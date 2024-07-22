@@ -3,7 +3,12 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
             <li class="{{ set_active(['home']) }}"> <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
+
                 <li class="list-divider"></li>
+                <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-home"></i> <span>Hotel</span></a> </li>
+
+
+
                 <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allbooking']) }}" href="{{ route('form/allbooking') }}"> All Booking </a></li>
@@ -51,8 +56,8 @@
                 </li>
                 <li class="submenu">
                     <a href="#">
-                        <i class="fa fa-user-plus"></i> 
-                        <span> User Management </span> 
+                        <i class="fa fa-user-plus"></i>
+                        <span> User Management </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="submenu_class" style="display: none;">

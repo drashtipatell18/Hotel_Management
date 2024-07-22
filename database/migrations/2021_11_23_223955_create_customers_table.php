@@ -28,6 +28,7 @@ class CreateCustomersTable extends Migration
             $table->string('fileupload')->nullable();
             $table->string('message')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

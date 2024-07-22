@@ -17,6 +17,7 @@ class CreateRoomTypesTable extends Migration
             $table->id();
             $table->string('room_name')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         DB::table('room_types')->insert([

@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Hotel extends Model
 {
     use HasFactory, SoftDeletes;
-
+    protected $table = "hotel";
     protected $fillable = [
-        'name'
+        'name',
+        'address',
+        'phone',
+        'email',
+        'stars',
+        'status'
     ];
 }

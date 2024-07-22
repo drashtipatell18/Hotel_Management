@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\HotelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +83,7 @@ Route::controller(ResetPasswordController::class)->group(function () {
     Route::post('reset-password', 'updatePassword');
 });
 
+
 // ----------------------------- booking -----------------------------//
 Route::controller(BookingController::class)->group(function () {
     Route::get('form/allbooking', 'allbooking')->name('form/allbooking')->middleware('auth');
@@ -127,4 +129,14 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::get('form/emplyee/list', 'employeesList')->middleware('auth')->name('form/emplyee/list');
     Route::get('form/employee/add', 'employeesAdd')->middleware('auth')->name('form/employee/add');
     Route::get('form/leaves/page', 'leavesPage')->middleware('auth')->name('form/leaves/page');
+});
+
+
+Route::controller(HotelController::class)->group(function () {
+    Route::get('hotel/add', 'hotelCreate')->name('hotel/add');
+    Route::post('hotel/store', 'hotelStore')->name('hotel/store');
+    Route::get('hotel/list', 'hotelList')->name('hotel/list');
+    Route::get('hotel/edit/{id}', 'hotelEdit');
+    Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
+    Route::post('hotel/delete',  'hotelDelete')->name('hotel/delete');
 });
