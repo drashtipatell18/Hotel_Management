@@ -12,6 +12,7 @@ class Customer extends Model
     protected $fillable = [
         'bkg_customer_id',
         'name',
+        'lname',
         'room_type',
         'total_numbers',
         'date',
@@ -20,6 +21,9 @@ class Customer extends Model
         'email',
         'ph_number',
         'fileupload',
-        'message',
+        'address',
+        'gender',
+        'aadharcard',
+        'status'
     ];
 }

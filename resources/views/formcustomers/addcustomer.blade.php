@@ -20,13 +20,73 @@
                                 <div class="row formtype">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Name</label>
-                                            <select class="form-control @error('name') is-invalid @enderror" id="sel1" name="name" value="{{ old('name') }}">
-                                                <option selected disabled> --Select Name-- </option>
-                                                @foreach ($user as $users )
-                                                <option value="{{ $users->name }}">{{ $users->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            <label>First Name</label>
+                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control @error('lname') is-invalid @enderror" name="lname" value="{{ old('lname') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Birth Date</label>
+                                            <div class="cal-icon">
+                                                <input type="text" class="form-control datetimepicker @error('date') is-invalid @enderror"name="date" value="{{ old('date') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" {{ old('gender') == 'male' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="genderMale">Male</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" {{ old('gender') == 'female' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="genderFemale">Female</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" {{ old('gender') == 'other' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="genderOther">Other</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Profile Pic</label>
+                                            <div class="custom-file mb-3">
+                                                <input type="file" class="custom-file-input @error('fileupload') is-invalid @enderror" id="customFile" name="fileupload">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Address (Proof) - Aadharcard</label>
+                                            <div class="custom-file mb-3">
+                                                <input type="file" class="custom-file-input @error('aadharcard') is-invalid @enderror" id="aadharcard" name="aadharcard">
+                                                <label class="custom-file-label" for="customFile1">Choose file</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -46,19 +106,12 @@
                                             <input type="number" class="form-control @error('total_numbers') is-invalid @enderror"name="total_numbers" value="{{ old('total_numbers') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Date</label>
-                                            <div class="cal-icon">
-                                                <input type="text" class="form-control datetimepicker @error('date') is-invalid @enderror"name="date" value="{{ old('date') }}">
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Time</label>
                                             <div class="time-icon">
-                                                <input type="text" class="form-control @error('time') is-invalid @enderror" id="datetimepicker3" name="time" value="{{ old('time') }}">
+                                                <input type="time" class="form-control @error('time') is-invalid @enderror" id="datetimepicker3" name="time" value="{{ old('time') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -74,35 +127,17 @@
                                         <div class="form-group">
                                             <label>Depature Date</label>
                                             <div class="cal-icon">
-                                                <input type="text" class="form-control datetimepicker @error('depature_date') is-invalid @enderror" name="depature_date" value="{{ old('depature_date') }}"> 
+                                                <input type="text" class="form-control datetimepicker @error('depature_date') is-invalid @enderror" name="depature_date" value="{{ old('depature_date') }}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+
+
+
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input type="text" class="form-control @error('phone_number') is-invalid @enderror" id="usr1" name="phone_number" value="{{ old('phone_number') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>File Upload</label>
-                                            <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input @error('fileupload') is-invalid @enderror" id="customFile" name="fileupload">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Message</label>
-                                            <textarea class="form-control @error('message') is-invalid @enderror" rows="1.5" id="message" name="message" value="{{ old('message') }}"></textarea>
+                                            <label>Address</label>
+                                            <textarea class="form-control @error('address') is-invalid @enderror" rows="5" id="message" name="address" value="{{ old('address') }}"></textarea>
                                         </div>
                                     </div>
                                 </div>

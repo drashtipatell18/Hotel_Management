@@ -104,6 +104,14 @@ class HotelController extends Controller
             return redirect()->back();
         }
     }
+    public function updateStatus(Request $request)
+    {
+        $hotel = Hotel::find($request->hotel_id);
+        $hotel->status = $request->status;
+        $hotel->save();
+
+        return response()->json(['status' => 'success', 'new_status' => $hotel->status]);
+    }
 
 
 }

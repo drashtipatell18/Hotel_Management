@@ -21,6 +21,10 @@
 	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
 
+
+
+
+
 <body>
 	<div class="main-wrapper">
 		<div class="header">
@@ -104,8 +108,8 @@
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
-						<a class="dropdown-item" href="{{ route('profile') }}">My Profile</a> 
-						<a class="dropdown-item" href="settings.html">Account Settings</a> 
+						<a class="dropdown-item" href="{{ route('profile') }}">My Profile</a>
+						<a class="dropdown-item" href="settings.html">Account Settings</a>
 						<a class="dropdown-item" href="{{route('logout')}}">Logout</a>
 					</div>
 				</li>
@@ -137,7 +141,7 @@
 	<script src="{{ URL::to('assets/js/chart.morris.js') }}"></script>
 
 	@yield('script')
-	
+
 </body>
 
 </html>

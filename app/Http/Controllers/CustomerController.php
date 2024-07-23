@@ -5,39 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use Brian2694\Toastr\Facades\Toastr;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
-    // view page all customer
     public function allCustomers()
     {
         $allCustomers = DB::table('customers')->get();
         return view('formcustomers.allcustomers',compact('allCustomers'));
     }
-
-    // add Customer
     public function addCustomer()
     {
         $data = DB::table('room_types')->get();
         $user = DB::table('users')->get();
         return view('formcustomers.addcustomer',compact('data','user'));
     }
-    // save record
     public function saveCustomer(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name'   => 'required|string|max:255',
+            'lname'   => 'required|string|max:255',
+            'email'      => 'required|string|max:255',
+            'date' => 'required|string|max:255',
+            'gender' => 'required',
+            'fileupload' => 'required|file',
             'room_type'     => 'required|string|max:255',
             'total_numbers' => 'required|string|max:255',
-            'date' => 'required|string|max:255',
             'time' => 'required|string|max:255',
             'arrival_date'  => 'required|string|max:255',
             'depature_date' => 'required|string|max:255',
-            'email'      => 'required|string|max:255',
+            'aadharcard' => 'required|file',
             'phone_number'  => 'required|string|max:255',
-            'fileupload' => 'required|file',
-            'message'    => 'required|string|max:255',
+            'address'    => 'required|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -46,79 +46,96 @@ class CustomerController extends Controller
             $photo= $request->fileupload;
             $file_name = rand() . '.' .$photo->getClientOriginalName();
             $photo->move(public_path('/assets/upload/'), $file_name);
-           
+
+            $aadharcard= $request->aadharcard;
+            $file_name1 = rand() . '.' .$aadharcard->getClientOriginalName();
+            $aadharcard->move(public_path('/assets/upload/'), $file_name1);
+
             $customer = new Customer;
             $customer->name = $request->name;
+            $customer->lname = $request->lname;
+            $customer->email       = $request->email;
+            $customer->date  = $request->date;
+            $customer->gender = $request->gender;
+            $customer->fileupload  = $file_name;
             $customer->room_type     = $request->room_type;
             $customer->total_numbers  = $request->total_numbers;
-            $customer->date  = $request->date;
             $customer->time  = $request->time;
             $customer->arrival_date   = $request->arrival_date;
             $customer->depature_date  = $request->depature_date;
-            $customer->email       = $request->email;
             $customer->ph_number   = $request->phone_number;
-            $customer->fileupload  = $file_name;
-            $customer->message     = $request->message;
+            $customer->aadharcard  = $file_name1;
+            $customer->address     = $request->address;
             $customer->save();
-            
+
             DB::commit();
             Toastr::success('Create new customer successfully :)','Success');
             return redirect()->route('form/allcustomers/page');
-            
+
         } catch(\Exception $e) {
             DB::rollback();
             Toastr::error('Add Customer fail :)','Error');
             return redirect()->back();
         }
     }
-
-    // customer edit
-    public function updateCustomer($bkg_customer_id)
+    public function updateCustomer($id)
     {
-        $customerEdit = DB::table('customers')->where('bkg_customer_id',$bkg_customer_id)->first();
-        return view('formcustomers.editcustomer',compact('customerEdit'));
+        $roomTypes = DB::table('room_types')->get();
+        $customerEdit = DB::table('customers')->where('id',$id)->first();
+        return view('formcustomers.editcustomer',compact('customerEdit','roomTypes'));
     }
 
-    // update record
-    public function updateRecord(Request $request)
+    public function updateRecord(Request $request,$id)
     {
         DB::beginTransaction();
         try {
+            $customer = Customer::findOrFail($id);
 
-            if (!empty($request->fileupload)) {
-                $photo = $request->fileupload;
-                $file_name = rand() . '.' . $photo->getClientOriginalExtension();
+            $customer->name = $request->input('name');
+            $customer->lname = $request->input('lname');
+            $customer->email = $request->input('email');
+            $customer->date = $request->input('date');
+            $customer->gender = $request->input('gender');
+            $customer->room_type = $request->input('room_type');
+            $customer->total_numbers = $request->input('total_numbers');
+            $customer->time = $request->input('time');
+            $customer->arrival_date = $request->input('arrival_date');
+            $customer->depature_date = $request->input('depature_date');
+            $customer->ph_number = $request->input('phone_number');
+            $customer->address = $request->input('address');
+
+            if ($request->hasFile('fileupload')) {
+                if (file_exists(public_path('/assets/upload/' . $customer->fileupload))) {
+                    unlink(public_path('/assets/upload/' . $customer->fileupload));
+                }
+
+                $photo = $request->file('fileupload');
+                $file_name = rand() . '.' . $photo->getClientOriginalName();
                 $photo->move(public_path('/assets/upload/'), $file_name);
-            } else {
-                $file_name = $request->hidden_fileupload;
+                $customer->fileupload = $file_name;
             }
 
-            $update = [
-                'bkg_customer_id' => $request->bkg_customer_id,
-                'name'   => $request->name,
-                'room_type'  => $request->room_type,
-                'total_numbers' => $request->total_numbers,
-                'date'   => $request->date,
-                'time'   => $request->time,
-                'arrival_date'   => $request->arrival_date,
-                'depature_date'  => $request->depature_date,
-                'email'   => $request->email,
-                'ph_number' => $request->phone_number,
-                'fileupload'=> $file_name,
-                'message'   => $request->message,
-            ];
-            Customer::where('bkg_customer_id',$request->bkg_customer_id)->update($update);
-        
+            if ($request->hasFile('aadharcard')) {
+                if (file_exists(public_path('/assets/upload/' . $customer->aadharcard))) {
+                    unlink(public_path('/assets/upload/' . $customer->aadharcard));
+                }
+
+                $aadharcard = $request->file('aadharcard');
+                $file_name1 = rand() . '.' . $aadharcard->getClientOriginalName();
+                $aadharcard->move(public_path('/assets/upload/'), $file_name1);
+                $customer->aadharcard = $file_name1;
+            }
+            $customer->save();
+
             DB::commit();
-            Toastr::success('Updated customer successfully :)','Success');
-            return redirect()->back();
-        } catch(\Exception $e) {
+            Toastr::success('Customer updated successfully :)', 'Success');
+            return redirect()->route('form/allcustomers/page');
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Update customer fail :)','Error');
-            return redirect()->back();
+            Toastr::error('Update customer failed :)', 'Error');
+            return redirect()->back()->withInput();
         }
     }
-    // delete record
     public function deleteRecord(Request $request)
     {
         try {
@@ -127,7 +144,7 @@ class CustomerController extends Controller
             unlink('assets/upload/'.$request->fileupload);
             Toastr::success('Customer deleted successfully :)','Success');
             return redirect()->back();
-        
+
         } catch(\Exception $e) {
 
             DB::rollback();
@@ -135,5 +152,26 @@ class CustomerController extends Controller
             return redirect()->back();
         }
     }
+    public function updateStatus(Request $request)
+    {
+        $customer = Customer::find($request->customer_id);
+        $customer->status = $request->status;
+        $customer->save();
+
+        return response()->json(['status' => 'success', 'new_status' => $customer->status]);
+    }
+    public function getCustomerDetails(Request $request)
+    {
+        $customerId = $request->id;
+        $customer = Customer::find($customerId);
+        // dd($customer);
+
+        if ($customer) {
+            return response()->json(['status' => 'success', 'customer' => $customer]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Customer not found']);
+        }
+    }
+
 
 }

@@ -38,28 +38,17 @@
                                                 <td>{{ $hotelList->stars }}</td>
                                                 <td>{{ $hotelList->address }}</td>
                                                 <td>
-                                                    @if($hotelList->status == 'active')
-                                                        <a class="btn btn-success">{{ $hotelList->status }}</a>
-                                                    @else
-                                                        <a class="btn btn-danger">{{ $hotelList->status }}</a>
-                                                    @endif
+                                                    <a href="javascript:void(0);"
+                                                       class="btn btn-sm toggle-status {{ $hotelList->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
+                                                       data-id="{{ $hotelList->id }}"
+                                                       data-status="{{ $hotelList->status }}">
+                                                        {{ $hotelList->status }}
+                                                    </a>
                                                 </td>
 
                                                 <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v ellipse_color"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            @if($hotelList->status == 'active')
-                                                                <a class="dropdown-item" href="{{ url('hotel/edit/'.$hotelList->id) }}">
-                                                                    <i class="fas fa-pencil-alt m-r-5"></i> Edit
-                                                                </a>
-                                                            @endif
-                                                            <a class="dropdown-item HotelDelete" data-toggle="modal" data-target="#delete_asset" data-id="{{ $hotelList->id }}">
-                                                                <i class="fas fa-trash-alt m-r-5"></i> Delete
-                                                            </a>
-                                                        </div>
+                                                    <div class="btn btn-primary">
+                                                            <a class="dropdown-item-sm" style="color:white" href="{{ url('hotel/edit/'.$hotelList->id) }}">Edit</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -72,39 +61,42 @@
                     </div>
                 </div>
             </div>
-
-            {{-- delete model --}}
-            <div id="delete_asset" class="modal fade delete-modal" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="{{ route('hotel/delete') }}" method="POST">
-                            @csrf
-                            <div class="modal-body text-center"> <img src="{{ URL::to('assets/img/sent.png') }}" alt="" width="50" height="46">
-                                <h3 class="delete_class">Are you sure want to delete this Asset?</h3>
-                                <div class="m-t-20">
-                                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <input class="form-control" type="hidden" id="e_id" name="id" value="">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            {{-- end delete model --}}
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         @section('script')
-        {{-- delete model --}}
         <script>
+            $(document).ready(function() {
+                $('.toggle-status').click(function() {
+                    var hotelId = $(this).data('id');
+                    var currentStatus = $(this).data('status');
+                    var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                    var button = $(this);
 
-        $(document).on('click','.HotelDelete',function()
-        {
-            $('#e_id').val($(this).data('id'));
+                    $.ajax({
+                        url: '{{ route('update.hotel.status') }}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            hotel_id: hotelId,
+                            status: newStatus
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                button.data('status', response.new_status);
+                                button.text(response.new_status);
 
-        });
-
-        </script>
+                                // Update button classes
+                                if (response.new_status === 'active') {
+                                    button.removeClass('bg-danger-light').addClass('bg-success-light');
+                                } else {
+                                    button.removeClass('bg-success-light').addClass('bg-danger-light');
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+            </script>
         @endsection
 
 @endsection

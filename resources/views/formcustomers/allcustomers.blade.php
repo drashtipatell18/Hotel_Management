@@ -21,60 +21,50 @@
                                         <thead>
                                             <tr>
                                                 <th>Booking ID</th>
+                                                <th>Profile Pic</th>
                                                 <th>Name</th>
-                                                <th>Room Type</th>
-                                                <th>Total Numbers</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
-                                                <th>Arrival Date</th>
-                                                <th>Depature Date</th>
-                                                <th>Email</th>
                                                 <th>Ph.Number</th>
+                                                <th>Birth Date</th>
+                                                <th>Gender</th>
                                                 <th>Status</th>
                                                 <th class="text-right">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($allCustomers as $customers )
-                                            <tr>
-                                                <td hidden class="id">{{ $customers->id }}</td>
-                                                <td hidden class="fileupload">{{ $customers->fileupload }}</td>
-                                                <td>{{ $customers->bkg_customer_id }}</td>
-                                                <td>
-                                                    <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$customers->fileupload) }}" alt="{{ $customers->fileupload }}">
-                                                    </a>
-                                                    <a href="profile.html">{{ $customers->name }}<span>{{ $customers->bkg_customer_id }}</span></a>
-                                                    </h2>
-                                                </td>
-                                                <td>{{ $customers->room_type }}</td>
-                                                <td>{{ $customers->total_numbers }}</td>
-                                                <td>{{ $customers->date }}</td>
-                                                <td>{{ $customers->time }}</td>
-                                                <td>{{ $customers->arrival_date }}</td>
-                                                <td>{{ $customers->depature_date }}</td>
-                                                <td><a href="#" class="__cf_email__" data-cfemail="2652494b4b5f44435448474a66435e474b564a430845494b">{{ $customers->email }}</a></td>
-                                                <td>{{ $customers->ph_number }}</td>
-                                                <td>
-                                                    <div class="actions"> <a href="#" class="btn btn-sm bg-success-light mr-2">Active</a> </div>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v ellipse_color"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="{{ url('form/customer/edit/'.$customers->bkg_customer_id) }}">
-                                                                <i class="fas fa-pencil-alt m-r-5"></i> Edit
+                                                <tr>
+                                                    {{-- <td hidden class="id">{{ $customers->id }}</td>
+                                                    <td hidden class="fileupload">{{ $customers->fileupload }}</td> --}}
+                                                    <td>{{ $customers->bkg_customer_id }}</td>
+                                                    <td>
+                                                        <h2 class="table-avatar">
+                                                            <a href="profile.html" class="avatar avatar-sm mr-2">
+                                                                <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$customers->fileupload) }}" alt="{{ $customers->fileupload }}">
                                                             </a>
-                                                            <a class="dropdown-item customerDelete" href="#" data-toggle="modal" data-target="#delete_asset">
-                                                                <i class="fas fa-trash-alt m-r-5"></i> Delete
-                                                            </a> 
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                        </h2>
+                                                    </td>
+                                                    <td><span>{{ $customers->name }} {{ $customers->lname }}</span></td>
+                                                    <td>{{ $customers->ph_number }}</td>
+                                                    <td>{{ $customers->date }}</td>
+                                                    <td>{{ $customers->gender }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);"
+                                                           class="btn btn-sm toggle-status {{ $customers->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
+                                                           data-id="{{ $customers->id }}"
+                                                           data-status="{{ $customers->status }}">
+                                                            {{ $customers->status }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <a href="{{ url('form/customer/edit/'.$customers->id) }}" style=" font-size: 23px; padding: 5px;">
+                                                            <i class="fas fa-pencil-alt fa-xs"></i>
+                                                        </a>
+
+                                                        <a  data-toggle="modal" data-target="#exampleModal" class="view-customer" data-id="{{ $customers->id }}" style=" font-size: 23px; padding: 5px;">
+                                                            <i class="fas fa-eye fa-xs"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -85,38 +75,110 @@
                 </div>
             </div>
 
-            {{-- delete model --}}
-            <div id="delete_asset" class="modal fade delete-modal" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body text-center">
-                            <form action="{{ route('form/customer/delete') }}" method="POST">
-                                @csrf
-                                <img src="{{ URL::to('assets/img/sent.png') }}" alt="" width="50" height="46">
-                                <h3 class="delete_class">Are you sure want to delete this Asset?</h3>
-                                <div class="m-t-20">
-                                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <input class="form-control" type="hidden" id="e_id" name="id" value="">
-                                    <input class="form-control" type="hidden" id="e_fileupload" name="fileupload" value="">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+        <!-- View Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Customer Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$customers->fileupload) }}" alt="{{ $customers->fileupload }}" width="100px">
+                            </div>
+                            <div class="col-md-8">
+                                <div id="customer-details">
+                                    <p><strong>Name:</strong> <span id="customer-name"></span></p>
+                                    <p><strong>Phone Number:</strong> <span id="customer-phone"></span></p>
+                                    <p><strong>Birth Date:</strong> <span id="customer-birthdate"></span></p>
+                                    <p><strong>Gender:</strong> <span id="customer-gender"></span></p>
+                                    <p><strong>Status:</strong> <span id="customer-status"></span></p>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
-            {{-- end delete model --}}
         </div>
+
+
+        {{-- End Model --}}
+
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         @section('script')
-        {{-- delete model --}}
         <script>
-            $(document).on('click','.customerDelete',function()
-            {
-                var _this = $(this).parents('tr');
-                $('#e_id').val(_this.find('.id').text());
-                $('#e_fileupload').val(_this.find('.fileupload').text());
+            $(document).ready(function() {
+            // Status Change
+
+                $('.toggle-status').click(function() {
+                    var customerId = $(this).data('id');
+                    var currentStatus = $(this).data('status');
+                    var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                    var button = $(this);
+
+                    $.ajax({
+                        url: '{{ route('update.customer.status') }}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            customer_id: customerId,
+                            status: newStatus
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                button.data('status', response.new_status);
+                                button.text(response.new_status);
+
+                                // Update button classes
+                                if (response.new_status === 'active') {
+                                    button.removeClass('bg-danger-light').addClass('bg-success-light');
+                                } else {
+                                    button.removeClass('bg-success-light').addClass('bg-danger-light');
+                                }
+                            }
+                        }
+                    });
+                });
+
+            // Particular Customer Record
+
+            $('.view-customer').click(function() {
+                var customerId = $(this).data('id');
+
+                $.ajax({
+                    url: '{{ route('get.customer.details') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: customerId
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            var customer = response.customer;
+                            $('#customer-name').text(customer.name + ' ' + customer.lname);
+                            $('#customer-phone').text(customer.ph_number);
+                            $('#customer-birthdate').text(customer.date);
+                            $('#customer-gender').text(customer.gender);
+                            $('#customer-status').text(customer.status);
+                        }
+                    }
+                });
             });
-        </script>
+
+        });
+
+
+
+            </script>
         @endsection
 
 @endsection

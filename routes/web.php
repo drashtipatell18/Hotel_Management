@@ -99,9 +99,11 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('form/allcustomers/page', 'allCustomers')->middleware('auth')->name('form/allcustomers/page');
     Route::get('form/addcustomer/page', 'addCustomer')->middleware('auth')->name('form/addcustomer/page');
     Route::post('form/addcustomer/save', 'saveCustomer')->middleware('auth')->name('form/addcustomer/save');
-    Route::get('form/customer/edit/{bkg_customer_id}', 'updateCustomer')->middleware('auth');
-    Route::post('form/customer/update', 'updateRecord')->middleware('auth')->name('form/customer/update');
+    Route::get('form/customer/edit/{id}', 'updateCustomer')->middleware('auth');
+    Route::post('form/customer/update/{id}', 'updateRecord')->name('form/customer/update');
     Route::post('form/customer/delete', 'deleteRecord')->middleware('auth')->name('form/customer/delete');
+    Route::post('/update-customer-status',  'updateStatus')->name('update.customer.status');
+    Route::post('/get-customer-details', [CustomerController::class, 'getCustomerDetails'])->name('get.customer.details');
 });
 
 // ----------------------------- rooms -----------------------------//
@@ -132,11 +134,13 @@ Route::controller(EmployeeController::class)->group(function () {
 });
 
 
+// Hotel
+
 Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/add', 'hotelCreate')->name('hotel/add');
     Route::post('hotel/store', 'hotelStore')->name('hotel/store');
     Route::get('hotel/list', 'hotelList')->name('hotel/list');
     Route::get('hotel/edit/{id}', 'hotelEdit');
     Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
-    Route::post('hotel/delete',  'hotelDelete')->name('hotel/delete');
+    Route::post('/update-hotel-status', [HotelController::class, 'updateStatus'])->name('update.hotel.status');
 });

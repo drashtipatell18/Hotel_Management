@@ -17,6 +17,7 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('bkg_customer_id');
             $table->string('name')->nullable();
+            $table->string('lname')->nullable();
             $table->string('room_type')->nullable();
             $table->string('total_numbers')->nullable();
             $table->string('date')->nullable();
@@ -26,7 +27,10 @@ class CreateCustomersTable extends Migration
             $table->string('email')->nullable();
             $table->string('ph_number')->nullable();
             $table->string('fileupload')->nullable();
-            $table->string('message')->nullable();
+            $table->string('address')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('aadharcard')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();
         });
