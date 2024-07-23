@@ -90,13 +90,27 @@
                             <div class="col-md-4 text-center">
                                 <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$customers->fileupload) }}" alt="{{ $customers->fileupload }}" width="100px">
                             </div>
-                            <div class="col-md-8">
-                                <div id="customer-details">
-                                    <p><strong>Name:</strong> <span id="customer-name"></span></p>
-                                    <p><strong>Phone Number:</strong> <span id="customer-phone"></span></p>
-                                    <p><strong>Birth Date:</strong> <span id="customer-birthdate"></span></p>
-                                    <p><strong>Gender:</strong> <span id="customer-gender"></span></p>
-                                    <p><strong>Status:</strong> <span id="customer-status"></span></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="customer-details" class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Name:</strong> <span id="customer-name"></span></p>
+                                            <p><strong>Email:</strong> <span id="customer-email"></span></p>
+                                            <p><strong>Date:</strong> <span id="customer-date"></span></p>
+                                            <p><strong>Gender:</strong> <span id="customer-gender"></span></p>
+                                            <p><strong>Room Type:</strong> <span id="customer-room-type"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Total Number:</strong> <span id="customer-total-number"></span></p>
+                                            <p><strong>Time:</strong> <span id="customer-time"></span></p>
+                                            <p><strong>Arrival Date:</strong> <span id="customer-arrival-date"></span></p>
+                                            <p><strong>Departure Date:</strong> <span id="customer-departure-date"></span></p>
+                                            <p><strong>Phone:</strong> <span id="customer-phone"></span></p>
+                                            <p><strong>Address:</strong> <span id="customer-address"></span></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -107,6 +121,7 @@
                 </div>
             </div>
         </div>
+
 
 
         {{-- End Model --}}

@@ -104,6 +104,18 @@ class CustomerController extends Controller
             $customer->ph_number = $request->input('phone_number');
             $customer->address = $request->input('address');
 
+
+            if ($request->hasFile('aadharcard')) {
+                if (file_exists(public_path('/assets/upload/' . $customer->aadharcard))) {
+                    unlink(public_path('/assets/upload/' . $customer->aadharcard));
+                }
+
+                $photo = $request->file('aadharcard');
+                $file_name = rand() . '.' . $photo->getClientOriginalName();
+                $photo->move(public_path('/assets/upload/'), $file_name);
+                $customer->aadharcard = $file_name;
+            }
+
             if ($request->hasFile('fileupload')) {
                 if (file_exists(public_path('/assets/upload/' . $customer->fileupload))) {
                     unlink(public_path('/assets/upload/' . $customer->fileupload));
@@ -115,16 +127,8 @@ class CustomerController extends Controller
                 $customer->fileupload = $file_name;
             }
 
-            if ($request->hasFile('aadharcard')) {
-                if (file_exists(public_path('/assets/upload/' . $customer->aadharcard))) {
-                    unlink(public_path('/assets/upload/' . $customer->aadharcard));
-                }
 
-                $aadharcard = $request->file('aadharcard');
-                $file_name1 = rand() . '.' . $aadharcard->getClientOriginalName();
-                $aadharcard->move(public_path('/assets/upload/'), $file_name1);
-                $customer->aadharcard = $file_name1;
-            }
+
             $customer->save();
 
             DB::commit();

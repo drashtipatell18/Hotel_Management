@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <label>Address (Proof) - Aadharcard</label>
                                     <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input" id="customFile1" name="fileupload1">
+                                        <input type="file" class="custom-file-input" id="aadharcard" name="aadharcard">
                                         <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $customerEdit->aadharcard }}">
                                         <a href="#" class="avatar avatar-sm mr-2">
                                             <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$customerEdit->aadharcard) }}" alt="{{ $customerEdit->aadharcard }}">
