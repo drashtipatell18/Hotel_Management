@@ -38,6 +38,8 @@ class CustomerController extends Controller
             'aadharcard' => 'required|file',
             'phone_number'  => 'required|string|max:255',
             'address'    => 'required|string|max:255',
+        ],[
+            'fileupload' => 'The Profile pic is required'
         ]);
 
         DB::beginTransaction();

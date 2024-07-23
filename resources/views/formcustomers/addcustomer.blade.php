@@ -22,18 +22,28 @@
                                         <div class="form-group">
                                             <label>First Name</label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
+                                                @error('name')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                         </div>
+
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Last Name</label>
                                             <input type="text" class="form-control @error('lname') is-invalid @enderror" name="lname" value="{{ old('lname') }}">
+                                            @error('lname')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                                            @error('email')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -41,6 +51,9 @@
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
                                                 <input type="text" class="form-control datetimepicker @error('date') is-invalid @enderror"name="date" value="{{ old('date') }}">
+                                                @error('date')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -60,6 +73,9 @@
                                                     <input class="form-check-input" type="radio" name="gender" id="other" value="other" {{ old('gender') == 'other' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="genderOther">Other</label>
                                                 </div>
+                                                @error('gender')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -68,6 +84,9 @@
                                         <div class="form-group">
                                             <label>Phone</label>
                                             <input type="number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}">
+                                            @error('phone_number')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -77,6 +96,9 @@
                                             <div class="custom-file mb-3">
                                                 <input type="file" class="custom-file-input @error('fileupload') is-invalid @enderror" id="customFile" name="fileupload">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
+                                                @error('fileupload')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -86,6 +108,9 @@
                                             <div class="custom-file mb-3">
                                                 <input type="file" class="custom-file-input @error('aadharcard') is-invalid @enderror" id="aadharcard" name="aadharcard">
                                                 <label class="custom-file-label" for="customFile1">Choose file</label>
+                                                @error('aadharcard')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -95,8 +120,11 @@
                                             <select class="form-control @error('room_type') is-invalid @enderror" id="sel2" name="room_type">
                                                 <option selected disabled> --Select Room Type-- </option>
                                                 @foreach ($data as $items )
-                                                <option value="{{ $items->room_name }}">{{ $items->room_name }}</option>
+                                                    <option value="{{ $items->room_name }}">{{ $items->room_name }}</option>
                                                 @endforeach
+                                                @error('room_type')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </select>
                                         </div>
                                     </div>
@@ -104,6 +132,9 @@
                                         <div class="form-group">
                                             <label>Total Members</label>
                                             <input type="number" class="form-control @error('total_numbers') is-invalid @enderror"name="total_numbers" value="{{ old('total_numbers') }}">
+                                            @error('total_numbers')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -112,6 +143,9 @@
                                             <label>Time</label>
                                             <div class="time-icon">
                                                 <input type="time" class="form-control @error('time') is-invalid @enderror" id="datetimepicker3" name="time" value="{{ old('time') }}">
+                                                @error('time')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -120,6 +154,9 @@
                                             <label>Arrival Date</label>
                                             <div class="cal-icon">
                                                 <input type="text" class="form-control datetimepicker @error('arrival_date') is-invalid @enderror" name="arrival_date" value="{{ old('arrival_date') }}">
+                                                @error('arrival_date')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -128,16 +165,20 @@
                                             <label>Depature Date</label>
                                             <div class="cal-icon">
                                                 <input type="text" class="form-control datetimepicker @error('depature_date') is-invalid @enderror" name="depature_date" value="{{ old('depature_date') }}">
+                                                @error('depature_date')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Address</label>
                                             <textarea class="form-control @error('address') is-invalid @enderror" rows="5" id="message" name="address" value="{{ old('address') }}"></textarea>
+                                            @error('address')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

@@ -20,18 +20,27 @@
                                 <div class="form-group">
                                     <label>Hotel Name</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"name="name" value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"name="email" value="{{ old('email') }}">
+                                    @error('email')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Phone</label>
                                     <input type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
+                                    @error('phone')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -39,6 +48,9 @@
                                 <div class="form-group">
                                     <label>Stars</label>
                                     <input type="number" class="form-control @error('stars') is-invalid @enderror" name="stars" value="{{ old('stars') }}">
+                                    @error('stars')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">

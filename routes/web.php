@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AmenitiesController;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
@@ -143,4 +144,15 @@ Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/edit/{id}', 'hotelEdit');
     Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
     Route::post('/update-hotel-status', [HotelController::class, 'updateStatus'])->name('update.hotel.status');
+});
+
+// Amenities
+
+Route::controller(AmenitiesController::class)->group(function () {
+    Route::get('amenities/add', 'amenitiesCreate')->name('amenities/add');
+    Route::post('amenities/store', 'amenitiesStore')->name('amenities/store');
+    Route::get('amenities/list', 'amenitiesList')->name('amenities/list');
+    Route::get('amenities/edit/{id}', 'amenitiesEdit');
+    Route::post('amenities/update/{id}', 'amenitiesUpdate')->name('amenities/update');
+    Route::get('amenities/delete/{id}', 'amenitiesDelete')->name('amenities/delete'); /** delere record */
 });
