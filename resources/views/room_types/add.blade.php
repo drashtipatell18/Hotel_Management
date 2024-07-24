@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row formtype">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>RoomType Name</label>
                                     <input type="text" class="form-control @error('room_name') is-invalid @enderror"
@@ -51,7 +51,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Capacity</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Base Price</label>
                                     <input type="number" id="base_price"
