@@ -24,13 +24,31 @@
                                                 <th>Capacity</th>
                                                 <th>Extra Bed</th>
                                                 <th>Extra Bed Quantity</th>
-                                                <th>Address</th>
-                                                <th>Status</th>
+                                                <th>Base Price</th>
+                                                <th>Description</th>
                                                 <th class="text-right">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($roomTypes as $roomType)
+                                                <tr>
+                                                    <td>{{ $roomType->room_name }}</td>
+                                                    <td>{{ $roomType->capacity }}</td>
+                                                    <td>{{ $roomType->extra_bed ? 'Yes' : 'No' }}</td>
+                                                    <td>{{ $roomType->extra_bed_quantity }}</td>
+                                                    <td>{{ $roomType->base_price }}</td>
+                                                    <td>{{ $roomType->description }}</td>
+                                                    <td class="text-right">
+                                                        <a href="{{ url('roomtype/edit/'.$roomType->id) }}" style=" font-size: 23px; padding: 5px;">
+                                                            <i class="fas fa-pencil-alt fa-xs"></i>
+                                                        </a>
+                                                        <a href="{{ route('roomtype.delete', ['id' => $roomType->id]) }}" onclick="return confirm('Are you sure you want to delete this Amenities?');" style="font-size: 23px; padding: 5px; color: red;">
+                                                            <i class="fas fa-trash fa-xs"></i>
+                                                        </a>
+                                                    </td>
 
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

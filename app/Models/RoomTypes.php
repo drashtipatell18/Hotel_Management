@@ -20,4 +20,6 @@ class RoomTypes extends Model
         'base_price',
         'extra_bed_price',
     ];
+
+
 }

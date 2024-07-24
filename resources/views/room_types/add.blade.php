@@ -26,7 +26,6 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        {{-- <h3 class="page-title mt-5">Add Room</h3> --}}
                         <div class="page-title mt-5">{{ isset($roomtype) ? 'Edit Room Type' : 'Add Room Type' }}</div>
                     </div>
                 </div>
@@ -68,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Extra Bed:</label>
-                                    <input type="checkbox" id="extra_bed_checkbox" class="form-control @error('extra_bed') is-invalid @enderror" name="extra_bed" value="{{ old('extra_bed', $roomtype->extra_bed ?? '') }}">
+                                    <input type="checkbox" id="extra_bed_checkbox" class="form-control @error('extra_bed') is-invalid @enderror" name="extra_bed" {{ old('extra_bed', $roomtype->extra_bed ?? 0) ? 'checked' : '' }}>
                                     @error('extra_bed')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
@@ -76,19 +75,18 @@
                             </div>
 
                             <div class="col-md-6" id="extra_bed_textbox" style="display: none;">
-                                <p id="total_extra_bed_price_display" style="color:red">Total Extra Price <span id="total_extra_bed_price"> 0.00</span></p>
+                                <p id="total_extra_bed_price_display" style="color:red">Total Extra Price <span id="total_extra_bed_price">0.00</span></p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="extra_bed_quantity_1">Per Extra Bed Price</label>
+                                            <label for="per_extra_bed_price">Per Extra Bed Price</label>
                                             <input type="number" id="per_extra_bed_price" class="form-control" name="per_extra_bed_price" value="{{ old('per_extra_bed_price', $roomtype->per_extra_bed_price ?? '') }}">
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="extra_bed_quantity_2">Extra Bed Quantity</label>
-                                            <input type="text" id="extra_bed_quantity" class="form-control" name="extra_bed_quantity" value="{{ old('extra_bed_quantity', $roomtype->extra_bed_quantity ?? '') }}">
+                                            <label for="extra_bed_quantity">Extra Bed Quantity</label>
+                                            <input type="number" id="extra_bed_quantity" class="form-control" name="extra_bed_quantity" value="{{ old('extra_bed_quantity', $roomtype->extra_bed_quantity ?? '') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -96,6 +94,9 @@
 
                         </div>
 
+                        <?php
+                        $selectedAmenities = isset($roomtype) ? explode(",", $roomtype->amenities_id) : [];
+                    ?>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="row formtype">
@@ -105,7 +106,8 @@
                                             <div class="row">
                                                 @foreach($amenities as $amenity)
                                                     <div class="col-md-4 checkbox-item">
-                                                        <input type="checkbox" id="amenity_{{ $amenity->id }}" name="amenities_id[]" value="{{ $amenity->id }}">
+                                                        <input type="checkbox" id="amenity_{{ $amenity->id }}" name="amenities_id[]" value="{{ $amenity->id }}"
+                                                        @if(in_array($amenity->id, $selectedAmenities)) checked @endif>
                                                         <label for="amenity_{{ $amenity->id }}">{{ $amenity->name }}</label>
                                                     </div>
                                                 @endforeach
@@ -128,7 +130,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="4">{{ old('description') }}</textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="4">{{ old('description', $roomtype->description ?? '') }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -145,6 +147,10 @@
     @section('script')
     <script>
         $(document).ready(function() {
+            // Toggle the extra bed textbox based on the checkbox state on page load
+            if ($('#extra_bed_checkbox').is(':checked')) {
+                $('#extra_bed_textbox').show();
+            }
             $('#extra_bed_checkbox').change(function() {
                 if ($(this).is(':checked')) {
                     $('#extra_bed_textbox').show();
