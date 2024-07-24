@@ -7,6 +7,7 @@
                 <li class="list-divider"></li>
                 <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-home"></i> <span>Hotel</span></a> </li>
                 <li class=""> <a href="{{ route('amenities/list') }}"><i class="fas fa-home"></i> <span>Amenities</span></a> </li>
+                <li class=""> <a href="{{ route('roomtype/list') }}"><i class="fas fa-home"></i> <span>Room Type</span></a> </li>
 
 
 

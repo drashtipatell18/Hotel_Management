@@ -16,6 +16,8 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomTypeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -154,5 +156,15 @@ Route::controller(AmenitiesController::class)->group(function () {
     Route::get('amenities/list', 'amenitiesList')->name('amenities/list');
     Route::get('amenities/edit/{id}', 'amenitiesEdit');
     Route::post('amenities/update/{id}', 'amenitiesUpdate')->name('amenities/update');
-    Route::get('amenities/delete/{id}', 'amenitiesDelete')->name('amenities/delete'); /** delere record */
+    Route::get('/amenities/delete/{id}','amenitiesDelete')->name('amenities.delete');
+
+});
+
+// Room Type
+
+Route::controller(RoomTypeController::class)->group(function () {
+    Route::get('roomtype/add', 'roomtypeCreate')->name('roomtype/add');
+    Route::post('roomtype/store', 'roomtypeStore')->name('roomtype/store');
+    Route::get('roomtype/list', 'roomtypeList')->name('roomtype/list');
+
 });

@@ -82,5 +82,23 @@ public function amenitiesUpdate(Request $request, $id)
         }
 }
 
+public function amenitiesDelete($id)
+{
+    DB::beginTransaction();
+    try {
+        $amenity = Amenities::findOrFail($id);
+        $amenity->delete();
+        DB::commit();
+        Toastr::success('Amenity deleted successfully :)', 'Success');
+    } catch (\Exception $e) {
+        DB::rollback();
+        Toastr::error('Failed to delete amenity :(', 'Error');
+    }
+    return redirect()->route('amenities/list');
+}
+
+
+
+
 
 }

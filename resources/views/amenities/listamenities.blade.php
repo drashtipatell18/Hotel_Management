@@ -38,6 +38,9 @@
                                                     <a href="{{ url('amenities/edit/'.$amenities->id) }}" style=" font-size: 23px; padding: 5px;">
                                                         <i class="fas fa-pencil-alt fa-xs"></i>
                                                     </a>
+                                                    <a href="{{ route('amenities.delete', ['id' => $amenities->id]) }}" onclick="return confirm('Are you sure you want to delete this Amenities?');" style="font-size: 23px; padding: 5px; color: red;">
+                                                        <i class="fas fa-trash fa-xs"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @endforeach
