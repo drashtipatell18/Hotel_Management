@@ -14,4 +14,5 @@ class Amenities extends Model
         'image',
         'description',
     ];
+
 }

@@ -17,11 +17,12 @@ return new class extends Migration
             $table->text('description');
             $table->integer('capacity');
             $table->integer('extra_bed')->default(0);
-            $table->integer('per_extra_bed_price');
-            $table->integer('extra_bed_quantity');
-            $table->string('amenities_id');
+            $table->integer('per_extra_bed_price')->nullable();
+            $table->integer('extra_bed_quantity')->nullable();
+            $table->string('amenities_id')->nullable();
             $table->integer('base_price');
-            $table->integer('extra_bed_price');
+            $table->integer('extra_bed_price')->nullable();
+            $table->string('room_image')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
