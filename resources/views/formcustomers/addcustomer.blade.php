@@ -1,5 +1,61 @@
 @extends('layouts.master')
 @section('content')
+    <style>
+        #clock-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #clock {
+            width: 85px;
+            /* Compact size */
+            height: 85px;
+            border: 3px solid #009688;
+            /* Main border color */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(0, 150, 136, 0.9) 0%, rgba(0, 150, 136, 0.5) 70%);
+            color: rgba(255, 255, 255, 0.836);
+            font-size: 16px;
+            /* Smaller font size for digits */
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            /* Subtle text shadow */
+            box-shadow: 0 0 10px rgba(0, 150, 136, 0.8);
+            /* Glow effect */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.3s ease-in-out;
+            position: relative;
+            /* For positioning pseudo-element */
+        }
+
+        #clock:hover {
+            transform: scale(1.05);
+            /* Slight zoom on hover */
+            box-shadow: 0 0 20px rgba(0, 150, 136, 1);
+            /* Enhanced glow effect on hover */
+            background: radial-gradient(circle, rgba(0, 150, 136, 1) 0%, rgba(0, 150, 136, 0.6) 70%);
+            /* Darker gradient on hover */
+        }
+
+        #clock:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            /* Full size to remove the border effect */
+            height: 100%;
+            border-radius: 50%;
+            border: none;
+            /* Remove the inner border */
+            box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
+            /* Remove the inner glow */
+        }
+    </style>
+
+
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">
@@ -21,39 +77,60 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>First Name</label>
+<<<<<<< Updated upstream
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
                                                 @error('name')
                                                     <div class="error text-danger">{{ $message }}</div>
                                                 @enderror
+=======
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                name="name" value="{{ old('name') }}">
+>>>>>>> Stashed changes
                                         </div>
 
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Last Name</label>
+<<<<<<< Updated upstream
                                             <input type="text" class="form-control @error('lname') is-invalid @enderror" name="lname" value="{{ old('lname') }}">
                                             @error('lname')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
+=======
+                                            <input type="text" class="form-control @error('lname') is-invalid @enderror"
+                                                name="lname" value="{{ old('lname') }}">
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Email</label>
+<<<<<<< Updated upstream
                                             <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
                                             @error('email')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
+=======
+                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                                id="email" name="email" value="{{ old('email') }}">
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
+<<<<<<< Updated upstream
                                                 <input type="text" class="form-control datetimepicker @error('date') is-invalid @enderror"name="date" value="{{ old('date') }}">
                                                 @error('date')
                                                     <div class="error text-danger">{{ $message }}</div>
                                                 @enderror
+=======
+                                                <input type="text"
+                                                    class="form-control datetimepicker @error('date') is-invalid @enderror"name="date"
+                                                    value="{{ old('date') }}">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                     </div>
@@ -62,15 +139,21 @@
                                             <label>Gender</label>
                                             <div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" {{ old('gender') == 'male' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gender"
+                                                        id="male" value="male"
+                                                        {{ old('gender') == 'male' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="genderMale">Male</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" {{ old('gender') == 'female' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gender"
+                                                        id="female" value="female"
+                                                        {{ old('gender') == 'female' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="genderFemale">Female</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" {{ old('gender') == 'other' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gender"
+                                                        id="other" value="other"
+                                                        {{ old('gender') == 'other' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="genderOther">Other</label>
                                                 </div>
                                                 @error('gender')
@@ -83,10 +166,16 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Phone</label>
+<<<<<<< Updated upstream
                                             <input type="number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}">
                                             @error('phone_number')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
+=======
+                                            <input type="number"
+                                                class="form-control @error('phone_number') is-invalid @enderror"
+                                                name="phone_number" value="{{ old('phone_number') }}">
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
 
@@ -94,7 +183,9 @@
                                         <div class="form-group">
                                             <label>Profile Pic</label>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input @error('fileupload') is-invalid @enderror" id="customFile" name="fileupload">
+                                                <input type="file"
+                                                    class="custom-file-input @error('fileupload') is-invalid @enderror"
+                                                    id="customFile" name="fileupload">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                                 @error('fileupload')
                                                     <div class="error text-danger">{{ $message }}</div>
@@ -106,7 +197,9 @@
                                         <div class="form-group">
                                             <label>Address (Proof) - Aadharcard</label>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input @error('aadharcard') is-invalid @enderror" id="aadharcard" name="aadharcard">
+                                                <input type="file"
+                                                    class="custom-file-input @error('aadharcard') is-invalid @enderror"
+                                                    id="aadharcard" name="aadharcard">
                                                 <label class="custom-file-label" for="customFile1">Choose file</label>
                                                 @error('aadharcard')
                                                     <div class="error text-danger">{{ $message }}</div>
@@ -117,10 +210,17 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Room Type</label>
-                                            <select class="form-control @error('room_type') is-invalid @enderror" id="sel2" name="room_type">
+                                            <select class="form-control @error('room_type') is-invalid @enderror"
+                                                id="sel2" name="room_type">
                                                 <option selected disabled> --Select Room Type-- </option>
+<<<<<<< Updated upstream
                                                 @foreach ($data as $items )
                                                     <option value="{{ $items->room_name }}">{{ $items->room_name }}</option>
+=======
+                                                @foreach ($data as $items)
+                                                    <option value="{{ $items->room_name }}">{{ $items->room_name }}
+                                                    </option>
+>>>>>>> Stashed changes
                                                 @endforeach
                                                 @error('room_type')
                                                     <div class="error text-danger">{{ $message }}</div>
@@ -131,32 +231,65 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Total Members</label>
+<<<<<<< Updated upstream
                                             <input type="number" class="form-control @error('total_numbers') is-invalid @enderror"name="total_numbers" value="{{ old('total_numbers') }}">
                                             @error('total_numbers')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
+=======
+                                            <input type="number"
+                                                class="form-control @error('total_numbers') is-invalid @enderror"name="total_numbers"
+                                                value="{{ old('total_numbers') }}">
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+
+
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Time</label>
                                             <div class="time-icon">
+<<<<<<< Updated upstream
                                                 <input type="time" class="form-control @error('time') is-invalid @enderror" id="datetimepicker3" name="time" value="{{ old('time') }}">
                                                 @error('time')
                                                     <div class="error text-danger">{{ $message }}</div>
                                                 @enderror
+=======
+                                                <input type="time"
+                                                    class="form-control @error('time') is-invalid @enderror"
+                                                    id="datetimepicker3" name="time" value="{{ old('time') }}">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+
+                                            <div class="time-icon" id="clock-container">
+                                                <div id="clock"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Arrival Date</label>
                                             <div class="cal-icon">
+<<<<<<< Updated upstream
                                                 <input type="text" class="form-control datetimepicker @error('arrival_date') is-invalid @enderror" name="arrival_date" value="{{ old('arrival_date') }}">
                                                 @error('arrival_date')
                                                     <div class="error text-danger">{{ $message }}</div>
                                                 @enderror
+=======
+                                                <input type="text"
+                                                    class="form-control datetimepicker @error('arrival_date') is-invalid @enderror"
+                                                    name="arrival_date" value="{{ old('arrival_date') }}">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                     </div>
@@ -164,10 +297,16 @@
                                         <div class="form-group">
                                             <label>Depature Date</label>
                                             <div class="cal-icon">
+<<<<<<< Updated upstream
                                                 <input type="text" class="form-control datetimepicker @error('depature_date') is-invalid @enderror" name="depature_date" value="{{ old('depature_date') }}">
                                                 @error('depature_date')
                                                     <div class="error text-danger">{{ $message }}</div>
                                                 @enderror
+=======
+                                                <input type="text"
+                                                    class="form-control datetimepicker @error('depature_date') is-invalid @enderror"
+                                                    name="depature_date" value="{{ old('depature_date') }}">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                     </div>
@@ -175,10 +314,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Address</label>
+<<<<<<< Updated upstream
                                             <textarea class="form-control @error('address') is-invalid @enderror" rows="5" id="message" name="address" value="{{ old('address') }}"></textarea>
                                             @error('address')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
+=======
+                                            <textarea class="form-control @error('address') is-invalid @enderror" rows="5" id="message" name="address"
+                                                value="{{ old('address') }}"></textarea>
+>>>>>>> Stashed changes
                                         </div>
                                     </div>
                                 </div>
@@ -191,3 +335,27 @@
         </div>
     </div>
 @endsection
+<script>
+    function updateClock() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+
+        // Format the time as HH:MM:SS
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        var currentTime = hours + ':' + minutes + ':' + seconds;
+
+        // Update the clock div
+        document.getElementById('clock').innerText = currentTime;
+    }
+
+    // Call the updateClock function every 1000ms (1 second)
+    setInterval(updateClock, 1000);
+
+    // Initial call to display the clock immediately
+    updateClock();
+</script>
