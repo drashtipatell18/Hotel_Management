@@ -6,6 +6,7 @@ use App\Models\Amenities;
 use Illuminate\Http\Request;
 use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\DB;
 
 class RoomTypeController extends Controller
 {
@@ -13,7 +14,7 @@ class RoomTypeController extends Controller
     {
         $roomtype = null;
         $amenities = Amenities::all();
-        return view('room_types/add',compact('amenities','roomtype'));
+        return view('room_types/add_room_typs',compact('amenities','roomtype'));
     }
     public function roomtypeStore(Request $request)
     {
@@ -52,13 +53,15 @@ class RoomTypeController extends Controller
     public function roomtypeList()
     {
         $roomTypes = RoomTypes::all();
-        return view('room_types/listroomtype',compact('roomTypes'));
+        $amenities = Amenities::all();
+
+        return view('room_types/listroomtype',compact('roomTypes','amenities'));
     }
     public function roomtypeEdit($id)
     {
         $roomtype = RoomTypes::find($id);
         $amenities = Amenities::all();
-        return view('room_types/add', compact('roomtype','amenities'));
+        return view('room_types/add_room_typs', compact('roomtype','amenities'));
     }
     public function roomtypeUpdate(Request $request, $id)
     {
@@ -92,5 +95,19 @@ class RoomTypeController extends Controller
             return redirect()->back();
         }
 
+    }
+    public function roomtypeDelete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $roomType = RoomTypes::findOrFail($id);
+            $roomType->delete();
+            DB::commit();
+            Toastr::success('RoomType deleted successfully :)', 'Success');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Failed to delete roomType :(', 'Error');
+        }
+        return redirect()->route('roomtype/list');
     }
 }

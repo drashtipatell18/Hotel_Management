@@ -30,7 +30,6 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        {{-- <h3 class="page-title mt-5">Add Room</h3> --}}
                         <div class="page-title mt-5">{{ isset($roomtype) ? 'Edit Room Type' : 'Add Room Type' }}</div>
                     </div>
                 </div>
@@ -53,7 +52,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Capacity</label>
+                                    <label>Member Capacity</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
                                         name="capacity" value="{{ old('capacity', $roomtype->capacity ?? '') }}">
                                     @error('capacity')
@@ -123,7 +122,7 @@
 
                     </div>
                 </div>
-                
+
                 <?php
                         $selectedAmenities = isset($roomtype) ? explode(",", $roomtype->amenities_id) : [];
                     ?>
@@ -144,8 +143,8 @@
                                     </div>
                                 </fieldset>
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -163,7 +162,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -171,7 +170,7 @@
             </form>
         </div>
     </div>
-   
+
 @section('script')
 <script>
     $(document).ready(function() {
@@ -185,9 +184,9 @@
                 $('#extra_bed_textbox').hide();
             }
         });
-        
+
     });
-</script> 
+</script>
 
 <script>
     // Calculate  per_extra_bed_price  *  extra_bed_quantity

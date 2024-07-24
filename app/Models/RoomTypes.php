@@ -19,6 +19,7 @@ class RoomTypes extends Model
         'amenities_id',
         'base_price',
         'extra_bed_price',
+        'room_image',
     ];
 
 

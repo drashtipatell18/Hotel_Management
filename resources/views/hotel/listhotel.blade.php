@@ -8,7 +8,8 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Hotel</h4> <a href="{{ route('hotel/add') }}" class="btn btn-primary float-right veiwbutton">Add Hotel</a> </div>
+                            <h4 class="card-title float-left mt-2">Hotel</h4> <a href="{{ route('hotel/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                class="fas fa-plus mr-2"></i>Add Hotel</a> </div>
                         </div>
                     </div>
                 </div>
@@ -17,7 +18,7 @@
                         <div class="card card-table">
                             <div class="card-body booking_card">
                                 <div class="table-responsive">
-                                    <table class="datatable table table-stripped table table-hover table-center mb-0">
+                                    <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -47,9 +48,8 @@
                                                 </td>
 
                                                 <td class="text-right">
-                                                    <div class="btn btn-primary">
-                                                            <a class="dropdown-item-sm" style="color:white" href="{{ url('hotel/edit/'.$hotelList->id) }}">Edit</a>
-                                                    </div>
+                                                            <a class="dropdown-item-sm" style="font-size: 23px; padding: 5px; color: #009688;"  href="{{ url('hotel/edit/'.$hotelList->id) }}"><i class="fas fa-pencil-alt fa-xs"></i</a>
+
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -66,6 +66,7 @@
         @section('script')
         <script>
             $(document).ready(function() {
+                $('.datatable1').DataTable();
                 $('.toggle-status').click(function() {
                     var hotelId = $(this).data('id');
                     var currentStatus = $(this).data('status');
