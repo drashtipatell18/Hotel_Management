@@ -17,7 +17,7 @@
                         <div class="card card-table">
                             <div class="card-body booking_card">
                                 <div class="table-responsive">
-                                    <table class="datatable table table-stripped table table-hover table-center mb-0">
+                                    <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
                                                 <th>RoomType Name</th>
@@ -58,9 +58,14 @@
                 </div>
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       
         @section('script')
-
+        <script>
+            $(document).ready(function() {
+        $('.datatable1').DataTable();
+            });
+        </script>
         @endsection
-
 @endsection
+
+
