@@ -1,5 +1,22 @@
 @extends('layouts.master')
 @section('content')
+<style>
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+    color: #009688 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+
+    border: #009688  ;
+    background-color:#009688 ;
+    color: white !important;
+
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #009688 !important;
+}
+
+
+</style>
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">
