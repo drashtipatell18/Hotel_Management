@@ -22,6 +22,7 @@
                                 <table class="table table-stripped table table-hover table-center mb-0" id="datatable1">
                                     <thead>
                                         <tr>
+                                            <th>Customer Id</th>
                                             <th>Booking ID</th>
                                             <th>Profile Pic</th>
                                             <th>Name</th>
@@ -37,6 +38,7 @@
                                             <tr>
                                                 {{-- <td hidden class="id">{{ $customers->id }}</td>
                                                     <td hidden class="fileupload">{{ $customers->fileupload }}</td> --}}
+                                                <td>{{ $customers->id }}</td>
                                                 <td>{{ $customers->bkg_customer_id }}</td>
                                                 <td>
                                                     <h2 class="table-avatar">

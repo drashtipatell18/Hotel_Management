@@ -8,7 +8,7 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">All RoomType</h4> <a href="{{ route('roomtype/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                            <h4 class="card-title float-left mt-2">Room Types</h4> <a href="{{ route('roomtype/add') }}" class="btn btn-primary float-right veiwbutton"><i
                                 class="fas fa-plus mr-2"></i>Add Room Type</a> </div>
                         </div>
                     </div>

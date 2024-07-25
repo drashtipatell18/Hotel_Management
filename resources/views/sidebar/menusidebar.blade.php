@@ -5,11 +5,11 @@
             <li class="{{ set_active(['home']) }}"> <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
 
                 <li class="list-divider"></li>
-                <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-home"></i> <span>Hotel</span></a> </li>
+                <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-home"></i> <span>Hotels</span></a> </li>
                 <li class=""> <a href="{{ route('amenities/list') }}"><i class="fas fa-home"></i> <span>Amenities</span></a> </li>
-                <li class=""> <a href="{{ route('roomtype/list') }}"><i class="fas fa-home"></i> <span>Room Type</span></a> </li>
-
-
+                <li class=""> <a href="{{ route('roomtype/list') }}"><i class="fas fa-home"></i> <span>Room Types</span></a> </li>
+                <li class=""> <a href="{{ route('floor/list') }}"><i class="fas fa-home"></i> <span>Floors</span></a> </li>
+                <li class=""> <a href="{{ route('food/list') }}"><i class="fas fa-home"></i> <span>Foods</span></a> </li>
 
                 <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
@@ -18,13 +18,16 @@
                         <li><a class="{{ set_active(['form/booking/add']) }}" href="{{ route('form/booking/add') }}"> Add Booking </a></li>
                     </ul>
                 </li>
-                <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
+
+                <li class=""> <a href="{{ route('form/allcustomers/page') }}"><i class="fas fa-user"></i> <span>Customers</span></a> </li>
+
+                {{-- <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allcustomers/page']) }}" href="{{ route('form/allcustomers/page') }}"> All customers </a></li>
                         <li><a class="{{ request()->is('form/customer/edit/*') ? 'active' : '' }}"> Edit Customer </a></li>
                         <li><a class="{{ set_active(['form/addcustomer/page']) }}" href="{{ route('form/addcustomer/page') }}"> Add Customer </a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Rooms </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allrooms/page']) }}" href="{{ route('form/allrooms/page') }}">All Rooms </a></li>

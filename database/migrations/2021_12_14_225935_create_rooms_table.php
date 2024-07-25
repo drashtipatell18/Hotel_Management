@@ -15,19 +15,25 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('bkg_room_id');
-            $table->string('name')->nullable();
-            $table->string('room_type')->nullable();
+            $table->unsignedBigInteger('floor_id')->nullable();
+            $table->string('room_number')->nullable();
+            $table->unsignedBigInteger('room_type_id')->nullable();
             $table->string('ac_non_ac')->nullable();
-            $table->string('food')->nullable();
+            $table->unsignedBigInteger('food_id')->nullable();
             $table->string('bed_count')->nullable();
-            $table->string('charges_for_cancellation')->nullable();
             $table->string('rent')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('fileupload')->nullable();
+            $table->bigInteger('phone_number')->nullable();
+            $table->string('image')->nullable();
             $table->string('message')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('floor_id')->references('id')->on('floors')->onDelete('set null');
+            $table->foreign('room_type_id')->references('id')->on('room_types')->onDelete('set null');
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('set null');
+
+
         });
     }
 

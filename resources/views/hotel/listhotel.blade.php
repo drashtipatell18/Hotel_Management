@@ -25,7 +25,7 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Hotel</h4> <a href="{{ route('hotel/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                            <h4 class="card-title float-left mt-2">Hotels</h4> <a href="{{ route('hotel/add') }}" class="btn btn-primary float-right veiwbutton"><i
                                 class="fas fa-plus mr-2"></i>Add Hotel</a> </div>
                         </div>
                     </div>
@@ -38,6 +38,7 @@
                                     <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Name</th>
                                                 <th>email</th>
                                                 <th>Phone</th>
@@ -50,6 +51,7 @@
                                         <tbody>
                                             @foreach ($allHotelList as $hotelList )
                                             <tr>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $hotelList->name }}</td>
                                                 <td>{{ $hotelList->email }}</td>
                                                 <td>{{ $hotelList->phone }}</td>
