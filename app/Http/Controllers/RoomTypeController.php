@@ -21,14 +21,18 @@ class RoomTypeController extends Controller
         $request->validate([
             'room_name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
-            'extra_bed_quantity' => 'nullable|required_if:extra_bed,1|integer|min:0',
-            'amenities_id' => 'required|exists:amenities,id',
+            'amenities_id' => 'required|array',
+            'amenities_id.*' => 'exists:amenities,id',
             'base_price' => 'required|numeric|min:0',
-            'extra_bed_price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
         ]);
 
         try{
+
+            $room_type= $request->room_image;
+            $file_name = rand() . '.' .$room_type->getClientOriginalName();
+            $room_type->move(public_path('/assets/upload/'), $file_name);
+
             RoomTypes::create([
                 'room_name' => $request->input('room_name'),
                 'capacity' => $request->input('capacity'),
@@ -39,6 +43,9 @@ class RoomTypeController extends Controller
                 'base_price' => $request->input('base_price'),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
+                'room_image' => $file_name,
+
+
             ]);
             Toastr::success('Create new room type successfully :)','Success');
             return redirect()->route('roomtype/list');
@@ -53,6 +60,7 @@ class RoomTypeController extends Controller
     public function roomtypeList()
     {
         $roomTypes = RoomTypes::all();
+
         $amenities = Amenities::all();
 
         return view('room_types/listroomtype',compact('roomTypes','amenities'));
@@ -73,9 +81,21 @@ class RoomTypeController extends Controller
             'base_price' => 'required|numeric|min:0',
             'extra_bed_price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
+             'room_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         $roomType = RoomTypes::findOrFail($id);
         try{
+
+            if ($request->hasFile('room_image')) {
+                if (file_exists(public_path('/assets/upload/') . $roomType->room_image)) {
+                    unlink(public_path('/assets/upload/') . $roomType->room_image);
+                }
+                $room_image = $request->file('room_image');
+                $file_name = rand() . '.' . $room_image->getClientOriginalName();
+                $room_image->move(public_path('/assets/upload/'), $file_name);
+                $roomType->room_image = $file_name;
+            }
+
             $roomType->update([
                 'room_name' => $request->input('room_name'),
                 'capacity' => $request->input('capacity'),
@@ -86,6 +106,7 @@ class RoomTypeController extends Controller
                 'base_price' => $request->input('base_price'),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
+                'room_image' => $roomType->room_image ?? $roomType->getOriginal('room_image')
             ]);
             Toastr::success('Room type updated successfully :)','Success');
             return redirect()->route('roomtype/list');

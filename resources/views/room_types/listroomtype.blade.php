@@ -79,8 +79,8 @@
                                                                 <div class="row">
                                                                     <div class="col-md-4 text-center">
                                                                         <img class="avatar-img rounded"
-                                                                            src="{{ URL::to('/assets/upload/' . $roomType->fileupload) }}"
-                                                                            alt="{{ $roomType->fileupload }}"
+                                                                            src="{{ URL::to('/assets/upload/' . $roomType->room_image) }}"
+                                                                            alt="{{ $roomType->room_image }}"
                                                                             style="width: 180px; height: 200px; object-fit: cover;">
                                                                     </div>
                                                                     <div class="col-md-8">

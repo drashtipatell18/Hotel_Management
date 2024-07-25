@@ -143,12 +143,27 @@
                                     </div>
                                 </fieldset>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row formtype">
+                            <div class="col-md-12">
+                                <label>Room Type Image</label>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="file" class="form-control @error('room_image') is-invalid @enderror" name="room_image" id="room_image" accept="image/*">
+                                    </div>
+                                </div>
+                                @if(isset($roomtype) && $roomtype->room_image)
+                                    <img src="{{ url('/assets/upload/', $roomtype->room_image) }}" width="100px"><br/>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -166,7 +181,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary buttonedit1">Create New Amenities</button>
+                <button type="submit" class="btn btn-primary buttonedit1">Create New RoomType</button>
             </form>
         </div>
     </div>
