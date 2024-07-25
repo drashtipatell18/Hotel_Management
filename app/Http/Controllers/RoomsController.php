@@ -2,135 +2,160 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use Illuminate\Http\Request;
 use App\Models\Room;
+use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class RoomsController extends Controller
 {
-    // index page
     public function allrooms()
     {
-        $allRooms = DB::table('rooms')->get();
+        $allRooms = Room::with('roomType','food','floor')->get();
         return view('room.allroom',compact('allRooms'));
     }
-    // add room page
-    public function addRoom()
+
+
+    public function addRoom(Request $request)
     {
-        $data = DB::table('room_types')->get();
+        $room_types = RoomTypes::all();
         $user = DB::table('users')->get();
-        return view('room.addroom',compact('user','data'));
+        $floors = DB::table('floors')->whereNull('deleted_at')->get();
+        $foods = Food::all();
+        return view('room.addroom',compact('user','room_types','floors','foods'));
     }
-    // edit room
-    public function editRoom($bkg_room_id)
+    public function editRoom($id)
     {
-        $roomEdit = DB::table('rooms')->where('bkg_room_id',$bkg_room_id)->first();
-        $data = DB::table('room_types')->get();
+        $roomEdit = DB::table('rooms')->where('id',$id)->first();
+        $room_types = RoomTypes::all();
         $user = DB::table('users')->get();
-        return view('room.editroom',compact('user','data','roomEdit'));
+        $floors = DB::table('floors')->whereNull('deleted_at')->get();
+        $foods = Food::all();
+
+        return view('room.editroom',compact('user','room_types','roomEdit','floors','foods'));
     }
 
-    // save record room
     public function saveRecordRoom(Request $request)
     {
+
         $request->validate([
-            'name'          => 'required|string|max:255',
-            'room_type'     => 'required|string|max:255',
-            'ac_non_ac'     => 'required|string|max:255',
-            'food'          => 'required|string|max:255',
-            'bed_count'     => 'required|string|max:255',
-            'charges_for_cancellation' => 'required|string|max:255',
-            'rent'          => 'required|string|max:255',
-            'phone_number'  => 'required|string|max:255',
-            'fileupload'    => 'required|file',
-            'message'       => 'required|string|max:255',
+            'floor_id' => 'required|integer',
+            'room_number' => 'required|string|max:255',
+            'room_type_id' => 'required|integer',
+            'ac_non_ac' => 'required|string|max:255',
+            'food_id' => 'required|integer',
+            'bed_count' => 'required|integer',
+            'rent' => 'required|numeric',
+            'phone_number' => 'required|string|max:15',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'message' => 'required|nullable|string',
         ]);
 
         DB::beginTransaction();
         try {
+            $photo = $request->file('image');
+            $file_name = time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('assets/upload/'), $file_name);
 
-            $photo= $request->fileupload;
-            $file_name = rand() . '.' .$photo->getClientOriginalName();
-            $photo->move(public_path('/assets/upload/'), $file_name);
-           
             $room = new Room;
-            $room->name         = $request->name;
-            $room->room_type    = $request->room_type;
-            $room->ac_non_ac    = $request->ac_non_ac;
-            $room->food         = $request->food;
-            $room->bed_count    = $request->bed_count;
-            $room->charges_for_cancellation   = $request->charges_for_cancellation;
-            $room->rent         = $request->rent;
+            $room->floor_id = $request->floor_id;
+            $room->room_number = $request->room_number;
+            $room->room_type_id = $request->room_type_id;
+            $room->ac_non_ac = $request->ac_non_ac;
+            $room->food_id = $request->food_id;
+            $room->bed_count = $request->bed_count;
+            $room->rent = $request->rent;
             $room->phone_number = $request->phone_number;
-            $room->fileupload   = $file_name;
-            $room->message      = $request->message;
+            $room->image = $file_name;
+            $room->message = $request->message;
+
+
             $room->save();
-            
+
             DB::commit();
-            Toastr::success('Create new room successfully :)','Success');
+            Toastr::success('Create new room successfully :)', 'Success');
             return redirect()->route('form/allrooms/page');
-            
+
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Add Room fail :)','Error');
+            Toastr::error('Add Room fail :)', 'Error');
             return redirect()->back();
         }
     }
 
-    // update record
-    public function updateRecord(Request $request)
+    public function updateRecord(Request $request, $id)
     {
         DB::beginTransaction();
         try {
+            $room = Room::findOrFail($id);
 
-            if (!empty($request->fileupload)) {
-                $photo = $request->fileupload;
-                $file_name = rand() . '.' . $photo->getClientOriginalExtension();
+            if ($request->hasFile('image')) {
+                $photo = $request->file('image');
+                $file_name = rand() . '.' . $photo->getClientOriginalName();
                 $photo->move(public_path('/assets/upload/'), $file_name);
-            } else {
-                $file_name = $request->hidden_fileupload;
+                $room->image = $file_name;
             }
 
-            $update = [
-                'bkg_room_id' => $request->bkg_room_id,
-                'name'   => $request->name,
-                'room_type'  => $request->room_type,
-                'ac_non_ac'  => $request->ac_non_ac,
-                'food'  => $request->food,
-                'bed_count'  => $request->bed_count,
-                'charges_for_cancellation'  => $request->charges_for_cancellation,
-                'phone_number' => $request->phone_number,
-                'fileupload'=> $file_name,
-                'message'   => $request->message,
-            ];
-            Room::where('bkg_room_id',$request->bkg_room_id)->update($update);
-        
+            // Update other fields
+            $room->floor_id = $request->input('floor_id');
+            $room->room_number = $request->input('room_number');
+            $room->room_type_id = $request->input('room_type_id');
+            $room->ac_non_ac = $request->input('ac_non_ac');
+            $room->food_id = $request->input('food_id');
+            $room->bed_count = $request->input('bed_count');
+            $room->rent = $request->input('rent');
+            $room->phone_number = $request->input('phone_number');
+            $room->message = $request->input('message');
+
+            $room->save();
             DB::commit();
-            Toastr::success('Updated room successfully :)','Success');
-            return redirect()->back();
-        } catch(\Exception $e) {
+
+            Toastr::success('Room Updated successfully :)', 'Success');
+            return redirect()->route('form/allrooms/page');
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Update room fail :)','Error');
+
+            Toastr::error('Update Room failed :)', 'Error');
             return redirect()->back();
         }
+    }
+
+
+    public function updateStatus(Request $request)
+    {
+        $room = Room::find($request->room_id);
+        $room->status = $request->status;
+        $room->save();
+
+        return response()->json(['status' => 'success', 'new_status' => $room->status]);
     }
 
     // delete record
     public function deleteRecord(Request $request)
     {
         try {
-
             Room::destroy($request->id);
-            unlink('assets/upload/'.$request->fileupload);
+            unlink('assets/upload/'.$request->image);
             Toastr::success('Room deleted successfully :)','Success');
             return redirect()->back();
-        
+
         } catch(\Exception $e) {
 
             DB::rollback();
             Toastr::error('Room delete fail :)','Error');
             return redirect()->back();
+        }
+    }
+    public function getRoomDetails(Request $request)
+    {
+        $roomId = $request->id;
+        $room = Room::find($roomId);
+        if ($room) {
+            return response()->json(['status' => 'success', 'room' => $room]);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Room not found']);
         }
     }
 }

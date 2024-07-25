@@ -21,10 +21,14 @@ class RoomTypeController extends Controller
         $request->validate([
             'room_name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
+            // 'extra_bed' => 'required',
+            // 'per_extra_bed_price' => 'required',
+            // 'extra_bed_quantity' => 'required',
             'amenities_id' => 'required|array',
             'amenities_id.*' => 'exists:amenities,id',
             'base_price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
+            'room_image' => 'required',
+            'description' => 'required|nullable|string',
         ]);
 
         try{

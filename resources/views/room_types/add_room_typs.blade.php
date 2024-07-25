@@ -93,6 +93,9 @@
                                             <input type="number" id="per_extra_bed_price" class="form-control"
                                                 name="per_extra_bed_price"
                                                 value="{{ old('per_extra_bed_price', $roomtype->per_extra_bed_price ?? '') }}">
+                                                @error('per_extra_bed_price')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                     </div>
 
@@ -100,6 +103,9 @@
                                         <div class="form-group">
                                             <label for="extra_bed_quantity_2">Extra Bed Quantity</label>
                                             <input type="number" id="extra_bed_quantity" class="form-control" name="extra_bed_quantity" value="{{ old('extra_bed_quantity', $roomtype->extra_bed_quantity ?? '') }}">
+                                            @error('extra_bed_quantity')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -140,6 +146,9 @@
                                             <label for="amenity_{{ $amenity->id }}">{{ $amenity->name }}</label>
                                         </div>
                                     @endforeach
+                                    @error('amenities_id')
+                                                    <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </fieldset>
                             </div>
@@ -160,6 +169,10 @@
                                 @if(isset($roomtype) && $roomtype->room_image)
                                     <img src="{{ url('/assets/upload/', $roomtype->room_image) }}" width="100px"><br/>
                                 @endif
+                                @error('room_image')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+
                             </div>
                         </div>
                     </div>

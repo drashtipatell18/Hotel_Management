@@ -12,6 +12,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FloorController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
@@ -113,10 +115,12 @@ Route::controller(CustomerController::class)->group(function () {
 Route::controller(RoomsController::class)->group(function () {
     Route::get('form/allrooms/page', 'allrooms')->middleware('auth')->name('form/allrooms/page');
     Route::get('form/addroom/page', 'addRoom')->middleware('auth')->name('form/addroom/page');
-    Route::get('form/room/edit/{bkg_room_id}', 'editRoom')->middleware('auth');
+    Route::get('form/room/edit/{id}', 'editRoom')->middleware('auth');
     Route::post('form/room/save', 'saveRecordRoom')->middleware('auth')->name('form/room/save');
     Route::post('form/room/delete', 'deleteRecord')->middleware('auth')->name('form/room/delete');
-    Route::post('form/room/update', 'updateRecord')->middleware('auth')->name('form/room/update');
+    Route::post('form/room/update/{id}', 'updateRecord')->name('form/room/update');
+    Route::post('/update-room-status',  'updateStatus')->name('update.room.status');
+
 });
 
 // ----------------------- user management -------------------------//
@@ -169,5 +173,29 @@ Route::controller(RoomTypeController::class)->group(function () {
     Route::get('roomtype/edit/{id}', 'roomtypeEdit');
     Route::post('roomtype/update/{id}', 'roomtypeUpdate')->name('roomtype/update');
     Route::get('/roomtype/delete/{id}','roomtypeDelete')->name('roomtype.delete');
+
+});
+
+// Floor
+
+Route::controller(FloorController::class)->group(function () {
+    Route::get('floor/add', 'floorCreate')->name('floor/add');
+    Route::post('floor/store', 'floorStore')->name('floor/store');
+    Route::get('floor/list', 'floorList')->name('floor/list');
+    Route::get('floor/edit/{id}', 'floorEdit');
+    Route::post('floor/update/{id}', 'floorUpdate')->name('floor/update');
+    Route::get('/floor/delete/{id}','floorDelete')->name('floor.delete');
+
+});
+
+// Food
+
+Route::controller(FoodController::class)->group(function () {
+    Route::get('food/add', 'foodCreate')->name('food/add');
+    Route::post('food/store', 'foodStore')->name('food/store');
+    Route::get('food/list', 'foodList')->name('food/list');
+    Route::get('food/edit/{id}', 'foodEdit');
+    Route::post('food/update/{id}', 'foodUpdate')->name('food/update');
+    Route::get('/food/delete/{id}','foodDelete')->name('food.delete');
 
 });

@@ -9,7 +9,7 @@
                     <div class="col">
                         <div class="mt-5">
                             <h4 class="card-title float-left mt-2">All Rooms</h4>
-                            <a href="{{ route('form/addroom/page') }}" class="btn btn-primary float-right veiwbutton">Add Room</a> 
+                            <a href="{{ route('form/addroom/page') }}" class="btn btn-primary float-right veiwbutton"><i class="fas fa-plus mr-2"></i>Add Room</a>
                         </div>
                     </div>
                 </div>
@@ -19,16 +19,15 @@
                     <div class="card card-table">
                         <div class="card-body booking_card">
                             <div class="table-responsive">
-                                <table class="datatable table table-stripped table table-hover table-center mb-0">
+                                <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                     <thead>
                                         <tr>
                                             <th>Booking ID</th>
-                                            <th>Name</th>
+                                            <th>Room Image</th>
+                                            <th>Floor Name</th>
+                                            <th>Room Number</th>
                                             <th>Room Type</th>
-                                            <th>AC/NON-AC</th>
-                                            <th>Food</th>
                                             <th>Bed Count</th>
-                                            <th>Charges For cancellation</th>
                                             <th>Rent</th>
                                             <th>Ph.Number</th>
                                             <th>Status</th>
@@ -38,43 +37,120 @@
                                     <tbody>
                                         @foreach ($allRooms as $rooms )
                                         <tr>
-                                            <td hidden class="id">{{ $rooms->id }}</td>
-                                            <td hidden class="fileupload">{{ $rooms->fileupload }}</td>
-                                            <td>{{ $rooms->bkg_room_id }}</td>
+                                            {{-- <td hidden class="id">{{ $rooms->room_number }}</td>
+                                            <td hidden class="image">{{ $rooms->image }}</td> --}}
+                                            <td>{{ $rooms->id }}</td>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                <a href="profile.html" class="avatar avatar-sm mr-2">
-                                                    <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$rooms->fileupload) }}" alt="{{ $rooms->fileupload }}">
-                                                </a>
-                                                <a href="profile.html">{{ $rooms->name }}<span>{{ $rooms->bkg_room_id }}</span></a>
+                                                    <a href="profile.html" class="avatar avatar-sm mr-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$rooms->image) }}" alt="{{ $rooms->image }}">
+                                                    </a>
                                                 </h2>
                                             </td>
-                                            <td>{{ $rooms->room_type }}</td>
-                                            <td>{{ $rooms->ac_non_ac }}</td>
-                                            <td>{{ $rooms->food }}</td>
+                                            <td>{{ $rooms->floor->floor_name }}</td>
+                                            <td>{{ $rooms->room_number }}</td>
+                                            <td>{{ $rooms->roomType->room_name }}</td>
                                             <td>{{ $rooms->bed_count }}</td>
-                                            <td>{{ $rooms->charges_for_cancellation }}</td>
                                             <td>{{ $rooms->rent }}</td>
                                             <td>{{ $rooms->phone_number }}</td>
                                             <td>
-                                                <div class="actions"> <a href="#" class="btn btn-sm bg-success-light mr-2">Active</a> </div>
+                                                <a href="javascript:void(0);"
+                                                    class="btn btn-sm toggle-status {{ $rooms->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
+                                                    data-id="{{ $rooms->id }}"
+                                                    data-status="{{ $rooms->status }}">
+                                                    {{ $rooms->status }}
+                                                </a>
                                             </td>
+
                                             <td class="text-right">
-                                                <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v ellipse_color"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="{{ url('form/room/edit/'.$rooms->bkg_room_id) }}">
-                                                            <i class="fas fa-pencil-alt m-r-5"></i> Edit
-                                                        </a>
-                                                        <a class="dropdown-item delete_asset" href="#" data-toggle="modal" data-target="#delete_asset">
-                                                            <i class="fas fa-trash-alt m-r-5"></i> Delete
-                                                        </a> 
-                                                    </div>
-                                                </div>
+                                                <a href="{{ url('form/room/edit/' . $rooms->id) }}"
+                                                    style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <i class="fas fa-pencil-alt fa-xs"></i>
+                                                </a>
+
+                                                <a data-toggle="modal" data-target="#exampleModal{{ $rooms->id }}"
+                                                    class="view-customer"
+                                                    style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <i class="fas fa-eye fa-xs"></i>
+                                                </a>
                                             </td>
                                         </tr>
+
+                                         <!-- View Modal -->
+                                         <div class="modal fade" id="exampleModal{{ $rooms->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document"
+                                                style="max-width: 990px; width: 990px; height: 500px;">
+                                                <div class="modal-content" style="border-radius: 10px; height: 100%;">
+                                                    <div class="modal-header text-white"
+                                                        style="background-color: #009688; color: white !important;">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Room Details
+                                                        </h5>
+                                                        <button type="button" class="close text-white"
+                                                            data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body mt-4"
+                                                        style="padding: 20px; height: calc(100% - 120px); overflow-y: auto;">
+                                                        <div class="row">
+                                                            <div class="col-md-4 text-center">
+                                                                <img class="avatar-img rounded"
+                                                                    src="{{ URL::to('/assets/upload/' . $rooms->image) }}"
+                                                                    alt="{{ $rooms->image }}"
+                                                                    style="width: 180px; height: 200px; object-fit: cover;">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <h6 class="text-muted">Room Details</h6>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <p><strong>Floor Name:</strong> <span
+                                                                                id="floor-floor_name">{{  $rooms->floor->floor_name  }}</span></p>
+                                                                        <p><strong>Room Number:</strong> <span
+                                                                                id="floor-room_number">{{ $rooms->room_number }}</span>
+                                                                        </p>
+                                                                        <p><strong>Room Type:</strong> <span
+                                                                                id="floor-room_type">{{ $rooms->roomType->room_name }}</span>
+                                                                        </p>
+                                                                        <p><strong>Ac/Non Ac:</strong> <span
+                                                                                id="floor-ac_non_ac ">{{ $rooms->ac_non_ac }}</span>
+                                                                        </p>
+                                                                        <p><strong>Food:</strong> <span
+                                                                                id="floor-food">{{ $rooms->food->food_name }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <p><strong>Bed Count:</strong> <span
+                                                                                id="floor-total-number">{{ $rooms->bed_count }}</span>
+                                                                        </p>
+                                                                        <p><strong>Rent:</strong> <span
+                                                                                id="floor-time">{{ $rooms->rent }}</span>
+                                                                        </p>
+                                                                        <p><strong>Phone Number:</strong> <span
+                                                                                id="floor-arrival-date">{{ $rooms->phone_number }}</span>
+                                                                        </p>
+                                                                        <p><strong>Meassage:</strong> <span
+                                                                                id="floor-departure-date">{{ $rooms->message }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer bg-light mb-1" style="height: 60px;">
+                                                        <button type="button" class="btn btn-info"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        {{-- End Model --}}
+
+
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -84,38 +160,48 @@
                 </div>
             </div>
         </div>
-        
-        {{-- delete model --}}
-        <div id="delete_asset" class="modal fade delete-modal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <form action="{{ route('form/room/delete') }}" method="POST">
-                            @csrf
-                            <img src="{{ URL::to('assets/img/sent.png') }}" alt="" width="50" height="46">
-                            <h3 class="delete_class">Are you sure want to delete this Asset?</h3>
-                            <div class="m-t-20">
-                                <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                                <input class="form-control" type="hidden" id="e_id" name="id" value="">
-                                <input class="form-control" type="hidden" id="e_fileupload" name="fileupload" value="">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- end delete model --}}
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @section('script')
         {{-- delete model --}}
         <script>
-            $(document).on('click','.delete_asset',function()
-            {
-                var _this = $(this).parents('tr');
-                $('#e_id').val(_this.find('.id').text());
-                $('#e_fileupload').val(_this.find('.fileupload').text());
+            $(document).ready(function() {
+                $('.datatable1').DataTable();
+
+                $('.toggle-status').click(function() {
+                var roomId = $(this).data('id');
+                var currentStatus = $(this).data('status');
+                var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                var button = $(this);
+
+                $.ajax({
+                    url: '{{ route('update.room.status') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        room_id: roomId,
+                        status: newStatus
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            button.data('status', response.new_status);
+                            button.text(response.new_status);
+
+                            // Update button classes
+                            if (response.new_status === 'active') {
+                                button.removeClass('bg-danger-light').addClass(
+                                    'bg-success-light');
+                            } else {
+                                button.removeClass('bg-success-light').addClass(
+                                    'bg-danger-light');
+                            }
+                        }
+                    }
+                });
             });
+
+            });
+
         </script>
     @endsection
 @endsection

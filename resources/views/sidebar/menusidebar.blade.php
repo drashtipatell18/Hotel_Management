@@ -5,6 +5,7 @@
             <li class="{{ set_active(['home']) }}"> <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
 
                 <li class="list-divider"></li>
+
                 <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-hotel"></i><span>Hotel</span></a> </li>
                 <li><a href="{{ route('amenities/list') }}">
                         <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Amenities</span>
@@ -17,6 +18,11 @@
 
 
 
+          
+                <li class=""> <a href="{{ route('floor/list') }}"><i class="fas fa-home"></i> <span>Floors</span></a> </li>
+                <li class=""> <a href="{{ route('food/list') }}"><i class="fas fa-home"></i> <span>Foods</span></a> </li>
+
+
                 <li class="submenu"> <a href="#"> <img src="{{ url('assets/icons/booking.png') }}" style="width: 20px; height:20px"> <span> Booking </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allbooking']) }}" href="{{ route('form/allbooking') }}"> All Booking </a></li>
@@ -24,13 +30,11 @@
                         <li><a class="{{ set_active(['form/booking/add']) }}" href="{{ route('form/booking/add') }}"> Add Booking </a></li>
                     </ul>
                 </li>
-                <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Customers </span> <span class="menu-arrow"></span></a>
-                    <ul class="submenu_class" style="display: none;">
-                        <li><a class="{{ set_active(['form/allcustomers/page']) }}" href="{{ route('form/allcustomers/page') }}"> All customers </a></li>
-                        <li><a class="{{ request()->is('form/customer/edit/*') ? 'active' : '' }}"> Edit Customer </a></li>
-                        <li><a class="{{ set_active(['form/addcustomer/page']) }}" href="{{ route('form/addcustomer/page') }}"> Add Customer </a></li>
-                    </ul>
-                </li>
+
+                <li class=""> <a href="{{ route('form/allcustomers/page') }}"><i class="fas fa-user"></i> <span>Customers</span></a> </li>
+
+      
+
                 <li class="submenu"> <a href="#"><img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px"><span> Rooms </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allrooms/page']) }}" href="{{ route('form/allrooms/page') }}">All Rooms </a></li>

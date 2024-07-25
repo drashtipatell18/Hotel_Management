@@ -27,57 +27,69 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title mt-5">Edit Room</h3> 
+                        <h3 class="page-title mt-5">Edit Room</h3>
                     </div>
                 </div>
             </div>
-            <form action="{{ route('form/room/update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('form/room/update', $roomEdit->id ) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row formtype">
-                            <input class="form-control" type="hidden" name="bkg_room_id" value="{{ $roomEdit->bkg_room_id }}" readonly>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input class="form-control" type="text" name="name" value="{{ $roomEdit->name }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Room Type</label>
-                                    <select class="form-control" id="sel2" name="room_type">
-                                        <option selected value="{{ $roomEdit->room_type }}">{{ $roomEdit->room_type }}</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Double">Double</option>
-                                        <option value="Quad">Quad</option>
-                                        <option value="King">King</option>
-                                        <option value="Suite">Suite</option>
-                                        <option value="Villa">Villa</option>
+                                    <label>Floor Name</label>
+                                    <select class="form-control @error('floor_id') is-invalid @enderror" id="floor_id" name="floor_id">
+                                        <option selected disabled> --Select Floor Name-- </option>
+                                        @foreach ($floors as $floor)
+                                            <option value="{{ $floor->id }}" {{ $floor->id == $roomEdit->floor_id ? 'selected' : '' }}>
+                                                {{ $floor->floor_name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room number</label>
+                                    <input type="text" class="form-control @error('room_number') is-invalid @enderror" id="room_number" name="room_number" value="{{ $roomEdit->room_number }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room Type</label>
+                                    <select class="form-control @error('room_type_id') is-invalid @enderror" id="room_type_id" name="room_type_id">
+                                        <option selected disabled> --Select Room Type-- </option>
+                                        @foreach ($room_types as $room_type)
+                                            <option value="{{ $room_type->id }}" {{ $room_type->id == $roomEdit->room_type_id ? 'selected' : '' }}>
+                                                {{ $room_type->room_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>AC/NON-AC</label>
                                     <select class="form-control @error('ac_non_ac') is-invalid @enderror" id="ac_non_ac" name="ac_non_ac">
-                                        <option selected value="{{ $roomEdit->ac_non_ac }}">{{ $roomEdit->ac_non_ac }}</option>
-                                        <option value="AC">AC</option>
-                                        <option value="NON-AC">NON-AC</option>
+                                        <option disabled {{ empty($roomEdit->ac_non_ac) ? 'selected' : '' }}> --Select AC/NON-AC-- </option>
+                                        <option value="AC" {{ $roomEdit->ac_non_ac == 'AC' ? 'selected' : '' }}>AC</option>
+                                        <option value="NON-AC" {{ $roomEdit->ac_non_ac == 'NON-AC' ? 'selected' : '' }}>NON-AC</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Food</label>
-                                    <select class="form-control @error('food') is-invalid @enderror" id="food" name="food">
-                                        <option selected value="{{ $roomEdit->food }}">{{ $roomEdit->food }}</option>
-                                        <option value="Free Breakfast">Free Breakfast</option>
-                                        <option value="Free Lunch">Free Lunch</option>
-                                        <option value="Free Dinner">Free Dinner</option>
-                                        <option value="Free Breakfast & Dinner">Free Breakfast & Dinner</option>
-                                        <option value="Free Welcome Drink">Free Welcome Drink</option>
-                                        <option value="No Free Food">No Free Food</option>
+                                    <select class="form-control @error('food_id') is-invalid @enderror" id="food_id" name="food_id">
+                                        <option selected disabled> --Select Food-- </option>
+                                            @foreach ($foods as $food )
+                                                <option value="{{ $food->id }}" {{ $food->id == $roomEdit->food_id ? 'selected' : '' }}>{{ $food->food_name }}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -85,31 +97,20 @@
                                 <div class="form-group">
                                     <label>Bed Count</label>
                                     <select class="form-control @error('bed_count') is-invalid @enderror" id="bed_count" name="bed_count">
-                                        <option selected value="{{ $roomEdit->bed_count }}">{{ $roomEdit->bed_count }}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Charges For cancellation</label>
-                                    <select class="form-control @error('charges_for_cancellation') is-invalid @enderror" id="charges_for_cancellation" name="charges_for_cancellation">
-                                        <option selected value="{{ $roomEdit->charges_for_cancellation }}">{{ $roomEdit->charges_for_cancellation }}</option>
-                                        <option value="Free">Free</option>
-                                        <option value="5% Before 24Hours">5% Before 24Hours</option>
-                                        <option value="No Cancellation Allow">No Cancellation Allow</option>
+                                        <option disabled {{ empty($roomEdit->bed_count) ? 'selected' : '' }}> --Select Bed Count-- </option>
+                                        <option value="1" {{ $roomEdit->bed_count == '1' ? 'selected' : '' }}>1</option>
+                                        <option value="2" {{ $roomEdit->bed_count == '2' ? 'selected' : '' }}>2</option>
+                                        <option value="3" {{ $roomEdit->bed_count == '3' ? 'selected' : '' }}>3</option>
+                                        <option value="4" {{ $roomEdit->bed_count == '4' ? 'selected' : '' }}>4</option>
+                                        <option value="5" {{ $roomEdit->bed_count == '5' ? 'selected' : '' }}>5</option>
+                                        <option value="6" {{ $roomEdit->bed_count == '6' ? 'selected' : '' }}>6</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rent</label>
-                                    <input type="text" class="form-control @error('rent') is-invalid @enderror" id="rent" name="rent" value="{{$roomEdit->rent}}">
+                                    <input type="text" class="form-control @error('rent') is-invalid @enderror" id="rent" name="rent"  value="{{ $roomEdit->rent }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -118,23 +119,31 @@
                                     <input type="number" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" value="{{$roomEdit->phone_number}}">
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>File Upload</label>
-                                    <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input" id="customFile" name="fileupload">
-                                        <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $roomEdit->fileupload }}">
-                                        <a href="profile.html" class="avatar avatar-sm mr-2">
-                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$roomEdit->fileupload) }}" alt="{{ $roomEdit->fileupload }}">
-                                        </a>
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <label>Room Image</label>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="image" name="image" onchange="previewImage(event, 'profilePicPreview')">
+                                                <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $roomEdit->image }}">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#">
+                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$roomEdit->image) }}" alt="{{ $roomEdit->image }}">
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>
-                                    <textarea class="form-control" rows="1.5" id="message" name="message">{{ $roomEdit->message }}</textarea>
+                                    <textarea class="form-control" rows="5" id="message" name="message">{{ $roomEdit->message }}</textarea>
                                 </div>
                             </div>
                         </div>
