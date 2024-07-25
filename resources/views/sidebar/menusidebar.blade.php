@@ -5,13 +5,19 @@
             <li class="{{ set_active(['home']) }}"> <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
 
                 <li class="list-divider"></li>
-                <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-home"></i> <span>Hotel</span></a> </li>
-                <li class=""> <a href="{{ route('amenities/list') }}"><i class="fas fa-home"></i> <span>Amenities</span></a> </li>
-                <li class=""> <a href="{{ route('roomtype/list') }}"><i class="fas fa-home"></i> <span>Room Type</span></a> </li>
+                <li class=""> <a href="{{ route('hotel/list') }}"><i class="fas fa-hotel"></i><span>Hotel</span></a> </li>
+                <li><a href="{{ route('amenities/list') }}">
+                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Amenities</span>
+                    </a>
+                </li>
+                
+                <li class=""> <a href="{{ route('roomtype/list') }}"> 
+                    <img src="{{ url('assets/icons/room_types.png') }}" style="width: 20px; height:20px"><span>Room Type</span>
+                </a> </li>
 
 
 
-                <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Booking </span> <span class="menu-arrow"></span></a>
+                <li class="submenu"> <a href="#"> <img src="{{ url('assets/icons/booking.png') }}" style="width: 20px; height:20px"> <span> Booking </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allbooking']) }}" href="{{ route('form/allbooking') }}"> All Booking </a></li>
                         <li><a class="{{ request()->is('form/booking/edit/*') ? 'active' : '' }}"> Edit Booking </a></li>
@@ -25,7 +31,7 @@
                         <li><a class="{{ set_active(['form/addcustomer/page']) }}" href="{{ route('form/addcustomer/page') }}"> Add Customer </a></li>
                     </ul>
                 </li>
-                <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Rooms </span> <span class="menu-arrow"></span></a>
+                <li class="submenu"> <a href="#"><img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px"><span> Rooms </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allrooms/page']) }}" href="{{ route('form/allrooms/page') }}">All Rooms </a></li>
                         <li><a class="{{ request()->is('form/room/edit/*') ? 'active' : '' }}"> Edit Rooms </a></li>
@@ -50,7 +56,7 @@
                         <li><a href="provident-fund.html">Provident Fund </a></li>
                     </ul>
                 </li>
-                <li class="submenu"> <a href="#"><i class="fas fa-book"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
+                <li class="submenu"> <a href="#"><img src="{{ url('assets/icons/payroll.png') }}" style="width: 20px; height:20px"> <span> Payroll </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a href="salary.html">Employee Salary </a></li>
                         <li><a href="salary-veiw.html">Payslip </a></li>
