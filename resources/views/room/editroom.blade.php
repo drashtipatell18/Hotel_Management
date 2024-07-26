@@ -47,6 +47,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('floor_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -54,6 +57,9 @@
                                 <div class="form-group">
                                     <label>Room number</label>
                                     <input type="text" class="form-control @error('room_number') is-invalid @enderror" id="room_number" name="room_number" value="{{ $roomEdit->room_number }}">
+                                    @error('room_number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -68,6 +74,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('room_type_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -79,6 +88,9 @@
                                         <option value="AC" {{ $roomEdit->ac_non_ac == 'AC' ? 'selected' : '' }}>AC</option>
                                         <option value="NON-AC" {{ $roomEdit->ac_non_ac == 'NON-AC' ? 'selected' : '' }}>NON-AC</option>
                                     </select>
+                                    @error('ac_non_ac')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -91,6 +103,9 @@
                                                 <option value="{{ $food->id }}" {{ $food->id == $roomEdit->food_id ? 'selected' : '' }}>{{ $food->food_name }}</option>
                                             @endforeach
                                     </select>
+                                    @error('food_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -105,18 +120,27 @@
                                         <option value="5" {{ $roomEdit->bed_count == '5' ? 'selected' : '' }}>5</option>
                                         <option value="6" {{ $roomEdit->bed_count == '6' ? 'selected' : '' }}>6</option>
                                     </select>
+                                    @error('bed_count')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rent</label>
                                     <input type="text" class="form-control @error('rent') is-invalid @enderror" id="rent" name="rent"  value="{{ $roomEdit->rent }}">
+                                    @error('rent')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Phone Number</label>
                                     <input type="number" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" value="{{$roomEdit->phone_number}}">
+                                    @error('phone_number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -144,12 +168,16 @@
                                 <div class="form-group">
                                     <label>Message</label>
                                     <textarea class="form-control" rows="5" id="message" name="message">{{ $roomEdit->message }}</textarea>
+                                    @error('message')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit">Update</button>
+                <a href="{{ route('form/allrooms/page') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
             </form>
         </div>
     </div>
@@ -161,5 +189,17 @@
             });
         });
         </script>
+
+        <script>
+                function previewImage(event, previewElementId) {
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const output = document.getElementById(previewElementId);
+                        output.src = reader.result;
+                    }
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+        </script>
+
     @endsection
 @endsection

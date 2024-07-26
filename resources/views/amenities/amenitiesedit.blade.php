@@ -34,9 +34,6 @@
                                         <a href="#">
                                             <img class="avatar-img squre" style="width:100px !important; height:100px !important;padding:20px" src="{{ URL::to('/assets/amenities/'.$amenitiesList->image) }}" alt="{{ $amenitiesList->image }}">
                                         </a>
-                                        @error('image')
-                                            <div class="error text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -54,6 +51,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit1">Update</button>
+                <a href="{{ route('amenities/list') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
             </form>
         </div>
     </div>

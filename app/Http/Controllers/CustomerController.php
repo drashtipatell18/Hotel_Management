@@ -29,14 +29,14 @@ class CustomerController extends Controller
             'email'      => 'required|string|max:255',
             'date' => 'required|string|max:255',
             'gender' => 'required',
-            'fileupload' => 'required|file',
+            'fileupload' => 'file',
             'room_type'     => 'required|string|max:255',
             'total_numbers' => 'required|string|max:255',
             'time' => 'required|string|max:255',
             'arrival_date'  => 'required|string|max:255',
             'depature_date' => 'required|string|max:255',
-            'aadharcard' => 'required|file',
-            'phone_number'  => 'required|string|max:255',
+            'aadharcard' => 'file',
+            'phone_number'  => 'required|digits:10',
             'address'    => 'required|string|max:255',
         ],[
             'fileupload' => 'The Profile pic is required'

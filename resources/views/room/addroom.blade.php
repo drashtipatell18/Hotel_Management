@@ -1,5 +1,25 @@
 @extends('layouts.master')
 @section('content')
+<style>
+    .avatar {
+        background-color: #aaa;
+        border-radius: 50%;
+        color: #fff;
+        display: inline-block;
+        font-weight: 500;
+        height: 38px;
+        line-height: 38px;
+        margin: -38px 10px 0 0;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        vertical-align: middle;
+        width: 38px;
+        position: relative;
+        white-space: nowrap;
+        z-index: 2;
+    }
+</style>
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">
@@ -117,18 +137,29 @@
                                 @enderror
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>File Upload</label>
-                                    <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                        @error('image')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
+                                    <label>Room Image</label>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="image" @error('image') is-invalid @enderror name="image" onchange="previewImage(event, 'profilePicPreview')">
+                                                <input type="hidden" class="form-control" name="hidden_fileupload">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="#">
+                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;">
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>
@@ -136,11 +167,6 @@
                                     @error('message')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-
-
-
-
-
 
                                 </div>
                             </div>
@@ -153,3 +179,13 @@
         </div>
     </div>
 @endsection
+<script>
+    function previewImage(event, previewElementId) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById(previewElementId);
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

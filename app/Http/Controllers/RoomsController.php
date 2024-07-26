@@ -42,15 +42,15 @@ class RoomsController extends Controller
 
         $request->validate([
             'floor_id' => 'required|integer',
-            'room_number' => 'required|string|max:255',
+            'room_number' => 'required|integer|max:255',
             'room_type_id' => 'required|integer',
             'ac_non_ac' => 'required|string|max:255',
             'food_id' => 'required|integer',
             'bed_count' => 'required|integer',
             'rent' => 'required|numeric',
-            'phone_number' => 'required|string|max:15',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'message' => 'required|nullable|string',
+            'phone_number' => 'required|digits:10',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'message' => 'nullable|string',
         ]);
 
         DB::beginTransaction();
@@ -87,6 +87,18 @@ class RoomsController extends Controller
 
     public function updateRecord(Request $request, $id)
     {
+        $request->validate([
+            'floor_id' => 'required|integer',
+            'room_number' => 'required|integer',
+            'room_type_id' => 'required|integer',
+            'ac_non_ac' => 'required|string|max:255',
+            'food_id' => 'required|integer',
+            'bed_count' => 'required|integer',
+            'rent' => 'required|numeric',
+            'phone_number' => 'required|digits:10',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'message' => 'nullable|string',
+        ]);
         DB::beginTransaction();
         try {
             $room = Room::findOrFail($id);

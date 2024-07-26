@@ -19,8 +19,8 @@ public function amenitiesStore(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-        'description' => 'required|string'
+        'image' => 'image|mimes:jpeg,png,jpg,gif',
+        'description' => 'string'
     ]);
 
     try {
@@ -58,6 +58,11 @@ public function amenitiesEdit($id)
 }
 public function amenitiesUpdate(Request $request, $id)
 {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'image' => 'image|mimes:jpeg,png,jpg,gif',
+        'description' => 'string'
+    ]);
 
         DB::beginTransaction();
         try {

@@ -16,7 +16,7 @@ class FloorController extends Controller
     {
         $request->validate([
             'floor_name' => 'required|string|max:255',
-            'description' => 'required|nullable|string',
+            'description' => 'nullable|string',
         ]);
         try{
             Floor::create([

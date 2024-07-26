@@ -18,7 +18,7 @@ class HotelController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required',
-            'phone' => 'required|integer',
+            'phone' => 'required|integer|digits:10',
             'stars' => 'required',
             'address' => 'required'
         ]);
@@ -59,7 +59,7 @@ class HotelController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'phone' => 'required|integer',
+            'phone' => 'required|integer|digits:10',
             'stars' => 'required|integer',
             'address' => 'required',
         ]);

@@ -16,7 +16,7 @@ class FoodController extends Controller
     {
         $request->validate([
             'food_name' => 'required|string|max:255',
-            'description' => 'required|nullable|string',
+            'description' => 'nullable|string',
         ]);
         try{
             Food::create([

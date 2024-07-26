@@ -37,7 +37,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary buttonedit1">Create New Floor</button>
+                <button type="submit" class="btn btn-primary buttonedit1">{{ isset($floor) ? 'Update' : 'Create New Floor' }}</button>
+                @if (isset($floor))
+                <a href="{{ route('floor/list') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
+                @endif
             </form>
         </div>
     </div>

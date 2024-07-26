@@ -93,18 +93,27 @@
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" type="text" name="name" value="{{ $customerEdit->name }}">
+                                     @error('name')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Last Name</label>
                                     <input class="form-control" type="text" name="lname" value="{{ $customerEdit->lname }}">
+                                    @error('lname')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" class="form-control" id="email" name="email" value="{{ $customerEdit->email }}">
+                                    @error('email')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -112,6 +121,9 @@
                                     <label>Birth Date</label>
                                     <div class="cal-icon">
                                         <input type="text" class="form-control datetimepicker" name="date" value="{{ $customerEdit->date }}">
+                                        @error('date')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
                             </div>
@@ -134,6 +146,9 @@
                                             {{ $customerEdit->gender == 'other' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="other">Other</label>
                                         </div>
+                                        @error('gender')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
                             </div>
@@ -142,6 +157,9 @@
                                 <div class="form-group">
                                     <label>Phone Number</label>
                                     <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $customerEdit->ph_number }}">
+                                    @error('phone_number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -195,6 +213,10 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('room_type')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+
                                 </div>
                             </div>
 
@@ -202,6 +224,9 @@
                                 <div class="form-group">
                                     <label>Total Members</label>
                                     <input class="form-control" type="number" name="total_numbers" value="{{ $customerEdit->total_numbers }}">
+                                    @error('total_numbers')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 
@@ -209,10 +234,6 @@
                                 <div class="form-group">
                                     <label>Time</label>
                                     <div class="time-icon">
-                                        {{-- <input type="time"
-                                            class="form-control @error('time') is-invalid @enderror"
-                                            id="datetimepicker3" name="time" value="{{ $customerEdit->time  }}"> --}}
-
                                             <input type="time" class="form-control"  name="time" value="{{ $customerEdit->time }}">
                                         @error('time')
                                             <div class="error text-danger">{{ $message }}</div>
@@ -237,6 +258,9 @@
                                     <label>Arrival Date</label>
                                     <div class="cal-icon">
                                         <input type="text" class="form-control datetimepicker" name="arrival_date" value="{{ $customerEdit->arrival_date }}">
+                                        @error('arrival_date')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
                             </div>
@@ -245,6 +269,9 @@
                                     <label>Depature Date</label>
                                     <div class="cal-icon">
                                         <input type="text" class="form-control datetimepicker" name="depature_date" value="{{ $customerEdit->depature_date }}">
+                                        @error('depature_date')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +287,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit">Update</button>
+                <a href="{{ route('form/allcustomers/page') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
             </form>
         </div>
     </div>
