@@ -117,9 +117,9 @@ Route::controller(RoomsController::class)->group(function () {
     Route::get('form/addroom/page', 'addRoom')->middleware('auth')->name('form/addroom/page');
     Route::get('form/room/edit/{id}', 'editRoom')->middleware('auth');
     Route::post('form/room/save', 'saveRecordRoom')->middleware('auth')->name('form/room/save');
-    Route::post('form/room/delete', 'deleteRecord')->middleware('auth')->name('form/room/delete');
     Route::post('form/room/update/{id}', 'updateRecord')->name('form/room/update');
     Route::post('/update-room-status',  'updateStatus')->name('update.room.status');
+    Route::get('form/room/delete/{id}','deleteRecord')->name('form/room/delete');
 
 });
 

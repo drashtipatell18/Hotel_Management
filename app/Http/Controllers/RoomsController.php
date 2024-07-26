@@ -42,7 +42,7 @@ class RoomsController extends Controller
 
         $request->validate([
             'floor_id' => 'required|integer',
-            'room_number' => 'required|integer|max:255',
+            'room_number' => 'required|integer',
             'room_type_id' => 'required|integer',
             'ac_non_ac' => 'required|string|max:255',
             'food_id' => 'required|integer',
@@ -144,22 +144,25 @@ class RoomsController extends Controller
         return response()->json(['status' => 'success', 'new_status' => $room->status]);
     }
 
-    // delete record
-    public function deleteRecord(Request $request)
+    public function deleteRecord($id)
     {
         try {
-            Room::destroy($request->id);
-            unlink('assets/upload/'.$request->image);
-            Toastr::success('Room deleted successfully :)','Success');
-            return redirect()->back();
-
-        } catch(\Exception $e) {
-
-            DB::rollback();
-            Toastr::error('Room delete fail :)','Error');
+            $room = Room::find($id);
+            if ($room) {
+                $room->delete();
+                Toastr::success('Room deleted successfully :)', 'Success');
+                return redirect()->route('form/allrooms/page');
+            } else {
+                Toastr::error('Room not found :)', 'Error');
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            Toastr::error('Room deletion failed :)', 'Error');
             return redirect()->back();
         }
     }
+
+
     public function getRoomDetails(Request $request)
     {
         $roomId = $request->id;
@@ -170,4 +173,5 @@ class RoomsController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Room not found']);
         }
     }
+
 }

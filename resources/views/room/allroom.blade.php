@@ -58,7 +58,7 @@
                                                     class="btn btn-sm toggle-status {{ $rooms->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
                                                     data-id="{{ $rooms->id }}"
                                                     data-status="{{ $rooms->status }}">
-                                                    {{ $rooms->status }}
+                                                    {{ $rooms->status == 'active' ? 'Available' : 'Not Available' }}
                                                 </a>
                                             </td>
 
@@ -72,6 +72,10 @@
                                                     class="view-customer"
                                                     style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-eye fa-xs"></i>
+                                                </a>
+
+                                                <a href="{{ route('form/room/delete', ['id' => $rooms->id]) }}" onclick="return confirm('Are you sure you want to delete this Room?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <i class="fas fa-trash fa-xs"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -163,12 +167,11 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @section('script')
-        {{-- delete model --}}
-        <script>
-            $(document).ready(function() {
-                $('.datatable1').DataTable();
+    <script>
+        $(document).ready(function() {
+            $('.datatable1').DataTable();
 
-                $('.toggle-status').click(function() {
+            $('.toggle-status').click(function() {
                 var roomId = $(this).data('id');
                 var currentStatus = $(this).data('status');
                 var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
@@ -184,24 +187,26 @@
                     },
                     success: function(response) {
                         if (response.status === 'success') {
+                            // Update the status data attribute
                             button.data('status', response.new_status);
-                            button.text(response.new_status);
 
-                            // Update button classes
+                            // Update button text based on the new status
+                            var displayText = response.new_status === 'active' ? 'Available' : 'Not Available';
+                            button.text(displayText);
+
+                            // Update button classes based on the new status
                             if (response.new_status === 'active') {
-                                button.removeClass('bg-danger-light').addClass(
-                                    'bg-success-light');
+                                button.removeClass('bg-danger-light').addClass('bg-success-light');
                             } else {
-                                button.removeClass('bg-success-light').addClass(
-                                    'bg-danger-light');
+                                button.removeClass('bg-success-light').addClass('bg-danger-light');
                             }
                         }
                     }
                 });
             });
 
-            });
-
-        </script>
+        });
+    </script>
     @endsection
+
 @endsection
