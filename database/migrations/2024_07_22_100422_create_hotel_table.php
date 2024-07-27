@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('address');
-            $table->integer('phone');
+            $table->bigInteger('phone');
             $table->string('email');
             $table->integer('stars');
             $table->enum('status', ['active', 'inactive'])->default('active');

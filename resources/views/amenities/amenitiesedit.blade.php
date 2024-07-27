@@ -28,16 +28,23 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Image</label>
-                                    <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                        <a href="#">
-                                            <img class="avatar-img squre" style="width:100px !important; height:100px !important;padding:20px" src="{{ URL::to('/assets/amenities/'.$amenitiesList->image) }}" alt="{{ $amenitiesList->image }}">
-                                        </a>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image"
+                                                    onchange="previewImage(event, 'profilePicPreview')">
+                                                <input type="hidden" class="form-control" name="hidden_fileupload">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="#">
+                                                <img class="avatar-img squre" style="width:100px !important; height:100px !important;padding:20px" src="{{ URL::to('/assets/amenities/'.$amenitiesList->image) }}" alt="{{ $amenitiesList->image }}">
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Description</label>
@@ -55,8 +62,15 @@
             </form>
         </div>
     </div>
-    @section('script')
-
-    @endsection
 
 @endsection
+<script>
+    function previewImage(event, previewElementId) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById(previewElementId);
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

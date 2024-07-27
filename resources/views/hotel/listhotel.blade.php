@@ -68,7 +68,6 @@
                                                         {{ $hotelList->status }}
                                                     </a>
                                                 </td>
-
                                                 <td class="text-right">
                                                     <a class="dropdown-item-sm"
                                                         style="font-size: 23px; padding: 5px; color: #009688;"

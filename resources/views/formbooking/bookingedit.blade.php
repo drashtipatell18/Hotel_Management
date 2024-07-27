@@ -31,37 +31,105 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('form/booking/update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('form/booking/update',$bookingEdit->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row formtype">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Booking ID</label>
-                                    <input class="form-control" type="text" name="bkg_id" value="{{ $bookingEdit->bkg_id }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input class="form-control" type="text" name="name" value="{{ $bookingEdit->name }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Room Type</label>
-                                    <select class="form-control" id="sel2" name="room_type">
-                                        <option selected value="{{ $bookingEdit->room_type }}">{{ $bookingEdit->room_type }}</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Double">Double</option>
-                                        <option value="Quad">Quad</option>
-                                        <option value="King">King</option>
-                                        <option value="Suite">Suite</option>
-                                        <option value="Villa">Villa</option>
+                                    <label>Customer Name</label>
+                                    <select class="form-control @error('customer_id') is-invalid @enderror" id="customer_id" name="customer_id">
+                                        <option selected disabled> --Select Customer Name-- </option>
+                                        @foreach ($users as $user)
+                                        <option value="{{ $user->name }}" {{ old('customer_id', $bookingEdit->customer_id) == $user->name ? 'selected' : '' }}>
+                                            {{ $user->name }} {{ $user->lname }}
+                                        </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Customer Email</label>
+                                    <input type="email" class="form-control" id="customer_email" name="email" value="{{ $bookingEdit->email }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Customer Phone</label>
+                                    <input type="tel" class="form-control" id="customer_phone" name="phone_number" value="{{ $bookingEdit->phone_number }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room Type</label>
+                                    <select class="form-control @error('room_type_id') is-invalid @enderror" id="room_type_id" name="room_type_id">
+                                        <option selected disabled> --Select Room Type-- </option>
+                                        @foreach ($roomTypes as $roomType)
+                                            <option value="{{ $roomType->id }}" {{ old('room_type_id', $bookingEdit->room_type_id) == $roomType->id ? 'selected' : '' }}>
+                                                {{ $roomType->room_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="room_number">Room Number</label>
+                                    <select class="form-control @error('room_number') is-invalid @enderror" id="room_number" name="room_number">
+                                        @foreach ($roomNumbers as $roomNumber)
+                                            <option value="{{ $roomNumber }}"
+                                                    {{ old('room_number', $bookingEdit->room_number) == $roomNumber ? 'selected' : '' }}>
+                                                {{ $roomNumber }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('room_number')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="floor_id">Floor</label>
+                                    <select class="form-control" id="floor_id" name="floor_id">
+                                        <option value="" disabled> --Select Floor-- </option>
+                                        @foreach($floors as $floorId => $floorName)
+                                            <option value="{{ $floorId }}" {{ old('floor_id', $bookingEdit->floor_id) == $floorId ? 'selected' : '' }}>
+                                                {{ $floorName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Non-AC</label>
+                                    <input type="text" class="form-control" id="non_ac" name="ac_non_ac" value="{{ old('ac_non_ac', $bookingEdit->ac_non_ac) }}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Bed Count</label>
+                                    <input type="text" class="form-control" id="bed_count" name="bed_count" value="{{ old('bed_count', $bookingEdit->bed_count) }}" readonly>
+                                </div>
+                            </div>
+
+                           <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Rent</label>
+                                    <input type="text" class="form-control" id="rent" name="rent" value="{{ old('rent', $bookingEdit->rent) }}" readonly>
+                                </div>
+                            </div>
+
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Total Members</label>
@@ -70,9 +138,9 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="date" value="{{ $bookingEdit->date }}">
+                                    <label>Booking Date</label>
+                                    <div class="">
+                                        <input type="date" id="booking_date" class="form-control" name="booking_date" value="{{ $bookingEdit->booking_date }}">
                                     </div>
                                 </div>
                             </div>
@@ -86,49 +154,26 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Arrival Date</label>
-                                    <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="arrival_date" value="{{ $bookingEdit->arrival_date }}">
+                                    <label>Check In Date</label>
+                                    <div class="">
+                                        <input type="date" id="check_in_date" class="form-control" name="check_in_date" value="{{ $bookingEdit->check_in_date }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Depature Date</label>
-                                    <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="depature_date" value="{{ $bookingEdit->depature_date }}">
+                                    <label>Check out Date</label>
+                                    <div class="">
+                                        <input type="date" id="check_out_date" class="form-control" name="check_out_date" value="{{ $bookingEdit->check_out_date }}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ $bookingEdit->email }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $bookingEdit->ph_number }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>File Upload</label>
-                                    <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input" id="customFile" name="fileupload">
-                                        <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $bookingEdit->fileupload }}">
-                                        <a href="profile.html" class="avatar avatar-sm mr-2">
-                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$bookingEdit->fileupload) }}" alt="{{ $bookingEdit->fileupload }}">
-                                        </a>
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>
-                                    <textarea class="form-control" rows="1.5" id="message" name="message">{{ $bookingEdit->message }}</textarea>
+                                    <textarea class="form-control" rows="5" id="message" name="message">{{ $bookingEdit->message }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -140,11 +185,111 @@
     </div>
     @section('script')
     <script>
-        $(function() {
-            $('#datetimepicker3').datetimepicker({
-                format: 'LT'
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDate = new Date();
+            var formattedCurrentDate = currentDate.toISOString().split('T')[0];
+            var selectElement = document.getElementById('booking_date');
+            selectElement.setAttribute('min', formattedCurrentDate);
         });
-        </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDate = new Date();
+            var formattedCurrentDate = currentDate.toISOString().split('T')[0];
+            var selectElement = document.getElementById('check_in_date');
+            selectElement.setAttribute('min', formattedCurrentDate);
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDate = new Date();
+            var formattedCurrentDate = currentDate.toISOString().split('T')[0];
+            var selectElement = document.getElementById('check_out_date');
+            selectElement.setAttribute('min', formattedCurrentDate);
+        });
+    </script>
+         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('room_type_id').addEventListener('change', function () {
+                    var roomTypeId = this.value;
+                    var roomNumberSelect = document.getElementById('room_number');
+                    var floorSelect = document.getElementById('floor_id');
+
+                    if (roomTypeId) {
+                        fetch(`/get-room-numbers/${roomTypeId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                roomNumberSelect.innerHTML = '<option selected disabled> --Select Room Number-- </option>';
+
+                                if (Object.keys(data).length > 0) {
+                                    for (var id in data) {
+                                        var option = document.createElement('option');
+                                        option.value = id;
+                                        option.textContent = data[id];
+                                        roomNumberSelect.appendChild(option);
+                                    }
+                                } else {
+                                    var option = document.createElement('option');
+                                    option.textContent = 'No rooms available';
+                                    roomNumberSelect.appendChild(option);
+                                }
+                            })
+                            .catch(error => console.error('Error fetching room numbers:', error));
+                    } else {
+                        roomNumberSelect.innerHTML = '<option selected disabled> --Select Room Number-- </option>';
+                    }
+                });
+
+                document.getElementById('room_number').addEventListener('change', function () {
+                    var roomId = this.value;
+                    var floorSelect = document.getElementById('floor_id');
+                    var nonAcField = document.getElementById('non_ac');
+                    var bedCountField = document.getElementById('bed_count');
+                    var rentField = document.getElementById('rent');
+
+                    if (roomId) {
+                        fetch(`/get-room-details/${roomId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.error) {
+                                    console.error(data.error);
+                                    return;
+                                }
+
+                                floorSelect.innerHTML = `<option value="${data.floor_id}">${data.floor_name}</option>`;
+                                nonAcField.value = data.nonAc;
+                                bedCountField.value = data.bed_count;
+                                rentField.value = data.rent;
+                            })
+                            .catch(error => console.error('Error fetching room details:', error));
+                    } else {
+                        floorSelect.innerHTML = '<option selected disabled> --Select Floor-- </option>';
+                        nonAcField.value = '';
+                        bedCountField.value = '';
+                        rentField.value = '';
+                    }
+                });
+
+                document.getElementById('customer_id').addEventListener('change', function () {
+                    var customerName = this.value;
+                    var customerEmailField = document.getElementById('customer_email');
+                    var customerPhoneField = document.getElementById('customer_phone');
+
+                    if (customerName) {
+                        fetch(`/get-customer-details/${customerName}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.error) {
+                                    console.error(data.error);
+                                    return;
+                                }
+
+                                customerEmailField.value = data.email;
+                                customerPhoneField.value = data.phone_number;
+                            })
+                            .catch(error => console.error('Error fetching customer details:', error));
+                    } else {
+                        customerEmailField.value = '';
+                        customerPhoneField.value = '';
+                    }
+                });
+            });
+            </script>
     @endsection
 @endsection

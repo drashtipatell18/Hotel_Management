@@ -27,7 +27,7 @@ class HomeController extends Controller
     // home page
     public function index()
     {
-        $allBookings = DB::table('bookings')->get();
+        $allBookings = DB::table('booking')->get();
         return view('dashboard.home',compact('allBookings'));
     }
 

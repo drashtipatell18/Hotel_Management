@@ -5,121 +5,158 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Booking;
-use DB;
+use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    // view page all booking
     public function allbooking()
     {
-        $allBookings = DB::table('bookings')->get();
+        $allBookings = DB::table('booking')->get();
         return view('formbooking.allbooking',compact('allBookings'));
     }
 
-    // booking add
     public function bookingAdd()
     {
         $data = DB::table('room_types')->get();
-        $user = DB::table('users')->get();
+        $user = DB::table('customers')->select('id','name','lname')->get();
         return view('formbooking.bookingadd',compact('data','user'));
     }
-    
-    // booking edit
-    public function bookingEdit($bkg_id)
+    public function getRoomNumbers($roomTypeId)
     {
-        $bookingEdit = DB::table('bookings')->where('bkg_id',$bkg_id)->first();
-        return view('formbooking.bookingedit',compact('bookingEdit'));
+        $roomNumbers = DB::table('rooms')
+        ->where('room_type_id', $roomTypeId)
+        ->pluck('room_number', 'id');
+
+        return response()->json($roomNumbers);
     }
 
-    // booking save record
+    public function getRoomDetails($roomId)
+    {
+        $room = DB::table('rooms')->find($roomId);
+        if ($room) {
+            return response()->json([
+                'floor_id' => $room->floor_id,
+                'floor_name' => DB::table('floors')->where('id', $room->floor_id)->value('floor_name'), // Assuming 'name' is the column for floor name
+                'nonAc' => $room->ac_non_ac, // Assuming these columns exist
+                'bed_count' => $room->bed_count,
+                'rent' => $room->rent
+            ]);
+        } else {
+            return response()->json(['error' => 'Room not found'], 404);
+        }
+
+    }
+
+    public function getCustomerDetails($customerName)
+    {
+        $customer = DB::table('customers')->where('name', $customerName)->first();
+
+        if ($customer) {
+            return response()->json([
+                'email' => $customer->email,
+                'phone_number' => $customer->ph_number,
+            ]);
+        } else {
+            return response()->json(['error' => 'Customer not found'], 404);
+        }
+    }
+
+    public function bookingEdit($id)
+    {
+        $bookingEdit = DB::table('booking')->where('id',$id)->first();
+        $users = DB::table('customers')->select('id','name','lname')->get();
+        $roomTypes = DB::table('room_types')->get();
+        $floors = DB::table('floors')->pluck('floor_name', 'id');
+
+
+        $roomNumbers = DB::table('rooms')
+        ->where('room_type_id', $bookingEdit->room_type_id)
+        ->where('floor_id', $bookingEdit->floor_id)
+        ->pluck('room_number', 'id');
+
+        return view('formbooking.bookingedit',compact('bookingEdit','users','roomTypes','roomNumbers','floors'));
+    }
+
+
     public function saveRecord(Request $request)
     {
-        $request->validate([
-            'name'   => 'required|string|max:255',
-            'room_type'     => 'required|string|max:255',
-            'total_numbers' => 'required|string|max:255',
-            'date' => 'required|string|max:255',
-            'time' => 'required|string|max:255',
-            'arrival_date'  => 'required|string|max:255',
-            'depature_date' => 'required|string|max:255',
-            'email'      => 'required|string|max:255',
-            'phone_number'  => 'required|string|max:255',
-            'fileupload' => 'required|file',
-            'message'    => 'required|string|max:255',
-        ]);
 
-        DB::beginTransaction();
-        try {
+        try{
+                $roomNumber = DB::table('rooms')->where('id', $request->room_number)->value('room_number');
+                if ($roomNumber === null) {
+                    return response()->json(['error' => 'Room number not found'], 404);
+                }
+                $booking = new Booking();
+                $booking->customer_id = $request->customer_id;
+                $booking->room_type_id = $request->room_type_id;
+                $booking->room_number = $roomNumber;
+                $booking->floor_id = $request->floor_id;
+                $booking->ac_non_ac = $request->ac_non_ac;
+                $booking->bed_count = $request->bed_count;
+                $booking->rent = $request->rent;
+                $booking->total_numbers = $request->total_numbers;
+                $booking->booking_date = $request->booking_date;
+                $booking->time = $request->time;
+                $booking->check_in_date = $request->check_in_date;
+                $booking->check_out_date = $request->check_out_date;
+                $booking->email = $request->email;
+                $booking->phone_number = $request->phone_number;
+                $booking->message = $request->message;
 
-            $photo= $request->fileupload;
-            $file_name = rand() . '.' .$photo->getClientOriginalName();
-            $photo->move(public_path('/assets/upload/'), $file_name);
-           
-            $booking = new Booking;
-            $booking->name = $request->name;
-            $booking->room_type     = $request->room_type;
-            $booking->total_numbers  = $request->total_numbers;
-            $booking->date  = $request->date;
-            $booking->time  = $request->time;
-            $booking->arrival_date   = $request->arrival_date;
-            $booking->depature_date  = $request->depature_date;
-            $booking->email       = $request->email;
-            $booking->ph_number   = $request->phone_number;
-            $booking->fileupload  = $file_name;
-            $booking->message     = $request->message;
-            $booking->save();
-            
-            DB::commit();
-            Toastr::success('Create new booking successfully :)','Success');
-            return redirect()->route('form/allbooking');
-            
-        } catch(\Exception $e) {
-            DB::rollback();
+                $booking->save();
+                Toastr::success('Bookeng created successfully :)', 'Success');
+                return redirect()->route('form/allbooking');
+            }
+
+        catch(\Exception $e) {
             Toastr::error('Add Booking fail :)','Error');
             return redirect()->back();
         }
+
     }
 
+
     // update record
-    public function updateRecord(Request $request)
+    public function updateRecord(Request $request,$id)
     {
         DB::beginTransaction();
         try {
+            // Find the existing booking by ID
+            $booking = Booking::findOrFail($id);
 
-            if (!empty($request->fileupload)) {
-                $photo = $request->fileupload;
-                $file_name = rand() . '.' . $photo->getClientOriginalExtension();
-                $photo->move(public_path('/assets/upload/'), $file_name);
-            } else {
-                $file_name = $request->hidden_fileupload;
-            }
+            // Update booking fields
+            $booking->customer_id = $request->customer_id;
+            $booking->room_type_id = $request->room_type_id;
+            $booking->room_number = $request->room_number;
+            $booking->floor_id = $request->floor_id;
+            $booking->ac_non_ac = $request->ac_non_ac;
+            $booking->bed_count = $request->bed_count;
+            $booking->rent = $request->rent;
+            $booking->total_numbers = $request->total_numbers;
+            $booking->booking_date = $request->booking_date;
+            $booking->time = $request->time;
+            $booking->check_in_date = $request->check_in_date;
+            $booking->check_out_date = $request->check_out_date;
+            $booking->email = $request->email;
+            $booking->phone_number = $request->phone_number;
+            $booking->message = $request->message;
 
-            $update = [
-                'bkg_id' => $request->bkg_id,
-                'name'   => $request->name,
-                'room_type'  => $request->room_type,
-                'total_numbers' => $request->total_numbers,
-                'date'   => $request->date,
-                'time'   => $request->time,
-                'arrival_date'   => $request->arrival_date,
-                'depature_date'  => $request->depature_date,
-                'email'   => $request->email,
-                'ph_number' => $request->phone_number,
-                'fileupload'=> $file_name,
-                'message'   => $request->message,
-            ];
 
-            Booking::where('bkg_id',$request->bkg_id)->update($update);
-        
+
+
+            $booking->save();
             DB::commit();
-            Toastr::success('Updated booking successfully :)','Success');
-            return redirect()->back();
-        } catch(\Exception $e) {
+            Toastr::success('Booking updated successfully :)', 'Success');
+            return redirect()->route('form/allbooking');
+
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Update booking fail :)','Error');
+            Toastr::error('Failed to update booking :)', 'Error');
             return redirect()->back();
         }
     }
+
 
     // delete record booking
     public function deleteRecord(Request $request)
@@ -130,7 +167,7 @@ class BookingController extends Controller
             unlink('assets/upload/'.$request->fileupload);
             Toastr::success('Booking deleted successfully :)','Success');
             return redirect()->back();
-        
+
         } catch(\Exception $e) {
 
             DB::rollback();

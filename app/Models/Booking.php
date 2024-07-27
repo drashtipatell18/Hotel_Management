@@ -9,17 +9,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Booking extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = "booking";
     protected $fillable = [
-        'bkg_id',
-        'name',
-        'room_type',
+        'customer_id',
+        'room_type_id',
+        'room_number',
+        'floor_id',
+        'ac_non_ac',
+        'bed_count',
+        'rent',
         'total_numbers',
-        'date',
+        'booking_date',
         'time',
-        'depature_date',
+        'check_in_date',
+        'check_out_date',
         'email',
-        'ph_number',
-        'fileupload',
+        'phone_number',
         'message',
     ];
+    
 }

@@ -149,17 +149,17 @@
                                     <tbody>
                                         @foreach ($allBookings as $bookings )
                                         <tr>
-                                            <td class="text-nowrap">
+                                            {{-- <td class="text-nowrap">
                                                 <div>{{ $bookings->bkg_id }}</div>
-                                            </td>
-                                            <td class="text-nowrap">{{ $bookings->name }}</td>
-                                            <td><a href="#" class="__cf_email__">{{ $bookings->email }}</a></td>
-                                            <td>{{ $bookings->total_numbers }}</td>
-                                            <td class="text-center">{{ $bookings->room_type }}</td>
-                                            <td class="text-right">
+                                            </td> --}}
+                                            {{-- <td class="text-nowrap">{{ $bookings->name }}</td> --}}
+                                            {{-- <td><a href="#" class="__cf_email__">{{ $bookings->email }}</a></td> --}}
+                                            {{-- <td>{{ $bookings->total_numbers }}</td> --}}
+                                            {{-- <td class="text-center">{{ $bookings->room_type }}</td> --}}
+                                            {{-- <td class="text-right">
                                                 <div>{{ $bookings->ph_number }}</div>
-                                            </td>
-                                            <td class="text-center"> <span class="badge badge-pill bg-success inv-badge">INACTIVE</span> </td>
+                                            </td> --}}
+                                            {{-- <td class="text-center"> <span class="badge badge-pill bg-success inv-badge">INACTIVE</span> </td> --}}
                                         </tr>
                                         @endforeach
                                     </tbody>

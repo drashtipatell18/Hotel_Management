@@ -100,7 +100,7 @@
                                                                         style="width: 180px; height: 200px; object-fit: cover;">
                                                                 </div>
                                                                 <div class="col-md-8">
-                                                                    <h6 class="text-muted">Personal Information</h6>
+                                                                    <h6 class="text-muted">Customer Details</h6>
                                                                     <hr>
                                                                     <div class="row">
                                                                         <div class="col-md-6">

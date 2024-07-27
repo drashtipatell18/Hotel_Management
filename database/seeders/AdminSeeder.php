@@ -12,6 +12,12 @@ class AdminSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
+    // 0 = Admin
+    // 1 = Stff
+    // 2 = Account
+    // 3 = Customer
+
     public function run(): void
     {
         User::create([
