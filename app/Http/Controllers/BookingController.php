@@ -12,7 +12,7 @@ class BookingController extends Controller
 {
     public function allbooking()
     {
-        $allBookings = DB::table('booking')->get();
+        $allBookings = Booking::with('roomType','food','floor')->get();
         return view('formbooking.allbooking',compact('allBookings'));
     }
 
@@ -62,6 +62,15 @@ class BookingController extends Controller
         }
     }
 
+    public function updateStatus(Request $request)
+    {
+        $booking = Booking::find($request->booking_id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json(['status' => 'success', 'new_status' => $booking->status]);
+    }
+
     public function bookingEdit($id)
     {
         $bookingEdit = DB::table('booking')->where('id',$id)->first();
@@ -81,6 +90,21 @@ class BookingController extends Controller
 
     public function saveRecord(Request $request)
     {
+
+        $rules = [
+            'customer_id' => 'required',
+            'room_type_id' => 'required|integer|exists:room_types,id',
+            'room_number' => 'required',
+            'floor_id' => 'required|integer|exists:floors,id',
+            'total_numbers' => 'required|integer|min:1',
+            'booking_date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'check_in_date' => 'required|date|after_or_equal:booking_date',
+            'check_out_date' => 'required|date|after:check_in_date',
+            'message' => 'nullable|string|max:500',
+        ];
+
+        $validatedData = $request->validate($rules);
 
         try{
                 $roomNumber = DB::table('rooms')->where('id', $request->room_number)->value('room_number');
@@ -157,23 +181,22 @@ class BookingController extends Controller
         }
     }
 
-
     // delete record booking
-    public function deleteRecord(Request $request)
+    public function deleteRecord($id)
     {
+        DB::beginTransaction();
         try {
-
-            Booking::destroy($request->id);
-            unlink('assets/upload/'.$request->fileupload);
-            Toastr::success('Booking deleted successfully :)','Success');
-            return redirect()->back();
-
-        } catch(\Exception $e) {
-
+            $booking = Booking::findOrFail($id);
+            $booking->delete();
+            DB::commit();
+            Toastr::success('Booking deleted successfully :)', 'Success');
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Booking delete fail :)','Error');
-            return redirect()->back();
+            Toastr::error('Failed to delete Booking :(', 'Error');
         }
+        return redirect()->route('form/allbooking');
     }
+
+
 
 }

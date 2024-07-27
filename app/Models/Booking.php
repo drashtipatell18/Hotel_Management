@@ -26,6 +26,20 @@ class Booking extends Model
         'email',
         'phone_number',
         'message',
+        'status'
     ];
-    
+
+    public function roomType()
+    {
+        return $this->belongsTo(RoomTypes::class);
+    }
+    public function food()
+    {
+        return $this->belongsTo(Food::class);
+    }
+    public function floor()
+    {
+        return $this->belongsTo(Floor::class);
+    }
+
 }

@@ -25,6 +25,9 @@
                                              <option {{ old('name') == $users->name ? "selected" : "" }} value="{{ $users->name }}">{{ $users->name }} {{ $users->lname }}</option>
                                         @endforeach
                                     </select>
+                                    @error('customer_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -49,6 +52,9 @@
                                             <option value="{{ $item->id }}">{{ $item->room_name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('room_type_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -58,6 +64,9 @@
                                         <option selected disabled> --Select Room Number-- </option>
                                         <!-- Options will be dynamically populated here -->
                                     </select>
+                                    @error('room_number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -94,6 +103,9 @@
                                     <label>Total Members</label>
                                     <input type="number" class="form-control @error('total_numbers') is-invalid @enderror"name="total_numbers" value="{{ old('total_numbers') }}">
                                 </div>
+                                @error('total_numbers')
+                                <div class="error text-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -102,6 +114,9 @@
                                         <input type="date" id="booking_date" class="form-control @error('booking_date') is-invalid @enderror" name="booking_date" value="{{ old('booking_date') }}">
                                     </div>
                                 </div>
+                                @error('booking_date')
+                                <div class="error text-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -109,6 +124,10 @@
                                     <div class="time-icon">
                                         <input type="time" class="form-control @error('time') is-invalid @enderror"  name="time" value="{{ old('time') }}">
                                     </div>
+                                    @error('time')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -117,6 +136,9 @@
                                     <div class="">
                                         <input type="date" id="check_in_date" class="form-control @error('check_in_date') is-invalid @enderror" name="check_in_date" value="{{ old('check_in_date') }}">
                                     </div>
+                                    @error('check_in_date')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -125,6 +147,9 @@
                                     <div class="">
                                         <input type="date" id="check_out_date" class="form-control @error('check_out_date') is-invalid @enderror" name="check_out_date" value="{{ old('check_out_date') }}">
                                     </div>
+                                    @error('check_out_date')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                             </div>
 

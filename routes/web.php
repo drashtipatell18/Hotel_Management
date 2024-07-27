@@ -96,11 +96,12 @@ Route::controller(BookingController::class)->group(function () {
     Route::get('form/booking/add', 'bookingAdd')->middleware('auth')->name('form/booking/add');
     Route::post('form/booking/save', 'saveRecord')->middleware('auth')->name('form/booking/save');
     Route::post('form/booking/update/{id}', 'updateRecord')->middleware('auth')->name('form/booking/update');
-    Route::post('form/booking/delete', 'deleteRecord')->middleware('auth')->name('form/booking/delete');
+    Route::get('/form/booking/delete/{id}','deleteRecord')->name('booking.delete');
 
     Route::get('/get-room-numbers/{roomTypeId}', 'getRoomNumbers');
     Route::get('/get-room-details/{roomId}', 'getRoomDetails');
     Route::get('/get-customer-details/{customerName}',  'getCustomerDetails');
+    Route::post('/update-booking-status',  'updateStatus')->name('update.booking.status');
 });
 
 // ---------------------------- customers --------------------------//
