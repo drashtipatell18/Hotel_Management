@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">
@@ -93,7 +94,7 @@
                                                                             style="width: 180px; height: 200px; object-fit: cover;">
                                                                     </div>
                                                                     <div class="col-md-8">
-                                                                        <h6 class="text-muted">Personal Information</h6>
+                                                                        <h6 class="text-muted">RoomType Details</h6>
                                                                         <hr>
 
                                                                         <div class="row">
@@ -139,7 +140,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer bg-light mb-1" style="height: 60px;">
-                                                                <button type="button" class="btn btn-info"
+                                                                <button type="button" class="btn btn-info hover-btn"
                                                                     data-dismiss="modal">Close</button>
                                                             </div>
                                                         </div>

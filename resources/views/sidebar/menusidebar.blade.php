@@ -35,6 +35,12 @@
                     <img src="{{ url('assets/icons/booking.png') }}" style="width: 20px; height:20px"><span>Booking</span>
                 </a> </li>
 
+                <li class=""> <a href="{{ route('position/list') }}">
+                    <img src="{{ url('assets/icons/position.png') }}" style="width: 20px; height:20px"><span>Positions</span>
+                </a> </li>
+
+                <li class=""> <a href="{{ route('staff/list') }}"><i class="fas fa-user"></i><span>Staff</span></a> </li>
+
                 {{-- <li class=""> <a href="#"> <img src="{{ url('assets/icons/booking.png') }}" style="width: 20px; height:20px"> <span> Booking </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['form/allbooking']) }}" href="{{ route('form/allbooking') }}"> All Booking </a></li>
@@ -54,7 +60,7 @@
                         <li><a class="{{ set_active(['form/addroom/page']) }}" href="{{ route('form/addroom/page') }}"> Add Rooms </a></li>
                     </ul>
                 </li> --}}
-                <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
+                {{-- <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a  class="{{ set_active(['form/emplyee/list']) }}" href="{{ route('form/emplyee/list') }}">Employees List </a></li>
                         <li><a  class="{{ set_active(['form/employee/add']) }}" href="{{ route('form/employee/add') }}">Employees Add </a></li>
@@ -77,7 +83,7 @@
                         <li><a href="salary.html">Employee Salary </a></li>
                         <li><a href="salary-veiw.html">Payslip </a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="submenu">
                     <a href="#">
                         <i class="fa fa-user-plus"></i>

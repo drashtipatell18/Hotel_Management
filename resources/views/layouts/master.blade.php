@@ -23,7 +23,15 @@
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
 
 
-
+    <style>
+        .hover-btn {
+            transition: background-color 0.3s ease;
+        }
+        .hover-btn:hover {
+            background-color: #009688;
+            border-color: #009688;
+        }
+    </style>
 
 
 <body>

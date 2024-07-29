@@ -62,15 +62,14 @@
                                                     </a>
                                                 </td>
                                                 <td class="text-right">
+                                                    <a data-toggle="modal" data-target="#exampleModal{{ $customers->id }}"
+                                                        class="view-customer"
+                                                        style="font-size: 23px; padding: 5px; color: #009688; cursor:pointer">
+                                                        <i class="fas fa-eye fa-xs"></i>
+                                                    </a>
                                                     <a href="{{ url('form/customer/edit/' . $customers->id) }}"
                                                         style="font-size: 23px; padding: 5px; color: #009688;">
                                                         <i class="fas fa-pencil-alt fa-xs"></i>
-                                                    </a>
-
-                                                    <a data-toggle="modal" data-target="#exampleModal{{ $customers->id }}"
-                                                        class="view-customer"
-                                                        style="font-size: 23px; padding: 5px; color: #009688;">
-                                                        <i class="fas fa-eye fa-xs"></i>
                                                     </a>
                                                 </td>
 
@@ -145,7 +144,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer bg-light mb-1" style="height: 60px;">
-                                                            <button type="button" class="btn btn-info"
+                                                            <button type="button" class="btn btn-info hover-btn"
                                                                 data-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>

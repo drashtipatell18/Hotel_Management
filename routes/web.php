@@ -18,7 +18,9 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,7 +156,7 @@ Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/list', 'hotelList')->name('hotel/list');
     Route::get('hotel/edit/{id}', 'hotelEdit');
     Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
-    Route::post('/update-hotel-status', [HotelController::class, 'updateStatus'])->name('update.hotel.status');
+    Route::post('/update-hotel-status','updateStatus')->name('update.hotel.status');
 });
 
 // Amenities
@@ -178,8 +180,7 @@ Route::controller(RoomTypeController::class)->group(function () {
     Route::get('roomtype/edit/{id}', 'roomtypeEdit');
     Route::post('roomtype/update/{id}', 'roomtypeUpdate')->name('roomtype/update');
     Route::get('/roomtype/delete/{id}','roomtypeDelete')->name('roomtype.delete');
-    Route::post('/update-roomtype-status', [RoomTypeController::class, 'updateStatus'])->name('update.roomtype.status');
-
+    Route::post('/update-roomtype-status',  'updateStatus')->name('update.roomtype.status');
 });
 
 // Floor
@@ -203,5 +204,32 @@ Route::controller(FoodController::class)->group(function () {
     Route::get('food/edit/{id}', 'foodEdit');
     Route::post('food/update/{id}', 'foodUpdate')->name('food/update');
     Route::get('/food/delete/{id}','foodDelete')->name('food.delete');
+
+});
+
+
+// Positions
+
+Route::controller(PositionController::class)->group(function () {
+    Route::get('position/add', 'positionCreate')->name('position/add');
+    Route::post('position/store', 'positionStore')->name('position/store');
+    Route::get('position/list', 'positionList')->name('position/list');
+    Route::get('position/edit/{id}', 'positionEdit');
+    Route::post('position/update/{id}', 'positionUpdate')->name('position/update');
+    Route::get('/position/delete/{id}','positionDelete')->name('position.delete');
+
+});
+
+
+// Staff
+
+Route::controller(StaffController::class)->group(function () {
+    Route::get('staff/add', 'staffCreate')->name('staff/add');
+    Route::post('staff/store', 'staffStore')->name('staff/store');
+    Route::get('staff/list', 'staffList')->name('staff/list');
+    Route::get('staff/edit/{id}', 'staffEdit');
+    Route::post('staff/update/{id}', 'staffUpdate')->name('staff/update');
+    Route::get('/staff/delete/{id}','staffDelete')->name('staff.delete');
+    Route::post('/update-staff-status',  'updateStatus')->name('update.staff.status');
 
 });

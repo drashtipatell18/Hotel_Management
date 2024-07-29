@@ -18,4 +18,8 @@ class Hotel extends Model
         'stars',
         'status'
     ];
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'hotel_id');
+    }
 }

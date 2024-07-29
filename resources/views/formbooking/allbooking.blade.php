@@ -8,7 +8,7 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Reservation</h4>
+                            <h4 class="card-title float-left mt-2">Bookings</h4>
                             <a href="{{ route('form/booking/add') }}" class="btn btn-primary float-right veiwbutton ">Add Booking</a>
                         </div>
                     </div>
@@ -56,14 +56,14 @@
                                                 </a>
                                             </td>
                                             <td class="text-right">
+                                                <a data-toggle="modal" data-target="#exampleModal{{ $bookings->id }}"
+                                                    class="view-customer"
+                                                    style="font-size: 23px; padding: 5px; color: #009688; cursor:pointer">
+                                                    <i class="fas fa-eye fa-xs"></i>
+                                                </a>
                                                 <a href="{{ url('form/booking/edit/' . $bookings->id) }}"
                                                     style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-pencil-alt fa-xs"></i>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#exampleModal{{ $bookings->id }}"
-                                                    class="view-customer"
-                                                    style="font-size: 23px; padding: 5px; color: #009688;">
-                                                    <i class="fas fa-eye fa-xs"></i>
                                                 </a>
                                                 <a href="{{ route('booking.delete', ['id' => $bookings->id]) }}" onclick="return confirm('Are you sure you want to delete this Booking?');" style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-trash fa-xs"></i>
@@ -151,7 +151,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer bg-light mb-1" style="height: 60px;">
-                                                        <button type="button" class="btn btn-info"
+                                                        <button type="button" class="btn btn-info  hover-btn"
                                                             data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
