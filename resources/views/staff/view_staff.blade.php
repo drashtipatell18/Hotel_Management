@@ -25,7 +25,7 @@
                                             <th>ID</th>
                                             <th>Profile Pic</th>
                                             <th>Hotel Name</th>
-                                            <th>Name</th>
+                                            <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Ph.Number</th>
                                             <th>Position Name</th>

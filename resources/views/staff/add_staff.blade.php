@@ -242,7 +242,7 @@
 
                 <button type="submit" class="btn btn-primary buttonedit1"> {{ isset($staff) ? 'Update' : 'Create New Staff' }}</button>
                 @if (isset($staff))
-                    <a href="{{ route('staff/list') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
+                    <a href="{{ route('staff/list') }}"  type="submit" class="btn btn-secondary  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
                 @endif
             </form>
         </div>

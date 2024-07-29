@@ -39,7 +39,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit1">{{ isset($position) ? 'Update' : 'Create New Position' }}</button>
                 @if (isset($position))
-                <a href="{{ route('position/list') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
+                <a href="{{ route('position/list') }}"  type="submit" class="btn btn-secondary  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
                 @endif
             </form>
         </div>

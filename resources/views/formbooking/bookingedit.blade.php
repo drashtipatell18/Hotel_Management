@@ -180,6 +180,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit">Update</button>
+                <a href="{{ route('form/allbooking') }}"  type="submit" class="btn btn-secondary  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
             </form>
         </div>
     </div>

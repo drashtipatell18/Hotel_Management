@@ -196,7 +196,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary buttonedit1"> {{ isset($roomtype) ? 'Update' : 'Create New RoomType' }}</button>
                 @if (isset($roomtype))
-                    <a href="{{ route('roomtype/list') }}"  type="submit" class="btn btn-warning  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
+                    <a href="{{ route('roomtype/list') }}"  type="submit" class="btn btn-secondary  padding:10px" style="float:right !important;margin-right:10px !important; padding:10px !important">Back</a>
                 @endif
             </form>
         </div>
