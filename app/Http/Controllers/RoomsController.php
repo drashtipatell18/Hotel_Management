@@ -20,7 +20,7 @@ class RoomsController extends Controller
 
     public function addRoom(Request $request)
     {
-        $room_types = RoomTypes::all();
+        $room_types = RoomTypes::where('status', 'active')->get();
         $user = DB::table('users')->get();
         $floors = DB::table('floors')->whereNull('deleted_at')->get();
         $foods = Food::all();

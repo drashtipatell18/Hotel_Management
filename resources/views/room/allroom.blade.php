@@ -49,7 +49,7 @@
                                             </td>
                                             <td>{{ $rooms->floor->floor_name }}</td>
                                             <td>{{ $rooms->room_number }}</td>
-                                            <td>{{ $rooms->roomType->room_name }}</td>
+                                            <td>{{ $rooms->roomType ? $rooms->roomType->room_name : 'N/A' }}</td>
                                             <td>{{ $rooms->bed_count }}</td>
                                             <td>{{ $rooms->rent }}</td>
                                             <td>{{ $rooms->phone_number }}</td>
@@ -115,7 +115,7 @@
                                                                                 id="floor-room_number">{{ $rooms->room_number }}</span>
                                                                         </p>
                                                                         <p><strong>Room Type:</strong> <span
-                                                                                id="floor-room_type">{{ $rooms->roomType->room_name }}</span>
+                                                                                id="floor-room_type">{{ $rooms->roomType ? $rooms->roomType->room_name : 'N/A' }}</span>
                                                                         </p>
                                                                         <p><strong>Ac/Non Ac:</strong> <span
                                                                                 id="floor-ac_non_ac ">{{ $rooms->ac_non_ac }}</span>

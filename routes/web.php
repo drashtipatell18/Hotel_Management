@@ -178,6 +178,7 @@ Route::controller(RoomTypeController::class)->group(function () {
     Route::get('roomtype/edit/{id}', 'roomtypeEdit');
     Route::post('roomtype/update/{id}', 'roomtypeUpdate')->name('roomtype/update');
     Route::get('/roomtype/delete/{id}','roomtypeDelete')->name('roomtype.delete');
+    Route::post('/update-roomtype-status', [RoomTypeController::class, 'updateStatus'])->name('update.roomtype.status');
 
 });
 

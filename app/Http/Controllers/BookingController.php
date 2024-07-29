@@ -18,7 +18,8 @@ class BookingController extends Controller
 
     public function bookingAdd()
     {
-        $data = DB::table('room_types')->get();
+        $data = DB::table('room_types')->where('status', 'active')->get();
+
         $user = DB::table('customers')->select('id','name','lname')->get();
         return view('formbooking.bookingadd',compact('data','user'));
     }
@@ -26,6 +27,7 @@ class BookingController extends Controller
     {
         $roomNumbers = DB::table('rooms')
         ->where('room_type_id', $roomTypeId)
+        ->where('status', 'active')
         ->pluck('room_number', 'id');
 
         return response()->json($roomNumbers);

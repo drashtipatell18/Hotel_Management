@@ -135,4 +135,12 @@ class RoomTypeController extends Controller
         }
         return redirect()->route('roomtype/list');
     }
+    public function updateStatus(Request $request)
+    {
+        $roomType = RoomTypes::find($request->roomtype_id);
+        $roomType->status = $request->status;
+        $roomType->save();
+
+        return response()->json(['status' => 'success', 'new_status' => $roomType->status]);
+    }
 }

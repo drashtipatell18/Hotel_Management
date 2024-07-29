@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('base_price');
             $table->integer('extra_bed_price')->nullable();
             $table->string('room_image')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();
 

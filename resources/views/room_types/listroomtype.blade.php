@@ -28,6 +28,7 @@
                                                 <th>Per Extra Bed Price</th>
                                                 <th>Extra Bed Quantity</th>
                                                 <th>Base Price</th>
+                                                <th>Status</th>
                                                 <th class="text-right">Actions</th>
                                             </tr>
                                         </thead>
@@ -41,6 +42,14 @@
                                                     <td>{{ $roomType->per_extra_bed_price }}</td>
                                                     <td>{{ $roomType->extra_bed_quantity }}</td>
                                                     <td>{{ $roomType->extra_bed_price }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);"
+                                                            class="btn btn-sm toggle-status {{ $roomType->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
+                                                            data-id="{{ $roomType->id }}"
+                                                            data-status="{{ $roomType->status }}">
+                                                            {{ $roomType->status }}
+                                                        </a>
+                                                    </td>
 
                                                     <td class="text-right">
                                                         <a data-toggle="modal" data-target="#exampleModal{{ $roomType->id }}"
@@ -147,13 +156,44 @@
                 </div>
             </div>
         </div>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         @section('script')
-        <script>
-            $(document).ready(function() {
-                     $('.datatable1').DataTable();
-            });
-        </script>
+            <script>
+                $(document).ready(function() {
+                    $('.datatable1').DataTable();
+                    $('.toggle-status').click(function() {
+                        var roomtypeId = $(this).data('id');
+                        var currentStatus = $(this).data('status');
+                        var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                        var button = $(this);
+
+                        $.ajax({
+                            url: '{{ route('update.roomtype.status') }}',
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                roomtype_id: roomtypeId,
+                                status: newStatus
+                            },
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    button.data('status', response.new_status);
+                                    button.text(response.new_status);
+
+                                    // Update button classes
+                                    if (response.new_status === 'active') {
+                                        button.removeClass('bg-danger-light').addClass(
+                                            'bg-success-light');
+                                    } else {
+                                        button.removeClass('bg-success-light').addClass(
+                                            'bg-danger-light');
+                                    }
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
         @endsection
 @endsection
 
