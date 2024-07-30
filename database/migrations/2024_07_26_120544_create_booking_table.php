@@ -24,7 +24,10 @@ return new class extends Migration
             $table->string('booking_date')->nullable();
             $table->string('time')->nullable();
             $table->string('check_in_date')->nullable();
+            $table->string('check_in_time')->nullable();
             $table->string('check_out_date')->nullable();
+            $table->string('check_out_time')->nullable();
+            $table->bigInteger('total_hours')->nullable();
             $table->string('email')->nullable();
             $table->bigInteger('phone_number')->nullable();
             $table->text('message')->nullable();

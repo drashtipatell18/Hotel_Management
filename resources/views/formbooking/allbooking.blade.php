@@ -141,6 +141,9 @@
                                                                         <p><strong>Check out Date:</strong> <span
                                                                             id="total_numbers">{{ $bookings->check_out_date }}</span>
                                                                         </p>
+                                                                        <p><strong>Total Hours:</strong> <span
+                                                                            id="total_numbers">{{ $bookings->total_hours }}</span>
+                                                                        </p>
                                                                         <p><strong>Message:</strong> <span
                                                                             id="time">{{ $bookings->message }}</span>
                                                                         </p>

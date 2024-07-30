@@ -50,9 +50,19 @@ class BookingController extends Controller
 
     }
 
-    public function getCustomerDetails($customerName)
+    public function getCustomerDetails($fullName)
     {
-        $customer = DB::table('customers')->where('name', $customerName)->first();
+        $parts = explode(' ', $fullName, 2); // Splits into at most 2 parts
+        if (count($parts) < 2) {
+            return response()->json(['error' => 'Invalid customer name format'], 400);
+        }
+
+        $name = $parts[0];
+        $lname = $parts[1];
+        $customer = DB::table('customers')
+                    ->where('name', $name)
+                    ->where('lname', $lname)
+                    ->first();
 
         if ($customer) {
             return response()->json([
@@ -63,6 +73,7 @@ class BookingController extends Controller
             return response()->json(['error' => 'Customer not found'], 404);
         }
     }
+
 
     public function updateStatus(Request $request)
     {
@@ -76,23 +87,31 @@ class BookingController extends Controller
     public function bookingEdit($id)
     {
         $bookingEdit = DB::table('booking')->where('id',$id)->first();
-        $users = DB::table('customers')->select('id','name','lname')->get();
+        $users = DB::table('customers')->select('id', 'name', 'lname')->get();
         $roomTypes = DB::table('room_types')->get();
         $floors = DB::table('floors')->pluck('floor_name', 'id');
-
-
         $roomNumbers = DB::table('rooms')
         ->where('room_type_id', $bookingEdit->room_type_id)
         ->where('floor_id', $bookingEdit->floor_id)
         ->pluck('room_number', 'id');
 
-        return view('formbooking.bookingedit',compact('bookingEdit','users','roomTypes','roomNumbers','floors'));
+        $selectedCustomer = $bookingEdit->customer_id;
+
+        return view('formbooking.bookingedit', [
+            'bookingEdit' => $bookingEdit,
+            'users' => $users,
+            'roomTypes' => $roomTypes,
+            'roomNumbers' => $roomNumbers,
+            'floors' => $floors,
+            'selectedCustomer' => $selectedCustomer
+        ]);
+
+        // return view('formbooking.bookingedit',compact('bookingEdit','users','roomTypes','roomNumbers','floors','selectedCustomer' => $customer->id ?? null));
     }
 
 
     public function saveRecord(Request $request)
     {
-
         $rules = [
             'customer_id' => 'required',
             'room_type_id' => 'required|integer|exists:room_types,id',
@@ -101,8 +120,10 @@ class BookingController extends Controller
             'total_numbers' => 'required|integer|min:1',
             'booking_date' => 'required|date',
             'time' => 'required|date_format:H:i',
-            'check_in_date' => 'required|date|after_or_equal:booking_date',
-            'check_out_date' => 'required|date|after:check_in_date',
+            'check_in_date' => 'required|date|',
+            'check_in_time' => 'required',
+            'check_out_date' => 'required|date',
+            'check_out_time' => 'required',
             'message' => 'nullable|string|max:500',
         ];
 
@@ -125,10 +146,13 @@ class BookingController extends Controller
                 $booking->booking_date = $request->booking_date;
                 $booking->time = $request->time;
                 $booking->check_in_date = $request->check_in_date;
+                $booking->check_in_time = $request->check_in_time;
                 $booking->check_out_date = $request->check_out_date;
+                $booking->check_out_time = $request->check_out_time;
                 $booking->email = $request->email;
                 $booking->phone_number = $request->phone_number;
                 $booking->message = $request->message;
+                $booking->total_hours = $request->total_hours;
 
                 $booking->save();
                 Toastr::success('Bookeng created successfully :)', 'Success');
@@ -146,6 +170,22 @@ class BookingController extends Controller
     // update record
     public function updateRecord(Request $request,$id)
     {
+        $rules = [
+            'customer_id' => 'required',
+            'room_type_id' => 'required|integer|exists:room_types,id',
+            'room_number' => 'required',
+            'floor_id' => 'required|integer|exists:floors,id',
+            'total_numbers' => 'required|integer|min:1',
+            'booking_date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'check_in_date' => 'required|date|',
+            'check_in_time' => 'required',
+            'check_out_date' => 'required|date',
+            'check_out_time' => 'required',
+            'message' => 'nullable|string|max:500',
+        ];
+        $validatedData = $request->validate($rules);
+
         DB::beginTransaction();
         try {
             // Find the existing booking by ID
@@ -163,13 +203,13 @@ class BookingController extends Controller
             $booking->booking_date = $request->booking_date;
             $booking->time = $request->time;
             $booking->check_in_date = $request->check_in_date;
+            $booking->check_in_time = $request->check_in_time;
             $booking->check_out_date = $request->check_out_date;
+            $booking->check_out_time = $request->check_out_time;
             $booking->email = $request->email;
             $booking->phone_number = $request->phone_number;
             $booking->message = $request->message;
-
-
-
+            $booking->total_hours = $request->total_hours;
 
             $booking->save();
             DB::commit();
