@@ -36,24 +36,23 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row formtype">
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Customer Name</label>
                                     <select class="form-control @error('customer_id') is-invalid @enderror" id="customer_id" name="customer_id">
                                         <option selected disabled> --Select Customer Name-- </option>
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $selectedCustomer == $user->id ? 'selected' : '' }}>
-                                                {{ $user->name }} {{ $user->lname }}
-                                            </option>
+                                        <?php $fullName = $user->name . ' ' . $user->lname; ?>
+                                        <option value="{{ $fullName }}" {{ $selectedCustomerId == $fullName ? 'selected' : '' }}>
+                                            {{ $fullName }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     @error('customer_id')
-                                    <div class="error text-danger">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-
 
                             <div class="col-md-4">
                                 <div class="form-group">

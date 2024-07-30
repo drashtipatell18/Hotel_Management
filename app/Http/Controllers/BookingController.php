@@ -95,7 +95,9 @@ class BookingController extends Controller
         ->where('floor_id', $bookingEdit->floor_id)
         ->pluck('room_number', 'id');
 
-        $selectedCustomer = $bookingEdit->customer_id;
+        $customer = DB::table('customers')->where('id', $bookingEdit->customer_id)->first();
+        $selectedCustomerId = $bookingEdit->customer_id;
+
 
         return view('formbooking.bookingedit', [
             'bookingEdit' => $bookingEdit,
@@ -103,10 +105,8 @@ class BookingController extends Controller
             'roomTypes' => $roomTypes,
             'roomNumbers' => $roomNumbers,
             'floors' => $floors,
-            'selectedCustomer' => $selectedCustomer
+            'selectedCustomerId' => $selectedCustomerId
         ]);
-
-        // return view('formbooking.bookingedit',compact('bookingEdit','users','roomTypes','roomNumbers','floors','selectedCustomer' => $customer->id ?? null));
     }
 
 
