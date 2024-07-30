@@ -189,19 +189,23 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="aadharcard" name="aadharcard" onchange="previewImage(event, 'profilePicPreview')">
+                                                <input type="file" class="custom-file-input" id="aadharcard" name="aadharcard" onchange="previewImage(event, 'aadharcardPreview')">
                                                 <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $customerEdit->aadharcard }}">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <a href="#">
-                                                <img class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$customerEdit->aadharcard) }}" alt="{{ $customerEdit->aadharcard }}">
+                                                <img id="aadharcardPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$customerEdit->aadharcard) }}" alt="{{ $customerEdit->aadharcard }}">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
 
                             <div class="col-md-4">
                                 <div class="form-group">

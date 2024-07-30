@@ -23,6 +23,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Food Image</th>
                                                 <th>Food Name</th>
                                                 <th>Description</th>
                                                 <th class="text-right">Actions</th>
@@ -32,6 +33,13 @@
                                             @foreach ($foods as $food )
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="profile.html" class="avatar avatar-sm mr-2">
+                                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$food->food_image) }}" alt="{{ $food->food_image }}">
+                                                        </a>
+                                                    </h2>
+                                                </td>
                                                 <td>{{ $food->food_name }}</td>
                                                 <td>{{ $food->description }}</td>
                                                 <td class="text-right">

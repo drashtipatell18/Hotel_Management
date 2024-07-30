@@ -95,7 +95,6 @@ class StaffController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'phone' => 'required|digits:10',
-            'position_id' => 'required',
             'salary' => 'required|integer',
             'birth_date' => 'required',
             'hire_date' => 'required',

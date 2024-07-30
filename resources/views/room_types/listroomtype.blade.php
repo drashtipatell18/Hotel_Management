@@ -22,6 +22,7 @@
                                     <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
+                                                <th>RoomType Image</th>
                                                 <th>RoomType Name</th>
                                                 <th>Member Capacity</th>
                                                 <th>Base Price</th>
@@ -36,6 +37,7 @@
                                         <tbody>
                                             @foreach ($roomTypes as $roomType)
                                                 <tr>
+                                                    <td><img class="avatar-img rounded-squre" src="{{ URL::to('/assets/upload/'.$roomType->room_image) }}" alt="{{ $roomType->room_image }}" width="80px"></td>
                                                     <td>{{ $roomType->room_name }}</td>
                                                     <td>{{ $roomType->capacity }}</td>
                                                     <td>{{ $roomType->base_price }}</td>
