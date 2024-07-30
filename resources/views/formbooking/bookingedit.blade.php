@@ -19,6 +19,9 @@
             white-space: nowrap;
             z-index: 2;
         }
+        .top-contant{
+            margin-top: -12px;
+        }
     </style>
     {{-- message --}}
     {!! Toastr::message() !!}
@@ -175,11 +178,11 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="">
-                                                <input type="text" id="check_in_date" class="form-control" name="check_in_date" value="{{ $bookingEdit->check_in_date }}">
+                                                <input type="date" id="check_in_date" class="form-control" name="check_in_date" value="{{ $bookingEdit->check_in_date }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="time" class="form-control @error('check_in_time') is-invalid @enderror"  name="check_in_time" id="check_in_time" value="{{ $bookingEdit->check_in_time }}">
+                                        <div class="col-md-4" style="margin-top: -32px">
+                                            <label>Check In Date</label><input type="time" class="form-control @error('check_in_time') is-invalid @enderror"  name="check_in_time" id="check_in_time" value="{{ $bookingEdit->check_in_time }}">
                                             @error('check_in_time')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
@@ -193,11 +196,11 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="">
-                                                <input type="text" id="check_out_date" class="form-control" name="check_out_date" value="{{ $bookingEdit->check_out_date }}">
+                                                <input type="date" id="check_out_date" class="form-control" name="check_out_date" value="{{ $bookingEdit->check_out_date }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="time" class="form-control @error('check_out_time') is-invalid @enderror"  name="check_out_time" id="check_out_time" value="{{ $bookingEdit->check_out_time }}">
+                                        <div class="col-md-4" style="margin-top: -32px">
+                                            <label>Check Out Date</label><input type="time" class="form-control @error('check_out_time') is-invalid @enderror"  name="check_out_time" id="check_out_time" value="{{ $bookingEdit->check_out_time }}">
                                             @error('check_out_time')
                                                 <div class="error text-danger">{{ $message }}</div>
                                             @enderror
