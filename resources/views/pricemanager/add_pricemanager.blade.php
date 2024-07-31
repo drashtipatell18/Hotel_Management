@@ -115,7 +115,7 @@
                                 <tbody>
                                     @foreach ($priceManagers as $price)
                                         <tr>
-                                            <td>{{ $price->id }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $price->roomType ? $price->roomType->room_name : 'N/A' }}</td>
                                             <td>{{ $price->monday_price }}</td>
                                             <td>{{ $price->tuesday_price }}</td>

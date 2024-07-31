@@ -21,6 +21,14 @@
             margin-bottom: 15px;
             /* Adjust the spacing between textboxes */
         }
+        .samethemebutton{
+            background: #009688;
+           color: white;
+        }
+        .samethemebutton a:hover{
+            background: #009688;
+
+        }
     </style>
 
     {{-- message --}}
@@ -64,9 +72,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Base Price</label>
-                                    <input type="number" id="base_price"
-                                        class="form-control @error('base_price') is-invalid @enderror" name="base_price"
-                                        value="{{ old('base_price', $roomtype->base_price ?? '') }}">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                                <input type="number" id="base_price"
+                                                class="form-control @error('base_price') is-invalid @enderror" name="base_price"
+                                                value="{{ old('base_price', $roomtype->base_price ?? '') }}">
+                                        </div>
+                                        <div class="col-md-4 samethemebutton">
+                                            <a href="{{ route('daily-price.list') }}" class="btn btn-outline" style="color:white">
+                                                <i class="fa fa-coins"></i> Daily Price List
+                                            </a>
+                                        </div>
+                                    </div>
+
                                     @error('base_price')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror

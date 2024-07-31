@@ -173,8 +173,8 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary buttonedit ml-2">Save</button>
-                <button type="button" class="btn btn-primary buttonedit">Cancel</button>
+                <button type="submit" class="btn btn-primary buttonedit ml-2">Add Room</button>
+
             </form>
         </div>
     </div>

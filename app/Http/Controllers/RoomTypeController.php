@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Amenities;
+use App\Models\PriceManger;
 use Illuminate\Http\Request;
 use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RoomTypeController extends Controller
 {
@@ -142,5 +144,21 @@ class RoomTypeController extends Controller
         $roomType->save();
 
         return response()->json(['status' => 'success', 'new_status' => $roomType->status]);
+    }
+    public function dailyPriceList()
+    {
+        $priceManagers = PriceManger::with('roomType')->get();
+        $startOfWeek = Carbon::now()->startOfWeek(); // Start of current week
+        $dates = [
+            'Monday' => $startOfWeek->format('d-m-Y'),
+            'Tuesday' => $startOfWeek->addDay()->format('d-m-Y'),
+            'Wednesday' => $startOfWeek->addDay()->format('d-m-Y'),
+            'Thursday' => $startOfWeek->addDay()->format('d-m-Y'),
+            'Friday' => $startOfWeek->addDay()->format('d-m-Y'),
+            'Saturday' => $startOfWeek->addDay()->format('d-m-Y'),
+            'Sunday' => $startOfWeek->addDay()->format('d-m-Y')
+        ];
+
+        return view('room_types/list_dailyprice',compact('priceManagers','dates'));
     }
 }

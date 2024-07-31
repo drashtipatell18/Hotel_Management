@@ -182,6 +182,7 @@ Route::controller(RoomTypeController::class)->group(function () {
     Route::post('roomtype/update/{id}', 'roomtypeUpdate')->name('roomtype/update');
     Route::get('/roomtype/delete/{id}','roomtypeDelete')->name('roomtype.delete');
     Route::post('/update-roomtype-status',  'updateStatus')->name('update.roomtype.status');
+    Route::get('daily-price/list', 'dailyPriceList')->name('daily-price.list');
 });
 
 // Floor
@@ -243,6 +244,5 @@ Route::controller(PriceManagerController::class)->group(function () {
     Route::post('pricemanager/store', 'priceManagerStore')->name('pricemanager/store');
     Route::get('pricemanager/edit/{id}', 'pricemanagerEdit');
     Route::get('/pricemanager/delete/{id}','pricemanagerDelete')->name('pricemanager.delete');
-    // Route::post('/update-staff-status',  'updateStatus')->name('update.staff.status');
 
 });
