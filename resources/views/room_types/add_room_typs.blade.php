@@ -78,8 +78,8 @@
                                                 class="form-control @error('base_price') is-invalid @enderror" name="base_price"
                                                 value="{{ old('base_price', $roomtype->base_price ?? '') }}">
                                         </div>
-                                        <div class="col-md-4 samethemebutton">
-                                            <a href="{{ route('daily-price.list') }}" class="btn btn-outline" style="color:white">
+                                        <div class="col-md-5">
+                                            <a href="{{ route('daily-price.list') }}" class="btn btn-primary" style="color:white">
                                                 <i class="fa fa-coins"></i> Daily Price List
                                             </a>
                                         </div>
