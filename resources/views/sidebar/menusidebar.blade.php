@@ -62,6 +62,12 @@
                     <a href="{{ route('staff/list') }}"><i class="fas fa-user"></i><span>Staff</span></a>
                 </li>
 
+                <li class="{{ set_active(['pricemanager/add']) }}">
+                    <a href="{{ route('pricemanager/add') }}">
+                        <img src="{{ url('assets/icons/price.png') }}" style="width: 20px; height:20px"><span>Price Manager</span>
+                    </a>
+                </li>
+
                 <li class="submenu">
                     <a href="#">
                         <i class="fa fa-user-plus"></i>

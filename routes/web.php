@@ -19,6 +19,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\PriceManagerController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StaffController;
 
@@ -231,5 +232,17 @@ Route::controller(StaffController::class)->group(function () {
     Route::post('staff/update/{id}', 'staffUpdate')->name('staff/update');
     Route::get('/staff/delete/{id}','staffDelete')->name('staff.delete');
     Route::post('/update-staff-status',  'updateStatus')->name('update.staff.status');
+
+});
+
+
+// Price Manager
+
+Route::controller(PriceManagerController::class)->group(function () {
+    Route::get('pricemanager/add', 'priceManagerCreate')->name('pricemanager/add');
+    Route::post('pricemanager/store', 'priceManagerStore')->name('pricemanager/store');
+    Route::get('pricemanager/edit/{id}', 'pricemanagerEdit');
+    Route::get('/pricemanager/delete/{id}','pricemanagerDelete')->name('pricemanager.delete');
+    // Route::post('/update-staff-status',  'updateStatus')->name('update.staff.status');
 
 });
