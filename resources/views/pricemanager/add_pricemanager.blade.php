@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('content')
 <style>
     .avatar {
@@ -72,7 +71,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div class="day-price-grid">
                                 <label>Prices for Each Day of the Week</label>
@@ -126,7 +124,7 @@
                                             <td>{{ $price->sunday_price }}</td>
                                             <td class="text-right">
                                                 <a class="dropdown-item-sm" style="font-size: 23px; padding: 5px; color: #009688;" href="{{ url('pricemanager/edit/'.$price->id) }}"><i class="fas fa-pencil-alt fa-xs"></i></a>
-                                                <a href="{{ route('pricemanager.delete', ['id' => $price->id]) }}" onclick="return confirm('Are you sure you want to delete this Position?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                <a href="{{ route('pricemanager.delete', ['id' => $price->id]) }}" onclick="return confirm('Are you sure you want to delete this Price Manager?');" style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-trash fa-xs"></i>
                                                 </a>
                                             </td>
@@ -139,7 +137,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

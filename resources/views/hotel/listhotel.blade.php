@@ -19,6 +19,15 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background: #009688 !important;
         }
+        .fa-star {
+            font-size: 1.2rem; /* Adjust size as needed */
+        }
+        .text-warning {
+            color: #ffd700; /* Gold color for filled stars */
+        }
+        .text-muted {
+            color: #e0e0e0; /* Gray color for empty stars */
+        }
     </style>
     {{-- message --}}
     {!! Toastr::message() !!}
@@ -58,7 +67,11 @@
                                                 <td>{{ $hotelList->name }}</td>
                                                 <td>{{ $hotelList->email }}</td>
                                                 <td>{{ $hotelList->phone }}</td>
-                                                <td>{{ $hotelList->stars }}</td>
+                                                <td>
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <i class="fas fa-star {{ $hotelList->stars >= $i ? 'text-warning' : 'text-muted' }}"></i>
+                                                    @endfor
+                                                </td>
                                                 <td>{{ $hotelList->address }}</td>
                                                 <td>
                                                     <a href="javascript:void(0);"
