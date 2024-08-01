@@ -1,5 +1,19 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background: linear-gradient(to bottom right, rgba(0, 128, 128, 0.8), rgba(0, 1, 17, 1)), url(http://127.0.0.1:8000/assets/img/product/product-03.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+</style>
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
             <div class="container">
