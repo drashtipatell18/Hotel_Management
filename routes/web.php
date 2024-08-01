@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ResetPasswordController;
@@ -91,6 +92,13 @@ Route::controller(ResetPasswordController::class)->group(function () {
     Route::post('reset-password', 'updatePassword');
 });
 
+// Change Password
+Route::middleware(['auth'])->group(function () {
+    Route::get('/change-password', [ChangePasswordController::class, 'changePassword'])->name('password.change');
+    Route::post('/change-password/store', [ChangePasswordController::class, 'changePasswordStore'])->name('password.change.store');
+});
+
+
 
 // ----------------------------- booking -----------------------------//
 Route::controller(BookingController::class)->group(function () {
@@ -139,7 +147,7 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('users/update', 'userUpdate')->name('users/update'); /** update record */
     Route::get('users/delete/{id}', 'userDelete')->name('users/delete'); /** delere record */
     Route::get('get-users-data', 'getUsersData')->name('get-users-data'); /** get all data users */
-});
+}); 
 
 // ----------------------------- employee -----------------------------//
 Route::controller(EmployeeController::class)->group(function () {

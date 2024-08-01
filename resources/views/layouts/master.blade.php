@@ -119,7 +119,9 @@
 							</div>
 						<a class="dropdown-item" href="{{ route('profile') }}">My Profile</a>
 						<a class="dropdown-item" href="settings.html">Account Settings</a>
+						<a class="dropdown-item" href="{{route('password.change')}}">Change Password</a>
 						<a class="dropdown-item" href="{{route('logout')}}">Logout</a>
+
 					</div>
 				</li>
 			</ul>
