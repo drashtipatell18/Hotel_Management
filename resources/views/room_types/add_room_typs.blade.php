@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row formtype">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>RoomType Name</label>
                                     <input type="text" class="form-control @error('room_name') is-invalid @enderror"
@@ -58,34 +58,12 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Member Capacity</label>
                                     <input type="number" class="form-control @error('capacity') is-invalid @enderror"
                                         name="capacity" value="{{ old('capacity', $roomtype->capacity ?? '') }}">
                                     @error('capacity')
-                                        <div class="error text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Base Price</label>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                                <input type="number" id="base_price"
-                                                class="form-control @error('base_price') is-invalid @enderror" name="base_price"
-                                                value="{{ old('base_price', $roomtype->base_price ?? '') }}">
-                                        </div>
-                                        <div class="col-md-5">
-                                            <a href="{{ route('daily-price.list') }}" class="btn btn-primary" style="color:white">
-                                                <i class="fa fa-coins"></i> Daily Price List
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    @error('base_price')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

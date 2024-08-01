@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('per_extra_bed_price')->nullable();
             $table->integer('extra_bed_quantity')->nullable();
             $table->string('amenities_id')->nullable();
-            $table->integer('base_price');
+            $table->integer('base_price')->nullable();
             $table->integer('extra_bed_price')->nullable();
             $table->string('room_image')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');

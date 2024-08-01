@@ -28,7 +28,6 @@ class RoomTypeController extends Controller
             // 'extra_bed_quantity' => 'required',
             'amenities_id' => 'required|array',
             'amenities_id.*' => 'exists:amenities,id',
-            'base_price' => 'required|numeric|min:0',
             'room_image' => 'required',
             'description' => 'required|nullable|string',
         ]);
@@ -46,7 +45,6 @@ class RoomTypeController extends Controller
                 'per_extra_bed_price'=> $request->input('per_extra_bed_price'),
                 'extra_bed_quantity' => $request->input('extra_bed_quantity', 0),
                 'amenities_id' => implode(",", $request->input('amenities_id')),
-                'base_price' => $request->input('base_price'),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
                 'room_image' => $file_name,
@@ -84,7 +82,6 @@ class RoomTypeController extends Controller
             'capacity' => 'required|integer|min:1',
             'extra_bed_quantity' => 'nullable|required_if:extra_bed,1|integer|min:0',
             'amenities_id' => 'required|exists:amenities,id',
-            'base_price' => 'required|numeric|min:0',
             'extra_bed_price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
              'room_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -109,7 +106,6 @@ class RoomTypeController extends Controller
                 'per_extra_bed_price' => $request->input('per_extra_bed_price'),
                 'extra_bed_quantity' => $request->input('extra_bed_quantity', 0),
                 'amenities_id' => implode(",", $request->input('amenities_id')),
-                'base_price' => $request->input('base_price'),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
                 'room_image' => $roomType->room_image ?? $roomType->getOriginal('room_image')

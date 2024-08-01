@@ -68,6 +68,24 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['event/list']) }}">
+                    <a href="{{ route('event/list') }}">
+                        <img src="{{ url('assets/icons/event.png') }}" style="width: 20px; height:20px"><span>Events</span>
+                    </a>
+                </li>
+
+                <li class="{{ set_active(['halltype/list']) }}">
+                    <a href="{{ route('halltype/list') }}">
+                        <img src="{{ url('assets/icons/hall.png') }}" style="width: 20px; height:20px"><span>Hall Types</span>
+                    </a>
+                </li>
+
+                <li class="{{ set_active(['hall/list']) }}">
+                    <a href="{{ route('hall/list') }}">
+                        <img src="{{ url('assets/icons/hall.png') }}" style="width: 20px; height:20px"><span>Halls</span>
+                    </a>
+                </li>
+
                 <li class="submenu">
                     <a href="#">
                         <i class="fa fa-user-plus"></i>
