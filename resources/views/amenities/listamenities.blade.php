@@ -33,7 +33,9 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img class="avatar-img rounded-squre" src="{{ URL::to('/assets/amenities/'.$amenities->image) }}" alt="{{ $amenities->image }}" width="80px">
+                                                    <a href="{{ URL::to('/assets/amenities/'.$amenities->image) }}" data-lightbox="amenities" data-title="{{ $amenities->name }}" class="avatar avatar-sm mr-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/amenities/'.$amenities->image) }}" alt="{{ $amenities->image }}" width="80px">
+                                                    </a>
                                                 </td>
                                                 <td>{{ $amenities->name }}</td>
                                                 <td>{{ $amenities->description }}</td>
@@ -47,6 +49,7 @@
                                                 </td>
                                             </tr>
                                             @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>

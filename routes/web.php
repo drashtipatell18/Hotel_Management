@@ -166,6 +166,7 @@ Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/edit/{id}', 'hotelEdit');
     Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
     Route::post('/update-hotel-status','updateStatus')->name('update.hotel.status');
+    Route::delete('/hotel/image/delete/{id}', [HotelController::class, 'deleteImage'])->name('hotel.image.delete');
 });
 
 // Amenities

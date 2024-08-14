@@ -51,6 +51,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Hotel Image</th>
                                                 <th>Name</th>
                                                 <th>email</th>
                                                 <th>Phone</th>
@@ -64,6 +65,20 @@
                                             @foreach ($allHotelList as $hotelList )
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    @if($hotelList->images->isNotEmpty())
+                                                        <a href="{{ URL::to('/assets/hotel/'.$hotelList->images->first()->hotel_image) }}" data-lightbox="hotel-{{ $hotelList->id }}" data-title="{{ $hotelList->name }}" class="avatar avatar-sm mr-2">
+                                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/hotel/'.$hotelList->images->first()->hotel_image) }}" alt="{{ $hotelList->name }}" width="80px">
+                                                        </a>
+                                                        @foreach ($hotelList->images->slice(1) as $image)
+                                                            <a href="{{ URL::to('/assets/hotel/'.$image->hotel_image) }}" data-lightbox="hotel-{{ $hotelList->id }}" data-title="{{ $hotelList->name }}" style="display: none;">
+                                                                <img src="{{ URL::to('/assets/hotel/'.$image->hotel_image) }}" alt="{{ $hotelList->name }}">
+                                                            </a>
+                                                        @endforeach
+                                                    @else
+                                                        <span>No Image Available</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $hotelList->name }}</td>
                                                 <td>{{ $hotelList->email }}</td>
                                                 <td>{{ $hotelList->phone }}</td>
