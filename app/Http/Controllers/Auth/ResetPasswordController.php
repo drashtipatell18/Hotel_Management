@@ -4,34 +4,47 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\User;
-use Hash;
-use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function getPassword($token)
+   public function resetPassword($token)
     {
-
-       return view('auth.passwords.reset', ['token' => $token]);
+        $user = User::where('remember_token','=',$token)->first();
+        if(!empty($user)){
+            $data['user'] = $user;
+            $data['token'] = $user->remember_token;
+            return view('auth.password.reset_password', $data);
+        }
     }
-    public function updatePassword(Request $request)
+
+    public function restePasswordStore($token, Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required',
+            'new_password' => 'required|string|min:8',
+            'confirm_password' => 'required|string|min:8|same:new_password',
         ]);
 
-        $updatePassword = DB::table('password_resets')->where(['email' => $request->email, 'token' => $request->token])->first();
-        if (!$updatePassword) {
-            Toastr::error('Invalid token! :)','Error');
-            return back();
-        } else {
-            $user = User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
-            DB::table('password_resets')->where(['email'=> $request->email])->delete();
-            Toastr::success('Your password has been changed! :)','Success');
-            return redirect('/login');
+        // Debugging - check values of the passwords
+        // dd($request->all());
+        
+        if ($request->new_password !== $request->confirm_password) {
+            return redirect()->back()->with('danger', 'The new password confirmation does not match.');
         }
-       
+
+        $user = User::where('remember_token', '=', $token)->first();
+        if (!empty($user)) {
+            if (empty($user->email_verified_at)) {
+                $user->email_verified_at = now();
+            }
+            $user->remember_token = Str::random(40);
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            return redirect('/login')->with('success', 'Password successfully reset.');
+        } else {
+            return redirect()->back()->with('danger', 'Invalid token or user not found.');
+        }
     }
+
 }

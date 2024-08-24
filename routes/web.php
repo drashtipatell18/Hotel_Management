@@ -13,10 +13,10 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\FoodController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PositionController;
@@ -82,14 +82,14 @@ Route::controller(RegisterController::class)->group(function () {
 
 // ----------------------------- forget password ----------------------------//
 Route::controller(ForgotPasswordController::class)->group(function () {
-    Route::get('forget-password', 'getEmail')->name('forget-password');
-    Route::post('forget-password', 'postEmail')->name('forget-password');
+    Route::get('forget/password', 'showForgetPasswordForm')->name('forget.password');
+    Route::post('forget/password', 'sendResetPasswordEmailLink')->name('send.resetpassword.emaillink');
 });
 
 // ----------------------------- reset password -----------------------------//
 Route::controller(ResetPasswordController::class)->group(function () {
-    Route::get('reset-password/{token}', 'getPassword');
-    Route::post('reset-password', 'updatePassword');
+    Route::get('reset/password/{token}', 'resetPassword')->name('reset.password');
+    Route::post('reset/password/{token}', 'restePasswordStore')->name('reset.password.store');
 });
 
 // Change Password
@@ -119,7 +119,7 @@ Route::controller(BookingController::class)->group(function () {
 Route::controller(CustomerController::class)->group(function () {
     Route::get('form/allcustomers/page', 'allCustomers')->middleware('auth')->name('form/allcustomers/page');
     Route::get('form/addcustomer/page', 'addCustomer')->middleware('auth')->name('form/addcustomer/page');
-    Route::post('form/addcustomer/save', 'saveCustomer')->middleware('auth')->name('form/addcustomer/save');
+    Route::post('form/addcustomer/save', 'saveCustomer')->middleware('auth')->name('form/addcustomer/save'); 
     Route::get('form/customer/edit/{id}', 'updateCustomer')->middleware('auth');
     Route::post('form/customer/update/{id}', 'updateRecord')->name('form/customer/update');
     Route::post('form/customer/delete', 'deleteRecord')->middleware('auth')->name('form/customer/delete');
@@ -254,3 +254,4 @@ Route::controller(PriceManagerController::class)->group(function () {
     Route::get('/pricemanager/delete/{id}','pricemanagerDelete')->name('pricemanager.delete');
 
 });
+

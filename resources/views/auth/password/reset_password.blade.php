@@ -12,17 +12,9 @@
                         <div class="login-right-wrap">
                             {!! Toastr::message() !!}
                             <h1 class="mb-3">Reset Password</h1>
-                            <form method="POST" action="{{ route('post_reset', ['token' => $token]) }}">
+                            <form method="POST" action="{{ route('reset.password.store', ['token' => $token]) }}">
                                 @csrf
-                                {{-- <input type="hidden" name="token" value="{{ $token }}"> --}}
-                                {{-- <div class="form-group">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Enter Email" value="{{ old('email') }}" required autocomplete="email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div> --}}
+                                <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="form-group">
                                     <input id="password" type="password"
                                         class="form-control @error('new_password') is-invalid @enderror" name="new_password"
@@ -48,15 +40,6 @@
                                     <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
                                 </div>
                             </form>
-                            {{-- <div class="login-or">
-                            <span class="or-line"></span>
-                            <span class="span-or">or</span>
-                        </div>
-                        <div class="social-login">
-                            <span>Register with</span>
-                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="google"><i class="fab fa-google"></i></a>
-                        </div> --}}
                             <div class="text-center dont-have">Already have an account? <a
                                     href="{{ route('login') }}">Login</a></div>
                         </div>
