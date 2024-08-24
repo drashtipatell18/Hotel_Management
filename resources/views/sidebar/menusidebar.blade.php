@@ -18,12 +18,6 @@
                     </a>
                 </li>
 
-                <li class="{{ set_active(['roomtype/list']) }}">
-                    <a href="{{ route('roomtype/list') }}">
-                        <img src="{{ url('assets/icons/room_types.png') }}" style="width: 20px; height:20px"><span>Room Type</span>
-                    </a>
-                </li>
-
                 <li class="{{ set_active(['floor/list']) }}">
                     <a href="{{ route('floor/list') }}">
                         <img src="{{ url('assets/icons/floor.png') }}" style="width: 20px; height:20px"><span>Floors</span>
@@ -40,11 +34,19 @@
                     <a href="{{ route('form/allcustomers/page') }}"><i class="fas fa-user"></i> <span>Customers</span></a>
                 </li>
 
-                <li class="{{ set_active(['form/allrooms/page']) }}">
-                    <a href="{{ route('form/allrooms/page') }}">
-                        <img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px"><span>Rooms</span>
+
+                <li class="submenu">
+                    <a href="#">
+                        <img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px">
+                        <span> Rooms </span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a class="{{ set_active(['roomtype/list']) }}" href="{{ route('roomtype/list') }}">Room Types</a></li>
+                        <li><a class="{{ set_active(['form/allrooms/page']) }}" href="{{ route('form/allrooms/page') }}">Rooms</a></li>
+                    </ul>
                 </li>
+
 
                 <li class="{{ set_active(['form/allbooking']) }}">
                     <a href="{{ route('form/allbooking') }}">
@@ -66,6 +68,24 @@
                     <a href="{{ route('pricemanager/add') }}">
                         <img src="{{ url('assets/icons/price.png') }}" style="width: 20px; height:20px"><span>Price Manager</span>
                     </a>
+                </li>
+
+                <li class="{{ set_active(['event/list']) }}">
+                    <a href="{{ route('event/list') }}">
+                        <img src="{{ url('assets/icons/event.png') }}" style="width: 20px; height:20px"><span>Events</span>
+                    </a>
+                </li>
+
+                <li class="submenu">
+                    <a href="#">
+                        <img src="{{ url('assets/icons/hall.png') }}" style="width: 20px; height:20px">
+                        <span> Halls </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a class="{{ set_active(['halltype/list']) }}" href="{{ route('halltype/list') }}">Hall Types</a></li>
+                        <li><a class="{{ set_active(['hall/list']) }}" href="{{ route('hall/list') }}">Halls</a></li>
+                    </ul>
                 </li>
 
                 <li class="submenu">

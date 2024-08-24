@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">
@@ -8,8 +9,8 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Amenities</h4> <a href="{{ route('amenities/add') }}" class="btn btn-primary float-right veiwbutton"><i
-                                class="fas fa-plus mr-2"></i>Add Amenities</a> </div>
+                            <h4 class="card-title float-left mt-2">Events</h4> <a href="{{ route('event/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                class="fas fa-plus mr-2"></i>Add Event</a> </div>
                         </div>
                     </div>
                 </div>
@@ -22,34 +23,38 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Image</th>
-                                                <th>Amenities Name</th>
+                                                <th>Event Image</th>
+                                                <th>Event Name</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
                                                 <th>Description</th>
                                                 <th class="text-right">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($allAmenitiesList as $amenities )
+                                            @foreach ($event as $even )
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ URL::to('/assets/amenities/'.$amenities->image) }}" data-lightbox="amenities" data-title="{{ $amenities->name }}" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/amenities/'.$amenities->image) }}" alt="{{ $amenities->image }}" width="80px">
-                                                    </a>
+                                                    <h2 class="table-avatar">
+                                                        <a href="profile.html" class="avatar avatar-sm mr-2">
+                                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$even->event_image) }}" alt="{{ $even->event_image }}">
+                                                        </a>
+                                                    </h2>
                                                 </td>
-                                                <td>{{ $amenities->name }}</td>
-                                                <td>{{ $amenities->description }}</td>
+                                                <td>{{ $even->event_name }}</td>
+                                                <td>{{ $even->start_date }}</td>
+                                                <td>{{ $even->end_date }}</td>
+                                                <td>{{ $even->description }}</td>
                                                 <td class="text-right">
-                                                    <a href="{{ url('amenities/edit/'.$amenities->id) }}" style="font-size: 23px; padding: 5px; color: #009688;">
-                                                        <i class="fas fa-pencil-alt fa-xs"></i>
-                                                    </a>
-                                                    <a href="{{ route('amenities.delete', ['id' => $amenities->id]) }}" onclick="return confirm('Are you sure you want to delete this Amenities?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <a class="dropdown-item-sm" style="font-size: 23px; padding: 5px; color: #009688;"  href="{{ url('event/edit/'.$even->id) }}"><i class="fas fa-pencil-alt fa-xs"></i></a>
+
+                                                    <a href="{{ route('event.delete', ['id' => $even->id]) }}" onclick="return confirm('Are you sure you want to delete this Event?');" style="font-size: 23px; padding: 5px; color: #009688;">
                                                         <i class="fas fa-trash fa-xs"></i>
                                                     </a>
                                                 </td>
                                             </tr>
                                             @endforeach
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -60,10 +65,10 @@
             </div>
         </div>
         @section('script')
-        <script>
-            $(document).ready(function() {
-                $('.datatable1').DataTable();
-            });
-        </script>
+            <script>
+                $(document).ready(function() {
+                            $('.datatable1').DataTable();
+                });
+            </script>
         @endsection
 @endsection

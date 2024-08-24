@@ -13,10 +13,18 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
+
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\FoodController;
+
+use App\Http\Controllers\EventController;
+
+
+use App\Http\Controllers\HallController;
+use App\Http\Controllers\HallTypeController;
+
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PositionController;
@@ -98,8 +106,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/change-password/store', [ChangePasswordController::class, 'changePasswordStore'])->name('password.change.store');
 });
 
-
-
 // ----------------------------- booking -----------------------------//
 Route::controller(BookingController::class)->group(function () {
     Route::get('form/allbooking', 'allbooking')->name('form/allbooking')->middleware('auth');
@@ -147,7 +153,7 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('users/update', 'userUpdate')->name('users/update'); /** update record */
     Route::get('users/delete/{id}', 'userDelete')->name('users/delete'); /** delere record */
     Route::get('get-users-data', 'getUsersData')->name('get-users-data'); /** get all data users */
-}); 
+});
 
 // ----------------------------- employee -----------------------------//
 Route::controller(EmployeeController::class)->group(function () {
@@ -158,7 +164,6 @@ Route::controller(EmployeeController::class)->group(function () {
 
 
 // Hotel
-
 Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/add', 'hotelCreate')->name('hotel/add');
     Route::post('hotel/store', 'hotelStore')->name('hotel/store');
@@ -166,10 +171,10 @@ Route::controller(HotelController::class)->group(function () {
     Route::get('hotel/edit/{id}', 'hotelEdit');
     Route::post('hotel/update/{id}', 'hotelUpdate')->name('hotel/update');
     Route::post('/update-hotel-status','updateStatus')->name('update.hotel.status');
+    Route::delete('/hotel/image/delete/{id}', [HotelController::class, 'deleteImage'])->name('hotel.image.delete');
 });
 
 // Amenities
-
 Route::controller(AmenitiesController::class)->group(function () {
     Route::get('amenities/add', 'amenitiesCreate')->name('amenities/add');
     Route::post('amenities/store', 'amenitiesStore')->name('amenities/store');
@@ -181,7 +186,6 @@ Route::controller(AmenitiesController::class)->group(function () {
 });
 
 // Room Type
-
 Route::controller(RoomTypeController::class)->group(function () {
     Route::get('roomtype/add', 'roomtypeCreate')->name('roomtype/add');
     Route::post('roomtype/store', 'roomtypeStore')->name('roomtype/store');
@@ -194,7 +198,6 @@ Route::controller(RoomTypeController::class)->group(function () {
 });
 
 // Floor
-
 Route::controller(FloorController::class)->group(function () {
     Route::get('floor/add', 'floorCreate')->name('floor/add');
     Route::post('floor/store', 'floorStore')->name('floor/store');
@@ -206,7 +209,6 @@ Route::controller(FloorController::class)->group(function () {
 });
 
 // Food
-
 Route::controller(FoodController::class)->group(function () {
     Route::get('food/add', 'foodCreate')->name('food/add');
     Route::post('food/store', 'foodStore')->name('food/store');
@@ -217,9 +219,7 @@ Route::controller(FoodController::class)->group(function () {
 
 });
 
-
 // Positions
-
 Route::controller(PositionController::class)->group(function () {
     Route::get('position/add', 'positionCreate')->name('position/add');
     Route::post('position/store', 'positionStore')->name('position/store');
@@ -227,12 +227,9 @@ Route::controller(PositionController::class)->group(function () {
     Route::get('position/edit/{id}', 'positionEdit');
     Route::post('position/update/{id}', 'positionUpdate')->name('position/update');
     Route::get('/position/delete/{id}','positionDelete')->name('position.delete');
-
 });
 
-
 // Staff
-
 Route::controller(StaffController::class)->group(function () {
     Route::get('staff/add', 'staffCreate')->name('staff/add');
     Route::post('staff/store', 'staffStore')->name('staff/store');
@@ -241,17 +238,46 @@ Route::controller(StaffController::class)->group(function () {
     Route::post('staff/update/{id}', 'staffUpdate')->name('staff/update');
     Route::get('/staff/delete/{id}','staffDelete')->name('staff.delete');
     Route::post('/update-staff-status',  'updateStatus')->name('update.staff.status');
-
 });
 
-
 // Price Manager
-
 Route::controller(PriceManagerController::class)->group(function () {
     Route::get('pricemanager/add', 'priceManagerCreate')->name('pricemanager/add');
     Route::post('pricemanager/store', 'priceManagerStore')->name('pricemanager/store');
     Route::get('pricemanager/edit/{id}', 'pricemanagerEdit');
     Route::get('/pricemanager/delete/{id}','pricemanagerDelete')->name('pricemanager.delete');
 
+});
+
+// Event
+Route::controller(EventController::class)->group(function () {
+    Route::get('event/add', 'eventCreate')->name('event/add');
+    Route::post('event/store', 'eventStore')->name('event/store');
+    Route::get('event/list', 'eventList')->name('event/list');
+    Route::get('event/edit/{id}', 'eventEdit');
+    Route::post('event/update/{id}', 'eventUpdate')->name('event/update');
+    Route::get('/event/delete/{id}','eventDelete')->name('event.delete');
+});
+
+// Hall Type
+Route::controller(HallTypeController::class)->group(function () {
+    Route::get('halltype/add', 'halltypeCreate')->name('halltype/add');
+    Route::post('halltype/store', 'halltypeStore')->name('halltype/store');
+    Route::get('halltype/list', 'halltypeList')->name('halltype/list');
+    Route::get('halltype/edit/{id}', 'halltypeEdit');
+    Route::post('halltype/update/{id}', 'halltypeUpdate')->name('halltype/update');
+    Route::get('/halltype/delete/{id}','halltypeDelete')->name('halltype.delete');
+    Route::post('/update-halltype-status',  'updateStatus')->name('update.halltype.status');
+});
+
+// Hall
+Route::controller(HallController::class)->group(function () {
+    Route::get('hall/add', 'hallCreate')->name('hall/add');
+    Route::post('hall/store', 'hallStore')->name('hall/store');
+    Route::get('hall/list', 'hallList')->name('hall/list');
+    Route::get('hall/edit/{id}', 'hallEdit');
+    Route::post('hall/update/{id}', 'hallUpdate')->name('hall/update');
+    Route::get('/hall/delete/{id}','hallDelete')->name('hall.delete');
+    Route::post('/update-hall-status',  'updateStatus')->name('update.hall.status');
 });
 

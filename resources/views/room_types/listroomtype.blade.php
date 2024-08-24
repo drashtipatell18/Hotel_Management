@@ -9,8 +9,13 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Room Types</h4> <a href="{{ route('roomtype/add') }}" class="btn btn-primary float-right veiwbutton"><i
-                                class="fas fa-plus mr-2"></i>Add Room Type</a> </div>
+                            <h4 class="card-title float-left mt-2">Room Types</h4>
+                                <a href="{{ route('daily-price.list') }}" class="btn btn-primary float-right" style="color:white;margin-left:20px !important">
+                                    <i class="fa fa-coins"></i> Daily Price List
+                                </a>
+                                <a href="{{ route('roomtype/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                    class="fas fa-plus mr-2"></i>Add Room Type</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,7 +30,6 @@
                                                 <th>RoomType Image</th>
                                                 <th>RoomType Name</th>
                                                 <th>Member Capacity</th>
-                                                <th>Base Price</th>
                                                 <th>Extra Bed</th>
                                                 <th>Per Extra Bed Price</th>
                                                 <th>Extra Bed Quantity</th>
@@ -40,7 +44,6 @@
                                                     <td><img class="avatar-img rounded-squre" src="{{ URL::to('/assets/upload/'.$roomType->room_image) }}" alt="{{ $roomType->room_image }}" width="80px"></td>
                                                     <td>{{ $roomType->room_name }}</td>
                                                     <td>{{ $roomType->capacity }}</td>
-                                                    <td>{{ $roomType->base_price }}</td>
                                                     <td>{{ $roomType->extra_bed ? 'Yes' : 'No' }}</td>
                                                     <td>{{ $roomType->per_extra_bed_price }}</td>
                                                     <td>{{ $roomType->extra_bed_quantity }}</td>

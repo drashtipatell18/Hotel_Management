@@ -64,6 +64,35 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="hotel_image">Hotel Images</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input @error('hotel_image') is-invalid @enderror" id="hotel_image" name="hotel_image[]" multiple onchange="previewImages(event)">
+                                        <label class="custom-file-label" for="hotel_image">Choose files</label>
+                                        @error('hotel_image')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row" id="imagePreview">
+                                    @foreach($hotelEdit->images as $image)
+                                        <div class="col-md-2 mb-3" id="image-{{ $image->id }}">
+                                            <div class="text-center">
+                                                <img src="{{ URL::to('/assets/hotel/'.$image->hotel_image) }}" alt="Hotel Image" class="img-fluid rounded mb-2" style="width: 100%; height: 100px; object-fit: cover;">
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="deleteImage('{{ $image->id }}')">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -74,7 +103,60 @@
         </div>
     </div>
     @section('script')
+  <script>
+        function previewImages(event) {
+            const previewContainer = document.getElementById('imagePreview');
+            const files = event.target.files;
 
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-fluid rounded mb-2';
+                    img.style.width = '100%';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+
+                    const div = document.createElement('div');
+                    div.className = 'col-md-2 mb-3';
+                    div.innerHTML = `
+                        <div class="text-center">
+                            ${img.outerHTML}
+                            <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </div>
+                    `;
+
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview(element) {
+            element.parentElement.parentElement.remove();
+        }
+        function deleteImage(imageId) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                $.ajax({
+                    url: '/hotel/image/delete/' + imageId, // Replace with your actual delete route
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Optionally reload the page or remove the image element
+                        } else {
+                            alert('Failed to delete the image');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
     @endsection
 
 @endsection

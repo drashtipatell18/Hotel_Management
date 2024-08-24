@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+
+</style>
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
             <div class="container">
