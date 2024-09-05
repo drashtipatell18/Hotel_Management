@@ -22,7 +22,17 @@
                             </div>
                             <div class="col ml-md-n2 profile-user-info">
                                 <h4 class="user-name mb-3">{{ Auth::user()->name }}</h4>
-                                <h6 class="text-muted mt-1">Manager</h6>
+                                <h6 class="text-muted mt-1">
+                                @if(Auth::user()->role == 0)
+                                    Admin
+                                @elseif(Auth::user()->role == 1)
+                                    Staff
+                                @elseif(Auth::user()->role == 2)
+                                    Account
+                                @elseif(Auth::user()->role == 3)
+                                    Customer
+                                @endif
+                                </h6>
                                 <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i> Florida, United States</div>
                                 <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                             </div>

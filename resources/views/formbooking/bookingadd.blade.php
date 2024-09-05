@@ -60,7 +60,7 @@
                                     @error('room_type_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-                                </div>update `user` set `email` = "IshaEsdcioioi" where `user` `id` = 2
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">

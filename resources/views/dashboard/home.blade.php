@@ -42,7 +42,7 @@
                         <div class="card-body">
                             <div class="dash-widget-header">
                                 <div>
-                                    <h3 class="card_widget_header">236</h3>
+                                    <h3 class="card_widget_header"><?php echo $bookingCount ?></h3>
                                     <h6 class="text-muted">Total Booking</h6> </div>
                                 <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -59,7 +59,7 @@
                         <div class="card-body">
                             <div class="dash-widget-header">
                                 <div>
-                                    <h3 class="card_widget_header">180</h3>
+                                    <h3 class="card_widget_header"><?php echo $availableRoomsCount; ?></h3>
                                     <h6 class="text-muted">Available Rooms</h6> </div>
                                 <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
                                 <line x1="12" y1="1" x2="12" y2="23"></line>

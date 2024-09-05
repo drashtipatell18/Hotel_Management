@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Amenities;
 use App\Models\PriceManger;
+use App\Models\RoomTypeImage;
 use Illuminate\Http\Request;
 use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class RoomTypeController extends Controller
 {
-    public function roomtypeCreate()
+    public function roomtypeCreate($id)
     {
         $roomtype = null;
+        $roomtype = RoomTypes::with('images')->where('id', $id)->firstOrFail();
         $amenities = Amenities::all();
         return view('room_types/add_room_typs',compact('amenities','roomtype'));
     }
@@ -33,12 +36,7 @@ class RoomTypeController extends Controller
         ]);
 
         try{
-
-            $room_type= $request->room_image;
-            $file_name = rand() . '.' .$room_type->getClientOriginalName();
-            $room_type->move(public_path('/assets/upload/'), $file_name);
-
-            RoomTypes::create([
+            $roomTypes = RoomTypes::create([
                 'room_name' => $request->input('room_name'),
                 'capacity' => $request->input('capacity'),
                 'extra_bed' => $request->has('extra_bed') ? 1 : 0,
@@ -47,10 +45,22 @@ class RoomTypeController extends Controller
                 'amenities_id' => implode(",", $request->input('amenities_id')),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
-                'room_image' => $file_name,
-
-
+                'base_price' => $request->input('base_price'),
             ]);
+
+            if ($request->hasFile('room_image')) {
+                foreach ($request->file('room_image') as $image) {
+                    $imageName = time().'_'.$image->getClientOriginalName();
+                    $image->move(public_path('/assets/upload/'), $imageName);
+
+                    // Store image in hotel_image table
+                    RoomTypeImage::create([
+                        'roomType_id' => $roomTypes->id,
+                        'room_image' => $imageName,
+                    ]);
+                }
+            }
+
             Toastr::success('Create new room type successfully :)','Success');
             return redirect()->route('roomtype/list');
         }
@@ -84,19 +94,23 @@ class RoomTypeController extends Controller
             'amenities_id' => 'required|exists:amenities,id',
             'extra_bed_price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
-             'room_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
         ]);
         $roomType = RoomTypes::findOrFail($id);
         try{
 
             if ($request->hasFile('room_image')) {
-                if (file_exists(public_path('/assets/upload/') . $roomType->room_image)) {
-                    unlink(public_path('/assets/upload/') . $roomType->room_image);
+                // Handle the new image upload
+                foreach ($request->file('room_image') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('/assets/upload/'), $imageName);
+
+                    // Store new image in room_type_image table
+                    RoomTypeImage::create([
+                        'roomType_id' => $roomType->id,
+                        'room_image' => $imageName,
+                    ]);
                 }
-                $room_image = $request->file('room_image');
-                $file_name = rand() . '.' . $room_image->getClientOriginalName();
-                $room_image->move(public_path('/assets/upload/'), $file_name);
-                $roomType->room_image = $file_name;
             }
 
             $roomType->update([
@@ -108,8 +122,11 @@ class RoomTypeController extends Controller
                 'amenities_id' => implode(",", $request->input('amenities_id')),
                 'extra_bed_price' => $request->input('extra_bed_price'),
                 'description' => $request->input('description'),
-                'room_image' => $roomType->room_image ?? $roomType->getOriginal('room_image')
+                'base_price' => $request->input('base_price'),
             ]);
+
+
+
             Toastr::success('Room type updated successfully :)','Success');
             return redirect()->route('roomtype/list');
         }
@@ -156,5 +173,20 @@ class RoomTypeController extends Controller
         ];
 
         return view('room_types/list_dailyprice',compact('priceManagers','dates'));
+    }
+
+
+    public function deleteImage($id)
+    {
+        $image = RoomTypeImage::findOrFail($id);
+        $imagePath = public_path('assets/upload/' . $image->room_image);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        // Delete the image record from the database
+        $image->delete();
+
+        return response()->json(['success' => true]);
     }
 }

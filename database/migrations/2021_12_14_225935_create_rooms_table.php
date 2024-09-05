@@ -24,6 +24,7 @@ class CreateRoomsTable extends Migration
             $table->string('rent')->nullable();
             $table->bigInteger('phone_number')->nullable();
             $table->string('image')->nullable();
+            $table->string('room_size')->nullable();
             $table->string('message')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

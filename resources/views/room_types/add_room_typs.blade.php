@@ -69,6 +69,16 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Base Price</label>
+                                        <input type="number" id="base_price" class="form-control @error('base_price') is-invalid @enderror" name="base_price" value="{{ old('base_price', $roomtype->base_price ?? '') }}">
+                                    @error('base_price')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Extra Bed:</label>
@@ -152,27 +162,42 @@
                     </div>
                 </div>
 
+
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row formtype">
-                            <div class="col-md-12">
-                                <label>Room Type Image</label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input type="file" class="form-control @error('room_image') is-invalid @enderror" name="room_image" id="room_image" accept="image/*">
-                                    </div>
-                                </div>
-                                @if(isset($roomtype) && $roomtype->room_image)
-                                    <img src="{{ url('/assets/upload/', $roomtype->room_image) }}" width="100px"><br/>
-                                @endif
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="roomType_image">Room Type Image</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input @error('room_image') is-invalid @enderror" id="room_image" name="room_image[]" multiple onchange="previewImages(event)">
+                                <label class="custom-file-label" for="room_image">Choose files</label>
                                 @error('room_image')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
 
+                        <div class="form-group mt-3">
+                            <label>Image Preview</label>
+                            <div id="imagePreview" class="row">
+                                <!-- Show existing images if editing -->
+                                @foreach($roomtype->images as $image)
+                                        <div class="col-md-2 mb-3" id="image-{{ $image->id }}">
+                                            <div class="text-center">
+                                                <img src="{{ URL::to('/assets/upload/'.$image->room_image) }}" alt="Room Type Image" class="img-fluid rounded mb-2" style="width: 100%; height: 100px; object-fit: cover;">
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="deleteImage('{{ $image->id }}')">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                <!-- Image previews for new uploads will be appended here -->
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -217,14 +242,15 @@
 
 <script>
     // Calculate  per_extra_bed_price  *  extra_bed_quantity
-
     document.addEventListener('DOMContentLoaded', function () {
         function calculateTotalExtraBedPrice() {
             var perExtraBedPrice = parseFloat(document.getElementById('per_extra_bed_price').value) || 0;
+
             var extraBedQuantity = parseInt(document.getElementById('extra_bed_quantity').value) || 0;
             var base_price = parseInt(document.getElementById('base_price').value) || 0;
 
             var totalExtraBedPrice = perExtraBedPrice * extraBedQuantity;
+            console.log(totalExtraBedPrice);
             var totalBasePrice = totalExtraBedPrice + base_price;
 
             document.getElementById('total_extra_bed_price').textContent = totalExtraBedPrice.toFixed(2); // Update the displayed total price
@@ -237,7 +263,63 @@
         calculateTotalExtraBedPrice();
     });
 </script>
+<script>
+    // Image Preview
+    function previewImages(event) {
+      const previewContainer = document.getElementById('imagePreview');
+      const files = event.target.files;
 
+      for (const file of files) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.className = 'img-fluid rounded mb-2';
+              img.style.width = '100%';
+              img.style.height = '100px';
+              img.style.objectFit = 'cover';
+
+              const div = document.createElement('div');
+              div.className = 'col-md-2 mb-3';
+              div.innerHTML = `
+                  <div class="text-center">
+                      ${img.outerHTML}
+                      <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                          <i class="fas fa-trash-alt"></i> Delete
+                      </a>
+                  </div>
+              `;
+
+              previewContainer.appendChild(div);
+          };
+          reader.readAsDataURL(file);
+      }
+  }
+
+  function removePreview(element) {
+      element.parentElement.parentElement.remove();
+  }
+
+  function deleteImage(imageId) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                $.ajax({
+                    url: '/roomtype/image/delete/' + imageId, // Replace with your actual delete route
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Optionally reload the page or remove the image element
+                        } else {
+                            alert('Failed to delete the image');
+                        }
+                    }
+                });
+            }
+        }
+
+</script>
 
 @endsection
 

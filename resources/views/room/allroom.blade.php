@@ -132,6 +132,9 @@
                                                                         <p><strong>Phone Number:</strong> <span
                                                                                 id="floor-arrival-date">{{ $rooms->phone_number }}</span>
                                                                         </p>
+                                                                        <p><strong>Room Size:</strong> <span
+                                                                            id="floor-arrival-date">{{ $rooms->room_size }}</span>
+                                                                        </p>
                                                                         <p><strong>Meassage:</strong> <span
                                                                                 id="floor-departure-date">{{ $rooms->message }}</span>
                                                                         </p>
@@ -169,7 +172,7 @@
         $(document).ready(function() {
             $('.datatable1').DataTable();
 
-            $('.toggle-status').click(function() {
+            $(document).on('click', '.toggle-status', function() {
                 var roomId = $(this).data('id');
                 var currentStatus = $(this).data('status');
                 var newStatus = currentStatus === 'active' ? 'inactive' : 'active';

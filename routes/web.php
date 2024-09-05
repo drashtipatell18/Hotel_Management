@@ -18,19 +18,17 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\FoodController;
-
 use App\Http\Controllers\EventController;
-
-
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\HallTypeController;
-
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PriceManagerController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FilterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,7 +123,7 @@ Route::controller(BookingController::class)->group(function () {
 Route::controller(CustomerController::class)->group(function () {
     Route::get('form/allcustomers/page', 'allCustomers')->middleware('auth')->name('form/allcustomers/page');
     Route::get('form/addcustomer/page', 'addCustomer')->middleware('auth')->name('form/addcustomer/page');
-    Route::post('form/addcustomer/save', 'saveCustomer')->middleware('auth')->name('form/addcustomer/save'); 
+    Route::post('form/addcustomer/save', 'saveCustomer')->middleware('auth')->name('form/addcustomer/save');
     Route::get('form/customer/edit/{id}', 'updateCustomer')->middleware('auth');
     Route::post('form/customer/update/{id}', 'updateRecord')->name('form/customer/update');
     Route::post('form/customer/delete', 'deleteRecord')->middleware('auth')->name('form/customer/delete');
@@ -195,6 +193,7 @@ Route::controller(RoomTypeController::class)->group(function () {
     Route::get('/roomtype/delete/{id}','roomtypeDelete')->name('roomtype.delete');
     Route::post('/update-roomtype-status',  'updateStatus')->name('update.roomtype.status');
     Route::get('daily-price/list', 'dailyPriceList')->name('daily-price.list');
+    Route::delete('/roomtype/image/delete/{id}',  'deleteImage')->name('roomtype.image.delete');
 });
 
 // Floor
@@ -281,3 +280,15 @@ Route::controller(HallController::class)->group(function () {
     Route::post('/update-hall-status',  'updateStatus')->name('update.hall.status');
 });
 
+// Contact
+Route::controller(ContactController::class)->group(function () {
+    Route::get('contact/list', 'ContactList')->name('contact/list');
+    Route::get('/contact/delete/{id}','ContactDelete')->name('contact.delete');
+});
+
+// Filter
+Route::controller(FilterController::class)->group(function () {
+    Route::get('filter/smoking', 'smokingFileter')->name('filter/smoking');
+    Route::post('filter/storeSmoking', 'storeSmoking')->name('filter/storeSmoking');
+    Route::get('smoking/list', 'SmokingList')->name('smoking/list');
+});

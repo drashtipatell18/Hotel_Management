@@ -116,8 +116,18 @@
 						<div class="user-header">
 							<div class="avatar avatar-sm"> <img src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" alt="User Image" class="avatar-img rounded-circle"> </div>
 								<div class="user-text">
-									<h6>Soeng Souy</h6>
-									<p class="text-muted mb-0">Administrator</p>
+									<h6>{{Auth::user()->name}}</h6>
+									<p class="text-muted mb-0">
+										@if(Auth::user()->role == 0)
+											Admin
+										@elseif(Auth::user()->role == 1)
+											Staff
+										@elseif(Auth::user()->role == 2)
+											Account
+										@elseif(Auth::user()->role == 3)
+											Customer
+										@endif
+									</p>
 								</div>
 							</div>
 						<a class="dropdown-item" href="{{ route('profile') }}">My Profile</a>

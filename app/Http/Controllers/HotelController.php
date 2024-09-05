@@ -7,7 +7,7 @@ use App\Models\Hotel;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use App\Models\HotelImages;
-use File;
+use Illuminate\Support\Facades\File;
 
 class HotelController extends Controller
 {

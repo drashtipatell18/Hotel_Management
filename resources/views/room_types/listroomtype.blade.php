@@ -27,6 +27,7 @@
                                     <table class="datatable1 table table-stripped table table-hover table-center mb-0">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>RoomType Image</th>
                                                 <th>RoomType Name</th>
                                                 <th>Member Capacity</th>
@@ -41,12 +42,27 @@
                                         <tbody>
                                             @foreach ($roomTypes as $roomType)
                                                 <tr>
-                                                    <td><img class="avatar-img rounded-squre" src="{{ URL::to('/assets/upload/'.$roomType->room_image) }}" alt="{{ $roomType->room_image }}" width="80px"></td>
+                                                    <td>{{ $roomType->id }}</td>
+                                                    <td>
+                                                        @if($roomType->images->isNotEmpty())
+                                                            <a href="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" data-lightbox="hotel-{{ $roomType->id }}" data-title="{{ $roomType->room_name }}" class="avatar avatar-sm mr-2">
+                                                                <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}" width="80px">
+                                                            </a>
+                                                            @foreach ($roomType->images->slice(1) as $image)
+                                                                <a href="{{ URL::to('/assets/upload/'.$image->room_image) }}" data-lightbox="hotel-{{ $roomType->id }}" data-title="{{ $roomType->room_name }}" style="display: none;">
+                                                                    <img src="{{ URL::to('/assets/upload/'.$image->room_image) }}" alt="{{ $roomType->room_name }}">
+                                                                </a>
+                                                            @endforeach
+                                                        @else
+                                                            <span>No Image Available</span>
+                                                        @endif
+                                                    </td>
+                                                    {{-- <td><img class="avatar-img rounded-squre" src="{{ URL::to('/assets/upload/'.$roomType->room_image) }}" alt="{{ $roomType->room_image }}" width="80px"></td> --}}
                                                     <td>{{ $roomType->room_name }}</td>
                                                     <td>{{ $roomType->capacity }}</td>
                                                     <td>{{ $roomType->extra_bed ? 'Yes' : 'No' }}</td>
-                                                    <td>{{ $roomType->per_extra_bed_price }}</td>
-                                                    <td>{{ $roomType->extra_bed_quantity }}</td>
+                                                    <td>{{ $roomType->extra_bed ? $roomType->per_extra_bed_price : '' }}</td>
+                                                    <td>{{ $roomType->extra_bed ? $roomType->extra_bed_quantity : '' }}</td>
                                                     <td>{{ $roomType->extra_bed_price }}</td>
                                                     <td>
                                                         <a href="javascript:void(0);"
@@ -93,10 +109,16 @@
                                                                 style="padding: 20px; height: calc(100% - 120px); overflow-y: auto;">
                                                                 <div class="row">
                                                                     <div class="col-md-4 text-center">
-                                                                        <img class="avatar-img rounded"
+                                                                        {{-- <img class="avatar-img rounded"
                                                                             src="{{ URL::to('/assets/upload/' . $roomType->room_image) }}"
                                                                             alt="{{ $roomType->room_image }}"
-                                                                            style="width: 180px; height: 200px; object-fit: cover;">
+                                                                            style="width: 180px; height: 200px; object-fit: cover;"> --}}
+
+                                                                            @if($roomType->images->isNotEmpty())
+                                                                                <img class="avatar-img rounded" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}" style="width: 180px; height: 200px; object-fit: cover;">
+                                                                            @else
+                                                                                <span>No Image Available</span>
+                                                                            @endif
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <h6 class="text-muted">RoomType Details</h6>
@@ -164,43 +186,44 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         @section('script')
-            <script>
-                $(document).ready(function() {
-                    $('.datatable1').DataTable();
-                    $('.toggle-status').click(function() {
-                        var roomtypeId = $(this).data('id');
-                        var currentStatus = $(this).data('status');
-                        var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-                        var button = $(this);
+        <script>
+            $(document).ready(function() {
+                $('.datatable1').DataTable();
 
-                        $.ajax({
-                            url: '{{ route('update.roomtype.status') }}',
-                            type: 'POST',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                roomtype_id: roomtypeId,
-                                status: newStatus
-                            },
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    button.data('status', response.new_status);
-                                    button.text(response.new_status);
+                // Use event delegation to handle click events for dynamically added elements
+                $(document).on('click', '.toggle-status', function() {
+                    var roomtypeId = $(this).data('id');
+                    var currentStatus = $(this).data('status');
+                    var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                    var button = $(this);
 
-                                    // Update button classes
-                                    if (response.new_status === 'active') {
-                                        button.removeClass('bg-danger-light').addClass(
-                                            'bg-success-light');
-                                    } else {
-                                        button.removeClass('bg-success-light').addClass(
-                                            'bg-danger-light');
-                                    }
+                    $.ajax({
+                        url: '{{ route('update.roomtype.status') }}',
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            roomtype_id: roomtypeId,
+                            status: newStatus
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                button.data('status', response.new_status);
+                                button.text(response.new_status);
+
+                                // Update button classes
+                                if (response.new_status === 'active') {
+                                    button.removeClass('bg-danger-light').addClass('bg-success-light');
+                                } else {
+                                    button.removeClass('bg-success-light').addClass('bg-danger-light');
                                 }
                             }
-                        });
+                        }
                     });
                 });
-            </script>
+            });
+        </script>
         @endsection
+
 @endsection
 
 

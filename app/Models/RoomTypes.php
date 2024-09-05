@@ -23,5 +23,10 @@ class RoomTypes extends Model
         'status',
     ];
 
+    public function images()
+    {
+        return $this->hasMany(RoomTypeImage::class, 'roomType_id', 'id');
+    }
+
 
 }

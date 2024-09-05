@@ -176,7 +176,7 @@
         <script>
             $(document).ready(function() {
                 $('.datatable1').DataTable();
-                $('.toggle-status').click(function() {
+                $(document).on('click', '.toggle-status', function() {
                     var bookingId = $(this).data('id');
                     var currentStatus = $(this).data('status');
                     var newStatus = currentStatus === 'confirmed' ? 'cancelled' : 'confirmed';

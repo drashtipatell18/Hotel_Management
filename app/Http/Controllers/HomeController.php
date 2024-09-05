@@ -28,7 +28,10 @@ class HomeController extends Controller
     public function index()
     {
         $allBookings = DB::table('booking')->get();
-        return view('dashboard.home',compact('allBookings'));
+        $bookingCount = $allBookings->count(); 
+        $availableRoomsCount = DB::table('rooms')->where('status', 'active')->count(); 
+        
+        return view('dashboard.home',compact('allBookings','bookingCount','availableRoomsCount'));
     }
 
     // profile

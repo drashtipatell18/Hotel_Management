@@ -91,6 +91,18 @@
                 <li class="submenu">
                     <a href="#">
                         <i class="fa fa-user-plus"></i>
+                        <span> Filter</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a class="{{ set_active(['smoking/list']) }}" href="{{ route('smoking/list') }}">Smoking Preference</a></li>
+                        <!-- <li><a class="{{ set_active(['users/list/page']) }}" href="{{ route('users/list/page') }}">Additional</a></li> -->
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="#">
+                        <i class="fa fa-user-plus"></i>
                         <span> User Management </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -100,6 +112,14 @@
                         <li><a href="">User Log Activity </a></li>
                     </ul>
                 </li>
+
+                <li class="{{ set_active(['contact/list']) }}">
+                    <a href="{{ route('contact/list') }}">
+                        <img src="{{ url('assets/icons/call.png') }}" style="width: 20px; height:20px"><span>Contact Us</span>
+                    </a>
+                </li>
+
+
             </ul>
         </div>
     </div>

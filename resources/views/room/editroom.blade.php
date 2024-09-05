@@ -164,6 +164,16 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room Size</label>
+                                    <input type="text" class="form-control @error('room_size') is-invalid @enderror" id="room_size" name="room_size" value="{{$roomEdit->room_size}}">
+                                    @error('room_size')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>

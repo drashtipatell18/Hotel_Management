@@ -50,6 +50,7 @@ class RoomsController extends Controller
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'room_size' => 'required',
             'message' => 'nullable|string',
         ]);
 
@@ -69,6 +70,7 @@ class RoomsController extends Controller
             $room->rent = $request->rent;
             $room->phone_number = $request->phone_number;
             $room->image = $file_name;
+            $room->room_size = $request->room_size;
             $room->message = $request->message;
 
 
@@ -97,6 +99,7 @@ class RoomsController extends Controller
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'room_size' => 'required',
             'message' => 'nullable|string',
         ]);
         DB::beginTransaction();
@@ -119,6 +122,7 @@ class RoomsController extends Controller
             $room->bed_count = $request->input('bed_count');
             $room->rent = $request->input('rent');
             $room->phone_number = $request->input('phone_number');
+            $room->room_size = $request->input('room_size');
             $room->message = $request->input('message');
 
             $room->save();
