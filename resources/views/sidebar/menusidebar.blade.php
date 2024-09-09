@@ -96,7 +96,7 @@
                     </a>
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['smoking/list']) }}" href="{{ route('smoking/list') }}">Smoking Preference</a></li>
-                        <!-- <li><a class="{{ set_active(['users/list/page']) }}" href="{{ route('users/list/page') }}">Additional</a></li> -->
+                        <li><a class="{{ set_active(['additionalFilter/list']) }}" href="{{ route('additionalFilter/list') }}">Additional Preference</a></li>
                     </ul>
                 </li>
 

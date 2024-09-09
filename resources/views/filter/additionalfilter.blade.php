@@ -7,12 +7,12 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <div class="page-title mt-5">{{ isset($smoking) ? 'Edit Smoking Prefrence' : 'Add Smoking Prefrence' }}</div>
+                        <div class="page-title mt-5">{{ isset($additionalFilter) ? 'Edit Additional Prefrence' : 'Add Additional Prefrence' }}</div>
                     </div>
                 </div>
             </div>
            
-            <form action="{{ isset($smoking) ? '/smoking/update/' . $smoking->id : '/filter/storeSmoking' }}" method="POST"
+            <form action="{{ isset($additionalFilter) ? '/additionalFilter/update/' . $additionalFilter->id : 'additionalFilter/store' }}" method="POST"
             enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -21,40 +21,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"name="name" value="{{ old('name', $smoking->name ?? '') }}">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"name="name" value="{{ old('name', $additionalFilter->name ?? '') }}">
                                     @error('name')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Image</label>
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image"
-                                                    name="image"
-                                                    onchange="previewImage(event, 'profilePicPreview')">
-                                                <input type="hidden" class="form-control" name="hidden_fileupload">
-                                                <label class="custom-file-label" for="customFile">Choose
-                                                    file</label>
-                                                    @error('image')
-                                                        <div class="error text-danger">{{ $message }}</div>
-                                                    @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <a href="#">
-                                                <img id="profilePicPreview" class="avatar-img"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
-    
+                          
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="roomType_image">Image</label>
@@ -71,9 +44,9 @@
                             <label>Image Preview</label>
                             <div id="imagePreview" class="row">
                                 <!-- Show existing images if editing -->
-                                @if(isset($smoking->image) && $smoking->image)
+                                @if(isset($additionalFilter->image) && $additionalFilter->image)
                                     @php
-                                        $imageFiles = explode(',', $smoking->image);
+                                        $imageFiles = explode(',', $additionalFilter->image);
                                     @endphp
                                     @foreach($imageFiles as $imageFile)
                                         @php
@@ -82,7 +55,7 @@
                                         <div class="col-md-2 mb-3">
                                             <div class="text-center">
                                                 <img src="{{ asset($imagePath) }}" class="img-fluid rounded mb-2" style="width: 100%; height: 100px; object-fit: cover;">
-                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="deleteImage('{{ $smoking->id }}', '{{ trim($imageFile) }}')">
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="deleteImage('{{ $additionalFilter->id }}', '{{ trim($imageFile) }}')">
                                                     <i class="fas fa-trash-alt"></i> Delete
                                                 </a>
                                             </div>
@@ -99,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary buttonedit1"> {{ isset($smoking) ? 'Update' : 'Create New Smoking' }}</button>
+                <button type="submit" class="btn btn-primary buttonedit1"> {{ isset($additionalFilter) ? 'Update' : 'Create New AdditionalFilter' }}</button>
             </form>
         </div>
     </div>
@@ -143,7 +116,7 @@
   function deleteImage(smokingId, imageFileName) {
     if (confirm('Are you sure you want to delete this image?')) {
         $.ajax({
-            url: '{{ url('smoking/image/delete') }}/' + smokingId, // Append the smokingId to the URL
+            url: '{{ url('additional/image/delete') }}/' + smokingId, // Append the smokingId to the URL
             method: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}',

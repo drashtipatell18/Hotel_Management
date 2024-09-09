@@ -29,6 +29,7 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\AdditionalFilterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -291,4 +292,19 @@ Route::controller(FilterController::class)->group(function () {
     Route::get('filter/smoking', 'smokingFileter')->name('filter/smoking');
     Route::post('filter/storeSmoking', 'storeSmoking')->name('filter/storeSmoking');
     Route::get('smoking/list', 'SmokingList')->name('smoking/list');
+    Route::get('smoking/edit/{id}', 'smokingEdit');
+    Route::post('smoking/update/{id}', 'smokingUpdate')->name('smoking/update');
+    Route::get('/smoking/delete/{id}','smokingDelete')->name('smoking.delete');
+    Route::delete('/smoking/image/delete/{id}', [FilterController::class, 'deleteImage'])->name('smoking.image.delete');
 });
+
+// Additional Prefrence
+Route::controller(AdditionalFilterController::class)->group(function () {
+    Route::get('additionalFilter', 'additionalFilter')->name('additional/filter');
+    Route::post('additionalFilter/store', 'storeAdditionalFilter')->name('additionalFilter/store');
+    Route::get('additionalFilter/list', 'additionalFilterLisnt')->name('additionalFilter/list');
+    Route::get('additional/edit/{id}', 'additionalEdit');
+    Route::post('additionalFilter/update/{id}', 'additionalUpdate')->name('additional/update');
+    Route::get('/additional/delete/{id}','additionalDelete')->name('additional.delete');
+    Route::delete('additional/image/delete/{id}', [AdditionalFilterController::class, 'deleteImage'])->name('additional.image.delete');
+}); 

@@ -3,26 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SmokingPrefrence;
+use App\Models\AdditionalPrefrence;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\File;
 use DB;
 
-class FilterController extends Controller
+class AdditionalFilterController extends Controller
 {
-    public function smokingFileter()
+    public function additionalFilter()
     {
-        return view('filter/add_smoking');
+        return view('filter/additionalfilter');
     }
-    public function storeSmoking(Request $request)
+    public function storeAdditionalFilter(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable'
         ]);
-    
         try {
-            $smokingFilter = SmokingPrefrence::create([
+            $additionalPrefrenceFilter = AdditionalPrefrence::create([
                 'name' => $request->input('name')
             ]);
     
@@ -35,38 +34,36 @@ class FilterController extends Controller
                     $imageNames[] = $imageName;
                 }
                 $imageNamesString = implode(',', $imageNames);
-                $smokingFilter->update([
+                $additionalPrefrenceFilter->update([
                     'image' => $imageNamesString
                 ]);
             }
-            Toastr::success('Create Smoking Preference successfully :)', 'Success');
-            return redirect()->route('smoking/list');
+            Toastr::success('Create Additional Prefrence successfully :)', 'Success');
+            return redirect()->route('additionalFilter/list');
         } catch (\Exception $e) {
          
-            Toastr::error('Add Smoking Preference failed :)', 'Error');
+            Toastr::error('Add Additional Preference failed :)', 'Error');
             return redirect()->back();
         }
     }
-
-    public function SmokingList()
+    public function additionalFilterLisnt()
     {
-        $listAllSmoking = SmokingPrefrence::all();
-        return view('filter/list_smoking',compact('listAllSmoking'));
+        $listAllAdditionalPrefrence = AdditionalPrefrence::all();
+        return view('filter/list_additionalfilter',compact('listAllAdditionalPrefrence'));
+    }
+    public function additionalEdit($id)
+    {
+        $additionalFilter = AdditionalPrefrence::find($id);
+        $existingImages = $additionalFilter->images;
+        return view('filter/additionalfilter', compact('additionalFilter', 'existingImages'));
     }
 
-    public function smokingEdit($id)
-    {
-        $smoking = SmokingPrefrence::find($id);
-        $existingImages = $smoking->images;
-        return view('filter/add_smoking', compact('smoking', 'existingImages'));
-    }
-
-    public function smokingUpdate(Request $request, $id)
+    public function additionalUpdate(Request $request, $id)
     {
         try {
-            $smokingFilter = SmokingPrefrence::findOrFail($id);
-            $smokingFilter->name = $request->input('name');
-            $existingImages = explode(',', $smokingFilter->image);
+            $additionalFilter = AdditionalPrefrence::findOrFail($id);
+            $additionalFilter->name = $request->input('name');
+            $existingImages = explode(',', $additionalFilter->image);
     
             if ($request->hasFile('image')) {
                 // Store new images
@@ -77,38 +74,38 @@ class FilterController extends Controller
                 }
             }
     
-            $smokingFilter->image = implode(',', $existingImages);
-            $smokingFilter->save();
+            $additionalFilter->image = implode(',', $existingImages);
+            $additionalFilter->save();
         
-            Toastr::success('Smoking Preference updated successfully :)', 'Success');
-            return redirect()->route('smoking/list');
+            Toastr::success('Additional Preference updated successfully :)', 'Success');
+            return redirect()->route('additionalFilter/list');
         } catch (\Exception $e) {
             // Log the exception for debugging
-            \Log::error('Update Smoking Preference failed: ' . $e->getMessage());
-            Toastr::error('Update Smoking Preference failed :)', 'Error');
+            \Log::error('Update Additional Preference failed: ' . $e->getMessage());
+            Toastr::error('Update Additional Preference failed :)', 'Error');
             return redirect()->back();
         }
     }
-    
-    public function smokingDelete($id)
+
+    public function additionalDelete($id)
     {
         DB::beginTransaction();
         try {
-            $smoking = SmokingPrefrence::findOrFail($id);
-            $smoking->delete();
+            $additionalFilter = AdditionalPrefrence::findOrFail($id);
+            $additionalFilter->delete();
             DB::commit();
-            Toastr::success('Smoking Prefrence deleted successfully :)', 'Success');
+            Toastr::success('Additional Prefrence deleted successfully :)', 'Success');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Failed to delete roomType :(', 'Error');
+            Toastr::error('Failed to delete Additional Prefrence :(', 'Error');
         }
-        return redirect()->route('smoking/list');
+        return redirect()->route('additionalFilter/list');
     }
     
     public function deleteImage(Request $request, $id)
     {
         // Find the SmokingPrefrence record by ID
-        $smoking = SmokingPrefrence::findOrFail($id);
+        $additionalFilter = AdditionalPrefrence::findOrFail($id);
         
         // Get the image file name
         $imageFileName = $request->input('image_file_name');
@@ -117,12 +114,12 @@ class FilterController extends Controller
         $imagePath = public_path('assets/upload/' . $imageFileName);
         
         // Remove the image file name from the image field
-        $imageFiles = explode(',', $smoking->image);
+        $imageFiles = explode(',', $additionalFilter->image);
         $imageFiles = array_filter($imageFiles, function($file) use ($imageFileName) {
             return trim($file) !== $imageFileName;
         });
-        $smoking->image = implode(',', $imageFiles);
-        $smoking->save();
+        $additionalFilter->image = implode(',', $imageFiles);
+        $additionalFilter->save();
         
         // Check if the file exists and delete it
         if (File::exists($imagePath)) {
@@ -132,4 +129,5 @@ class FilterController extends Controller
         // Return a JSON response indicating success
         return response()->json(['success' => true], 200);
     }
+
 }
