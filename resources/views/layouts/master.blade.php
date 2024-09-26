@@ -34,6 +34,10 @@
             background-color: #009688;
             border-color: #009688;
         }
+		.header-top{
+			margin-top:17px;
+		}
+		
     </style>
 
 
@@ -41,8 +45,10 @@
 	<div class="main-wrapper">
 		<div class="header">
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/hotel_logo.png') }}" width="50" height="70" alt="logo"> <span class="logoclass">HOTEL</span> </a>
-				<a href="{{ route('home') }}" class="logo logo-small"> <img src="{{ URL::to('assets/img/hotel_logo.png') }}" alt="Logo" width="30" height="30"> </a>
+				<div class="header-top">
+					<a href="{{ route('home') }}" class=""> <img src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" class="rounded-circle" width="50" height="50" alt="logo"> <span class="logoclass">HOTEL</span> </a>
+				<!-- <a href="{{ route('home') }}" class="logo logo-small"> <img src="{{ URL::to('assets/img/hotel_logo.png') }}" alt="Logo" width="30" height="30"> </a> -->
+				</div>
 			</div>
 			<a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
 			<a class="mobile_btn" id="mobile_btn"> <i class="fas fa-bars"></i> </a>
@@ -111,20 +117,20 @@
 					</div>
 				</li> --}}
 				<li class="nav-item dropdown has-arrow">
-					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img class="rounded-circle" src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="31" alt="Soeng Souy"></span> </a>
+					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img class="rounded-circle" src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" width="35" height="35" alt="Soeng Souy"></span> </a>
 					<div class="dropdown-menu">
 						<div class="user-header">
-							<div class="avatar avatar-sm"> <img src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" alt="User Image" class="avatar-img rounded-circle"> </div>
+							<div class="avatar avatar-sm"> <img src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" alt="User Image" class="avatar-img rounded-circle"> </div>
 								<div class="user-text">
 									<h6>{{Auth::user()->name}}</h6>
 									<p class="text-muted mb-0">
-										@if(Auth::user()->role == 0)
+										@if(Auth::user()->role_id == 0)
 											Admin
-										@elseif(Auth::user()->role == 1)
+										@elseif(Auth::user()->role_id == 1)
 											Staff
-										@elseif(Auth::user()->role == 2)
+										@elseif(Auth::user()->role_id == 2)
 											Account
-										@elseif(Auth::user()->role == 3)
+										@elseif(Auth::user()->role_id == 3)
 											Customer
 										@endif
 									</p>

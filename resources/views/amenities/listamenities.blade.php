@@ -1,5 +1,34 @@
 @extends('layouts.master')
 @section('content')
+<style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+            color: #009688 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+
+            border: #009688;
+            background-color: #009688;
+            color: white !important;
+
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #009688 !important;
+        }
+        .fa-star {
+            font-size: 1.2rem; /* Adjust size as needed */
+        }
+        .text-warning {
+            color: #ffd700; /* Gold color for filled stars */
+        }
+        .text-muted {
+            color: #e0e0e0; /* Gray color for empty stars */
+        }
+    </style>
     {{-- message --}}
     {!! Toastr::message() !!}
     <div class="page-wrapper">

@@ -1,12 +1,6 @@
 @extends('layouts.master')
 @section('content')
     <style>
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-            color: #009688 !important;
-        }
-
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
 
@@ -76,7 +70,9 @@
                                                             </a>
                                                         @endforeach
                                                     @else
-                                                        <span>No Image Available</span>
+                                                    <a class="avatar avatar-sm mr-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image" width="80px">
+                                                    </a>
                                                     @endif
                                                 </td>
                                                 <td>{{ $hotelList->name }}</td>

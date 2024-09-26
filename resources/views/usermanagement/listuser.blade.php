@@ -23,12 +23,13 @@
                                     <thead>
                                         <tr>
                                             <th>User ID</th>
+                                            <th>Profile Pic</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
                                             <th>Position</th>
                                             <th>Status</th>
-                                            <th>Modify</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -55,6 +56,15 @@
                     {
                         data: 'user_id',
                         name: 'user_id',
+                    },
+                    {
+                        data: 'profile',  
+                        name: 'profile',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return data ? data : 'No Image';  // Return image HTML or 'No Image'
+                        }
                     },
                     {
                         data: 'name',

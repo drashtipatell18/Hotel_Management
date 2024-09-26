@@ -45,7 +45,7 @@
                                                         <a href="profile.html" class="avatar avatar-sm mr-2">
                                                             <img class="avatar-img rounded-circle"
                                                                 src="{{ URL::to('/assets/upload/' . $customers->fileupload) }}"
-                                                                alt="{{ $customers->fileupload }}">
+                                                                alt="{{ $customers->fileupload }}"  onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
                                                         </a>
                                                     </h2>
                                                 </td>
@@ -96,7 +96,7 @@
                                                                     <img class="avatar-img rounded"
                                                                         src="{{ URL::to('/assets/upload/' . $customers->fileupload) }}"
                                                                         alt="{{ $customers->fileupload }}"
-                                                                        style="width: 180px; height: 200px; object-fit: cover;">
+                                                                        style="width: 180px; height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
                                                                 </div>
                                                                 <div class="col-md-8">
                                                                     <h6 class="text-muted">Customer Details</h6>

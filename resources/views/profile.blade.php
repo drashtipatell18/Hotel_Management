@@ -1,5 +1,10 @@
 @extends('layouts.master')
 @section('content')
+    <style>
+        .profile-header img{
+            height:120px;
+        }
+    </style>
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header mt-5">
@@ -18,18 +23,18 @@
                     <div class="profile-header">
                         <div class="row align-items-center">
                             <div class="col-auto profile-image">
-                                <a href="#"> <img class="rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg"> </a>
+                                <a href="#"> <img class="rounded-circle" alt="User Image" src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}"> </a>
                             </div>
                             <div class="col ml-md-n2 profile-user-info">
                                 <h4 class="user-name mb-3">{{ Auth::user()->name }}</h4>
                                 <h6 class="text-muted mt-1">
-                                @if(Auth::user()->role == 0)
+                                @if(Auth::user()->role_id == 0)
                                     Admin
-                                @elseif(Auth::user()->role == 1)
+                                @elseif(Auth::user()->role_id == 1)
                                     Staff
-                                @elseif(Auth::user()->role == 2)
+                                @elseif(Auth::user()->role_id == 2)
                                     Account
-                                @elseif(Auth::user()->role == 3)
+                                @elseif(Auth::user()->role_id == 3)
                                     Customer
                                 @endif
                                 </h6>

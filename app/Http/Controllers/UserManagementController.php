@@ -39,7 +39,8 @@ class UserManagementController extends Controller
                 'phone_number' => $request->phone_number,
                 'position'     => $request->position,
                 'department'   => $request->department,
-                'role_id' => $request->role_id
+                'role_id' => $request->role_id,
+                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
             ];
 
             User::where('user_id',$request->user_id)->update($updateRecord);
@@ -115,25 +116,42 @@ class UserManagementController extends Controller
         $data_arr = [];
 
         foreach ($records as $key => $record) {
+            $profile = $record->profile 
+            ? '<img src="'.asset('assets/img/' . $record->profile).'" width="50" height="50" class="img-fluid rounded-circle">'
+            : 'No Image';
+   
+
+            // $modify = '
+            //     <td class="text-right">
+            //         <div class="dropdown dropdown-action">
+            //             <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            //                 <i class="fas fa-ellipsis-v ellipse_color"></i>
+            //             </a>
+            //             <div class="dropdown-menu dropdown-menu-right">
+            //                 <a class="dropdown-item" href="'.url('users/add/edit/'.$record->user_id).'">
+            //                     <i class="fas fa-pencil-alt m-r-5"></i> Edit
+            //                 </a>
+            //                 <a class="dropdown-item" href="'.url('users/delete/'.$record->id).'">
+            //                 <i class="fas fa-trash-alt m-r-5"></i> Delete
+            //             </a>
+            //             </div>
+            //         </div>
+            //     </td>
+            // ';
+
             $modify = '
                 <td class="text-right">
-                    <div class="dropdown dropdown-action">
-                        <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v ellipse_color"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="'.url('users/add/edit/'.$record->user_id).'">
-                                <i class="fas fa-pencil-alt m-r-5"></i> Edit
-                            </a>
-                            <a class="dropdown-item" href="'.url('users/delete/'.$record->id).'">
-                            <i class="fas fa-trash-alt m-r-5"></i> Delete
-                        </a>
-                        </div>
-                    </div>
+                    <a href="'.url('users/add/edit/'.$record->user_id).'" style="font-size: 23px; padding: 5px; color: #009688;">
+                        <i class="fas fa-pencil-alt fa-xs"></i>
+                    </a>
+                    <a href="'.url('users/delete/'.$record->id).'" onclick="return confirm(\'Are you sure you want to delete this User?\');" style="font-size: 23px; padding: 5px; color: #009688;">
+                        <i class="fas fa-trash fa-xs"></i>
+                    </a>
                 </td>
             ';
             $data_arr [] = [
                 "user_id"      => $record->user_id,
+                "profile"      => $profile,
                 "name"         => $record->name,
                 "email"        => $record->email,
                 "position"     => $record->position,

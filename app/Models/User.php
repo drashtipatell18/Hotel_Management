@@ -25,7 +25,7 @@ class User extends Authenticatable
         'phone_number',
         'status',
         'role_id',
-        'avatar',
+        'profile',
         'position',
         'department',
         'password',
