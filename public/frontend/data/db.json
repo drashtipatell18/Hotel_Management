@@ -1,0 +1,57 @@
+{
+    "room":
+    [
+        {
+            "id":1,
+            "img":"room1.png",
+            "price":"300",
+            "meter":"80m2",
+            "guest":"2",
+            "bed":"Double bed",
+            "feature":[
+                "1 King Bed",
+                "Forest View",
+                "Loft Guest Room"
+            ]
+        },
+        {
+            "id":2,
+            "img":"room2.png",
+            "price":"700",
+            "meter":"80m2",
+            "guest":"2",
+            "bed":"Double bed",
+            "feature":[
+                "1 King Bed",
+                "Forest View",
+                "Loft Guest Room"
+            ]
+        },
+        {
+            "id":3,
+            "img":"room3.png",
+            "price":"1000",
+            "meter":"80m2",
+            "guest":"2",
+            "bed":"Double bed",
+            "feature":[
+                "1 King Bed",
+                "Forest View",
+                "Loft Guest Room"
+            ]
+        },
+        {
+            "id":4,
+            "img":"room4.png",
+            "price":"200",
+            "meter":"80m2",
+            "guest":"2",
+            "bed":"Double bed",
+            "feature":[
+                "1 King Bed",
+                "Forest View",
+                "Loft Guest Room"
+            ]
+        }
+    ]
+}

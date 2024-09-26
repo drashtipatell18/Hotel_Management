@@ -38,7 +38,7 @@
                                                         $firstImage = $images[0]; // Get the first image
                                                     @endphp
                                                     <a href="{{ URL::to('/assets/upload/'.$firstImage) }}" data-lightbox="smoking-group-{{ $smoking->id }}" data-title="{{ $smoking->name }}" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$firstImage) }}" alt="{{ $firstImage }}" width="80px">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$firstImage) }}" alt="{{ $firstImage }}" width="80px" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/imagen para todo.jpg') }}';">
                                                     </a>
                                                     @foreach($images as $index => $image)
                                                         @if($index != 0)

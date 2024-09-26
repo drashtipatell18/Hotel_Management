@@ -31,16 +31,17 @@ class RegisterController extends Controller
             'department'   => 'required|string|max:255',
             'password'     => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
+            'profile'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $dt       = Carbon::now();
         $join_date = $dt->toDayDateTimeString();
 
-        if(!empty($profile)) {
-            $image = time().'.'.$profile->extension();
-            $profile->move(public_path('assets/img'), $image);
-        } else {
-            $image = ' ';
+        $image = ''; // Set default profile image if none uploaded
+        if ($request->hasFile('profile')) {
+            $profile = $request->file('profile'); // Retrieve the uploaded file
+            $image = time().'.'.$profile->getClientOriginalExtension(); // Create unique image name
+            $profile->move(public_path('assets/img'), $image); // Move the file to the destination folder
         }
 
 
@@ -52,8 +53,10 @@ class RegisterController extends Controller
         $user->role_id    = $request->role_id;
         $user->position     = $request->position;
         $user->department   = $request->department;
-        $user->avatar       = $image;
+        $user->profile       = $image;
         $user->password     = Hash::make($request->password);
+
+        
         $user->save();
 
         Toastr::success('Create new account successfully :)','Success');

@@ -54,9 +54,12 @@
                                                                 </a>
                                                             @endforeach
                                                         @else
-                                                            <span>No Image Available</span>
+                                                        <a class="avatar avatar-sm mr-2">
+                                                            <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image" width="80px">
+                                                        </a>
                                                         @endif
                                                     </td>
+
                                                     {{-- <td><img class="avatar-img rounded-squre" src="{{ URL::to('/assets/upload/'.$roomType->room_image) }}" alt="{{ $roomType->room_image }}" width="80px"></td> --}}
                                                     <td>{{ $roomType->room_name }}</td>
                                                     <td>{{ $roomType->capacity }}</td>
@@ -117,7 +120,7 @@
                                                                             @if($roomType->images->isNotEmpty())
                                                                                 <img class="avatar-img rounded" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}" style="width: 180px; height: 200px; object-fit: cover;">
                                                                             @else
-                                                                                <span>No Image Available</span>
+                                                                                <img class="avatar-img rounded" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
                                                                             @endif
                                                                     </div>
                                                                     <div class="col-md-8">

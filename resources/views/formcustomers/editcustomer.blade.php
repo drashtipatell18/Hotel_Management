@@ -176,7 +176,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <a href="#">
-                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$customerEdit->fileupload) }}" alt="{{ $customerEdit->fileupload }}">
+                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" 
+                                                    src="{{ file_exists(public_path('/assets/upload/'.$customerEdit->fileupload)) ? 
+                                                        URL::to('assets/upload/'.$customerEdit->fileupload) : 
+                                                        URL::to('assets/upload/men.jpg') }}" 
+                                                    alt="Profile Picture">
                                             </a>
                                         </div>
                                     </div>
@@ -196,7 +200,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <a href="#">
-                                                <img id="aadharcardPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$customerEdit->aadharcard) }}" alt="{{ $customerEdit->aadharcard }}">
+                                            <img id="aadharcardPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" 
+                                                src="{{ file_exists(public_path('/assets/upload/'.$customerEdit->aadharcard)) && !empty($customerEdit->aadharcard) ? 
+                                                    URL::to('assets/upload/'.$customerEdit->aadharcard) : 
+                                                    URL::to('assets/upload/imagen para todo.jpg') }}" 
+                                                alt="Aadhar Card">
                                             </a>
                                         </div>
                                     </div>
@@ -297,15 +305,17 @@
     </div>
     @section('script')
     <script>
-        function previewImage(event, previewElementId) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const output = document.getElementById(previewElementId);
-                output.src = reader.result;
-            }
+    function previewImage(event, previewElementId) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            const output = document.getElementById(previewElementId);
+            output.src = reader.result;
+        }
+        if (event.target.files[0]) {
             reader.readAsDataURL(event.target.files[0]);
         }
-    </script>
+    }
+</script>
     <script>
         $(function() {
             $('#datetimepicker3').datetimepicker({

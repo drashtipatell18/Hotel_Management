@@ -43,7 +43,8 @@
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="profile.html" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$rooms->image) }}" alt="{{ $rooms->image }}">
+                                                        <img class="avatar-img rounded-circle"  src="{{ file_exists(public_path('assets/upload/'.$rooms->image)) && $rooms->image ? URL::to('/assets/upload/'.$rooms->image) : URL::to('/assets/upload/imagen para todo.jpg') }}" 
+                                                        alt="{{ $rooms->image ?? 'Default Image' }}">
                                                     </a>
                                                 </h2>
                                             </td>

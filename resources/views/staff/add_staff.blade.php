@@ -134,7 +134,7 @@
                                         <div class="col-md-4">
                                             @if(isset($staff))
                                                 <a href="#">
-                                                    <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$staff->profile_pic) }}" alt="{{ $staff->profile_pic }}">
+                                                    <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$staff->profile_pic) }}" alt="{{ $staff->profile_pic }}" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
                                                 </a>
                                             @else
                                                 <img id="profilePicPreview" class="avatar-img"
@@ -215,7 +215,7 @@
                                         <div class="col-md-4">
                                             @if(isset($staff))
                                                 <a href="#">
-                                                    <img id="aadharcardPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$staff->aadharcard) }}" alt="{{ $staff->aadharcard }}">
+                                                    <img id="aadharcardPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$staff->aadharcard) }}" alt="{{ $staff->aadharcard }}"  onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/imagen para todo.jpg') }}';">
                                                 </a>
                                             @else
                                                 <img id="aadharcardPreview" class="avatar-img"

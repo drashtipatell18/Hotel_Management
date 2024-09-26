@@ -13,7 +13,6 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
-
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FloorController;
@@ -31,16 +30,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\AdditionalFilterController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\Frontend\IndexController;
+
+// =========================================================== Backend Route ============================================================
 
 /** set side bar active dynamic */
 function set_active($route) {
@@ -308,3 +300,13 @@ Route::controller(AdditionalFilterController::class)->group(function () {
     Route::get('/additional/delete/{id}','additionalDelete')->name('additional.delete');
     Route::delete('additional/image/delete/{id}', [AdditionalFilterController::class, 'deleteImage'])->name('additional.image.delete');
 }); 
+
+
+
+
+
+
+
+// =========================================================== Frontend Route ============================================================
+
+Route::get('/',[IndexController::class,'index']);

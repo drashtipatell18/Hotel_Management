@@ -157,7 +157,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <a href="#">
-                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" src="{{ URL::to('/assets/upload/'.$roomEdit->image) }}" alt="{{ $roomEdit->image }}">
+                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;"  src="{{ file_exists(public_path('assets/upload/' . $roomEdit->image)) && $roomEdit->image ? URL::to('/assets/upload/' . $roomEdit->image) : URL::to('/assets/upload/imagen para todo.jpg') }}" 
+                                                alt="{{ $roomEdit->image ?? 'Default Image' }}">
                                             </a>
                                         </div>
                                     </div>

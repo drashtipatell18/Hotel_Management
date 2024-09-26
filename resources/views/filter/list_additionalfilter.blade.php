@@ -51,11 +51,13 @@
                                                         <a href="{{ url('additional/edit/'.$additional->id) }}"  style="font-size: 23px; padding: 5px; color: #009688;">
                                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                                         </a>
-                                                        <a href="{{ route('additional.delete', ['id' => $additional->id]) }}" onclick="return confirm('Are you sure you want to delete this Additional Prefrence?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                        <a href="{{ route('additional.delete', ['id' => $additional->id]) }}" onclick="return confirm('Are you sure you want to delete this Add?');" style="font-size: 23px; padding: 5px; color: #009688;">
                                                             <i class="fas fa-trash fa-xs"></i>
                                                         </a>
 
                                                     </td>
+                                            
+                                              
                                             </tr>
                                             @endforeach
 
