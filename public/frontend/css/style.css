@@ -1169,7 +1169,7 @@
 		color: white !important;
 	}
 	.count_section{
-		background-image: url(/img/count/countBack.png);
+		background-image: url(../img/count/countBack.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
@@ -2214,7 +2214,7 @@
 		width: inherit;
 	} */
 	.unique-modal-content_img{
-		background-image: url(/img/Welcom_popup.png);
+		background-image: url(../img/Welcom_popup.png);
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
