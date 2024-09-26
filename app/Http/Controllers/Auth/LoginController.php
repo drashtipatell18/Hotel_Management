@@ -65,10 +65,10 @@ class LoginController extends Controller
         $password = $request->password;
 
         if (Auth::attempt(['email'=>$email,'password'=>$password,'status'=>'Active'])) {
-            Toastr::success('Login successfully :)','Success');
+            Toastr::success('Login successfully','Success');
             return redirect()->intended('home');
         } elseif (Auth::attempt(['email'=>$email,'password'=>$password,'status'=> null])) {
-            Toastr::success('Login successfully :)','Success');
+            Toastr::success('Login successfully ','Success');
             return redirect()->intended('home');
         } else {
             Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
