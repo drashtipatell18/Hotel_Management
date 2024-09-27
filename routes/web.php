@@ -87,6 +87,7 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'storeUser')->name('register');
 });
 
+
 // ----------------------------- forget password ----------------------------//
 Route::controller(ForgotPasswordController::class)->group(function () {
     Route::get('forget/password', 'showForgetPasswordForm')->name('forget.password');
@@ -316,7 +317,6 @@ Route::controller(AdditionalFilterController::class)->group(function () {
 
 
 // =========================================================== Frontend Route ============================================================
-
 Route::get('/',[IndexController::class,'index'])->name('index');
 Route::get('/aboutus',[AboutUsController::class,'aboutus'])->name('aboutus');
 Route::get('/rooms',[RoomsFrontendController::class,'rooms'])->name('rooms-frontend');
@@ -325,3 +325,15 @@ Route::get('/gallery',[GalleryFrontendController::class,'gallery'])->name('galle
 Route::get('/contact-us',[ContactFrontendController::class,'contactus'])->name('contact-us');
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
 Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');
+
+// Route::get('/',[IndexController::class,'index']);
+
+
+// web.php
+Route::get('/register', [IndexController::class, 'register'])->name('register');
+Route::post('/register', [IndexController::class, 'storeUser'])->name('register.store');
+
+
+Route::get('/login', [IndexController::class, 'login'])->name('login');
+Route::post('/login', [IndexController::class, 'authenticate'])->name('login.authenticate');
+

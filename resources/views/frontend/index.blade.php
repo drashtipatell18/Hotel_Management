@@ -108,7 +108,6 @@
                                                     <button class="increment" data-type="child">+</button>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

@@ -7,13 +7,12 @@
     <meta name="keywords" content="Hiroto, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Hotel Management')</title>
+    <title>Hotel Management</title>
 
     <!-- Css Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('frontend/css/bootstrap.min.css') }} " type="text/css">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ url('frontend/css/elegant-icons.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/nice-select.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/jquery-ui.min.css') }}" type="text/css">
@@ -21,9 +20,7 @@
     <link rel="stylesheet" href="{{ url('frontend/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
-    
- 
-  
+
 
     <!-- font-family  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,19 +44,19 @@
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__logo">
-            <a href="{{ route('index') }}">
+            <a href="./index.html">
                 <!-- <img src="img/logo.png" alt=""> -->
                 <h2 class="text-light">Logo</h2>
             </a>
         </div>
         <!-- <div id="mobile-menu-wrap"></div> -->
         <ul class="menu__class">
-            <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
-            <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a></li>
-            <li><a href="{{ route('rooms-frontend') }}" class="nav-link" data-page="rooms">Rooms</a></li>
-            <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
-            <li><a href="{{ route('gallery') }}" class="nav-link" data-page="gallery">Gallery</a></li>
-            <li><a href="{{ route('contact-us') }}" class="nav-link" data-page="contact">Contact Us</a></li>
+            <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
+            <li><a href="about.html" class="nav-link" data-page="about">About Us</a></li>
+            <li><a href="rooms.html" class="nav-link" data-page="rooms">Rooms</a></li>
+            <li><a href="spa.html" class="nav-link" data-page="spa">Spa</a></li>
+            <li><a href="gallery.html" class="nav-link" data-page="gallery">Gallery</a></li>
+            <li><a href="contact.html" class="nav-link" data-page="contact">Contact Us</a></li>
         </ul>
         <div class="offcanvas__btn__widget">
             <a href="#" id="openNewModalBtn">Login</a>
@@ -199,7 +196,7 @@
                 <div class="row m-0">
                     <div class="col-lg-2">
                         <div class="header__logo">
-                            <a href="{{ route('index') }}">
+                            <a href="./index.html">
                                 <!-- <img src="img/logo.png" alt=""> -->
                                 <h2 class="text-light">Logo</h2>
                             </a>
@@ -209,12 +206,12 @@
                         <div class="header__nav">
                             <nav class="header__menu">
                                 <ul class="menu__class">
-                                    <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
-                                    <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a></li>
-                                    <li><a href="{{ route('rooms-frontend') }}" class="nav-link" data-page="rooms">Rooms</a></li>
-                                    <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
-                                    <li><a href="{{ route('gallery') }}" class="nav-link" data-page="gallery">Gallery</a></li>
-                                    <li><a href="{{ route('contact-us') }}" class="nav-link" data-page="contact">Contact Us</a></li>
+                                    <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
+                                    <li><a href="about.html" class="nav-link" data-page="about">About Us</a></li>
+                                    <li><a href="rooms.html" class="nav-link" data-page="rooms">Rooms</a></li>
+                                    <li><a href="spa.html" class="nav-link" data-page="spa">Spa</a></li>
+                                    <li><a href="gallery.html" class="nav-link" data-page="gallery">Gallery</a></li>
+                                    <li><a href="contact.html" class="nav-link" data-page="contact">Contact Us</a></li>
                                 </ul>
                             </nav>
                             <div class="header__nav__widget">
@@ -265,40 +262,42 @@
                                         </div>
                                     </div>
 
-                                    <!-- Register Form -->
-                                    <div id="registerForm" class="form hidden">
-                                        <div class="row  m-0 justify-content-center d-flex">
-                                            <div class="col-lg-9">
-                                                <h2>Hello! Register to get
-                                                    started</h2>
+                                    <form action="{{ route('register.store') }}" method="POST">
+                                        @csrf
+                                        <div id="registerForm" class="form">
+                                            <div class="row  m-0 justify-content-center d-flex">
+                                                <div class="col-lg-9">
+                                                    <h2>Hello! Register to get started</h2>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="name" placeholder="Name" required>
+                                            <input type="email" name="email" placeholder="Enter your email" required>
+                                            <input type="text" name="phone_number" placeholder="Enter your phone number" required>
+                                            <div class="password-field">
+                                                <input type="password" name="password" id="registerPassword" placeholder="Password" required>
+                                                <i class="fas fa-eye toggle-password" id="toggleRegisterPassword"></i>
+                                            </div>
+                                            <div class="password-field">
+                                                <input type="password" name="password_confirmation" id="confirmPassword" placeholder="Confirm Password" required>
+                                                <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+                                            </div>
+                                            <button type="submit">Register</button>
+                                            <div class="m_scon pt-4">
+                                                <div class="m_sline"></div>
+                                                <h3 class="m_stxt">Or Login with</h3>
+                                                <div class="m_sline"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center py-3">
+                                                <div class="y_facebbok_icon d-flex justify-content-center">
+                                                    <img src="img/facebook_ic.png" alt>
+                                                </div>
+                                                <div class="y_ggole_icon d-flex justify-content-center">
+                                                    <img src="img/google_ic.png" alt>
+                                                </div>
                                             </div>
                                         </div>
-                                        <input type="text" placeholder="Name">
-                                        <input type="email" placeholder="Enter your email">
-                                        <div class="password-field">
-                                            <input type="password" id="registerPassword" placeholder="Password">
-                                            <i class="fas fa-eye toggle-password" id="toggleRegisterPassword"></i>
-                                        </div>
-                                        <div class="password-field">
-                                            <input type="password" id="registerPassword" placeholder="Confirm Password">
-                                            <i class="fas fa-eye toggle-password" id="toggleRegisterPassword"></i>
-                                        </div>
-                                        <button>Register</button>
-                                        <div class="m_scon pt-4">
-                                            <div class="m_sline"></div>
-                                            <h3 class="m_stxt">Or Login
-                                                with</h3>
-                                            <div class="m_sline"></div>
-                                        </div>
-                                        <div class="d-flex justify-content-center align-items-center py-3">
-                                            <div class="y_facebbok_icon d-flex justify-content-center">
-                                                <img src="img/facebook_ic.png" alt>
-                                            </div>
-                                            <div class="y_ggole_icon d-flex justify-content-center">
-                                                <img src="img/google_ic.png" alt>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
+                                    
 
                                     <!-- Forgot Password Form -->
                                     <div id="forgotPasswordForm" class="form hidden">
