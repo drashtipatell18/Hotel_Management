@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AmenitiesController;
+use App\Http\Controllers\Frontend\EditProfileController;
 use App\Http\Controllers\Frontend\GalleryController;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +40,10 @@ use App\Http\Controllers\Frontend\GalleryFrontendController;
 use App\Http\Controllers\Frontend\ContactFrontendController;
 use App\Http\Controllers\Frontend\CheckAvaliblityController;
 use App\Http\Controllers\Frontend\BookNowController;
+use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\MyBookingController;
+use App\Http\Controllers\Frontend\OfferPackageController;
+
 
 // =========================================================== Backend Route ============================================================
 
@@ -325,6 +330,15 @@ Route::get('/gallery',[GalleryFrontendController::class,'gallery'])->name('galle
 Route::get('/contact-us',[ContactFrontendController::class,'contactus'])->name('contact-us');
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
 Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');
+Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
+Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
+Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
+Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobooking');
+Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
+
+Route::get('/spabook',[OfferPackageController::class,'spabook'])->name('spabook');
+Route::get('/spabook-know',[OfferPackageController::class,'spabookKnow'])->name('spabookKnow');
 
 // Route::get('/',[IndexController::class,'index']);
 
