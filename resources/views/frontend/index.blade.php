@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center hero_checkAvalibility">
-                                <button class="Custom_btn" type="submit"><a href="check_avilabilty.html"
+                                <button class="Custom_btn" type="submit"><a href="{{ route('check-avilabilty') }}"
                                         class="text-decoration-none text-light">Check Availability</a></button>
                             </div>
                         </form>

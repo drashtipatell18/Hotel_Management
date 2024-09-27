@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AmenitiesController;
+use App\Http\Controllers\Frontend\GalleryController;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,13 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\AdditionalFilterController;
 
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\AboutUsController;
+use App\Http\Controllers\Frontend\RoomsFrontendController;
+use App\Http\Controllers\Frontend\SpaController;
+use App\Http\Controllers\Frontend\GalleryFrontendController;
+use App\Http\Controllers\Frontend\ContactFrontendController;
+use App\Http\Controllers\Frontend\CheckAvaliblityController;
+use App\Http\Controllers\Frontend\BookNowController;
 
 // =========================================================== Backend Route ============================================================
 
@@ -309,4 +317,11 @@ Route::controller(AdditionalFilterController::class)->group(function () {
 
 // =========================================================== Frontend Route ============================================================
 
-Route::get('/',[IndexController::class,'index']);
+Route::get('/',[IndexController::class,'index'])->name('index');
+Route::get('/aboutus',[AboutUsController::class,'aboutus'])->name('aboutus');
+Route::get('/rooms',[RoomsFrontendController::class,'rooms'])->name('rooms-frontend');
+Route::get('/spa',[SpaController::class,'spa'])->name('spa');
+Route::get('/gallery',[GalleryFrontendController::class,'gallery'])->name('gallery');
+Route::get('/contact-us',[ContactFrontendController::class,'contactus'])->name('contact-us');
+Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
+Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');

@@ -68,9 +68,9 @@
                                                 <ul class="footer_ul_res">
                                                     <div>
                                                         <li><a class="text-light"
-                                                                href="index.html">Home</a></li>
+                                                                href="{{ route('index') }}">Home</a></li>
                                                         <li><a class="text-light"
-                                                                href="about.html">About
+                                                                href="{{ route('aboutus')">About
                                                                 Us</a></li>
                                                         <li><a class="text-light"
                                                                 href="rooms.html">Rooms</a></li>
