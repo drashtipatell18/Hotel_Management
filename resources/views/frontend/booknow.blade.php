@@ -2,6 +2,12 @@
 @section('title', 'Book Now')
 @section('main-container')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url('frontend/js/d_home.js') }}"></script> -->
+
 <section class="d_booknow">
     <div class="d_img col">
         <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
@@ -403,6 +409,6 @@
         </div>
     </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="{{ url('frontend/js/d_home.js') }}"></script>
+
 @endsection
+

@@ -2,6 +2,9 @@
 @section('title', 'About Us')
 @section('main-container')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option d_banner set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
     <div class="d_container">
