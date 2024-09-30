@@ -259,9 +259,15 @@
                                     <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact
                                             Us</a></li>
                                     <li><a href="" class="nav-link">+1 23 4567890</a></li>
-
                                 </ul>
                             </nav>
+                            @if (Auth::check())
+                                <div class="header__nav__widget">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        {{ Auth::user()->name }}
+                                    </a>
+                                </div>&nbsp;&nbsp;
+                            @endif
                             <div class="header__nav__widget">
                                 @auth
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
