@@ -253,7 +253,7 @@
                         @if($roomType->images->isNotEmpty())
                             <img class="image__img" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
                         @else
-                            <img class="image__img" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                            <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
                         @endif
                         <div class="image__overlay3 image__overlay3--primary">
                             <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
@@ -341,27 +341,27 @@
             <div class="row m-0">
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text"><?php echo $premiumRoomsCount; ?></h2>
+                    <h2 class="text-center outlined-text"><?php echo $premiumRoomsCount ?? 0; ?></h2>
                         <h3 class="text-center text-light">Premium
                             Rooms</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text"><?php echo $deluxeSuitesCount; ?></h2>
+                        <h2 class="text-center outlined-text"><?php echo $deluxeSuitesCount ?? 0; ?></h2>
                         <h3 class="text-center text-light">Deluxe
                             Suites</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text"><?php echo $HoneymoonRoomsCount; ?></h2>
+                        <h2 class="text-center outlined-text"><?php echo $HoneymoonRoomsCount ?? 0; ?></h2>
                         <h3 class="text-center text-light">Honeymoon Suite Room</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text"><?php echo $standardSuitesCount; ?></h2>
+                        <h2 class="text-center outlined-text"><?php echo $standardSuitesCount ?? 0; ?></h2>
                         <h3 class="text-center text-light">Standard double Room</h3>
                     </div>
                 </div>
