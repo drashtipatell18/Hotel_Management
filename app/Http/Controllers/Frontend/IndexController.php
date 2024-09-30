@@ -126,7 +126,9 @@ class IndexController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+
+        return response()->json(['success' => true, 'message' => 'You have been logged out successfully.']);
+
     }
 
 }

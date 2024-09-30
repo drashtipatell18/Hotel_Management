@@ -117,7 +117,7 @@
                         <h2>Welcome back! Glad to see you, Again!</h2>
                     </div>
                 </div>
-                <form id="loginAjaxForm">
+                <form id="mobileloginAjaxForm">
                     @csrf
                     <input type="text" name="email" placeholder="Username or Email">
                     <div class="new-password-field">
@@ -149,7 +149,7 @@
                         <h2>Hello! Register to get started</h2>
                     </div>
                 </div>
-                <form id="registerAjaxForm">
+                <form id="mobileregisterAjaxForm">
                     @csrf
                     <input type="text" name="name" placeholder="Name">
                     <input type="email" name="email" placeholder="Enter your email">
@@ -439,7 +439,7 @@
                 <div class="modal-header justify-content-center">
                     <h1 class="modal-title fs-5 " id="exampleModalLabel">Logout</h1>
                 </div>
-                <form action="{{ route('logoutfrontend') }}" method="POST">
+                <form id="logoutButton">
                     @csrf
 
                     <div class="modal-body">
@@ -451,7 +451,7 @@
 
                             <div class="col-6">
                                 {{-- <a type="submit" style="background-color: #1A2142;color: #fff;"class="btn ">Yes</a> --}}
-                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;">Yes</button>
+                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;" >Yes</button>
                             </div>
 
                         </div>

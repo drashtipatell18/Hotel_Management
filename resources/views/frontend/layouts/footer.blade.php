@@ -480,34 +480,119 @@
                 }
             });
         });
+        $('#mobileloginAjaxForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('login.authenticate') }}",
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        window.location.href = response.redirect;
+                    } else {
+                        if (response.errors) {
+                            if (response.errors.email) {
+                                toastr.error(response.errors.email[0]);
+                            }
+                            if (response.errors.password) {
+                                toastr.error(response.errors.password[0]);
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.email) {
+                            toastr.error(errors.email[0]);
+                        }
+                        if (errors.password) {
+                            toastr.error(errors.password[0]);
+                        }
+                    } else {
+                        toastr.error('An error occurred. Please try again.');
+                    }
+                }
+            });
+        });
 
         $('#registerAjaxForm').submit(function(e) {
-        e.preventDefault();
-        var form = $(this);
-        var url = "{{ route('register.store') }}";
+            e.preventDefault();
+            var form = $(this);
+            var url = "{{ route('register.store') }}";
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(),
-            success: function(response) {
-                if (response.success) {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        window.location.href = response.redirect;
-                    }, 2000);
-                } else {
-                    toastr.error('Registration failed. Please try again.');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 2000);
+                    } else {
+                        toastr.error('Registration failed. Please try again.');
+                    }
+                },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        toastr.error(value[0]);
+                    });
                 }
-            },
-            error: function(xhr) {
-                var errors = xhr.responseJSON.errors;
-                $.each(errors, function(key, value) {
-                    toastr.error(value[0]);
-                });
+            });
+        });
+
+        $('#mobileregisterAjaxForm').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = "{{ route('register.store') }}";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 2000);
+                    } else {
+                        toastr.error('Registration failed. Please try again.');
+                    }
+                },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        toastr.error(value[0]);
+                    });
+                }
+            });
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    });
+
+        $('#logoutButton').click(function() {
+            $.ajax({
+                url: '{{ route("logoutfrontend") }}', // Adjust the route as necessary
+                type: 'POST',
+                success: function(response) {
+                    toastr.success("You have been logged out successfully.");
+                    window.location.href = '/'; // Redirect after logout
+                },
+                error: function(xhr) {
+                    toastr.error("Logout failed. Please try again.");
+                }
+            });
+        });
 
         // Make sure Toastr is properly initialized
         toastr.options = {
