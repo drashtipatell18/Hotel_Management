@@ -9,12 +9,16 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Amenities;
+use App\Models\Facilities;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        return view('frontend.index');
+        $amenities = Amenities::all();
+        $facilities = Facilities::all();
+        return view('frontend.index',compact('amenities','facilities'));
     }
     public function register()
     {

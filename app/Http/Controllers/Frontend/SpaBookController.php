@@ -15,4 +15,8 @@ class SpaBookController extends Controller
     {
         return view('frontend.spabooknow');
     }
+    public function spacheckout()
+    {
+        return view('frontend.spacheckout');
+    }
 }

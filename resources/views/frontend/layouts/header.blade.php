@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ url('frontend/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
    
 
 
@@ -38,9 +39,9 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -214,6 +215,7 @@
                                 <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
                                 <li><a href="{{ route('gallery') }} " class="nav-link" data-page="gallery">Gallery</a></li>
                                 <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
+                                <li><a href="" class="nav-link">+1 23 4567890</a></li>
                                 </ul>
                             </nav>
                             <div class="header__nav__widget">
@@ -380,3 +382,27 @@
             </div>
         </div>
     </header>
+
+        <!-- Modal -->
+        <div class="modal fade d_modal1" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-header justify-content-center">
+                    <h1 class="modal-title fs-5 " id="exampleModalLabel">Logout</h1>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Logout?</p>
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="col-6"><a type="button" class="btn " data-bs-dismiss="modal">Cancel</a></div>
+                        <div class="col-6"><a type="button" style="background-color: #1A2142;color: #fff;"
+                                class="btn ">Yes</a></div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>

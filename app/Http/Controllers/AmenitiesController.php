@@ -19,7 +19,7 @@ public function amenitiesStore(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'image' => 'image|mimes:jpeg,png,jpg,gif',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         'description' => 'string'
     ]);
 

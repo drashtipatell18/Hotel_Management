@@ -18,6 +18,12 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['facilities/list']) }}">
+                    <a href="{{ route('facilities/list') }}">
+                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Facilities</span>
+                    </a>
+                </li>
+
                 <li class="{{ set_active(['floor/list']) }}">
                     <a href="{{ route('floor/list') }}">
                         <img src="{{ url('assets/icons/floor.png') }}" style="width: 20px; height:20px"><span>Floors</span>

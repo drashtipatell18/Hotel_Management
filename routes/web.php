@@ -31,6 +31,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\AdditionalFilterController;
+use App\Http\Controllers\FacilitiesController;
 
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\AboutUsController;
@@ -43,6 +44,7 @@ use App\Http\Controllers\Frontend\BookNowController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\MyBookingController;
 use App\Http\Controllers\Frontend\OfferPackageController;
+use App\Http\Controllers\Frontend\SpaBookController;
 
 
 // =========================================================== Backend Route ============================================================
@@ -81,7 +83,7 @@ Route::controller(HomeController::class)->group(function () {
 
 // -----------------------------login----------------------------------------//
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
+    Route::get('/admin/login', 'login')->name('adminlogin');
     Route::post('/login', 'authenticate');
     Route::get('/logout', 'logout')->name('logout');
 });
@@ -316,7 +318,16 @@ Route::controller(AdditionalFilterController::class)->group(function () {
 }); 
 
 
+// Facilities
+Route::controller(FacilitiesController::class)->group(function () {
+    Route::get('facilities/add', 'facilitiesCreate')->name('facilities/add');
+    Route::post('facilities/store', 'facilitiesStore')->name('facilities/store');
+    Route::get('facilities/list', 'facilitiesList')->name('facilities/list');
+    Route::get('facilities/edit/{id}', 'facilitiesEdit');
+    Route::post('facilities/update/{id}', 'facilitiesUpdate')->name('facilities/update');
+    Route::get('/facilities/delete/{id}','facilitiesDelete')->name('facilities.delete');
 
+});
 
 
 
@@ -337,8 +348,9 @@ Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myPr
 Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobooking');
 Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
 
-Route::get('/spabook',[OfferPackageController::class,'spabook'])->name('spabook');
-Route::get('/spabook-know',[OfferPackageController::class,'spabookKnow'])->name('spabookKnow');
+Route::get('/spabook',[SpaBookController::class,'spabook'])->name('spabook');
+Route::get('/spabook-know',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
+Route::get('/spacheckout',[SpaBookController::class,'spacheckout'])->name('spacheckout');
 
 // Route::get('/',[IndexController::class,'index']);
 

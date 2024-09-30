@@ -141,7 +141,7 @@
                                 exercitation ullamco laboris nisi ut aliquip
                                 ex</p>
                         </div>
-                        <a href="about.html" class="Custom_btn3">Explore More</a>
+                        <a href="{{ route('aboutus')}}" class="Custom_btn3">Explore More</a>
                     </div>
                 </div>
             </div>
@@ -159,62 +159,26 @@
                             <h5 class="text-light">Hotel Amenities</h5>
                         </div>
                         <div class="row m-0">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/1.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">24-
-                                        Hour Front Desk</p>
+                            @if(!empty($amenities))
+                                @foreach($amenities as $amenity)
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
+                                        <div class="service_img">
+                                            @if($amenity && $amenity->image)
+                                                <img src="{{ asset('assets/amenities/' . $amenity->image) }}" alt="{{ $amenity->name }}">
+                                            @else
+                                                <img src="{{ asset('assets/amenities/default.png') }}" alt="Default Image">
+                                            @endif
+                                            <p class="mb-0 text-center text-light">{{ $amenity->name ?? 'Unknown Amenity' }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="col-12 text-center text-light">
+                                    <p>No amenities available.</p>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/2.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">Indoor
-                                        Pool</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/3.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">Fitness
-                                        Center</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/4.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">Spa
-                                        & Salon</p>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/5.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">High-Speed
-                                        Wi-Fi</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/6.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">Parking</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/7.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">EV
-                                        Charging</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-6 pt-5">
-                                <div class="service_img">
-                                    <img src="{{ url('frontend/img/services/8.svg') }}" alt>
-                                    <p class="mb-0 text-center text-light">Accessibility</p>
-                                </div>
-                            </div>
+                            @endif
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -241,68 +205,24 @@
             </div>
         </div>
         <div class="gallery__slider owl-carousel">
-            <div class="gallery__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/services/3.jpg') }}" alt>
-                    <div class="image__overlay image__overlay--primary">
-                        <div class="image__title">Restaurant</div>
-                        <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                        <p class="image__description">
-                            Here we have a brick wall.
-                        </p>
+            @foreach($facilities as $facility)
+                <div class="gallery__item">
+                    <div class="Slider_image">
+                        @if($facility && $facility->image)
+                            <img src="{{ asset('assets/facilities/' . $facility->image) }}" alt="{{ $facility->name }}">
+                        @else
+                            <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
+                        @endif
+                        <div class="image__overlay image__overlay--primary">
+                            <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
+                            <!-- <a href="#" class="Custom_btn">Book Now</a> -->
+                            <p class="image__description">
+                                {{ $facility->description ?? 'Unknown Facility' }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="gallery__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/services/1.png') }}" alt>
-                    <div class="image__overlay image__overlay--primary">
-                        <div class="image__title">Casino</div>
-                        <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                        <p class="image__description">
-                            Here we have a brick wall.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/services/2.png') }}" alt>
-                    <div class="image__overlay image__overlay--primary">
-                        <div class="image__title">Spa</div>
-                        <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                        <p class="image__description">
-                            Here we have a brick wall.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/services/4.jpg') }}" alt>
-                    <div class="image__overlay image__overlay--primary">
-                        <div class="image__title">Pull</div>
-                        <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                        <p class="image__description">
-                            Here we have a brick wall.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/services/3.jpg') }}" alt>
-                    <div class="image__overlay image__overlay--primary">
-                        <div class="image__title">Bar</div>
-                        <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                        <p class="image__description">
-                            Here we have a brick wall.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Repeat other items as needed -->
+            @endforeach
         </div>
 
     </section>
@@ -331,7 +251,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/room1.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="check_avilabilty.html" class="Custom_btn">Reserve</a>
+                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Deluxe Suite</h4>
@@ -346,7 +266,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/room2.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="check_avilabilty.html" class="Custom_btn">Reserve</a>
+                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Deluxe Suite</h4>
@@ -361,7 +281,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/room3.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="check_avilabilty.html" class="Custom_btn">Reserve</a>
+                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Deluxe Suite</h4>
