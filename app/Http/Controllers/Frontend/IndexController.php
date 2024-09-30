@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Amenities;
 use App\Models\Facilities;
+use Illuminate\Support\Facades\Validator;
 
 class IndexController extends Controller
 {
@@ -27,14 +28,21 @@ class IndexController extends Controller
     }
     public function storeUser(Request $request)
     {
-        // Validate input
-        $validatedData = $request->validate([
+                // Validate input
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'phone_number' => 'required|string|max:15',
         ]);
-        
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         $userroleid = 3;
         // Store the new user
         $user = new User();
@@ -44,10 +52,14 @@ class IndexController extends Controller
         $user->password = Hash::make($request->password);
         $user->role_id = $userroleid;
         $user->save();
-    
-     return redirect()->route('index');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration successful! Please log in.',
+            'redirect' => route('index')
+        ]);
     }
-    
+
 
     public function login()
     {
@@ -57,23 +69,56 @@ class IndexController extends Controller
     // Method to authenticate user
     public function authenticate(Request $request)
     {
-        // Validate input
-        $credentials = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        // Attempt to authenticate
-        if (Auth::attempt($credentials)) {
-            // Authentication passed, redirect to the desired page
-            $request->session()->regenerate();
-            return redirect()->route('index'); // or your desired route
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
         }
 
-        // If authentication fails
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->withInput();
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            return response()->json([
+                'success' => true,
+                'message' => 'Login successful!',
+                'redirect' => route('index'),
+                'user' => [
+                    'name' => $user->name,
+                    'email' => $user->email
+                ]
+            ]);
+        } else {
+            // Check if the email exists
+            $user = \App\Models\User::where('email', $request->email)->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['email' => ['No account found with this email.']]
+                ], 422);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['password' => ['Incorrect password.']]
+                ], 422);
+            }
+        }
     }
-    
+
+    public function logoutfrontend(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+
 }

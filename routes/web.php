@@ -315,7 +315,7 @@ Route::controller(AdditionalFilterController::class)->group(function () {
     Route::post('additionalFilter/update/{id}', 'additionalUpdate')->name('additional/update');
     Route::get('/additional/delete/{id}','additionalDelete')->name('additional.delete');
     Route::delete('additional/image/delete/{id}', [AdditionalFilterController::class, 'deleteImage'])->name('additional.image.delete');
-}); 
+});
 
 
 // Facilities
@@ -361,5 +361,6 @@ Route::post('/register', [IndexController::class, 'storeUser'])->name('register.
 
 
 Route::get('/login', [IndexController::class, 'login'])->name('login');
-Route::post('/login', [IndexController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/logoutfrontend', [IndexController::class, 'logoutfrontend'])->name('logoutfrontend');
+Route::post('/loginstore', [IndexController::class, 'authenticate'])->name('login.authenticate');
 

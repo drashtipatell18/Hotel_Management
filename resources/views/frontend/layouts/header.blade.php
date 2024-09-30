@@ -10,7 +10,7 @@
     <title>Hotel Management</title>
 
     <!-- Css Styles -->
- 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ url('frontend/css/bootstrap.min.css') }} " type="text/css">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="{{ url('frontend/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-   
 
 
     <!-- font-family  -->
@@ -33,8 +32,12 @@
         rel="stylesheet">
 
     <style>
-        @import url('https://fonts.cdnfonts.com/css/footlight-mt-pro');
+        /* @import url('https://fonts.cdnfonts.com/css/footlight-mt-pro'); */
     </style>
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 </head>
 
 <body>
@@ -42,6 +45,31 @@
     <!-- <div id="preloder">
         <div class="loader"></div>
     </div> -->
+
+    <!-- Toastr Messages -->
+    @if(session()->has('success'))
+    <script>
+        toastr.success("{{ session('success') }}");
+    </script>
+    @endif
+
+    @if(session()->has('error'))
+    <script>
+        toastr.error("{{ session('error') }}");
+    </script>
+    @endif
+
+    @if(session()->has('info'))
+    <script>
+        toastr.info("{{ session('info') }}");
+    </script>
+    @endif
+
+    @if(session()->has('warning'))
+    <script>
+        toastr.warning("{{ session('warning') }}");
+    </script>
+    @endif
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -62,7 +90,11 @@
             <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
         </ul>
         <div class="offcanvas__btn__widget">
+            @auth
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
+            @else
             <a href="#" id="openNewModalBtn">Login</a>
+            @endauth
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -85,26 +117,29 @@
                         <h2>Welcome back! Glad to see you, Again!</h2>
                     </div>
                 </div>
-                <input type="text" placeholder="Username or Email">
-                <div class="new-password-field">
-                    <input type="password" id="newLoginPassword" placeholder="Password">
-                    <i class="fas fa-eye new-toggle-password" id="newToggleLoginPassword"></i>
-                </div>
-                <button id="newForgotPasswordBtn">Forgot Password?</button>
-                <button>Login</button>
-                <div class="new_m_scon pt-4">
-                    <div class="new_m_sline"></div>
-                    <h3 class="new_m_stxt">Or Login with</h3>
-                    <div class="new_m_sline"></div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center py-3">
-                    <div class="new_y_facebook_icon d-flex justify-content-center">
-                        <img src="img/facebook_ic.png" alt>
+                <form id="loginAjaxForm">
+                    @csrf
+                    <input type="text" name="email" placeholder="Username or Email">
+                    <div class="new-password-field">
+                        <input type="password" name="password" id="newLoginPassword" placeholder="Password">
+                        <i class="fas fa-eye new-toggle-password" id="newToggleLoginPassword"></i>
                     </div>
-                    <div class="new_y_google_icon d-flex justify-content-center">
-                        <img src="img/google_ic.png" alt>
+                    <button id="newForgotPasswordBtn">Forgot Password?</button>
+                    <button>Login</button>
+                    <div class="new_m_scon pt-4">
+                        <div class="new_m_sline"></div>
+                        <h3 class="new_m_stxt">Or Login with</h3>
+                        <div class="new_m_sline"></div>
                     </div>
-                </div>
+                    <div class="d-flex justify-content-center align-items-center py-3">
+                        <div class="new_y_facebook_icon d-flex justify-content-center">
+                            <img src="img/facebook_ic.png" alt>
+                        </div>
+                        <div class="new_y_google_icon d-flex justify-content-center">
+                            <img src="img/google_ic.png" alt>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <!-- Register Form -->
@@ -114,32 +149,36 @@
                         <h2>Hello! Register to get started</h2>
                     </div>
                 </div>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Enter your email">
-                <div class="new-password-field">
-                    <input type="password" id="newRegisterPassword" placeholder="Password">
-                    <i class="fas fa-eye new-toggle-password" id="newToggleRegisterPassword"></i>
-                </div>
-                <div class="new-password-field">
-                    <input type="password" id="newConfirmRegisterPassword" placeholder="Confirm Password">
-                    <i class="fas fa-eye new-toggle-password" id="newToggleConfirmRegisterPassword"></i>
-                </div>
-                <button>Register</button>
-                <div class="new_m_scon pt-4">
-                    <div class="new_m_sline"></div>
-                    <h3 class="new_m_stxt">Or Login with</h3>
-                    <div class="new_m_sline"></div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center py-3">
-                    <div class="new_y_facebook_icon d-flex justify-content-center">
-                        <img src="img/facebook_ic.png" alt>
+                <form id="registerAjaxForm">
+                    @csrf
+                    <input type="text" name="name" placeholder="Name">
+                    <input type="email" name="email" placeholder="Enter your email">
+                    <input type="text" name="phone_number" placeholder="Enter your phone number">
+                    <div class="new-password-field">
+                        <input type="password" name="password" id="newRegisterPassword" placeholder="Password">
+                        <i class="fas fa-eye new-toggle-password" id="newToggleRegisterPassword"></i>
                     </div>
-                    <div class="new_y_google_icon d-flex justify-content-center">
-                        <img src="img/google_ic.png" alt>
+                    <div class="new-password-field">
+                        <input type="password" name="password_confirmation" id="newConfirmRegisterPassword"
+                            placeholder="Confirm Password">
+                        <i class="fas fa-eye new-toggle-password" id="newToggleConfirmRegisterPassword"></i>
                     </div>
-                </div>
+                    <button>Register</button>
+                    <div class="new_m_scon pt-4">
+                        <div class="new_m_sline"></div>
+                        <h3 class="new_m_stxt">Or Login with</h3>
+                        <div class="new_m_sline"></div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center py-3">
+                        <div class="new_y_facebook_icon d-flex justify-content-center">
+                            <img src="img/facebook_ic.png" alt>
+                        </div>
+                        <div class="new_y_google_icon d-flex justify-content-center">
+                            <img src="img/google_ic.png" alt>
+                        </div>
+                    </div>
+                </form>
             </div>
-
             <!-- Forgot Password Form -->
             <div id="newForgotPasswordForm" class="new-form hidden">
                 <h2>Forgot Password</h2>
@@ -168,7 +207,7 @@
                     <input type="text" maxlength="1" class="new-otp-box" id="newOtp4">
                 </div>
                 <button id="newVerifyBtn">Verify</button>
-                <p class="new_verification_resend">Didn’t receive code? <span>Resend</span></p>
+                <p class="new_verification_resend">Didn't receive code? <span>Resend</span></p>
             </div>
 
             <!-- Create New Password Form -->
@@ -209,17 +248,26 @@
                         <div class="header__nav">
                             <nav class="header__menu">
                                 <ul class="menu__class">
-                                <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
-                                <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a></li>
-                                <li><a href="{{ route('rooms-frontend') }}" class="nav-link" data-page="rooms">Rooms</a></li>
-                                <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
-                                <li><a href="{{ route('gallery') }} " class="nav-link" data-page="gallery">Gallery</a></li>
-                                <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
-                                <li><a href="" class="nav-link">+1 23 4567890</a></li>
+                                    <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
+                                    <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a>
+                                    </li>
+                                    <li><a href="{{ route('rooms-frontend') }}" class="nav-link"
+                                            data-page="rooms">Rooms</a></li>
+                                    <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
+                                    <li><a href="{{ route('gallery') }} " class="nav-link"
+                                            data-page="gallery">Gallery</a></li>
+                                    <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact
+                                            Us</a></li>
+                                    <li><a href="" class="nav-link">+1 23 4567890</a></li>
+
                                 </ul>
                             </nav>
                             <div class="header__nav__widget">
+                                @auth
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
+                                @else
                                 <a href="#" id="openModalBtn">Login</a>
+                                @endauth
                             </div>
                             <div id="customOverlay" class="custom-overlay"></div>
                             <!-- The Modal -->
@@ -232,60 +280,60 @@
                                         <button id="registerBtn">Register</button>
                                     </div>
 
-                                    <!-- Login Form -->
+
                                     <div id="loginForm" class="form">
                                         <div class="row m-0 justify-content-center d-flex">
                                             <div class="col-lg-9">
-                                                <h2>Welcome back! Glad
-                                                    to see you, Again!</h2>
+                                                <h2>Welcome back! Glad to see you, Again!</h2>
                                             </div>
                                         </div>
-
-                                        <input type="text" placeholder="Username or Email">
-                                        <div class="password-field">
-                                            <input type="password" id="loginPassword" placeholder="Password">
-                                            <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>
-                                        </div>
-                                        <button id="forgotPasswordBtn">Forgot
-                                            Password?</button>
-                                        <button>Login</button>
-
-                                        <div class="m_scon pt-4">
-                                            <div class="m_sline"></div>
-                                            <h3 class="m_stxt">Or Login
-                                                with</h3>
-                                            <div class="m_sline"></div>
-                                        </div>
-                                        <div class="d-flex justify-content-center align-items-center py-3">
-                                            <div class="y_facebbok_icon d-flex justify-content-center">
-                                                <img src="img/facebook_ic.png" alt>
+                                        <form id="loginAjaxForm">
+                                            @csrf
+                                            <input type="text" name="email" placeholder="Username or Email">
+                                            <div class="password-field">
+                                                <input type="password" name="password" id="loginPassword"
+                                                    placeholder="Password">
+                                                <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>
                                             </div>
-                                            <div class="y_ggole_icon d-flex justify-content-center">
-                                                <img src="img/google_ic.png" alt>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            <button type="button" id="forgotPasswordBtn">Forgot Password?</button>
+                                            <button type="submit">Login</button>
 
-                                    <form action="{{ route('register.store') }}" method="POST">
-                                        @csrf
-                                        <div id="registerForm" class="form">
-                                            <div class="row  m-0 justify-content-center d-flex">
-                                                <div class="col-lg-9">
-                                                    <h2>Hello! Register to get started</h2>
+                                            <div class="m_scon pt-4">
+                                                <div class="m_sline"></div>
+                                                <h3 class="m_stxt">Or Login with</h3>
+                                                <div class="m_sline"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center py-3">
+                                                <div class="y_facebbok_icon d-flex justify-content-center">
+                                                    <img src="img/facebook_ic.png" alt>
+                                                </div>
+                                                <div class="y_ggole_icon d-flex justify-content-center">
+                                                    <img src="img/google_ic.png" alt>
                                                 </div>
                                             </div>
-                                            <input type="text" name="name" placeholder="Name" required>
-                                            <input type="email" name="email" placeholder="Enter your email" required>
-                                            <input type="text" name="phone_number" placeholder="Enter your phone number"
-                                                required>
+                                        </form>
+                                    </div>
+
+                                    <div id="registerForm" class="form">
+                                        <div class="row  m-0 justify-content-center d-flex">
+                                            <div class="col-lg-9">
+                                                <h2>Hello! Register to get started</h2>
+                                            </div>
+                                        </div>
+                                        <form id="registerAjaxForm">
+                                            @csrf
+                                            <input type="text" name="name" placeholder="Name">
+                                            <input type="email" name="email" placeholder="Enter your email">
+                                            <input type="text" name="phone_number"
+                                                placeholder="Enter your phone number">
                                             <div class="password-field">
                                                 <input type="password" name="password" id="registerPassword"
-                                                    placeholder="Password" required>
+                                                    placeholder="Password">
                                                 <i class="fas fa-eye toggle-password" id="toggleRegisterPassword"></i>
                                             </div>
                                             <div class="password-field">
                                                 <input type="password" name="password_confirmation" id="confirmPassword"
-                                                    placeholder="Confirm Password" required>
+                                                    placeholder="Confirm Password">
                                                 <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
                                             </div>
                                             <button type="submit">Register</button>
@@ -302,7 +350,7 @@
                                                     <img src="img/google_ic.png" alt>
                                                 </div>
                                             </div>
-                                        </div>
+                                    </div>
                                     </form>
 
 
@@ -342,7 +390,7 @@
                                             <input type="text" maxlength="1" class="otp-box" id="otp4">
                                         </div>
                                         <button id="verifyBtn">Verify</button>
-                                        <p class="verification_resend">Didn’t
+                                        <p class="verification_resend">Didn't
                                             receive code?
                                             <span>Resend</span>
                                         </p>
@@ -383,26 +431,38 @@
         </div>
     </header>
 
-        <!-- Modal -->
-        <div class="modal fade d_modal1" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <!-- Modal -->
+    <div class="modal fade d_modal1" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content text-center">
                 <div class="modal-header justify-content-center">
                     <h1 class="modal-title fs-5 " id="exampleModalLabel">Logout</h1>
                 </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to Logout?</p>
-                </div>
-                <div class="modal-footer d-block">
-                    <div class="row">
-                        <div class="col-6"><a type="button" class="btn " data-bs-dismiss="modal">Cancel</a></div>
-                        <div class="col-6"><a type="button" style="background-color: #1A2142;color: #fff;"
-                                class="btn ">Yes</a></div>
+                <form action="{{ route('logoutfrontend') }}" method="POST">
+                    @csrf
+
+                    <div class="modal-body">
+                        <p>Are you sure you want to Logout?</p>
                     </div>
+                    <div class="modal-footer d-block">
+                        <div class="row">
+                            <div class="col-6"><a type="button" class="btn " data-bs-dismiss="modal">Cancel</a></div>
 
+                            <div class="col-6">
+                                {{-- <a type="submit" style="background-color: #1A2142;color: #fff;"class="btn ">Yes</a> --}}
+                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;">Yes</button>
+                            </div>
 
-                </div>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
+    </div>
+
+</body>
+
+</html>

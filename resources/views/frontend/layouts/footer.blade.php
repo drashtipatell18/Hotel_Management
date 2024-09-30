@@ -81,7 +81,9 @@
             <div class="container">
                 <div class="footer__copyright__text">
                     <p class="text-light"> &copy;
-                        <script>document.write(new Date().getFullYear());</script>
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
                         Hotel. All Rights Reserved
                         with
                     </p>
@@ -92,10 +94,18 @@
 
 </footer>
 <!-- Footer Section End -->
- 
+
 <!-- Js Plugins -->
-<script src="{{ url('frontend/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url('frontend/js/bootstrap.min.js') }}"></script>
+<!-- jQuery (make sure this is before other scripts that use jQuery) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery Validate plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<!-- Toastr JS (if you're using it) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+{{-- <script src="{{ url('frontend/js/bootstrap.min.js') }}"></script> --}}
 <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
@@ -422,7 +432,97 @@
         }
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Initialize Toastr
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "5000",
+        }
 
+        $('#loginAjaxForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ route('login.authenticate') }}",
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        window.location.href = response.redirect;
+                    } else {
+                        if (response.errors) {
+                            if (response.errors.email) {
+                                toastr.error(response.errors.email[0]);
+                            }
+                            if (response.errors.password) {
+                                toastr.error(response.errors.password[0]);
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.email) {
+                            toastr.error(errors.email[0]);
+                        }
+                        if (errors.password) {
+                            toastr.error(errors.password[0]);
+                        }
+                    } else {
+                        toastr.error('An error occurred. Please try again.');
+                    }
+                }
+            });
+        });
+
+        $('#registerAjaxForm').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = "{{ route('register.store') }}";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.message);
+                    setTimeout(function() {
+                        window.location.href = response.redirect;
+                    }, 2000);
+                } else {
+                    toastr.error('Registration failed. Please try again.');
+                }
+            },
+            error: function(xhr) {
+                var errors = xhr.responseJSON.errors;
+                $.each(errors, function(key, value) {
+                    toastr.error(value[0]);
+                });
+            }
+        });
+    });
+
+        // Make sure Toastr is properly initialized
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+    });
+</script>
 </body>
 
 </html>
