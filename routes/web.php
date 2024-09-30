@@ -194,7 +194,7 @@ Route::controller(AmenitiesController::class)->group(function () {
 
 // Room Type
 Route::controller(RoomTypeController::class)->group(function () {
-    Route::get('roomtype/add', 'roomtypeCreate')->name('roomtype/add');
+    Route::get('roomtype/add', 'roomtypeCreate')->name('roomtype.add');
     Route::post('roomtype/store', 'roomtypeStore')->name('roomtype/store');
     Route::get('roomtype/list', 'roomtypeList')->name('roomtype/list');
     Route::get('roomtype/edit/{id}', 'roomtypeEdit');

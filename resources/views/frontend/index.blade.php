@@ -247,66 +247,28 @@
             </div>
         </div>
         <div class="order__slider owl-carousel">
-            <div class="order__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/room1.png') }}" alt>
-                    <div class="image__overlay3 image__overlay3--primary">
-                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
-                    </div>
-                    <div class="image_onsection bg-light py-3">
-                        <h4 class="text-center pb-2">Deluxe Suite</h4>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                            <p class="text-dark mb-0">$1050/Night</p>
+            @foreach ($roomTypes as $roomType)
+                <div class="order__item">
+                    <div class="Slider_image">
+                        @if($roomType->images->isNotEmpty())
+                            <img class="image__img" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                        @else
+                            <img class="image__img" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                        @endif
+                        <div class="image__overlay3 image__overlay3--primary">
+                            <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
+                        </div>
+                        <div class="image_onsection bg-light py-3">
+                            <h4 class="text-center pb-2">{{$roomType->room_name}}</h4>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <!-- <i class="fa-solid fa-tag px-2"></i> -->
+                                <p class="text-dark mb-0">${{$roomType->base_price}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="order__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/room2.png') }}" alt>
-                    <div class="image__overlay3 image__overlay3--primary">
-                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
-                    </div>
-                    <div class="image_onsection bg-light py-3">
-                        <h4 class="text-center pb-2">Deluxe Suite</h4>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                            <p class="text-dark mb-0">$1050/Night</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="order__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/room3.png') }}" alt>
-                    <div class="image__overlay3 image__overlay3--primary">
-                        <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
-                    </div>
-                    <div class="image_onsection bg-light py-3">
-                        <h4 class="text-center pb-2">Deluxe Suite</h4>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                            <p class="text-dark mb-0">$1050/Night</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="order__item">
-                <div class="Slider_image">
-                    <img class="image__img" src="{{ url('frontend/img/room4.png') }}" alt>
-                    <div class="image__overlay3 image__overlay3--primary">
-                        <a href="check_avilabilty.html" class="Custom_btn">Reserve</a>
-                    </div>
-                    <div class="image_onsection bg-light py-3">
-                        <h4 class="text-center pb-2">Deluxe Suite</h4>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                            <p class="text-dark mb-0">$1050/Night</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+          
 
             <!-- Repeat other items as needed -->
         </div>
@@ -379,29 +341,28 @@
             <div class="row m-0">
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text">50</h2>
+                        <h2 class="text-center outlined-text"><?php echo $premiumRoomsCount; ?></h2>
                         <h3 class="text-center text-light">Premium
                             Rooms</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text">12</h2>
+                        <h2 class="text-center outlined-text"><?php echo $deluxeSuitesCount; ?></h2>
                         <h3 class="text-center text-light">Deluxe
                             Suites</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text">25</h2>
-                        <h3 class="text-center text-light">Luxury Rooms</h3>
+                        <h2 class="text-center outlined-text"><?php echo $HoneymoonRoomsCount; ?></h2>
+                        <h3 class="text-center text-light">Honeymoon Suite Room</h3>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-6">
                     <div class="count_imgbox p-5">
-                        <h2 class="text-center outlined-text">10</h2>
-                        <h3 class="text-center text-light">Luxury
-                            Suites</h3>
+                        <h2 class="text-center outlined-text"><?php echo $standardSuitesCount; ?></h2>
+                        <h3 class="text-center text-light">Standard double Room</h3>
                     </div>
                 </div>
             </div>

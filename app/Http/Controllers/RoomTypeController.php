@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\File;
 
 class RoomTypeController extends Controller
 {
-    public function roomtypeCreate($id)
+    // public function roomtypeCreate($id)
+    // {
+    //     $roomtypes = null;
+    //     $roomtypes = RoomTypes::with('images')->where('id', $id)->firstOrFail();
+    //     $amenities = Amenities::all();
+    //     return view('room_types/add_room_typs',compact('amenities','roomtypes'));
+    // }
+    public function roomtypeCreate()
     {
-        $roomtype = null;
-        $roomtype = RoomTypes::with('images')->where('id', $id)->firstOrFail();
         $amenities = Amenities::all();
-        return view('room_types/add_room_typs',compact('amenities','roomtype'));
+        return view('room_types/add_room_typs',compact('amenities'));
     }
     public function roomtypeStore(Request $request)
     {

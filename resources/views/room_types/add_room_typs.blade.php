@@ -179,8 +179,9 @@
                         <div class="form-group mt-3">
                             <label>Image Preview</label>
                             <div id="imagePreview" class="row">
-                                <!-- Show existing images if editing -->
-                                @foreach($roomtype->images as $image)
+                                <!-- Check if roomtype exists and has images -->
+                                @if(isset($roomtype) && $roomtype->images)
+                                    @foreach($roomtype->images as $image)
                                         <div class="col-md-2 mb-3" id="image-{{ $image->id }}">
                                             <div class="text-center">
                                                 <img src="{{ URL::to('/assets/upload/'.$image->room_image) }}" alt="Room Type Image" class="img-fluid rounded mb-2" style="width: 100%; height: 100px; object-fit: cover;">
@@ -190,6 +191,9 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                @else
+                                    <p></p>
+                                @endif
                                 <!-- Image previews for new uploads will be appended here -->
                             </div>
                         </div>

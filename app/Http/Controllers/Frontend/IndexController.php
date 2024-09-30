@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Amenities;
 use App\Models\Facilities;
 use Illuminate\Support\Facades\Validator;
+use App\Models\RoomTypes;
 
 class IndexController extends Controller
 {
@@ -19,7 +20,14 @@ class IndexController extends Controller
     {
         $amenities = Amenities::all();
         $facilities = Facilities::all();
-        return view('frontend.index',compact('amenities','facilities'));
+        $roomTypes = RoomTypes::all();
+
+        $premiumRoomsCount = RoomTypes::where('room_name', 'Premium Rooms')->count();
+        $deluxeSuitesCount = RoomTypes::where('room_name', 'Deluxe Room')->count();
+        $HoneymoonRoomsCount = RoomTypes::where('room_name', 'Honeymoon Suite Room')->count();
+        $standardSuitesCount = RoomTypes::where('room_name', 'Standard double Room')->count();
+
+        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount'));
     }
     public function register()
     {

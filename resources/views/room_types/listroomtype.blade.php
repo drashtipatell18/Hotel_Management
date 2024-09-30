@@ -13,7 +13,7 @@
                                 <a href="{{ route('daily-price.list') }}" class="btn btn-primary float-right" style="color:white;margin-left:20px !important">
                                     <i class="fa fa-coins"></i> Daily Price List
                                 </a>
-                                <a href="{{ route('roomtype/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                <a href="{{ route('roomtype.add') }}" class="btn btn-primary float-right veiwbutton"><i
                                     class="fas fa-plus mr-2"></i>Add Room Type</a>
                             </div>
                         </div>
