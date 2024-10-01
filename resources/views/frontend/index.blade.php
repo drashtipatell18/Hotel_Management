@@ -490,91 +490,22 @@
             </div>
             <div class="testimonai__container">
                 <div class="Testimonials_slider owl-carousel">
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{{ url('frontend/img/user.png') }}" alt="Johan Patel">
-                                <div class="author-info">
-                                    <h3>Johan Patel</h3>
-                                    <p>UK, BRIGHTON</p>
+                    @foreach($clientReviews as $review)
+                        <div class="gallery__item gallery__item2">
+                            <div class="testimonial-container">
+                                <div class="testimonial-box">
+                                    <p class="testimonial-text">"{{ $review->description }}"</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <img class="image__img" src="{{ URL::to('/assets/upload/'.$review->image) }}" alt="{{ $review->client_name }}">
+                                    <div class="author-info">
+                                        <h3>{{ $review->client_name }}</h3>
+                                        <p>{{ $review->country }} {{$review->state}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{{ url('frontend/img/user.png') }}" alt="Johan Patel">
-                                <div class="author-info">
-                                    <h3>Johan Patel</h3>
-                                    <p>UK, BRIGHTON</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{{ url('frontend/img/user.png') }}" alt="Johan Patel">
-                                <div class="author-info">
-                                    <h3>Johan Patel</h3>
-                                    <p>UK, BRIGHTON</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{{ url('frontend/img/user.png') }}" alt="Johan Patel">
-                                <div class="author-info">
-                                    <h3>Johan Patel</h3>
-                                    <p>UK, BRIGHTON</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="{{ url('frontend/img/user.png') }}" alt="Johan Patel">
-                                <div class="author-info">
-                                    <h3>Johan Patel</h3>
-                                    <p>UK, BRIGHTON</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                     <!-- Repeat other items as needed -->
                 </div>
             </div>
