@@ -20,7 +20,7 @@
 
                 <li class="{{ set_active(['facilities/list']) }}">
                     <a href="{{ route('facilities/list') }}">
-                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Facilities</span>
+                        <img src="{{ url('assets/icons/facility.png') }}" style="width: 25px; height:25px"><span>Facilities</span>
                     </a>
                 </li>
 
@@ -96,8 +96,8 @@
 
                 <li class="submenu">
                     <a href="#">
-                        <i class="fa fa-user-plus"></i>
-                        <span> Filter</span>
+                        <img src="{{ url('assets/icons/smoke1-zone.jpg') }}" style="width: 20px; height:20px">
+                        <span> Filter </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="submenu_class" style="display: none;">
@@ -121,7 +121,7 @@
 
                 <li class="{{ set_active(['contact/list']) }}">
                     <a href="{{ route('contact/list') }}">
-                        <img src="{{ url('assets/icons/call.png') }}" style="width: 20px; height:20px"><span>Contact Us</span>
+                        <img src="{{ url('assets/icons/call1.png') }}" style="width: 20px; height:20px"><span>Contact Us</span>
                     </a>
                 </li>
 

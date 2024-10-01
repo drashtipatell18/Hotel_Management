@@ -141,7 +141,7 @@
                                 exercitation ullamco laboris nisi ut aliquip
                                 ex</p>
                         </div>
-                        <a href="{{ route('aboutus')}}" class="Custom_btn3">Explore More</a>
+                        <a href="{{ route('aboutus') }}" class="Custom_btn3">Explore More</a>
                     </div>
                 </div>
             </div>
@@ -159,16 +159,19 @@
                             <h5 class="text-light">Hotel Amenities</h5>
                         </div>
                         <div class="row m-0">
-                            @if(!empty($amenities))
-                                @foreach($amenities as $amenity)
+                            @if (!empty($amenities))
+                                @foreach ($amenities as $amenity)
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
                                         <div class="service_img">
-                                            @if($amenity && $amenity->image)
-                                                <img src="{{ asset('assets/amenities/' . $amenity->image) }}" alt="{{ $amenity->name }}">
+                                            @if ($amenity && $amenity->image)
+                                                <img src="{{ asset('assets/amenities/' . $amenity->image) }}"
+                                                    alt="{{ $amenity->name }}">
                                             @else
-                                                <img src="{{ asset('assets/amenities/default.png') }}" alt="Default Image">
+                                                <img src="{{ asset('assets/amenities/default.png') }}"
+                                                    alt="Default Image">
                                             @endif
-                                            <p class="mb-0 text-center text-light">{{ $amenity->name ?? 'Unknown Amenity' }}</p>
+                                            <p class="mb-0 text-center text-light">
+                                                {{ $amenity->name ?? 'Unknown Amenity' }}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -205,10 +208,10 @@
             </div>
         </div>
         <div class="gallery__slider owl-carousel">
-            @foreach($facilities as $facility)
+            @foreach ($facilities as $facility)
                 <div class="gallery__item">
                     <div class="Slider_image">
-                        @if($facility && $facility->image)
+                        @if ($facility && $facility->image)
                             <img src="{{ asset('assets/facilities/' . $facility->image) }}" alt="{{ $facility->name }}">
                         @else
                             <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
@@ -250,25 +253,32 @@
             @foreach ($roomTypes as $roomType)
                 <div class="order__item">
                     <div class="Slider_image">
-                        @if($roomType->images->isNotEmpty())
-                            <img class="image__img" src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                        @if ($roomType->images->isNotEmpty())
+                            <img class="image__img"
+                                src="{{ URL::to('/assets/upload/' . $roomType->images->first()->room_image) }}"
+                                alt="{{ $roomType->room_name }}">
                         @else
+<<<<<<< Updated upstream
                             <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
+=======
+                            <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}"
+                                alt="Default Image">
+>>>>>>> Stashed changes
                         @endif
                         <div class="image__overlay3 image__overlay3--primary">
-                            <a href="{{ route('check-avilabilty')}}" class="Custom_btn">Reserve</a>
+                            <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
                         </div>
                         <div class="image_onsection bg-light py-3">
-                            <h4 class="text-center pb-2">{{$roomType->room_name}}</h4>
+                            <h4 class="text-center pb-2">{{ $roomType->room_name }}</h4>
                             <div class="d-flex justify-content-center align-items-center">
                                 <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                <p class="text-dark mb-0">${{$roomType->base_price}}</p>
+                                <p class="text-dark mb-0">${{ $roomType->base_price }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
-          
+
 
             <!-- Repeat other items as needed -->
         </div>
@@ -600,4 +610,3 @@
 
 
 @endsection
-
