@@ -24,6 +24,12 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['clientReview/list']) }}">
+                    <a href="{{ route('clientReview/list') }}">
+                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Client Review</span>
+                    </a>
+                </li>
+
                 <li class="{{ set_active(['floor/list']) }}">
                     <a href="{{ route('floor/list') }}">
                         <img src="{{ url('assets/icons/floor.png') }}" style="width: 20px; height:20px"><span>Floors</span>
