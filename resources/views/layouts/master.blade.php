@@ -46,8 +46,11 @@
 		<div class="header">
 			<div class="header-left">
 				<div class="header-top">
-					<a href="{{ route('home') }}" class=""> <img src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" class="rounded-circle" width="50" height="50" alt="logo"> <span class="logoclass">HOTEL</span> </a>
-				<!-- <a href="{{ route('home') }}" class="logo logo-small"> <img src="{{ URL::to('assets/img/hotel_logo.png') }}" alt="Logo" width="30" height="30"> </a> -->
+				<a href="{{ route('home') }}" class="">
+					<img src="{{ Auth::check() && Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" class="rounded-circle" width="50" height="50" alt="logo">
+					<span class="logoclass">HOTEL</span>
+				</a>
+				
 				</div>
 			</div>
 			<a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
@@ -117,13 +120,18 @@
 					</div>
 				</li> --}}
 				<li class="nav-item dropdown has-arrow">
-					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img class="rounded-circle" src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" width="35" height="35" alt="Soeng Souy"></span> </a>
+				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<span class="user-img">
+						<img class="rounded-circle" src="{{ Auth::check() && Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" width="35" height="35" alt="User Image">
+					</span>
+				</a>
 					<div class="dropdown-menu">
 						<div class="user-header">
-							<div class="avatar avatar-sm"> <img src="{{ Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" alt="User Image" class="avatar-img rounded-circle"> </div>
+							<div class="avatar avatar-sm"> <img src="{{  Auth::check() && Auth::user()->profile ? asset('assets/img/' . Auth::user()->profile) : asset('assets/img/men.jpg') }}" alt="User Image" class="avatar-img rounded-circle"> </div>
 								<div class="user-text">
-									<h6>{{Auth::user()->name}}</h6>
+									<h6>{{ Auth::check() ? Auth::user()->name : 'Guest' }}</h6>
 									<p class="text-muted mb-0">
+									@if(Auth::check())
 										@if(Auth::user()->role_id == 0)
 											Admin
 										@elseif(Auth::user()->role_id == 1)
@@ -133,6 +141,9 @@
 										@elseif(Auth::user()->role_id == 3)
 											Customer
 										@endif
+									@else
+										Not logged in
+									@endif
 									</p>
 								</div>
 							</div>

@@ -32,6 +32,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\AdditionalFilterController;
 use App\Http\Controllers\FacilitiesController;
+use App\Http\Controllers\ClientReviewController;
 
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\AboutUsController;
@@ -326,6 +327,17 @@ Route::controller(FacilitiesController::class)->group(function () {
     Route::get('facilities/edit/{id}', 'facilitiesEdit');
     Route::post('facilities/update/{id}', 'facilitiesUpdate')->name('facilities/update');
     Route::get('/facilities/delete/{id}','facilitiesDelete')->name('facilities.delete');
+
+});
+
+// Client Review
+Route::controller(ClientReviewController::class)->group(function () {
+    Route::get('clientReview/add', 'clientReviewCreate')->name('clientReview/add');
+    Route::post('clientReview/store', 'clientReviewStore')->name('clientReview/store');
+    Route::get('clientReview/list', 'clientReviewList')->name('clientReview/list');
+    Route::get('clientReview/edit/{id}', 'clientReviewEdit');
+    Route::post('clientReview/update/{id}', 'clientReviewUpdate')->name('clientReview/update');
+    Route::get('/clientReview/delete/{id}','clientReviewDelete')->name('clientReview.delete');
 
 });
 
