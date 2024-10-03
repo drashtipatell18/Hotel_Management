@@ -208,25 +208,24 @@
             </div>
         </div>
         <div class="gallery__slider owl-carousel">
-            @foreach ($facilities as $facility)
-                <div class="gallery__item">
-                    <div class="Slider_image">
-                        @if ($facility && $facility->image)
-                            <img src="{{ asset('assets/facilities/' . $facility->image) }}" alt="{{ $facility->name }}">
-                        @else
-                            <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
-                        @endif
-                        <div class="image__overlay image__overlay--primary">
-                            <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
-                            <!-- <a href="#" class="Custom_btn">Book Now</a> -->
-                            <p class="image__description">
-                                {{ $facility->description ?? 'Unknown Facility' }}
-                            </p>
-                        </div>
+        @foreach ($facilities as $facility)
+            <div class="gallery__item">
+                <div class="Slider_image">
+                    @if ($facility->image && file_exists(public_path('assets/facilities/' . $facility->image)))
+                        <img src="{{ asset('assets/facilities/' . $facility->image) }}" alt="{{ $facility->name }}">
+                    @else
+                        <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
+                    @endif
+                    <div class="image__overlay image__overlay--primary">
+                        <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
+                        <p class="image__description">
+                            {{ $facility->description ?? 'No description available.' }}
+                        </p>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+    </div>
 
     </section>
     <!-- Gallery Section End -->
