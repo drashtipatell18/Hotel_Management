@@ -10,7 +10,7 @@ class AboutUsController extends Controller
 {
     public function aboutus()
     {
-        $facilities = Facilities::take(2)->get();
+        $facilities = Facilities::take(3)->get();
         return view('frontend.about',compact('facilities'));
     }
 }

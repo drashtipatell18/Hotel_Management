@@ -127,7 +127,7 @@ class FacilitiesController extends Controller
 
     public function deleteImage(Request $request, $id)
     {
-        // Find the SmokingPrefrence record by ID
+        // Find the Facilities record by ID
         $facilities = Facilities::findOrFail($id);
         
         // Get the image file name
@@ -138,10 +138,16 @@ class FacilitiesController extends Controller
         
         // Remove the image file name from the image field
         $imageFiles = explode(',', $facilities->image);
+        
+        // Filter out the image that needs to be deleted
         $imageFiles = array_filter($imageFiles, function($file) use ($imageFileName) {
             return trim($file) !== $imageFileName;
         });
-        $facilities->image = implode(',', $imageFiles);
+    
+        // Rebuild the image string, ensuring there are no leading/trailing commas or spaces
+        $facilities->image = implode(',', array_map('trim', $imageFiles));
+    
+        // Save the updated Facilities record
         $facilities->save();
         
         // Check if the file exists and delete it
@@ -152,4 +158,6 @@ class FacilitiesController extends Controller
         // Return a JSON response indicating success
         return response()->json(['success' => true], 200);
     }
+    
+
 }
