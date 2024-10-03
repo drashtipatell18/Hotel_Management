@@ -495,7 +495,7 @@
                                     <img class="image__img" src="{{ URL::to('/assets/upload/'.$review->image) }}" alt="{{ $review->client_name }}">
                                     <div class="author-info">
                                         <h3>{{ $review->client_name }}</h3>
-                                        <p>{{ $review->country }} {{$review->state}}</p>
+                                        <p>{{ $review->country }}, {{$review->state}}</p>
                                     </div>
                                 </div>
                             </div>
