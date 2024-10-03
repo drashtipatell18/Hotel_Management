@@ -33,7 +33,8 @@ class FoodController extends Controller
                 'food_image' => $file_name,
 
             ]);
-            Toastr::success('Food created successfully :)', 'Success');
+            Toastr::success('Food created successfully
+            ', 'Success');
             return redirect()->route('food/list');
         }
         catch (\Exception $e) {

@@ -1,22 +1,22 @@
 <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
-            <ul>
-                <li class="{{ set_active(['home']) }}">
-                    <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
-                </li>
+                <ul>
+                    <li class="{{ set_active(['home']) }}">
+                        <a href="{{ route('home') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                    </li>
 
-                <li class="list-divider"></li>
+                    <li class="list-divider"></li>
 
-                <li class="{{ set_active(['hotel/list']) }}">
-                    <a href="{{ route('hotel/list') }}"><i class="fas fa-hotel"></i><span>Hotel</span></a>
-                </li>
+                    <li class="{{ set_active(['hotel/list']) }}">
+                        <a href="{{ route('hotel/list') }}"><i class="fas fa-hotel"></i><span>Hotel</span></a>
+                    </li>
 
                 <li class="{{ set_active(['amenities/list']) }}">
                     <a href="{{ route('amenities/list') }}">
-                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px"><span>Amenities</span>
+                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px;"><span>Amenities</span>
                     </a>
-                </li>
+                    </li>
 
                 <li class="{{ set_active(['facilities/list']) }}">
                     <a href="{{ route('facilities/list') }}">
@@ -102,7 +102,7 @@
 
                 <li class="submenu">
                     <a href="#">
-                        <img src="{{ url('assets/icons/smoke1-zone.jpg') }}" style="width: 20px; height:20px">
+                        <img src="{{ url('assets/icons/smoke-zone.png') }}" style="width: 20px; height:20px">
                         <span> Filter </span>
                         <span class="menu-arrow"></span>
                     </a>

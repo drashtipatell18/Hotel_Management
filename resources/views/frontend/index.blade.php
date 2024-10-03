@@ -16,7 +16,7 @@
                             <h5 class="text-center default_model_title">Sign up to get the latest news and Updates</h5>
                             <p class="text-center default_model_p">Join over 3,000 members to get weekly
                                 updates and special deals only available via
-                                email.</p>
+                                email.</p>  
                         </div>
                     </div>
 
@@ -258,12 +258,7 @@
                                 src="{{ URL::to('/assets/upload/' . $roomType->images->first()->room_image) }}"
                                 alt="{{ $roomType->room_name }}">
                         @else
-<<<<<<< Updated upstream
                             <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
-=======
-                            <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}"
-                                alt="Default Image">
->>>>>>> Stashed changes
                         @endif
                         <div class="image__overlay3 image__overlay3--primary">
                             <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
