@@ -130,23 +130,26 @@ class FacilitiesController extends Controller
         // Find the Facilities record by ID
         $facilities = Facilities::findOrFail($id);
         
-        // Get the image file name
+        // Get the image file name to be deleted
         $imageFileName = $request->input('image_file_name');
         
         // Construct the file path
         $imagePath = public_path('assets/facilities/' . $imageFileName);
         
-        // Remove the image file name from the image field
+        // Split the image field into an array of image file names
         $imageFiles = explode(',', $facilities->image);
         
-        // Filter out the image that needs to be deleted
+        // Remove the image file name from the array
         $imageFiles = array_filter($imageFiles, function($file) use ($imageFileName) {
-            return trim($file) !== $imageFileName;
+            return trim($file) !== $imageFileName && !empty(trim($file));
         });
-    
-        // Rebuild the image string, ensuring there are no leading/trailing commas or spaces
-        $facilities->image = implode(',', array_map('trim', $imageFiles));
-    
+        
+        // Rebuild the image string without leading/trailing commas
+        $facilities->image = implode(',', $imageFiles);
+        
+        // Trim any leading or trailing commas (just to be sure)
+        $facilities->image = trim($facilities->image, ',');
+        
         // Save the updated Facilities record
         $facilities->save();
         
@@ -158,6 +161,8 @@ class FacilitiesController extends Controller
         // Return a JSON response indicating success
         return response()->json(['success' => true], 200);
     }
+    
+
     
 
 }
