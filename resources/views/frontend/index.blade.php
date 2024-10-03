@@ -258,12 +258,7 @@
                                 src="{{ URL::to('/assets/upload/' . $roomType->images->first()->room_image) }}"
                                 alt="{{ $roomType->room_name }}">
                         @else
-<<<<<<< Updated upstream
                             <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
-=======
-                            <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}"
-                                alt="Default Image">
->>>>>>> Stashed changes
                         @endif
                         <div class="image__overlay3 image__overlay3--primary">
                             <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
@@ -500,7 +495,7 @@
                                     <img class="image__img" src="{{ URL::to('/assets/upload/'.$review->image) }}" alt="{{ $review->client_name }}">
                                     <div class="author-info">
                                         <h3>{{ $review->client_name }}</h3>
-                                        <p>{{ $review->country }} {{$review->state}}</p>
+                                        <p>{{ $review->country }}, {{$review->state}}</p>
                                     </div>
                                 </div>
                             </div>

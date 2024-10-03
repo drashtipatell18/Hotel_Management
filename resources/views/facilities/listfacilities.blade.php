@@ -53,6 +53,7 @@
                                                 <th>No</th>
                                                 <th>Image</th>
                                                 <th>Facilities Name</th>
+                                                <th>Title</th>
                                                 <th>Description</th>
                                                 <th class="text-right">Actions</th>
                                             </tr>
@@ -62,11 +63,22 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <a href="{{ URL::to('/assets/facilities/'.$facilities->image) }}" data-lightbox="facilities" data-title="{{ $facilities->name }}" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/facilities/'.$facilities->image) }}" alt="{{ $facilities->image }}" width="80px">
+                                                    @php
+                                                        $images = explode(',', $facilities->image);
+                                                        $firstImage = $images[0]; // Get the first image
+                                                    @endphp
+                                                    <a href="{{ URL::to('/assets/facilities/'.$firstImage) }}" data-lightbox="facilities-group-{{ $facilities->id }}" data-title="{{ $facilities->name }}" class="avatar avatar-sm mr-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/facilities/'.$firstImage) }}" alt="{{ $firstImage }}" width="80px" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/imagen para todo.jpg') }}';">
                                                     </a>
+                                                    @foreach($images as $index => $image)
+                                                        @if($index != 0)
+                                                            <a href="{{ URL::to('/assets/facilities/'.$image) }}" data-lightbox="facilities-group-{{ $facilities->id }}" data-title="{{ $facilities->name }}" style="display: none;"></a>
+                                                        @endif
+                                                    @endforeach
                                                 </td>
+
                                                 <td>{{ $facilities->name }}</td>
+                                                <td>{{ $facilities->title }}</td>
                                                 <td>{{ $facilities->description }}</td>
                                                 <td class="text-right">
                                                     <a href="{{ url('facilities/edit/'.$facilities->id) }}" style="font-size: 23px; padding: 5px; color: #009688;">

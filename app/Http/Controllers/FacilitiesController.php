@@ -7,6 +7,7 @@ use App\Models\Facilities;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
+use File;
 
 
 class FacilitiesController extends Controller
@@ -20,29 +21,35 @@ class FacilitiesController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'description' => 'string'
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'nullable|string',
         ]);
 
         try {
-            $imagePath = null;
+            $imagePaths = []; // Array to store the image paths
+
+            // Check if images are uploaded
             if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('/assets/facilities/'), $imageName);
-                $imagePath = $imageName;
+                foreach ($request->file('image') as $image) {
+                    $imageName = time().'_'.$image->getClientOriginalName();
+                    $image->move(public_path('/assets/facilities/'), $imageName);
+                    $imagePaths[] = $imageName; // Store the image name
+                }
             }
 
-            // Create a new Amenity record
+            // Create a new Facilities record
             $facilities = new Facilities;
             $facilities->name = $request->input('name');
-            $facilities->image = $imagePath;
+            $facilities->image = implode(',', $imagePaths); // Store paths as a comma-separated string
+            $facilities->title = $request->input('title');
             $facilities->description = $request->input('description');
             $facilities->save();
+
             return redirect()->route('facilities/list')
                 ->with('success', 'Facilities added successfully!');
         } catch (\Exception $e) {
-            Log::error('Error saving amenity: ' . $e->getMessage());
+            Log::error('Error saving facilities: ' . $e->getMessage());
             return redirect()->route('facilities/list')
                 ->with('error', 'There was a problem adding the facilities.');
         }
@@ -59,34 +66,49 @@ class FacilitiesController extends Controller
     }
     public function facilitiesUpdate(Request $request, $id)
     {
+        // Validate request input
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif',
-            'description' => 'string'
+            'title' => 'nullable|string|max:255', // Make sure to validate the title
+            'description' => 'nullable|string',
+            'image' => 'nullable|array',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-            DB::beginTransaction();
-            try {
-                $facilities = Facilities::findOrFail($id);
-                $facilities->name = $request->input('name');
-                $facilities->description = $request->input('description');
+        DB::beginTransaction();
+        try {
+            $facilities = Facilities::findOrFail($id);
+            $facilities->name = $request->input('name');
+            $facilities->title = $request->input('title');
+            $facilities->description = $request->input('description');
 
-                if ($request->hasFile('image')) {
-                    $image = $request->file('image');
-                    $imageName = rand() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('/assets/amenities/'), $imageName);
-                    $facilities->image = $imageName;
+            // Handle multiple images
+            $imagePaths = [];
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('/assets/facilities/'), $imageName);
+                    $imagePaths[] = $imageName;
                 }
-                $facilities->save();
-                DB::commit();
-                Toastr::success('Facilities updated successfully :)', 'Success');
-                return redirect()->route('facilities/list');
-            } catch (\Exception $e) {
-                DB::rollback();
-                Toastr::error('Facilities  failed :)', 'Error');
-                return redirect()->back()->withInput();
+                // Append new image paths to existing ones
+                $existingImages = explode(',', $facilities->image);
+                $allImages = array_merge($existingImages, $imagePaths);
+                $facilities->image = implode(',', $allImages);
             }
+
+            $facilities->save();
+            DB::commit();
+            Toastr::success('Facilities updated successfully :)', 'Success');
+            return redirect()->route('facilities/list');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error updating facilities: ' . $e->getMessage());
+            Toastr::error('Facilities update failed :)', 'Error');
+            return redirect()->back()->withInput();
+        }
     }
+
+    
 
     public function facilitiesDelete($id)
     {
@@ -101,5 +123,33 @@ class FacilitiesController extends Controller
             Toastr::error('Failed to delete Facilities :(', 'Error');
         }
         return redirect()->route('facilities/list');
+    }
+
+    public function deleteImage(Request $request, $id)
+    {
+        // Find the SmokingPrefrence record by ID
+        $facilities = Facilities::findOrFail($id);
+        
+        // Get the image file name
+        $imageFileName = $request->input('image_file_name');
+        
+        // Construct the file path
+        $imagePath = public_path('assets/facilities/' . $imageFileName);
+        
+        // Remove the image file name from the image field
+        $imageFiles = explode(',', $facilities->image);
+        $imageFiles = array_filter($imageFiles, function($file) use ($imageFileName) {
+            return trim($file) !== $imageFileName;
+        });
+        $facilities->image = implode(',', $imageFiles);
+        $facilities->save();
+        
+        // Check if the file exists and delete it
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+        
+        // Return a JSON response indicating success
+        return response()->json(['success' => true], 200);
     }
 }

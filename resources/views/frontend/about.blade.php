@@ -56,40 +56,38 @@
 
     <!-- About Section2 Begin -->
     <section class="about_sec2 about_sectionBg spad">
-        <img class="pattern2" src="{{ url('frontend/img/about/pattern2.png') }}" alt>
+        <img class="pattern2" src="{{ url('frontend/img/about/pattern2.png') }}" alt="">
         <div class="container-fluid">
-            <div class="row  py-4 about_sec2_row">
-                <div class="col-lg-5 d-flex justify-content-center">
-                    <img src="{{ url('frontend/img/about/sec2_1.png') }}" alt>
+            @foreach($facilities as $section)
+                <div class="row py-4 about_sec2_row">
+                    @if($loop->first) <!-- Check if it's the first iteration -->
+                        <div class="col-lg-5 d-flex justify-content-center">
+                            <img src="{{ asset('assets/facilities/' . $section->image) }}" alt="{{ $section->name }}">
+                        </div>
+                        <div class="col-lg-7 y_aboutrestrarant_col2 d-flex align-items-center">
+                            <div class="y_abouttext">
+                                <h4>{{ $section->name }}</h4>
+                                <h2>{{ $section->title }}</h2>
+                                <p>{{ $section->description }}</p>
+                            </div>
+                        </div>
+                    @elseif($loop->index == 1) <!-- Check if it's the second iteration -->
+                        <div class="col-lg-7 y_aboutrestrarant_col2 d-flex align-items-center">
+                            <div class="y_abouttext">
+                                <h4>{{ $section->name }}</h4>
+                                <h2>{{ $section->title }}</h2>
+                                <p>{{ $section->description }}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 d-flex justify-content-center">
+                            <img src="{{ asset('assets/facilities/' . $section->image) }}" alt="{{ $section->name }}">
+                        </div>
+                    @endif
                 </div>
-                <div class="col-lg-7 y_aboutrestrarant_col2  d-flex align-items-center">
-                    <div class="y_abouttext">
-                        <h4>Restaurant</h4>
-                        <h2>Once you try it, You will Love it.</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magnalaboris nisi ut aliquip exLorem ipsum
-                            dolor sit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row y_colRevers py-4 about_sec2_row">
-                <div class="col-lg-7 y_aboutrestrarant_col2 d-flex align-items-center">
-                    <div class="y_abouttext">
-                        <h4>Bar</h4>
-                        <h2>Fun and entertainment inside</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magnalaboris nisi ut aliquip exLorem ipsum
-                            dolor sit.</p>
-                    </div>
-                </div>
-                <div class="col-lg-5 d-flex justify-content-center">
-                    <img src="{{ url('frontend/img/about/sec2_2.png') }}" alt>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
+
     <!-- About Section2 Begin -->
 
 
@@ -119,6 +117,7 @@
             </div>
         </div>
     </section>
+
     <!-- About Section3 End -->
 
 

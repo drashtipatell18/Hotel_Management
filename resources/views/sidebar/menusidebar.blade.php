@@ -102,7 +102,7 @@
 
                 <li class="submenu">
                     <a href="#">
-                        <img src="{{ url('assets/icons/smoke1-zone.jpg') }}" style="width: 20px; height:20px">
+                        <img src="{{ url('assets/icons/facelities.png') }}" style="width: 20px; height:20px">
                         <span> Filter </span>
                         <span class="menu-arrow"></span>
                     </a>

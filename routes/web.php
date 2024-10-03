@@ -327,6 +327,7 @@ Route::controller(FacilitiesController::class)->group(function () {
     Route::get('facilities/edit/{id}', 'facilitiesEdit');
     Route::post('facilities/update/{id}', 'facilitiesUpdate')->name('facilities/update');
     Route::get('/facilities/delete/{id}','facilitiesDelete')->name('facilities.delete');
+    Route::delete('/facilities/image/delete/{id}', [FacilitiesController::class, 'deleteImage'])->name('facilities.image.delete');
 
 });
 
