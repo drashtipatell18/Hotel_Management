@@ -65,48 +65,56 @@ class FacilitiesController extends Controller
         return view('facilities.facilitiesedit',compact('facilitiesList'));
     }
     public function facilitiesUpdate(Request $request, $id)
-    {
-        // Validate request input
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'title' => 'nullable|string|max:255', // Make sure to validate the title
-            'description' => 'nullable|string',
-            'image' => 'nullable|array',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+{
+    // Validate request input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'title' => 'nullable|string|max:255', // Make sure to validate the title
+        'description' => 'nullable|string',
+        'image' => 'nullable|array',
+        'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        DB::beginTransaction();
-        try {
-            $facilities = Facilities::findOrFail($id);
-            $facilities->name = $request->input('name');
-            $facilities->title = $request->input('title');
-            $facilities->description = $request->input('description');
+    DB::beginTransaction();
+    try {
+        $facilities = Facilities::findOrFail($id);
+        $facilities->name = $request->input('name');
+        $facilities->title = $request->input('title');
+        $facilities->description = $request->input('description');
 
-            // Handle multiple images
-            $imagePaths = [];
-            if ($request->hasFile('image')) {
-                foreach ($request->file('image') as $image) {
-                    $imageName = time() . '_' . $image->getClientOriginalName();
-                    $image->move(public_path('/assets/facilities/'), $imageName);
-                    $imagePaths[] = $imageName;
-                }
-                // Append new image paths to existing ones
-                $existingImages = explode(',', $facilities->image);
-                $allImages = array_merge($existingImages, $imagePaths);
-                $facilities->image = implode(',', $allImages);
+        // Handle multiple images
+        $imagePaths = [];
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('/assets/facilities/'), $imageName);
+                $imagePaths[] = $imageName;
             }
 
-            $facilities->save();
-            DB::commit();
-            Toastr::success('Facilities updated successfully :)', 'Success');
-            return redirect()->route('facilities/list');
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error('Error updating facilities: ' . $e->getMessage());
-            Toastr::error('Facilities update failed :)', 'Error');
-            return redirect()->back()->withInput();
+            // If there are existing images, merge them with the new ones
+            if (!empty($facilities->image)) {
+                $existingImages = explode(',', $facilities->image);
+                $allImages = array_merge($existingImages, $imagePaths);
+            } else {
+                $allImages = $imagePaths;
+            }
+
+            // Remove empty values and ensure no extra commas
+            $facilities->image = implode(',', array_filter($allImages, 'trim'));
         }
+
+        $facilities->save();
+        DB::commit();
+        Toastr::success('Facilities updated successfully :)', 'Success');
+        return redirect()->route('facilities/list');
+    } catch (\Exception $e) {
+        DB::rollback();
+        Log::error('Error updating facilities: ' . $e->getMessage());
+        Toastr::error('Facilities update failed :)', 'Error');
+        return redirect()->back()->withInput();
     }
+}
+
 
     
 
@@ -145,10 +153,7 @@ class FacilitiesController extends Controller
         });
         
         // Rebuild the image string without leading/trailing commas
-        $facilities->image = implode(',', $imageFiles);
-        
-        // Trim any leading or trailing commas (just to be sure)
-        $facilities->image = trim($facilities->image, ',');
+        $facilities->image = implode(',', array_map('trim', $imageFiles));
         
         // Save the updated Facilities record
         $facilities->save();
@@ -161,6 +166,7 @@ class FacilitiesController extends Controller
         // Return a JSON response indicating success
         return response()->json(['success' => true], 200);
     }
+    
     
 
     
