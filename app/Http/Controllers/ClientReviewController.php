@@ -17,6 +17,10 @@ class ClientReviewController extends Controller
 
     public function clientReviewStore(Request $request)
     {
+        $request->validate([
+            'client_name' => 'required|string|max:255',
+        ]);
+
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {

@@ -39,7 +39,7 @@
 
 
 <!-- section1 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1">
     <img class="pattern3" src="img/rooms/patern1.png" alt>
     <div class="roomsPosition">
         <div class="row m-0 pb-5">
@@ -56,12 +56,12 @@
         </div>
     </div>
 
-</section>
+</section> -->
 <!-- section1 end -->
 
 
 <!-- section2 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1 ">
     <img class="pattern4" src="{{ url('frontend/img/rooms/patern2.png') }}" alt>
     <div class="roomsPosition">
         <div class="row m-0 d-flex justify-content-end pb-5">
@@ -77,11 +77,61 @@
                 laboris nisi ut aliquip exLorem ipsum dolor sit amet, </p>
         </div>
     </div>
+</section> -->
+
+
+<section class="about_sec1 roomsSec1">
+    @foreach($roomTypesRooms as $index => $roomType)
+        <div class="roomsPosition">
+            @if($index % 2 === 0)
+                <img class="pattern3" src="{{ url('frontend/img/rooms/patern1.png') }}" alt="">
+                <div class="row m-0 pb-5">
+                    <div class="col-lg-7">
+                        @if($roomType->images->isNotEmpty())
+                            <a href="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" data-title="{{ $roomType->room_name }}">
+                                <img  style="height: 650px; width: 100%; object-fit: fill;" class=""  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                            </a>
+                        @else
+                            <a class="avatar avatar-sm mr-2">
+                                <img style="height: 650px; width: 100%; object-fit: fill;"  src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="static_box">
+                    <h1>{{ $roomType->name }}</h1>
+                    <p>{{ $roomType->description }}</p>
+                </div>
+            @else
+                <img class="pattern4" src="img/rooms/patern1.png" alt="">
+                <div class="row m-0 d-flex justify-content-end pb-5">
+                    <div class="col-lg-7">
+                        @if($roomType->images->isNotEmpty())
+                            <a href="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" data-title="{{ $roomType->room_name }}">
+                                <img style="height: 650px; width: 100%; object-fit: fill;"  class="roomssection2_img"  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                            </a>
+                        @else
+                            <a class="avatar avatar-sm mr-2">
+                                <img style="height: 650px; width: 100%; object-fit: fill;" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="static_box2">
+                    <h1>{{ $roomType->name }}</h1>
+                    <p>{{ $roomType->description }}</p>
+                </div>
+            @endif
+        </div>
+    @endforeach
 </section>
+
+
+
 <!-- section2 end -->
 
 <!-- section3 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1 ">
     <img class="pattern3" src="{{ url('frontend/img/rooms/patern1.png') }}" alt>
     <div class="roomsPosition">
         <div class="row m-0 pb-5">
@@ -98,11 +148,11 @@
         </div>
     </div>
 
-</section>
+</section> -->
 <!-- section3 end -->
 
 <!-- section4 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1 ">
     <img class="pattern4" src="{{ url('frontend/img/rooms/patern2.png') }}" alt>
     <div class="roomsPosition">
         <div class="row m-0 d-flex justify-content-end pb-5">
@@ -118,13 +168,13 @@
                 laboris nisi ut aliquip exLorem ipsum dolor sit amet, </p>
         </div>
     </div>
-</section>
+</section> -->
 <!-- section4 end -->
 
 
 
 <!-- section5 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1 ">
     <img class="pattern3" src="{{ url('frontend/img/rooms/patern1.png') }}" alt>
     <div class="roomsPosition">
         <div class="row m-0 pb-5">
@@ -141,12 +191,12 @@
         </div>
     </div>
 
-</section>
+</section> -->
 <!-- section5 end -->
 
 
 <!-- section6 start -->
-<section class="about_sec1 roomsSec1 ">
+<!-- <section class="about_sec1 roomsSec1 ">
     <img class="pattern4" src="{{ url('frontend/img/rooms/patern2.png') }}" alt>
     <div class="roomsPosition">
         <div class="row m-0 d-flex justify-content-end pb-5">
@@ -164,6 +214,6 @@
                 laboris nisi ut aliquip exLorem ipsum dolor sit amet, </p>
         </div>
     </div>
-</section>
+</section> -->
 <!-- section6 end -->
 @endsection

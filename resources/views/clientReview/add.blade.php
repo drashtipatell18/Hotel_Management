@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Select Country</label>
-                                    <select id="country" name="country" class="form-control @error('country') is-invalid @enderror"></select>
+                                    <select name="country" id="country"  class="form-control @error('country') is-invalid @enderror"></select>
                                     @error('country')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

@@ -11,11 +11,8 @@
                     <div class="col">
                         <div class="mt-5">
                             <h4 class="
-                            card-title float-left mt-2">Floors</h4> <a
-                                href="{{ route('floor/add') }}"
-                                class="btn btn-pr
-                                imary float-right veiwbutton"><i
-                                    class="fas fa-plus mr-2"></i>Add Floor</a>
+                            card-title float-left mt-2">Floors</h4> <a href="{{ route('floor/add') }}"
+                                class="btn btn-primary float-right veiwbutton"><i class="fas fa-plus mr-2"></i>Add Floor</a>
                         </div>
                     </div>
                 </div>
