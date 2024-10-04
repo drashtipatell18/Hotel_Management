@@ -211,20 +211,34 @@
         @foreach ($facilities as $facility)
             <div class="gallery__item">
                 <div class="Slider_image">
-                    @if ($facility->image && file_exists(public_path('assets/facilities/' . $facility->image)))
-                        <img src="{{ asset('assets/facilities/' . $facility->image) }}" alt="{{ $facility->name }}">
+                    @php
+                        // Split the comma-separated images into an array
+                        $images = explode(',', $facility->image);
+                        
+                        // Check if the facility name is 'Spa' and select the third image (index 2), else use the first image
+                        if ($facility->name == 'Spa') {
+                            $selectedImage = $images[2] ?? null;
+                        } elseif($facility->name == 'Indoor Pool'){
+                            $selectedImage = $images[2] ?? null;
+                        }
+                         else {
+                            $selectedImage = $images[0] ?? null;
+                        }
+                    @endphp
+
+                    @if ($selectedImage && file_exists(public_path('assets/facilities/' . $selectedImage)))
+                        <img src="{{ asset('assets/facilities/' . $selectedImage) }}" alt="{{ $facility->name }}">
                     @else
                         <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
                     @endif
+
                     <div class="image__overlay image__overlay--primary">
                         <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
-                        <p class="image__description">
-                            {{ $facility->description ?? 'No description available.' }}
-                        </p>
                     </div>
                 </div>
             </div>
         @endforeach
+
     </div>
 
     </section>

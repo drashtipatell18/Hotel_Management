@@ -65,55 +65,55 @@ class FacilitiesController extends Controller
         return view('facilities.facilitiesedit',compact('facilitiesList'));
     }
     public function facilitiesUpdate(Request $request, $id)
-{
-    // Validate request input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'title' => 'nullable|string|max:255', // Make sure to validate the title
-        'description' => 'nullable|string',
-        'image' => 'nullable|array',
-        'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+    {
+        // Validate request input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255', // Make sure to validate the title
+            'description' => 'nullable|string',
+            'image' => 'nullable|array',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    DB::beginTransaction();
-    try {
-        $facilities = Facilities::findOrFail($id);
-        $facilities->name = $request->input('name');
-        $facilities->title = $request->input('title');
-        $facilities->description = $request->input('description');
+        DB::beginTransaction();
+        try {
+            $facilities = Facilities::findOrFail($id);
+            $facilities->name = $request->input('name');
+            $facilities->title = $request->input('title');
+            $facilities->description = $request->input('description');
 
-        // Handle multiple images
-        $imagePaths = [];
-        if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $image) {
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('/assets/facilities/'), $imageName);
-                $imagePaths[] = $imageName;
+            // Handle multiple images
+            $imagePaths = [];
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('/assets/facilities/'), $imageName);
+                    $imagePaths[] = $imageName;
+                }
+
+                // If there are existing images, merge them with the new ones
+                if (!empty($facilities->image)) {
+                    $existingImages = explode(',', $facilities->image);
+                    $allImages = array_merge($existingImages, $imagePaths);
+                } else {
+                    $allImages = $imagePaths;
+                }
+
+                // Remove empty values and ensure no extra commas
+                $facilities->image = implode(',', array_filter($allImages, 'trim'));
             }
 
-            // If there are existing images, merge them with the new ones
-            if (!empty($facilities->image)) {
-                $existingImages = explode(',', $facilities->image);
-                $allImages = array_merge($existingImages, $imagePaths);
-            } else {
-                $allImages = $imagePaths;
-            }
-
-            // Remove empty values and ensure no extra commas
-            $facilities->image = implode(',', array_filter($allImages, 'trim'));
+            $facilities->save();
+            DB::commit();
+            Toastr::success('Facilities updated successfully :)', 'Success');
+            return redirect()->route('facilities/list');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error updating facilities: ' . $e->getMessage());
+            Toastr::error('Facilities update failed :)', 'Error');
+            return redirect()->back()->withInput();
         }
-
-        $facilities->save();
-        DB::commit();
-        Toastr::success('Facilities updated successfully :)', 'Success');
-        return redirect()->route('facilities/list');
-    } catch (\Exception $e) {
-        DB::rollback();
-        Log::error('Error updating facilities: ' . $e->getMessage());
-        Toastr::error('Facilities update failed :)', 'Error');
-        return redirect()->back()->withInput();
     }
-}
 
 
     
