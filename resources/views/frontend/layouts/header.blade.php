@@ -11,7 +11,6 @@
 
     <!-- Css Styles -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ url('frontend/css/bootstrap.min.css') }} " type="text/css">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ url('frontend/css/elegant-icons.css') }}" type="text/css">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="{{ url('frontend/css/jquery-ui.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/slicknav.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('frontend/css/bootstrap.min.css') }} " type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -32,7 +32,7 @@
         rel="stylesheet">
 
     <style>
-        /* @import url('https://fonts.cdnfonts.com/css/footlight-mt-pro'); */
+        @import url('https://fonts.cdnfonts.com/css/footlight-mt-pro');
     </style>
 
     <!-- Toastr CSS -->
@@ -98,7 +98,7 @@
             <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
             <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a></li>
             <li><a href="{{ route('rooms-frontend') }}" class="nav-link" data-page="rooms">Rooms</a></li>
-            <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
+            <li><a href="{{ route('spabook') }}" class="nav-link" data-page="spabook">Spa</a></li>
             <li><a href="{{ route('gallery') }} " class="nav-link" data-page="gallery">Gallery</a></li>
             <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
         </ul>
@@ -266,7 +266,7 @@
                                     </li>
                                     <li><a href="{{ route('rooms-frontend') }}" class="nav-link"
                                             data-page="rooms">Rooms</a></li>
-                                    <li><a href="{{ route('spa') }}" class="nav-link" data-page="spa">Spa</a></li>
+                                    <li><a href="{{ route('spabook') }}" class="nav-link" data-page="spabook">Spa</a></li>
                                     <li><a href="{{ route('gallery') }} " class="nav-link"
                                             data-page="gallery">Gallery</a></li>
                                     <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact

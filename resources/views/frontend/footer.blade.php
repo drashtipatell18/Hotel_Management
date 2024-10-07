@@ -38,7 +38,7 @@
     </head>
 
     <body>
-       
+
               <!-- Footer Section Begin -->
               <footer class="footer">
                 <div class="footerBack_img">
@@ -77,7 +77,7 @@
                                                     </div>
                                                     <div class="div2">
                                                         <li><a class="text-light"
-                                                                    href="spa.html">Spa</a></li>
+                                                                    href="{{ route('spabook') }}">Spa</a></li>
                                                         <li><a class="text-light"
                                                                 href="gallery.html">Gallery</a></li>
                                                         <li><a class="text-light"
@@ -130,9 +130,9 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                         </div>
-    
+
                     </div>
                     <div class="footer__copyright">
                         <div class="container">
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-    
+
             </footer>
             <!-- Footer Section End -->
 
@@ -155,13 +155,13 @@
                     var modal = document.getElementById("defaultModal");
                     modal.style.display = "block";
                 }
-    
+
                 function closeModal() {
                     var modal = document.getElementById("defaultModal");
                     modal.style.display = "none";
                 }
             </script>
-        
+
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>

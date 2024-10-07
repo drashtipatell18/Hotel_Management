@@ -34,13 +34,13 @@
                                 <img class="image__img h-100" src="{{ url('frontend/img/d_img/spa1.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
                                         <div class="d-flex justify-content-center align-items-center">
                                             <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p> 
+                                            <p class=" mb-0">Starting from $120</p>
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa3.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -72,7 +72,7 @@
                                 <img class="image__img" src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -91,7 +91,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa5.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -110,7 +110,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -129,7 +129,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa1.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -148,7 +148,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa3.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -167,7 +167,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -186,7 +186,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa5.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="spabooknow.html" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookK  now')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
@@ -203,7 +203,7 @@
             </div>
         </div>
     </section>
-    
+
 <script src="{{ url('frontend/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ url('frontend/js/d_home.js') }}"></script>
 

@@ -14,7 +14,7 @@
                         <span>An elevated Spa experience</span>
                     </div>
                     <div class="mt-3">
-                        <a href="spabook.html" class="Custom_btn4">Book Treatment</a>
+                        <a href="{{ url('spabook') }}" class="Custom_btn4">Book Treatment</a>
                     </div>
 
                 </div>

@@ -152,7 +152,7 @@ if (document.getElementById('offcanvasTop')) {
 //                                 </div>
 //                             </div>
 //                         </div>
-//                     </div>  
+//                     </div>
 //                 </div>
 //             </div>
 //         `;
@@ -224,7 +224,7 @@ if (document.getElementById('offcanvasTop')) {
 //     });
 // });
 
-// check availability room card 
+// check availability room card
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     const apiUrl = "http://localhost:3000/room";
@@ -746,7 +746,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function setActiveLink() {
         const currentPage = window.location.pathname.split("/").pop().replace(".html", "") || "index";
-        
+
         navLinks.forEach(link => {
             const linkPage = link.getAttribute("data-page");
             if (linkPage === currentPage) {
@@ -765,10 +765,10 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function(e) {
             e.preventDefault();
             const clickedPage = this.getAttribute("data-page");
-            
+
             // Navigate to the new page
             window.location.href = clickedPage + ".html";
-            
+
             // Update active state
             setActiveLink();
         });
@@ -818,4 +818,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-// 
+//

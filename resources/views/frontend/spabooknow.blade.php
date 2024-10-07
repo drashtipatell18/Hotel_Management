@@ -162,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="d_cta mt-3 text-center">
-                                <a href="spacheckout.html" class="d-block d-sm-inline-block text-center">Book Treatment</a>
+                                <a href="{{ route('spacheckout') }}" class="d-block d-sm-inline-block text-center">Book Treatment</a>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                         <div class="d-sm-flex d-inline-block justify-content-between align-items-center mb-3">
                             <h2 class=" d_spatext">Custom Massage (100 min)</h2>
                             <h2 class="d_spatext">Starting from $120</h2>
-                        </div> 
+                        </div>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                             Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
                             ridiculus mus. </p>
@@ -195,12 +195,6 @@
 
     <!-- Detail section end -->
 
-
-
-
-
-
-
 @endsection
 
     <!-- Js Plugins -->
@@ -222,10 +216,10 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    
+
     <!-- <script src="js/jquery-ui.min.js"></script> -->
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-   
+
     <script src="js/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 

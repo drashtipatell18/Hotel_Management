@@ -30,9 +30,9 @@
                                             <li><a class="text-light" href="rooms.html">Rooms</a></li>
                                         </div>
                                         <div class="div2">
-                                            <li><a class="text-light" href="spa.html">Spa</a></li>
-                                            <li><a class="text-light" href="gallery.html">Gallery</a></li>
-                                            <li><a class="text-light" href="contact.html">Contact
+                                            <li><a class="text-light" href="{{ route('spabook') }}">Spa</a></li>
+                                            <li><a class="text-light" href="{{ route('gallery') }}">Gallery</a></li>
+                                            <li><a class="text-light" href="{{ route('contact-us') }}">Contact
                                                     Us</a></li>
                                         </div>
                                     </ul>
@@ -105,12 +105,15 @@
 <!-- Toastr JS (if you're using it) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-{{-- <script src="{{ url('frontend/js/bootstrap.min.js') }}"></script> --}}
+<script src="{{ url('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url('frontend/js/bootstrap.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
 <script src="{{ url('frontend/js/main.js') }}"></script>
+<script src="{{ url('frontend/js/d_home.js') }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
@@ -304,6 +307,32 @@
 
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        debugger
+        const filterButtons = document.querySelectorAll('.tab');
+        const galleryItems = document.querySelectorAll('.d_spabook');
+
+        function filterGallery(category) {
+            galleryItems.forEach(item => {
+                const item  Category = item.getAttribute('data-category');
+                item.style.display = (category === 'all' || itemCategory === category) ? 'block' : 'none';
+            });
+        }
+
+        if(filterButtons && galleryItems){
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const category = this.getAttribute('data-category');
+                filterGallery(category);
+            });
+        });
+    }
+
+        // Initialize with 'all' category
+        filterGallery('all');
+    });
+
+
     document.addEventListener('DOMContentLoaded', function () {
         const tabs = document.querySelectorAll('.tab');
         const galleries = Array.from(document.querySelectorAll('.image-gallery'));
