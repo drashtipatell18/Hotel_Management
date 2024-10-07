@@ -39,7 +39,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 </head>
+<style>
+    .custom-dropdown {
+        background-color: white; /* Set background color to black */
+    }
 
+    .custom-dropdown .dropdown-item {
+        color: black; /* Set text color to white for better visibility */
+    }
+
+    .custom-dropdown .dropdown-item:hover {
+        background-color: darkgray; /* Optional: Change hover color for better UX */
+        color: white; /* Maintain text color on hover */
+    }
+</style>
 <body>
     <!-- Page Preloder -->
     <!-- <div id="preloder">
@@ -263,11 +276,20 @@
                             </nav>
                             @if (Auth::check())
                                 <div class="header__nav__widget">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        {{ Auth::user()->name }}
-                                    </a>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ Auth::user()->name }}
+                                        </a>
+                                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
                                 </div>&nbsp;&nbsp;
                             @endif
+
                             <div class="header__nav__widget">
                                 @auth
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>

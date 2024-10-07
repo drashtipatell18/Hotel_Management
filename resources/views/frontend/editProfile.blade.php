@@ -14,7 +14,7 @@
         z-index: 0;
     }
 
-    .custom-dropdown {
+    .custom-dropdown1 {
         position: relative;
         display: inline-block;
         width: 200px;
@@ -32,7 +32,7 @@
         z-index: 1000;
     }
 
-    .dropdown-content {
+    .dropdown-content1 {
         display: none;
         position: absolute;
         background-color: #1A2142;
@@ -42,14 +42,14 @@
         z-index: 1000;
     }
 
-    .dropdown-content span {
+    .dropdown-content1 span {
         display: block;
         padding: 8px;
         color: #fff;
         text-decoration: none;
     }
 
-    .dropdown-content span:hover {
+    .dropdown-content1 span:hover {
         background-color: #1A2142;
     }
 
@@ -57,6 +57,11 @@
         background-color: #1A2142;
         color: white !important;
     }
+
+
+    
+
+ 
 </style>
 
 <section class="d_p-25 d_room">
@@ -69,12 +74,12 @@
             </div>
         </div>
         <div class="container edit_profile">
-            <form>
+             <form action="{{ route('updateprofiledata') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="row edit_1row pb-3">
-                    <div class="col-lg-3">
+                <div class="col-lg-3">
                         <div class="profile-pic">
-                            <img src="{{ url('frontend/img/my_profile.png') }}" alt="Profile Picture">
-                            <button type="button" class="change-pic">Change</button>
+                            <img src="{{ $user->profile ? asset('assets/img/' . $user->profile) : asset('assets/img/men.jpg') }}" style="width: 193px;height: 192px;object-fit: fill;"  class="rounded-circle"  alt="logo">
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -84,27 +89,27 @@
                                 <div class="row">
                                     <div class="input-group">
                                         <label for="first-name">First Name</label>
-                                        <input type="text" id="first-name" name="first-name" value="John">
+                                        <input type="text" id="name" name="name" value="{{ $user->name }}" required>
                                     </div>
                                     <div class="input-group">
                                         <label for="last-name">Last Name</label>
-                                        <input type="text" id="last-name" name="last-name" value="John">
+                                        <input type="text" id="lname" name="lname" value="{{ $user->lname }}" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-group">
                                         <label for="email">Email</label>
-                                        <input type="email" id="email" name="email" value="john123@gmail.com">
+                                        <input type="text" id="email" name="email" value="{{ $user->email }}" required>
                                     </div>
                                     <div class="input-group">
                                         <label for="phone">Phone</label>
                                         <div class="phone-group y_select_drop">
-                                            <div class="custom-dropdown w-auto" style="border-radius:0px;">
+                                            <div class="custom-dropdown1 w-auto" style="border-radius:0px;">
                                                 <button class="text-decoration-none m-0 y_select_btn">+1
 
                                                 </button>
 
-                                                <div class="dropdown-content">
+                                                <div class="dropdown-content1">
                                                     <span data-value="+1">+1</span>
                                                     <span data-value="+1">+1</span>
                                                     <span data-value="+44">+44</span>
@@ -112,22 +117,33 @@
                                                     <!-- Add more options as needed -->
                                                 </div>
                                             </div>
-                                            <input class="select_drp" type="tel" id="phone" name="phone"
-                                                value="234567891">
+                                            <input class="select_drp" type="tel" id="phone_number" name="phone_number"
+                                               value="{{ $user->phone_number }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-group">
                                         <label for="dob">Date of Birth (DD/MM/YYYY)</label>
-                                        <input type="date" id="dob" name="dob" value="1977-08-07">
-                                        <div class="custom-date-icon"></div>
+                                        <input type="date"  id="dob" name="dob" value="{{ $user->dob }}">
+                                        <div class="custom-date-icon">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
                                     </div>
                                     <div class="input-group">
                                         <label for="nationality">Nationality</label>
                                         <input type="text" id="nationality" name="nationality" value="United States">
                                     </div>
                                 </div>
+
+                               <div class="row">
+                                    <div class="input-group" style="width: 96%;">
+                                        <label for="profile_pic">Profile Picture</label>
+                                        <input type="file" id="profile" name="profile" accept="image/*" style="width: 100%;">
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -139,6 +155,12 @@
                         <div class="section">
                             <h2>Address</h2>
                             <div class="row">
+                                <div class="input-group" style="width: 96%;">
+                                    <label for="state">Country</label>
+                                    <input type="text" id="state" name="state" value="United States">
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="input-group">
                                     <label for="city">City</label>
                                     <input type="text" id="city" name="city" value="United States">
@@ -148,22 +170,13 @@
                                     <input type="text" id="state" name="state" value="United States">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="input-group">
-                                    <label for="state">Country</label>
-                                    <input type="text" id="state" name="state" value="United States">
-                                </div>
-                                <div class="input-group">
-                                    <label for="postal-code">Postal Code</label>
-                                    <input type="text" id="postal-code" name="postal-code" value="123456">
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
                 </div>
 
                 <div class="save-button">
-                    <a href="#" class="Custom_btn text-decoration-none">Save Changes</a>
+                    <button type="submit" class="Custom_btn text-decoration-none" style="background-color:#1A2142;">Save Changes</button>
                 </div>
             </form>
         </div>

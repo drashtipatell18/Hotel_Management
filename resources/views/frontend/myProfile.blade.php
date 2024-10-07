@@ -27,7 +27,7 @@
             <div class="row my_profile_card">
                 <div class="col-lg-2">
                     <div class="profile_img">
-                        <img src="{{ url('frontend/img/my_profile.png') }}" alt="">
+                        <img src="{{ $user->profile ? asset('assets/img/' . $user->profile) : asset('assets/img/men.jpg') }}" style="width: 300px;height: 178px;object-fit: fill;"  class="rounded-circle"  alt="logo">
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -36,17 +36,17 @@
                         <div class="row">
                             <div class="col-6">
                                 <p class="mb-1">First Name</p>
-                                <h5 class="mb-2">John </h5>
+                                <h5 class="mb-2">{{ $user->name }} </h5>
                                 <p class="mb-1">Email</p>
-                                <h5 class="mb-2">John123@gmail.com</h5>
+                                <h5 class="mb-2">{{ $user->email }}</h5>
                                 <p class="mb-1">Date of Birth</p>
-                                <h5 class="mb-2">07/08/1977 </h5>
+                                <h5 class="mb-2">{{ $user->dob }} </h5>
                             </div>
                             <div class="col-6">
                                 <p class="mb-1">Last Name</p>
-                                <h5 class="mb-2">Patel </h5>
+                                <h5 class="mb-2">{{ $user->lname }} </h5>
                                 <p class="mb-1">Phone</p>
-                                <h5 class="mb-2">+1 234567891</h5>
+                                <h5 class="mb-2">{{$user->phone_number}}</h5>
                                 <p class="mb-1">Nationality</p>
                                 <h5 class="mb-2">United States</h5>
                             </div>
@@ -78,8 +78,6 @@
                             <div class="col-6">
                                 <p class="mb-1">State</p>
                                 <h5 class="mb-2">United States</h5>
-                                <p class="mb-1">Postal Code</p>
-                                <h5 class="mb-2">123456</h5>
                             </div>
                         </div>
                     </div>

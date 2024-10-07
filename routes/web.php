@@ -359,6 +359,9 @@ Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
 Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
 Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
+
+Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');
+
 Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
 Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobooking');
 Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
