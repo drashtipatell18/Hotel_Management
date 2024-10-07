@@ -80,6 +80,8 @@ Auth::routes();
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
     Route::get('/profile', 'profile')->name('profile');
+    Route::put('/profile/update', 'update')->name('profile.update');
+    Route::post('/profilepic',  'updateProfilePic')->name('profilepic.updates');
 });
 
 // -----------------------------login----------------------------------------//

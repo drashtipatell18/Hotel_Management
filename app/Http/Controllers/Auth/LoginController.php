@@ -80,7 +80,7 @@ class LoginController extends Controller
     {
         Auth::logout();
         Toastr::success('Logout successfully :)','Success');
-        return redirect('login');
+        return redirect('admin/login');
     }
 
 }

@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'user_id',
         'name',
+        'lname',
+        'dob',
         'email',
         'join_date',
         'phone_number',
@@ -68,6 +70,11 @@ class User extends Authenticatable
                 $model->user_id = 'KH_' . sprintf("%03s", $nextID);
             }
         });
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class, 'user_id', 'id'); // Adjust 'user_id' and 'id' if needed
     }
 
 }
