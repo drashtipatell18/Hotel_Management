@@ -89,36 +89,36 @@
                     <div class="col-lg-7">
                         @if($roomType->images->isNotEmpty())
                             <a href="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" data-title="{{ $roomType->room_name }}">
-                                <img  style="height: 650px; width: 100%; object-fit: fill;" class=""  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                                <img  style="height: 640px; width: 100%; object-fit: fill;" class=""  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
                             </a>
                         @else
                             <a class="avatar avatar-sm mr-2">
-                                <img style="height: 650px; width: 100%; object-fit: fill;"  src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                                <img style="height: 640px; width: 100%; object-fit: fill;"  src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
                             </a>
                         @endif
                     </div>
                 </div>
                 <div class="static_box">
-                    <h1>{{ $roomType->name }}</h1>
+                    <h1>{{ $roomType->room_name }}</h1>
                     <p>{{ $roomType->description }}</p>
                 </div>
             @else
-                <img class="pattern4" src="img/rooms/patern1.png" alt="">
+                <img class="pattern4" src="{{ url('frontend/img/rooms/patern2.png') }}" alt="">
                 <div class="row m-0 d-flex justify-content-end pb-5">
                     <div class="col-lg-7">
                         @if($roomType->images->isNotEmpty())
                             <a href="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" data-title="{{ $roomType->room_name }}">
-                                <img style="height: 650px; width: 100%; object-fit: fill;"  class="roomssection2_img"  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
+                                <img style="height: 640px; width: 100%; object-fit: fill;"  class="roomssection2_img"  src="{{ URL::to('/assets/upload/'.$roomType->images->first()->room_image) }}" alt="{{ $roomType->room_name }}">
                             </a>
                         @else
                             <a class="avatar avatar-sm mr-2">
-                                <img style="height: 650px; width: 100%; object-fit: fill;" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
+                                <img style="height: 640px; width: 100%; object-fit: fill;" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image">
                             </a>
                         @endif
                     </div>
                 </div>
                 <div class="static_box2">
-                    <h1>{{ $roomType->name }}</h1>
+                    <h1>{{ $roomType->room_name }}</h1>
                     <p>{{ $roomType->description }}</p>
                 </div>
             @endif
