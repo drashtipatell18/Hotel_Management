@@ -41,8 +41,8 @@
                                                     <h2 class="table-avatar">
                                                         <a href="profile.html" class="avatar avatar-sm mr-2">
                                                             <img class="avatar-img rounded-circle"
-                                                                src="{{ URL::to('/assets/upload/' . $staff->profile_pic) }}"
-                                                                alt="{{ $staff->profile_pic }}" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
+                                                                src="{{ URL::to('/assets/img/' . $staff->profile_pic) }}"
+                                                                alt="{{ $staff->profile_pic }}" onerror="this.onerror=null; this.src='{{ URL::to('/assets/img/men.jpg') }}';">
                                                         </a>
                                                     </h2>
                                                 </td>
@@ -95,9 +95,9 @@
                                                             <div class="row">
                                                                 <div class="col-md-4 text-center">
                                                                     <img class="avatar-img rounded"
-                                                                        src="{{ URL::to('/assets/upload/' . $staff->profile_pic) }}"
+                                                                        src="{{ URL::to('/assets/img/' . $staff->profile_pic) }}"
                                                                         alt="{{ $staff->profile_pic }}"
-                                                                        style="width: 180px; height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
+                                                                        style="width: 180px; height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ URL::to('/assets/img/men.jpg') }}';">
                                                                 </div>
                                                                 <div class="col-md-8">
                                                                     <h6 class="text-muted">Staff Details</h6>
