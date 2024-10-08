@@ -308,7 +308,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        debugger
         const filterButtons = document.querySelectorAll('.tab');
         const galleryItems = document.querySelectorAll('.d_spabook');
 
@@ -350,6 +349,7 @@
 
             // Hide all images initially
             allImages.forEach(img => img.style.display = 'none');
+
 
             // Distribute and show filtered images
             filteredImages.forEach((img, index) => {
