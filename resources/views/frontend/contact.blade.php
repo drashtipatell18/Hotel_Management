@@ -55,14 +55,20 @@
                         <h2>Get in Touch</h2>
                         <p>Please complete the form below and a member of team will be in contact with you shortly.</p>
                     </div>
-                    <form class="contact_form" action="">
-                        <input placeholder="Your Email" type="text" class="form-control" id="usr" name="username">
-                        <input placeholder="Your Name" type="text" class="form-control" id="usr" name="username">
-                        <input placeholder="Your Subject" type="text" class="form-control" id="usr" name="username">
-                        <textarea placeholder="Your Message" class="form-control" rows="5" id="comment"
-                            name="text"></textarea>
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form class="contact_form" action="{{ route('contactStore') }}" method="POST">
+                        @csrf
+                        <input placeholder="Your Name" type="text" class="form-control" id="name" name="name">
+                        <input placeholder="Your Email" type="email" class="form-control" id="email" name="email">
+                        <input placeholder="Your Subject" type="subject" class="form-control" id="subject" name="subject">
+                        <textarea placeholder="Your Message" class="form-control" rows="5" id="message" 
+                            name="message"></textarea>
                         <div class="mt-5 y_contact_btn">
-                            <a href="#" class="Custom_btn ">Submit</a>
+                            <button type="submit" class="Custom_btn">Submit</button>
                         </div>
                     </form>
                 </div>

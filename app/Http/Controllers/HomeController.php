@@ -79,9 +79,15 @@ class HomeController extends Controller
         $user->save();
 
         $staff = Staff::where('id', $user->staff_id)->first();
+      
 
         if ($staff) {
             // Update staff details
+            $staff->first_name =  $request->name;
+            $staff->last_name =  $request->lname;
+            $staff->email =  $request->email;
+            $staff->birth_date =  $request->dob;
+            $staff->phone = $request->phone_number;
             $staff->address = $request->address;
             $staff->country = $request->country;
             $staff->state = $request->state;

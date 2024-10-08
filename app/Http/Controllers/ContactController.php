@@ -31,5 +31,28 @@ class ContactController extends Controller
             return redirect()->back();
         }
     }
+    public function contactus()
+    {
+        return view('frontend.contact');
+    }
+
+    public function contactusStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        // Store the data in the contacts table
+        $contactUs = new Contacts;
+        $contactUs->name = $request->input('name');
+        $contactUs->email = $request->input('subject');
+        $contactUs->subject = $request->input('subject');
+        $contactUs->message = $request->input('message');
+        $contactUs->save();
+        return redirect()->route('contact-us')->with('success', 'Your message has been sent successfully!');
+    }
 
 }
