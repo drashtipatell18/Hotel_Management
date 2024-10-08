@@ -36,6 +36,19 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
+                                </div>
+                            </div>
+                           
+                            <!-- <div class="col-md-4">
+                                <div class="form-group">
                                     <label>Role Name</label>
                                     <select class="form-control @error('role_id') is-invalid @enderror" name="role_id">
                                         <option value="">Select Role</option>
@@ -44,7 +57,7 @@
                                         <option value="3" {{ old('role_id') == 'customer' ? 'selected' : '' }}>Customer</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Position</label>
@@ -57,18 +70,7 @@
                                     <input type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
-                                </div>
-                            </div>
+                         
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Profile Image</label>

@@ -353,7 +353,10 @@ Route::get('/aboutus',[AboutUsController::class,'aboutus'])->name('aboutus');
 Route::get('/rooms',[RoomsFrontendController::class,'rooms'])->name('rooms-frontend');
 Route::get('/spa',[SpaController::class,'spa'])->name('spa');
 Route::get('/gallery',[GalleryFrontendController::class,'gallery'])->name('gallery');
-Route::get('/contact-us',[ContactFrontendController::class,'contactus'])->name('contact-us');
+
+Route::get('/contact-us',[ContactController::class,'contactus'])->name('contact-us');
+Route::post('/contact-us/store',[ContactController::class,'contactusStore'])->name('contactStore');
+
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
 Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');

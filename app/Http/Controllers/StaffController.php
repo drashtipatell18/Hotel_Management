@@ -151,7 +151,7 @@ class StaffController extends Controller
             $staff->email = $request->email;
             $staff->country = $request->country;
             $staff->state = $request->state;
-                $staff->city = $request->city;
+            $staff->city = $request->city;
             $staff->gender = $request->gender;
             $staff->phone = $request->phone;
             $staff->birth_date = $request->birth_date;

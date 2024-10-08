@@ -98,7 +98,7 @@
             <li><a href="{{ route('index') }}" class="nav-link" data-page="index">Home</a></li>
             <li><a href="{{ route('aboutus') }}" class="nav-link" data-page="about">About Us</a></li>
             <li><a href="{{ route('rooms-frontend') }}" class="nav-link" data-page="rooms">Rooms</a></li>
-            <li><a href="{{ route('spabook') }}" class="nav-link" data-page="spabook">Spa</a></li>
+            <li><a href="{{ route('spa') }}" class="nav-link" data-page="spabook">Spa</a></li>
             <li><a href="{{ route('gallery') }} " class="nav-link" data-page="gallery">Gallery</a></li>
             <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
         </ul>
@@ -266,7 +266,7 @@
                                     </li>
                                     <li><a href="{{ route('rooms-frontend') }}" class="nav-link"
                                             data-page="rooms">Rooms</a></li>
-                                    <li><a href="{{ route('spabook') }}" class="nav-link" data-page="spabook">Spa</a></li>
+                                    <li><a href="{{ route('spa') }}" class="nav-link" data-page="spabook">Spa</a></li>
                                     <li><a href="{{ route('gallery') }} " class="nav-link"
                                             data-page="gallery">Gallery</a></li>
                                     <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact

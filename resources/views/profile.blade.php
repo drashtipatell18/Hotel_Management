@@ -42,7 +42,12 @@
                             </h6>
                             <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i> Florida, United States
                             </div>
-                            <div class="about-text"> {{ $staff->position->name }}</div>
+                          
+                            @if($staff)
+                                <div class="about-text">{{ $staff->position->name }}</div>
+                            @else
+                                <div class="about-text"></div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -87,7 +92,7 @@
                                                 @if($staff && $staff->address)
                                                     {{ $staff->address }},
                                                     <br> {{  $staff->state }},
-                                                    <br> {{  $staff->country }}.
+                                                    {{   $staff->country }}.
                                                 @else
                                                     <em>No address available</em>
                                                 @endif
@@ -277,20 +282,8 @@
             }
         });
 
-<<<<<<< Updated upstream
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
-=======
-        async function fetchCountries() {
-            const response = await fetch('https://api.countrystatecity.in/v1/countries', {
-                    headers: {
-                        'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag=='
-                }   
-            });
-         console.log(response);
-            const data = await response.json();
-            return data; // The API returns an array of country objects
->>>>>>> Stashed changes
         }
 
         const data = await response.json();
@@ -299,7 +292,6 @@
 
     function populateCountries(countries, selectedCountry = '') {
         countries.forEach(country => {
-            console.log(countries);
             const option = document.createElement('option');
             option.value = country.iso2;
             

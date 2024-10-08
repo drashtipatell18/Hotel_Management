@@ -60,6 +60,6 @@ class RegisterController extends Controller
         $user->save();
 
         Toastr::success('Create new account successfully :)','Success');
-        return redirect('login');
+        return redirect('admin/login');
     }
 }
