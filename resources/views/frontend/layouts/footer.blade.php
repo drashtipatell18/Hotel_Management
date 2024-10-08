@@ -489,6 +489,9 @@
                             if (response.errors.password) {
                                 toastr.error(response.errors.password[0]);
                             }
+                            if (response.errors.role) {
+                                toastr.error(response.errors.role[0]);
+                            }
                         } else {
                             toastr.error(response.message);
                         }
@@ -503,10 +506,15 @@
                         if (errors.password) {
                             toastr.error(errors.password[0]);
                         }
+                    } else if (xhr.status === 403) {  // Handle 403 status for role errors
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.role) {
+                            toastr.error(errors.role[0]);
+                        }
                     } else {
                         toastr.error('An error occurred. Please try again.');
                     }
-                }
+                            }
             });
         });
         $('#mobileloginAjaxForm').on('submit', function(e) {
@@ -527,6 +535,9 @@
                             if (response.errors.password) {
                                 toastr.error(response.errors.password[0]);
                             }
+                            if (response.errors.role) {  // Add this block to handle role errors
+                                toastr.error(response.errors.role[0]);
+                            }
                         } else {
                             toastr.error(response.message);
                         }
@@ -541,6 +552,11 @@
                         if (errors.password) {
                             toastr.error(errors.password[0]);
                         }
+                    } else if (xhr.status === 403) {  // Handle 403 status for role errors
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.role) {
+                            toastr.error(errors.role[0]);
+                            }
                     } else {
                         toastr.error('An error occurred. Please try again.');
                     }
