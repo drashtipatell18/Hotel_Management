@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('users/update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('users/update', ['id' => $userData->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" class="form-control "name="user_id" value="{{ $userData->user_id }}" readonly>
                 <div class="row">
@@ -33,17 +33,6 @@
                                 <div class="form-group">
                                     <label>Phone Number</label>
                                     <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ $userData->phone_number }}">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Role Name</label>
-                                    <select class="form-control @error('role_id') is-invalid @enderror" name="role_id">
-                                        <option value="">Select Role</option>
-                                        <option value="1" {{ $userData->role_id == 1 ? 'selected' : '' }}>Staff</option>
-                                        <option value="2" {{ $userData->role_id == 2 ? 'selected' : '' }}>Accountant</option>
-                                        <option value="3" {{ $userData->role_id == 3 ? 'selected' : '' }}>Customer</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">

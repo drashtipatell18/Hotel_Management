@@ -9,7 +9,7 @@
                     <div class="col">
                         <div class="mt-5">
                             <h4 class="card-title float-left mt-2">All List Users</h4>
-                            <a href="{{ route('users/add/new') }}" class="btn btn-primary float-right veiwbutton" id="userDelete">Add User</a> 
+                            <a href="{{ route('users/add/new') }}" class="btn btn-primary float-right veiwbutton" id="userDelete">Add User</a>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     @section('script')
     <script type="text/javascript">
@@ -58,7 +58,7 @@
                         name: 'user_id',
                     },
                     {
-                        data: 'profile',  
+                        data: 'profile',
                         name: 'profile',
                         orderable: false,
                         searchable: false,
@@ -82,7 +82,7 @@
                         data: 'position',
                         name: 'position'
                     },
-                   
+
                     {
                         data: 'status',
                         name: 'status',

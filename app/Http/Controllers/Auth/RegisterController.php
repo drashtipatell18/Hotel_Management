@@ -50,13 +50,13 @@ class RegisterController extends Controller
         $user->email        = $request->email;
         $user->phone_number = $request->phone_number;
         $user->join_date    = $join_date;
-        $user->role_id    = $request->role_id;
+        $user->role_id      = 1;
         $user->position     = $request->position;
         $user->department   = $request->department;
         $user->profile       = $image;
         $user->password     = Hash::make($request->password);
 
-        
+
         $user->save();
 
         Toastr::success('Create new account successfully :)','Success');

@@ -12,7 +12,8 @@ class UserManagementController extends Controller
     /** user list */
     public function userList()
     {
-        return view('usermanagement.listuser');
+        $users = User::all();
+        return view('usermanagement.listuser',compact('users'));
     }
 
     /** add neew users */
@@ -29,30 +30,36 @@ class UserManagementController extends Controller
     }
 
     /** update record */
-    public function userUpdate(Request $request)
+    public function userUpdate(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
-            $updateRecord = [
-                'name'         => $request->name,
-                'email'        => $request->email,
-                'phone_number' => $request->phone_number,
-                'position'     => $request->position,
-                'department'   => $request->department,
-                'role_id' => $request->role_id,
-                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
-            ];
+        $request->validate([
+            'name'         => 'required|string|max:255',
+            'email'        => 'required|email|max:255',
+            'phone_number' => 'required|string|max:15',
+            'position'     => 'nullable|string|max:255',
+            'department'   => 'nullable|string|max:255',
+            'profile'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            User::where('user_id',$request->user_id)->update($updateRecord);
+        $updateRecord = [
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'phone_number' => $request->phone_number,
+            'position'     => $request->position,
+            'department'   => $request->department,
+            'role_id'      => 0, // Set role_id dynamically
+        ];
 
-            DB::commit();
-            Toastr::success('Updated record successfully :)','Success');
-            return redirect()->route('users/list/page');
-        } catch(\Exception $e) {
-            DB::rollback();
-            Toastr::error('Update record fail :)','Error');
-            return redirect()->back();
+        if ($request->hasFile('profile')) {
+            $fileName = time() . '.' . $request->profile->extension();
+            $request->profile->move(public_path('assets/img'), $fileName);
+            $updateRecord['profile'] = $fileName;
         }
+
+        User::where('id', $id)->update($updateRecord);
+
+        Toastr::success('Updated record successfully :)', 'Success');
+        return redirect()->route('users/list/page');
     }
 
     /** delete record */
@@ -88,7 +95,7 @@ class UserManagementController extends Controller
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue     = $search_arr['value']; // Search value
 
-        $users = DB::table('users')->where('role_id', '!=', 0);
+        $users = DB::table('users');
         $totalRecords = $users->count();
 
         $totalRecordsWithFilter = $users->where(function ($query) use ($searchValue) {
@@ -116,10 +123,10 @@ class UserManagementController extends Controller
         $data_arr = [];
 
         foreach ($records as $key => $record) {
-            $profile = $record->profile 
+            $profile = $record->profile
             ? '<img src="'.asset('assets/img/' . $record->profile).'" width="50" height="50" class="img-fluid rounded-circle">'
             : 'No Image';
-   
+
 
             // $modify = '
             //     <td class="text-right">
@@ -170,5 +177,28 @@ class UserManagementController extends Controller
             "aaData"               => $data_arr
         ];
         return response()->json($response);
+    }
+
+    public function createUser(Request $request)
+    {
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->role_id = 0;
+        $user->position = $request->position;
+        $user->department = $request->department;
+        $user->password = bcrypt($request->password);
+
+        if ($request->hasFile('profile')) {
+            $fileName = time() . '.' . $request->profile->extension();
+            $request->profile->move(public_path('assets/img'), $fileName);
+            $user->profile = $fileName;
+        }
+
+        $user->save();
+
+        Toastr::success('User created successfully :)', 'Success');
+        return redirect()->route('users/list/page');
     }
 }

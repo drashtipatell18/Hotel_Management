@@ -93,7 +93,7 @@ Route::controller(LoginController::class)->group(function () {
 
 // ------------------------------ register ---------------------------------//
 Route::controller(RegisterController::class)->group(function () {
-    Route::get('/register', 'register')->name('register');
+    Route::get('/admin/register', 'register')->name('register');
     Route::post('/register', 'storeUser')->name('register');
 });
 
@@ -160,9 +160,10 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::get('users/list/page', 'userList')->middleware('auth')->name('users/list/page');
     Route::get('users/add/new', 'userAddNew')->middleware('auth')->name('users/add/new'); /** add new users */
     Route::get('users/add/edit/{user_id}', 'userView'); /** add new users */
-    Route::post('users/update', 'userUpdate')->name('users/update'); /** update record */
+    Route::post('users/update/{id}', 'userUpdate')->name('users/update'); /** update record */
     Route::get('users/delete/{id}', 'userDelete')->name('users/delete'); /** delere record */
     Route::get('get-users-data', 'getUsersData')->name('get-users-data'); /** get all data users */
+    Route::post('users/add', [UserManagementController::class, 'createUser'])->name('users.add');
 });
 
 // ----------------------------- employee -----------------------------//
