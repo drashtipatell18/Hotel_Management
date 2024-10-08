@@ -97,6 +97,16 @@ class IndexController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $user = Auth::user();
+
+             // Check if the authenticated user has role_id 3
+             if ($user->role_id !== 3) {
+                Auth::logout();
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['role' => ['Access denied for this user role.']]
+                ], 403);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Login successful!',
