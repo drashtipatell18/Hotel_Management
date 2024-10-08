@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Models\UserAddress;
+use App\Models\Staff;
 
 class HomeController extends Controller
 {
@@ -41,13 +41,13 @@ class HomeController extends Controller
     // profile
     public function profile()
     {
-        $adminAddress = null;
         $user = Auth::user();
-        foreach ($user->addresses as $address)
-        {
-            $adminAddress = $address;
-        }
-        return view('profile',compact('adminAddress'));
+        $staff = Staff::with('position')->where('id', $user->staff_id)->first();
+       
+
+       
+       
+        return view('profile',compact('staff'));
     }
 
     public function update(Request $request)
@@ -78,16 +78,16 @@ class HomeController extends Controller
         $user->phone_number = $request->phone_number;
         $user->save();
 
+        $staff = Staff::where('id', $user->staff_id)->first();
 
-        $address = $user->addresses()->firstOrNew(
-            ['user_id' => $user->id]
-        );
-
-        // Update the admin_address field from the request
-        $address->address = $request->input('address');
-
-        $address->save();
-
+        if ($staff) {
+            // Update staff details
+            $staff->address = $request->address;
+            $staff->country = $request->country;
+            $staff->state = $request->state;
+            $staff->city = $request->city;
+            $staff->save();
+        }
 
 
         // Redirect back to the profile page with success message

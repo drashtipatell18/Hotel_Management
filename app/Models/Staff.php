@@ -38,4 +38,9 @@ class Staff extends Model
     {
         return $this->belongsTo(Position::class, 'position_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'staff_id');
+    }
 }

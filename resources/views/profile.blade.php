@@ -42,8 +42,7 @@
                             </h6>
                             <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i> Florida, United States
                             </div>
-                            <div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                            <div class="about-text"> {{ $staff->position->name }}</div>
                         </div>
                     </div>
                 </div>
@@ -85,14 +84,14 @@
                                         <div class="row">
                                             <p class="col-sm-3 text-sm-right mb-0">Address</p>
                                             <p class="col-sm-9 mb-0">
-                                                @if($adminAddress)
-                                                    {{ $adminAddress->address }}
+                                                @if($staff && $staff->address)
+                                                    {{ $staff->address }},
+                                                    <br> {{  $staff->state }},
+                                                    <br> {{  $staff->country }}.
                                                 @else
                                                     <em>No address available</em>
                                                 @endif
                                             </p>
-                                            <br> Florida - 33165,
-                                            <br> United States.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +155,7 @@
                                                             <div class="form-group">
                                                                 <label>Address</label>
                                                                 <textarea class="form-control" name="address"
-                                                                    rows="3">{{ $adminAddress->address ?? '' }}</textarea>
+                                                                    rows="3">{{ $staff->address ?? '' }}</textarea>
                                                             </div>
                                                         </div>
 
@@ -243,18 +242,31 @@
 
 <!-- Get All Country => State => City -->
 <script>
-
     const countrySelect = document.getElementById('country');
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
 
     // Fetch countries on page load
     document.addEventListener('DOMContentLoaded', async () => {
+        const selectedCountry = "{{ $staff->country ?? '' }}"; // Replace with your backend data
+        const selectedState = "{{ $staff->state ?? '' }}"; // Replace with your backend data
+        const selectedCity = "{{ $staff->city ?? '' }}"; // Replace with your backend data
+
         try {
             const countries = await fetchCountries();
-            populateCountries(countries);
+            populateCountries(countries, selectedCountry);
+
+            if (selectedCountry) {
+                const states = await fetchStates(selectedCountry);
+                populateStates(states, selectedState);
+
+                if (selectedState) {
+                    const cities = await fetchCities(selectedCountry, selectedState);
+                    populateCities(cities, selectedCity);
+                }
+            }
         } catch (error) {
-            console.error("Error fetching countries:", error);
+            console.error("Error fetching data:", error);
         }
     });
 
@@ -273,14 +285,23 @@
         return data; // The API returns an array of country objects
     }
 
-    function populateCountries(countries) {
+    function populateCountries(countries, selectedCountry = '') {
         countries.forEach(country => {
+            console.log(countries);
             const option = document.createElement('option');
-            option.value = country.iso2; // Use iso2 for the country code
-            option.textContent = country.name; // Use name for display
+            option.value = country.iso2;
+            
+           
+            option.textContent = country.name;
+            if (country.iso2 === selectedCountry) {
+                option.selected = true;
+            }
+            console.log(option.textContent);
             countrySelect.appendChild(option);
         });
     }
+
+    
 
     // Event listener for country selection
     countrySelect.addEventListener('change', getStates);
@@ -315,15 +336,19 @@
         return data; // Adjust this based on the API response structure
     }
 
-    function populateStates(states) {
+
+    function populateStates(states, selectedState = '') {
         stateSelect.innerHTML = '<option value="">Select State</option>';
         states.forEach(state => {
             const option = document.createElement('option');
-            option.value = state.iso2; // Assuming the state object has an iso2 property
-            option.textContent = state.name; // Assuming the state object has a name property
+            option.value = state.iso2;
+            option.textContent = state.name;
+            if (state.iso2 === selectedState) {
+                option.selected = true;
+            }
             stateSelect.appendChild(option);
         });
-        resetCitySelect(); // Reset city dropdown
+        resetCitySelect();
     }
 
     // Event listener for state selection
@@ -331,11 +356,11 @@
 
     async function getCities() {
         const stateCode = stateSelect.value;
-        const countryCode = countrySelect.value; // Add this line to use the selected country code
+        const countryCode = countrySelect.value;
         resetCitySelect();
-        if (stateCode && countryCode) { // Ensure both country and state are selected
+        if (stateCode && countryCode) {
             try {
-                const cities = await fetchCities(countryCode, stateCode); // Pass both codes
+                const cities = await fetchCities(countryCode, stateCode);
                 populateCities(cities);
                 citySelect.disabled = false;
             } catch (error) {
@@ -359,12 +384,15 @@
         return data; // Adjust this based on the API response structure
     }
 
-    function populateCities(cities) {
+    function populateCities(cities, selectedCity = '') {
         citySelect.innerHTML = '<option value="">Select City</option>';
         cities.forEach(city => {
             const option = document.createElement('option');
-            option.value = city.name; // Assuming the city object has an iso2 property
-            option.textContent = city.name; // Assuming the city object has a name property
+            option.value = city.name;
+            option.textContent = city.name;
+            if (city.name === selectedCity) {
+                option.selected = true;
+            }
             citySelect.appendChild(option);
         });
     }
@@ -380,8 +408,6 @@
         citySelect.disabled = true; // Disable city dropdown until a state is selected
     }
 
-
 </script>
-
 
 @endsection

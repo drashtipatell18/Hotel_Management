@@ -73,9 +73,14 @@ class User extends Authenticatable
         });
     }
 
-    public function addresses()
+    // public function addresses()
+    // {
+    //     return $this->hasMany(UserAddress::class, 'user_id', 'id'); // Adjust 'user_id' and 'id' if needed
+    // }
+
+    public function staff()
     {
-        return $this->hasMany(UserAddress::class, 'user_id', 'id'); // Adjust 'user_id' and 'id' if needed
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 
 }
