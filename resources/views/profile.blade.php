@@ -277,8 +277,20 @@
             }
         });
 
+<<<<<<< Updated upstream
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
+=======
+        async function fetchCountries() {
+            const response = await fetch('https://api.countrystatecity.in/v1/countries', {
+                    headers: {
+                        'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag=='
+                }   
+            });
+         console.log(response);
+            const data = await response.json();
+            return data; // The API returns an array of country objects
+>>>>>>> Stashed changes
         }
 
         const data = await response.json();
