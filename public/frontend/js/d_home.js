@@ -623,119 +623,119 @@ $(function () {
 // gallery page js
 
 
-// // filter the gallery page js
+// filter the gallery page js
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const tabs = document.querySelectorAll('.tab');
-//     const galleries = document.querySelectorAll('.image-gallery');
-//     const allImages = document.querySelectorAll('.image-item');
-//     const modal = document.getElementById("imageModal");
-//     const carousel = $('#test1');
-//     const modalText = document.querySelector('.d_sildertext');
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab');
+    const galleries = document.querySelectorAll('.image-gallery');
+    const allImages = document.querySelectorAll('.image-item');
+    const modal = document.getElementById("imageModal");
+    const carousel = $('#test1');
+    const modalText = document.querySelector('.d_sildertext');
 
-//     function initializeCarousel() {
-//         // Clear existing carousel items
-//         carousel.trigger('destroy.owl.carousel');
-//         carousel.empty();
+    function initializeCarousel() {
+        // Clear existing carousel items
+        carousel.trigger('destroy.owl.carousel');
+        carousel.empty();
 
-//         // Add visible images to the carousel
-//         document.querySelectorAll('.image-item[style="display: block;"] img').forEach((img, index) => {
-//             const overlayText = img.nextElementSibling.querySelector('p').textContent;
-//             carousel.append(`
-//                 <div class="item" data-hash="slide${index + 1}">
-//                     <img src="${img.src}" alt="${img.alt}">
-//                     <p class="hidden-text">${overlayText}</p>
-//                 </div>
-//             `);
-//         });
+        // Add visible images to the carousel
+        document.querySelectorAll('.image-item[style="display: block;"] img').forEach((img, index) => {
+            const overlayText = img.nextElementSibling.querySelector('p').textContent;
+            carousel.append(`
+                <div class="item" data-hash="slide${index + 1}">
+                    <img src="${img.src}" alt="${img.alt}">
+                    <p class="hidden-text">${overlayText}</p>
+                </div>
+            `);
+        });
 
-//         // Initialize Owl Carousel
-//         carousel.owlCarousel({
-//             items: 1,
-//             loop: true,
-//             dots: false,
-//             center: true,
-//             nav: true,
-//             margin: 10,
-//             URLhashListener: true,
-//             autoplayHoverPause: true,
-//             startPosition: 'URLHash',
-//         });
+        // Initialize Owl Carousel
+        carousel.owlCarousel({
+            items: 1,
+            loop: true,
+            dots: false,
+            center: true,
+            nav: true,
+            margin: 10,
+            URLhashListener: true,
+            autoplayHoverPause: true,
+            startPosition: 'URLHash',
+        });
 
-//         carousel.on('changed.owl.carousel', function (event) {
-//             const current = event.item.index;
-//             updateModalText(current);
-//         });
-//     }
+        carousel.on('changed.owl.carousel', function (event) {
+            const current = event.item.index;
+            updateModalText(current);
+        });
+    }
 
-//     function updateModalText(index) {
-//         const text = $(carousel.find('.owl-item.active .item')).find('.hidden-text').text();
-//         modalText.textContent = text;
-//     }
+    function updateModalText(index) {
+        const text = $(carousel.find('.owl-item.active .item')).find('.hidden-text').text();
+        modalText.textContent = text;
+    }
 
-//     function addImageClickListeners() {
-//         document.querySelectorAll('.image-item[style="display: block;"] img').forEach((image, index) => {
-//             image.addEventListener('click', function (e) {
-//                 e.preventDefault();
-//                 modal.style.display = "block";
-//                 initializeCarousel(); // Reinitialize carousel before opening modal
-//                 carousel.trigger('to.owl.carousel', [index, 300]);
-//             });
-//         });
-//     }
+    function addImageClickListeners() {
+        document.querySelectorAll('.image-item[style="display: block;"] img').forEach((image, index) => {
+            image.addEventListener('click', function (e) {
+                e.preventDefault();
+                modal.style.display = "block";
+                initializeCarousel(); // Reinitialize carousel before opening modal
+                carousel.trigger('to.owl.carousel', [index, 300]);
+            });
+        });
+    }
 
-//     function filterAndDistributeImages(category) {
-//         const filteredImages = Array.from(allImages).filter(img =>
-//             category === 'all' || img.getAttribute('data-category') === category
-//         );
+    function filterAndDistributeImages(category) {
+        const filteredImages = Array.from(allImages).filter(img =>
+            category === 'all' || img.getAttribute('data-category') === category
+        );
 
-//         allImages.forEach(img => img.style.display = 'none');
+        allImages.forEach(img => img.style.display = 'none');
 
-//         filteredImages.forEach((img, index) => {
-//             const galleryIndex = Math.floor(index / 5);
-//             if (galleryIndex < 3) {
-//                 const targetGallery = galleries[galleryIndex];
-//                 const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
-//                 if (targetSlot) {
-//                     targetSlot.innerHTML = img.innerHTML;
-//                     targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
-//                     targetSlot.style.display = 'block';
-//                 }
-//             }
-//         });
+        filteredImages.forEach((img, index) => {
+            const galleryIndex = Math.floor(index / 5);
+            if (galleryIndex < 3) {
+                const targetGallery = galleries[galleryIndex];
+                const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
+                if (targetSlot) {
+                    targetSlot.innerHTML = img.innerHTML;
+                    targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
+                    targetSlot.style.display = 'block';
+                }
+            }
+        });
 
-//         galleries.forEach(gallery => {
-//             const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
-//             gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
-//         });
+        galleries.forEach(gallery => {
+            const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
+            gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
+        });
 
-//         addImageClickListeners();
-//     }
+        addImageClickListeners();
+    }
 
-//     tabs.forEach(tab => {
-//         tab.addEventListener('click', function () {
-//             tabs.forEach(tab => tab.classList.remove('active'));
-//             this.classList.add('active');
-//             const category = this.getAttribute('data-category');
-//             filterAndDistributeImages(category);
-//         });
-//     });
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            this.classList.add('active');
+            const category = this.getAttribute('data-category');
+            filterAndDistributeImages(category);
+        });
+    });
 
-//     // Initial setup
-//     filterAndDistributeImages('all');
+    // Initial setup
+    filterAndDistributeImages('all');
 
-//     // Close modal functionality
-//     const span = document.getElementsByClassName("d_close")[0];
-//     span.onclick = function () {
-//         modal.style.display = "none";
-//     }
+    // Close modal functionality
+    const span = document.getElementsByClassName("d_close")[0];
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 
-//     window.onclick = function (event) {
-//         if (event.target == modal) {
-//             modal.style.display = "none";
-//         }
-//     }
-// });
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
 
 
 
