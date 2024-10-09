@@ -52,6 +52,11 @@
         background-color: darkgray; /* Optional: Change hover color for better UX */
         color: white; /* Maintain text color on hover */
     }
+    /* .fixed-size-image {
+    width: 500px;
+    height: 150px;
+    object-fit: cover;
+    } */
 </style>
 <body>
     <!-- Page Preloder -->
