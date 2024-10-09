@@ -30,71 +30,76 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Full Name</label>
-                                <input type="text" class="form-control" name="name"
-                                    value="{{ old('name') }}">
+                                <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
+                                    value="{{ old('name') }}" >
+                                @error('name')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" class="form-control"
+                                <input type="email" class="form-control  @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Phone Number</label>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control  @error('phone_number') is-invalid @enderror"
                                     name="phone_number" value="{{ old('phone_number') }}">
+                                @error('phone_number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                @error('password')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
+                                @error('password_confirmation')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Position</label>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control @error('position') is-invalid @enderror"
                                     name="position" value="{{ old('position') }}">
+                                @error('position')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Department</label>
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control @error('department') is-invalid @enderror"
                                     name="department" value="{{ old('department') }}">
+                                @error('department')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Position</label>
-                                    <input type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}">
-                                </div>
-                            </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control "
-                                    name="password">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password"
-                                    class="form-control"
-                                    name="password_confirmation">
-                            </div>
-                        </div>
+                     
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Profile Image</label>
@@ -112,8 +117,4 @@
         </form>
     </div>
 </div>
-@section('script')
-
-@endsection
-
 @endsection

@@ -115,12 +115,12 @@
                 <li class="submenu">
                     <a href="#">
                         <i class="fa fa-user-plus"></i>
-                        <span> User Management </span>
+                        <span> Admin </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="submenu_class" style="display: none;">
-                        <li><a class="{{ set_active(['users/add/new']) }}" href="{{ route('users/add/new') }}">Add User</a></li>
-                        <li><a class="{{ set_active(['users/list/page']) }}" href="{{ route('users/list/page') }}">All User</a></li>
+                        <li><a class="{{ set_active(['users/add/new']) }}" href="{{ route('users/add/new') }}">Add Admin</a></li>
+                        <li><a class="{{ set_active(['users/list/page']) }}" href="{{ route('users/list/page') }}">All Users</a></li>
                         <li><a href="">User Log Activity </a></li>
                     </ul>
                 </li>

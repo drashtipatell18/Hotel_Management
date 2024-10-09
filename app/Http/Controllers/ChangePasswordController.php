@@ -12,7 +12,7 @@ class ChangePasswordController extends Controller
 {
     public function changePassword()
     {
-        return view('auth.passwords.changepassword');
+        return view('auth.password.changepassword');
     }
 
     public function changePasswordStore(Request $request)

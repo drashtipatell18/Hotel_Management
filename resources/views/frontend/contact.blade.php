@@ -2,6 +2,11 @@
 @section('title', 'Contact Us')
 @section('main-container')
 <!-- Breadcrumb Begin -->
+<style>
+    .contact_form input{
+        margin:0px !important;
+    }
+</style>
 <div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
     <div class="container">
         <div class="row">
@@ -10,7 +15,7 @@
                     <h1>Contact us</h1>
                     <div class="breadcrumb__links">
                         <a href="{{ route('index') }}">Home</a>
-                        <span>Contact us </span>
+                        <span>Contact us</span>
                     </div>
                 </div>
             </div>
@@ -18,8 +23,6 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
-
-
 
 <!-- welcome Section Begin -->
 <div class="chooseus mt-0 spad">
@@ -48,7 +51,7 @@
 <section class="about_sec2 about_sectionBg py-4">
     <img class="pattern2" src="{{ url('frontend/img/about/pattern2.png') }}" alt>
     <div class="container-fluid">
-        <div class="row  py-4 about_sec2_row">
+        <div class="row py-4 about_sec2_row">
             <div class="col-lg-6 y_aboutrestrarant_col2 contact_sec1">
                 <div>
                     <div class="y_abouttext">
@@ -62,11 +65,34 @@
                     @endif
                     <form class="contact_form" action="{{ route('contactStore') }}" method="POST">
                         @csrf
-                        <input placeholder="Your Name" type="text" class="form-control" id="name" name="name">
-                        <input placeholder="Your Email" type="email" class="form-control" id="email" name="email">
-                        <input placeholder="Your Subject" type="subject" class="form-control" id="subject" name="subject">
-                        <textarea placeholder="Your Message" class="form-control" rows="5" id="message" 
-                            name="message"></textarea>
+                        <div class="form-group">
+                            <input placeholder="Your Name" type="text" class="form-control" id="name" name="name">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <input placeholder="Your Email" type="email" class="form-control" id="email" name="email">
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group">
+                            <input placeholder="Your Subject" type="text" class="form-control" id="subject" name="subject">
+                            @error('subject')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" class="form-control" rows="5" id="message" name="message"></textarea>
+                            @error('message')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
                         <div class="mt-5 y_contact_btn">
                             <button type="submit" class="Custom_btn">Submit</button>
                         </div>
@@ -79,7 +105,7 @@
         </div>
     </div>
 </section>
-<!-- CONTACT Section2 Begin -->
+<!-- CONTACT Section2 End -->
 
 <!-- CONTACT Section3 Begin -->
 <section class="about_sec2 about_sectionBg py-4">
@@ -94,21 +120,19 @@
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6  d-flex align-items-center">
+            <div class="col-lg-4 col-md-6 d-flex align-items-center">
                 <div>
-                    <div class=" y_abouttext">
+                    <div class="y_abouttext">
                         <h2>Location</h2>
-                        <p>330 Kling Ford, Lake Denitaside,
-                            United States</p>
+                        <p>330 Kling Ford, Lake Denitaside, United States</p>
                         <div class="pt-3">
                             <a href="#" class="Custom_btn">Get Directions</a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- CONTACT Section3 Begin -->
- @endsection
+<!-- CONTACT Section3 End -->
+@endsection

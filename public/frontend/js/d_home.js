@@ -439,125 +439,125 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // calculate bookbox
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Constants
-    const PRICE_PER_NIGHT = 1250;
-    const ROOM_CLEAN_PRICE = 100;
-    const MASSAGE_PRICE = 30;
-    const DAY_SPA_PRICE = 20;
+// document.addEventListener('DOMContentLoaded', () => {
+//     // Constants
+//     const PRICE_PER_NIGHT = 1250;
+//     const ROOM_CLEAN_PRICE = 100;
+//     const MASSAGE_PRICE = 30;
+//     const DAY_SPA_PRICE = 20;
 
-    // DOM Elements
-    const checkInInput = document.querySelector('input[name="checkin"]');
-    const checkOutInput = document.querySelector('input[name="checkout"]');
-    const roomCount = document.getElementById('room-count');
-    const adultCount = document.getElementById('adult-count');
-    const childrenCount = document.getElementById('children-count');
-    const roomCleanCheckbox = document.getElementById('extra-room-clean');
-    const massageCheckbox = document.getElementById('extra-massage');
-    const daySpaCheckbox = document.getElementById('extra-day-spa');
-    const massageCount = document.getElementById('massage-count');
-    const daySpaCount = document.getElementById('day-spa-count');
-    const totalCostDisplay = document.getElementById('total-cost');
-    const basePriceDisplay = document.querySelector('.d_price[data-type="base"]');
-    const taxesDisplay = document.querySelector('.d_price[data-type="taxes"]');
-    const extraDisplay = document.querySelector('.d_price[data-type="extra"]');
-    const totalPriceDisplay = document.getElementById('total-price');
+//     // DOM Elements
+//     const checkInInput = document.querySelector('input[name="checkin"]');
+//     const checkOutInput = document.querySelector('input[name="checkout"]');
+//     const roomCount = document.getElementById('room-count');
+//     const adultCount = document.getElementById('adult-count');
+//     const childrenCount = document.getElementById('children-count');
+//     const roomCleanCheckbox = document.getElementById('extra-room-clean');
+//     const massageCheckbox = document.getElementById('extra-massage');
+//     const daySpaCheckbox = document.getElementById('extra-day-spa');
+//     const massageCount = document.getElementById('massage-count');
+//     const daySpaCount = document.getElementById('day-spa-count');
+//     const totalCostDisplay = document.getElementById('total-cost');
+//     const basePriceDisplay = document.querySelector('.d_price[data-type="base"]');
+//     const taxesDisplay = document.querySelector('.d_price[data-type="taxes"]');
+//     const extraDisplay = document.querySelector('.d_price[data-type="extra"]');
+//     const totalPriceDisplay = document.getElementById('total-price');
 
-    // Helper Functions
-    const updateDisplay = (element, value) => {
-        if (element) element.textContent = value;
-    };
+//     // Helper Functions
+//     const updateDisplay = (element, value) => {
+//         if (element) element.textContent = value;
+//     };
 
-    const calculateNights = () => {
-        const checkIn = new Date(checkInInput.value);
-        const checkOut = new Date(checkOutInput.value);
-        return checkIn && checkOut && checkOut > checkIn ?
-            Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
-    };
+//     const calculateNights = () => {
+//         const checkIn = new Date(checkInInput.value);
+//         const checkOut = new Date(checkOutInput.value);
+//         return checkIn && checkOut && checkOut > checkIn ?
+//             Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
+//     };
 
-    const calculateTotal = () => {
-        const nights = calculateNights();
-        const rooms = parseInt(roomCount.textContent);
-        const basePrice = PRICE_PER_NIGHT * nights * rooms;
+//     const calculateTotal = () => {
+//         const nights = calculateNights();
+//         const rooms = parseInt(roomCount.textContent);
+//         const basePrice = PRICE_PER_NIGHT * nights * rooms;
 
-        let extraPrice = 0;
-        if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
-        if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
-        if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
+//         let extraPrice = 0;
+//         if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
+//         if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
+//         if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
 
-        const taxes = 0; // Assuming no taxes for now
-        const total = basePrice + extraPrice + taxes;
+//         const taxes = 0; // Assuming no taxes for now
+//         const total = basePrice + extraPrice + taxes;
 
-        updateDisplay(basePriceDisplay, `$${basePrice}`);
-        updateDisplay(taxesDisplay, `$${taxes}`);
-        updateDisplay(extraDisplay, `$${extraPrice}`);
-        updateDisplay(totalPriceDisplay, `$${total}`);
-        updateDisplay(totalCostDisplay, `$${total}`);
-    };
+//         updateDisplay(basePriceDisplay, `$${basePrice}`);
+//         updateDisplay(taxesDisplay, `$${taxes}`);
+//         updateDisplay(extraDisplay, `$${extraPrice}`);
+//         updateDisplay(totalPriceDisplay, `$${total}`);
+//         updateDisplay(totalCostDisplay, `$${total}`);
+//     };
 
-    // Event Listeners
-    const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
-        incrementBtn.addEventListener('click', () => {
-            countElement.textContent = parseInt(countElement.textContent) + 1;
-            calculateTotal();
-        });
-        decrementBtn.addEventListener('click', () => {
-            if (parseInt(countElement.textContent) > minValue) {
-                countElement.textContent = parseInt(countElement.textContent) - 1;
-                calculateTotal();
-            }
-        });
-    };
+//     // Event Listeners
+//     const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
+//         incrementBtn.addEventListener('click', () => {
+//             countElement.textContent = parseInt(countElement.textContent) + 1;
+//             calculateTotal();
+//         });
+//         decrementBtn.addEventListener('click', () => {
+//             if (parseInt(countElement.textContent) > minValue) {
+//                 countElement.textContent = parseInt(countElement.textContent) - 1;
+//                 calculateTotal();
+//             }
+//         });
+//     };
 
-    // Room, Adult, Children counters
-    addCounterListeners(
-        document.querySelector('.btn-increment[data-target="room"]'),
-        document.querySelector('.btn-decrement[data-target="room"]'),
-        roomCount, 1
-    );
-    addCounterListeners(
-        document.querySelector('.btn-increment[data-target="adult"]'),
-        document.querySelector('.btn-decrement[data-target="adult"]'),
-        adultCount, 1
-    );
-    addCounterListeners(
-        document.querySelector('.btn-increment[data-target="children"]'),
-        document.querySelector('.btn-decrement[data-target="children"]'),
-        childrenCount
-    );
+//     // Room, Adult, Children counters
+//     addCounterListeners(
+//         document.querySelector('.btn-increment[data-target="room"]'),
+//         document.querySelector('.btn-decrement[data-target="room"]'),
+//         roomCount, 1
+//     );
+//     addCounterListeners(
+//         document.querySelector('.btn-increment[data-target="adult"]'),
+//         document.querySelector('.btn-decrement[data-target="adult"]'),
+//         adultCount, 1
+//     );
+//     addCounterListeners(
+//         document.querySelector('.btn-increment[data-target="children"]'),
+//         document.querySelector('.btn-decrement[data-target="children"]'),
+//         childrenCount
+//     );
 
-    // Extra services counters
-    addCounterListeners(
-        document.querySelector('.btn-service-increment[data-target="massage"]'),
-        document.querySelector('.btn-service-decrement[data-target="massage"]'),
-        massageCount, 1
-    );
-    addCounterListeners(
-        document.querySelector('.btn-service-increment[data-target="day-spa"]'),
-        document.querySelector('.btn-service-decrement[data-target="day-spa"]'),
-        daySpaCount, 1
-    );
+//     // Extra services counters
+//     addCounterListeners(
+//         document.querySelector('.btn-service-increment[data-target="massage"]'),
+//         document.querySelector('.btn-service-decrement[data-target="massage"]'),
+//         massageCount, 1
+//     );
+//     addCounterListeners(
+//         document.querySelector('.btn-service-increment[data-target="day-spa"]'),
+//         document.querySelector('.btn-service-decrement[data-target="day-spa"]'),
+//         daySpaCount, 1
+//     );
 
-    // Checkbox listeners
-    [roomCleanCheckbox, massageCheckbox, daySpaCheckbox].forEach(checkbox => {
-        checkbox.addEventListener('change', calculateTotal);
-    });
+//     // Checkbox listeners
+//     [roomCleanCheckbox, massageCheckbox, daySpaCheckbox].forEach(checkbox => {
+//         checkbox.addEventListener('change', calculateTotal);
+//     });
 
-    // Date input listeners
-    [checkInInput, checkOutInput].forEach(input => {
-        input.addEventListener('change', calculateTotal);
-    });
+//     // Date input listeners
+//     [checkInInput, checkOutInput].forEach(input => {
+//         input.addEventListener('change', calculateTotal);
+//     });
 
-    // Book Now button
-    document.querySelector('.d_cta a').addEventListener('click', (e) => {
-        e.preventDefault();
-        // alert('Booking functionality is not yet implemented.');
-        window.location = 'checkout.html'
-    });
+//     // Book Now button
+//     document.querySelector('.d_cta a').addEventListener('click', (e) => {
+//         e.preventDefault();
+//         // alert('Booking functionality is not yet implemented.');
+//         window.location = 'checkout.html'
+//     });
 
-    // Initial calculation
-    calculateTotal();
-});
+//     // Initial calculation
+//     calculateTotal();
+// });
 
 
 // spabook category wise filtering
@@ -684,45 +684,47 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function filterAndDistributeImages(category) {
-        const filteredImages = Array.from(allImages).filter(img =>
-            category === 'all' || img.getAttribute('data-category') === category
-        );
+    // function filterAndDistributeImages(category) {
+    //     debugger
+    //     const filteredImages = Array.from(allImages).filter(img =>
+    //         category === 'all' || img.getAttribute('data-category') === category
+    //     );
+        
 
-        allImages.forEach(img => img.style.display = 'none');
+    //     allImages.forEach(img => img.style.display = 'none');
 
-        filteredImages.forEach((img, index) => {
-            const galleryIndex = Math.floor(index / 5);
-            if (galleryIndex < 3) {
-                const targetGallery = galleries[galleryIndex];
-                const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
-                if (targetSlot) {
-                    targetSlot.innerHTML = img.innerHTML;
-                    targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
-                    targetSlot.style.display = 'block';
-                }
-            }
-        });
+    //     filteredImages.forEach((img, index) => {
+    //         const galleryIndex = Math.floor(index / 5);
+    //         if (galleryIndex < 3) {
+    //             const targetGallery = galleries[galleryIndex];
+    //             const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
+    //             if (targetSlot) {
+    //                 targetSlot.innerHTML = img.innerHTML;
+    //                 targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
+    //                 targetSlot.style.display = 'block';
+    //             }
+    //         }
+    //     });
 
-        galleries.forEach(gallery => {
-            const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
-            gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
-        });
+    //     galleries.forEach(gallery => {
+    //         const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
+    //         gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
+    //     });
 
-        addImageClickListeners();
-    }
+    //     addImageClickListeners();
+    // }
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            tabs.forEach(tab => tab.classList.remove('active'));
-            this.classList.add('active');
-            const category = this.getAttribute('data-category');
-            filterAndDistributeImages(category);
-        });
-    });
+    // tabs.forEach(tab => {
+    //     tab.addEventListener('click', function () {
+    //         tabs.forEach(tab => tab.classList.remove('active'));
+    //         this.classList.add('active');
+    //         const category = this.getAttribute('data-category');
+    //         filterAndDistributeImages(category);
+    //     });
+    // });
 
-    // Initial setup
-    filterAndDistributeImages('all');
+    // // Initial setup
+    // filterAndDistributeImages('all');
 
     // Close modal functionality
     const span = document.getElementsByClassName("d_close")[0];

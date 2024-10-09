@@ -2,22 +2,11 @@
 @section('title', 'Gallery')
 @section('main-container')
 
+
+<!-- <script src="{{ url('frontend/js/d_home.js') }}"></script> -->
+
     <!-- Breadcrumb Begin -->
-    <div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h1>Gallery</h1>
-                        <div class="breadcrumb__links">
-                            <a href="./index.html" class="text-decoration-none">Home</a>
-                            <span>Gallery</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Breadcrumb End -->
 
     <section class="d_p-25 d_gallery mt-3">
@@ -33,6 +22,21 @@
                 <button class="tab" data-category="restaurant-bar">Restaurant & Bar</button>
                 <button class="tab" data-category="indoor-pool">Indoor Pool</button>
             </div>
+
+           <div class="image-gallery" id="imageGallery1">
+    <div class="row g-3 px-sm-2 p-0">
+        @foreach($hotelImages as $index => $image)
+            <div class="col-12 col-lg-6 my-2">
+                <div class="image-item h-100" data-category="{{ $image->category }}" data-index="{{ $index }}">
+                    <img src="{{ url('assets/hotel/' . $image->hotel_image) }}" alt="{{ $image->alt_text }}">
+                    <div class="d_image-overlay">
+                        <p>{{ $image->description }}</p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div> 
             <div class="image-gallery" id="imageGallery1">
                 <div class="row g-3 px-sm-2 p-0">
                     <div class="col-12 col-lg-6 my-2">
@@ -80,8 +84,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="image-gallery my-3" id="imageGallery2">
+            </div> 
+             <div class="image-gallery my-3" id="imageGallery2">
                 <div class="row g-3 px-sm-2 p-0">
                     <div class="col-12 col-lg-6 my-2">
                         <div class="row g-3 p-0">
@@ -190,4 +194,139 @@
             <div class="d_sildertext"></div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const tabs = document.querySelectorAll('.tab');
+            const galleries = Array.from(document.querySelectorAll('.image-gallery'));
+            const allImages = document.querySelectorAll('.image-item');
+            const modal = document.getElementById('imageModal');
+            const modalCarousel = document.getElementById('test1');
+            const modalText = document.querySelector('.d_sildertext');
+            let filteredImages = [];
+
+            function filterAndDistributeImages(category) {
+                // ... (previous code remains the same)
+                filteredImages = Array.from(allImages).filter(img =>
+                    category === 'all' || img.getAttribute('data-category') === category
+                );
+
+                // Hide all images initially
+                allImages.forEach(img => img.style.display = 'none');
+
+                // Distribute and show filtered images
+                filteredImages.forEach((img, index) => {
+                    const galleryIndex = Math.floor(index / 5);
+                    if (galleryIndex < galleries.length) {
+                        const targetGallery = galleries[galleryIndex];
+                        const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
+                        if (targetSlot) {
+                            // Replace the content of the target slot with the filtered image
+                            targetSlot.innerHTML = img.innerHTML;
+                            targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
+                            targetSlot.style.display = 'block';
+                        }
+                    }
+                });
+
+                // Show/hide galleries based on content
+                galleries.forEach(gallery => {
+                    const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
+                    gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
+                });
+
+                // Reinitialize click events for the newly displayed images
+                initializeImageClickEvents();
+            }
+
+            function initializeImageClickEvents() {
+                const visibleImages = document.querySelectorAll('.image-item[style="display: block;"]');
+                visibleImages.forEach((img, index) => {
+                    img.onclick = function () {
+                        openModal(index);
+                    };
+                });
+            }
+
+            function openModal(index) {
+                modalCarousel.innerHTML = '';
+                filteredImages.forEach((img, idx) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'item';
+                    slide.innerHTML = img.innerHTML;
+                    modalCarousel.appendChild(slide);
+                });
+
+                // Initialize or reinitialize Owl Carousel
+                if (modalCarousel.classList.contains('owl-loaded')) {
+                    $(modalCarousel).trigger('destroy.owl.carousel');
+                }
+                $(modalCarousel).owlCarousel({
+                    items: 1,
+                    loop: true,
+                    nav: true,
+                    dots: false,
+                    startPosition: index,
+                    onInitialized: function (event) {
+                        updateModalText();
+                    }
+                });
+
+                // Show the modal
+                modal.style.display = 'block';
+            }
+
+            function updateModalText() {
+                const currentSlide = modalCarousel.querySelector('.owl-item.active');
+                if (currentSlide) {
+                    const textElement = currentSlide.querySelector('.d_image-overlay p') || currentSlide.querySelector('p');
+                    modalText.textContent = textElement ? textElement.textContent : '';
+                } else {
+                    modalText.textContent = '';
+                }
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(tab => tab.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+                    filterAndDistributeImages(category);
+                });
+            });
+
+            // Close modal when clicking on the close button
+            document.querySelector('.d_close').onclick = function () {
+                modal.style.display = 'none';
+            };
+
+            // Close modal when clicking outside the image
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+
+            // Update modal text when carousel changes
+            $(modalCarousel).on('changed.owl.carousel', function (event) {
+                updateModalText();
+            });
+
+            // Find the initially active tab or default to 'all'
+            const initialActiveTab = document.querySelector('.tab.active') || document.querySelector('.tab[data-category="all"]');
+            if (initialActiveTab) {
+                const initialCategory = initialActiveTab.getAttribute('data-category');
+                filterAndDistributeImages(initialCategory);
+            } else {
+                // If no active tab found, default to showing all images
+                filterAndDistributeImages('all');
+            }
+        });
+    </script>
+  
+
 @endsection

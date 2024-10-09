@@ -12,7 +12,7 @@ class UserManagementController extends Controller
     /** user list */
     public function userList()
     {
-        $users = User::all();
+        $users = User::where('role_id', 0)->get();
         return view('usermanagement.listuser',compact('users'));
     }
 
@@ -89,15 +89,19 @@ class UserManagementController extends Controller
         $columnName_arr  = $request->get('columns');
         $order_arr       = $request->get('order');
         $search_arr      = $request->get('search');
-
+    
         $columnIndex     = $columnIndex_arr[0]['column']; // Column index
         $columnName      = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue     = $search_arr['value']; // Search value
-
-        $users = DB::table('users');
+    
+        // Get users with role_id = 0
+        $users = DB::table('users')->where('role_id', 0);
+    
+        // Total records with role_id = 0
         $totalRecords = $users->count();
-
+    
+        // Total filtered records
         $totalRecordsWithFilter = $users->where(function ($query) use ($searchValue) {
             $query->where('name', 'like', '%' . $searchValue . '%');
             $query->orWhere('email', 'like', '%' . $searchValue . '%');
@@ -105,10 +109,8 @@ class UserManagementController extends Controller
             $query->orWhere('phone_number', 'like', '%' . $searchValue . '%');
             $query->orWhere('status', 'like', '%' . $searchValue . '%');
         })->count();
-
-        if ($columnName == 'name') {
-            $columnName = 'name';
-        }
+    
+        // Fetch data with search filter and pagination
         $records = $users->orderBy($columnName, $columnSortOrder)
             ->where(function ($query) use ($searchValue) {
                 $query->where('name', 'like', '%' . $searchValue . '%');
@@ -120,32 +122,14 @@ class UserManagementController extends Controller
             ->skip($start)
             ->take($rowPerPage)
             ->get();
+    
         $data_arr = [];
-
+    
         foreach ($records as $key => $record) {
-            $profile = $record->profile
-            ? '<img src="'.asset('assets/img/' . $record->profile).'" width="50" height="50" class="img-fluid rounded-circle">'
-            : 'No Image';
-
-
-            // $modify = '
-            //     <td class="text-right">
-            //         <div class="dropdown dropdown-action">
-            //             <a href="" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            //                 <i class="fas fa-ellipsis-v ellipse_color"></i>
-            //             </a>
-            //             <div class="dropdown-menu dropdown-menu-right">
-            //                 <a class="dropdown-item" href="'.url('users/add/edit/'.$record->user_id).'">
-            //                     <i class="fas fa-pencil-alt m-r-5"></i> Edit
-            //                 </a>
-            //                 <a class="dropdown-item" href="'.url('users/delete/'.$record->id).'">
-            //                 <i class="fas fa-trash-alt m-r-5"></i> Delete
-            //             </a>
-            //             </div>
-            //         </div>
-            //     </td>
-            // ';
-
+            $profile = $record->profile && file_exists(public_path('assets/img/' . $record->profile))
+            ? '<img src="'.asset('assets/img/' . $record->profile).'" width="80" class="avatar avatar-sm mr-2">'
+            : '<img src="'.asset('assets/img/men.jpg').'" width="80" class="avatar avatar-sm mr-2">';
+    
             $modify = '
                 <td class="text-right">
                     <a href="'.url('users/add/edit/'.$record->user_id).'" style="font-size: 23px; padding: 5px; color: #009688;">
@@ -167,9 +151,7 @@ class UserManagementController extends Controller
                 "modify"       => $modify,
             ];
         }
-
-
-
+    
         $response = [
             "draw"                 => intval($draw),
             "iTotalRecords"        => $totalRecords,
@@ -178,9 +160,21 @@ class UserManagementController extends Controller
         ];
         return response()->json($response);
     }
+    
 
     public function createUser(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'required|numeric',
+            'position' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+            'password_confirmation' => 'required|same:password',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate file as an image
+        ]);
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
