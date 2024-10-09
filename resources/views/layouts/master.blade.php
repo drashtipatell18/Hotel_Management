@@ -37,6 +37,9 @@
 		.header-top{
 			margin-top:17px;
 		}
+		.avatar{
+			margin:0px !important;
+		}
 		
     </style>
 

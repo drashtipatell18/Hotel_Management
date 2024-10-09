@@ -27,7 +27,6 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
-                                            <th>Position</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -77,10 +76,10 @@
                         data: 'phone_number',
                         name: 'phone_number'
                     },
-                    {
-                        data: 'position',
-                        name: 'position'
-                    },
+                    // {
+                    //     data: 'position',
+                    //     name: 'position'
+                    // },
 
                     // {
                     //     data: 'status',

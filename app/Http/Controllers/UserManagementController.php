@@ -166,10 +166,9 @@ class UserManagementController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone_number' => 'required|numeric',
-            'position' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|same:password',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate file as an image
@@ -177,7 +176,12 @@ class UserManagementController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->lname = $request->lname;
         $user->email = $request->email;
+        $user->country = $request->country;
+        $user->state = $request->state;
+        $user->city = $request->city;
+        $user->address = $request->address;
         $user->phone_number = $request->phone_number;
         $user->role_id = 0;
         $user->position = $request->position;

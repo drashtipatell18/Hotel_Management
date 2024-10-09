@@ -89,12 +89,18 @@
                                         <div class="row">
                                             <p class="col-sm-3 text-sm-right mb-0">Address</p>
                                             <p class="col-sm-9 mb-0">
-                                                @if($staff && $staff->address)
-                                                    {{ $staff->address }},
-                                                    <br> {{  $staff->state }},
-                                                    {{   $staff->country }}.
-                                                @else
-                                                    <em>No address available</em>
+                                                @if(Auth::check())
+                                                    @if(Auth::user()->role_id === 0)
+                                                        {{ Auth::user()->address }},
+                                                        
+                                                    @elseif(Auth::user()->role_id=== 1)
+                                                        {{ $staff->address }}<br/>
+                                                        {{ $staff->country }}<br/>
+                                                        {{ $staff->state }}
+                                                       
+                                                    @else
+                                                        <em>No address available</em>
+                                                    @endif
                                                 @endif
                                             </p>
                                         </div>
@@ -159,44 +165,53 @@
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <label>Address</label>
-                                                                <textarea class="form-control" name="address"
-                                                                    rows="3">{{ $staff->address ?? '' }}</textarea>
+                                                                @if(Auth::check())
+                                                                    @if(Auth::user()->role_id == 0)
+                                                                        <textarea class="form-control" name="address" rows="3">{{ Auth::user()->address }}</textarea>
+                                                                    @elseif(Auth::user()->role_id == 1)
+                                                                        <textarea class="form-control" name="address" rows="3"> {{ $staff->address ?? '' }}</textarea>
+                                                                    @else
+                                                                        <em>No address available</em>
+                                                                    @endif
+                                                                @endif
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-12 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label>Country</label>
-                                                                <select id="country" onchange="getStates()"
-                                                                    name="country" class="form-control">
-                                                                    <option value="">Select Country</option>
-                                                                </select>
-                                                                @error('country')
-                                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                                @enderror
+                                                        @if(auth()->user()->role_id == 1)
+                                                            <div class="col-12 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Country</label>
+                                                                    <select id="country" onchange="getStates()"
+                                                                        name="country" class="form-control">
+                                                                        <option value="">Select Country</option>
+                                                                    </select>
+                                                                    @error('country')
+                                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
-                                                            <div class="form-group">
-                                                                <label>State</label>
-                                                                <select name="state" onchange="getCities()" id="state"
-                                                                    class="form-control">
-                                                                    <option value="">Select State</option>
-                                                                </select>
-                                                                @error('state')
-                                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                                @enderror
+                                                            <div class="col-12 col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>State</label>
+                                                                    <select name="state" onchange="getCities()" id="state"
+                                                                        class="form-control">
+                                                                        <option value="">Select State</option>
+                                                                    </select>
+                                                                    @error('state')
+                                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                                    @enderror
 
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label>City</label>
-                                                                <select id="city" class="form-control" name="city">
-                                                                    <option value="">Select a city</option>
-                                                                </select>
+                                                            <div class="col-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label>City</label>
+                                                                    <select id="city" class="form-control" name="city">
+                                                                        <option value="">Select a city</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
 
 
 

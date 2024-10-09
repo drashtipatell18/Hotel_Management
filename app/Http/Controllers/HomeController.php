@@ -43,31 +43,45 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $staff = Staff::with('position')->where('id', $user->staff_id)->first();
-       
 
-       
        
         return view('profile',compact('staff'));
     }
 
     public function update(Request $request)
     {
-        // dd($request->all());
-        // Get the current authenticated user
         $user = Auth::user();
+       
 
         // Validate input data
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'lname' => 'required|string|max:255',
-            'dob' => 'required|date',
-            'email' => 'required|email|unique:users,email,' . $user->id, // Email must be unique except for the current user
-            'phone_number' => 'required|string|max:15',
+            'name' => 'nullable|string|max:255',
+            'lname' => 'nullable|string|max:255',
+            'dob' => 'nullable|date',
+            'email' => 'nullable|email|unique:users,email,' . $user->id, // Email must be unique except for the current user
+            'phone_number' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
         ]);
 
         // If validation fails, return with errors
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if (Auth::check() && Auth::user()->role_id === 0) { // Check if user is admin
+            $user = Auth::user();
+            $user->name = $request->name;
+            $user->lname = $request->lname;
+            $user->dob = $request->dob;
+            $user->email = $request->email;
+            $user->phone_number = $request->phone_number;
+            $user->address = $request->address;
+            $user->save();
+    
+            return redirect()->back()->with('success', 'Address updated successfully.');
         }
 
         // Update user details
@@ -77,6 +91,8 @@ class HomeController extends Controller
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->save();
+
+       
 
         $staff = Staff::where('id', $user->staff_id)->first();
       
