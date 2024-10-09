@@ -23,20 +23,7 @@
                 <button class="tab" data-category="indoor-pool">Indoor Pool</button>
             </div>
 
-           <div class="image-gallery" id="imageGallery1">
-    <div class="row g-3 px-sm-2 p-0">
-        @foreach($hotelImages as $index => $image)
-            <div class="col-12 col-lg-6 my-2">
-                <div class="image-item h-100" data-category="{{ $image->category }}" data-index="{{ $index }}">
-                    <img src="{{ url('assets/hotel/' . $image->hotel_image) }}" alt="{{ $image->alt_text }}">
-                    <div class="d_image-overlay">
-                        <p>{{ $image->description }}</p>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div> 
+        
             <div class="image-gallery" id="imageGallery1">
                 <div class="row g-3 px-sm-2 p-0">
                     <div class="col-12 col-lg-6 my-2">
