@@ -27,8 +27,6 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
-                                            <th>Position</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -63,7 +61,7 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row) {
-                            return data ? data : 'No Image';  // Return image HTML or 'No Image'
+                            return data ? data : '<img src="' + window.location.origin + '/assets/img/men.jpg" width="80" class="avatar avatar-sm mr-2">';
                         }
                     },
                     {
@@ -78,15 +76,15 @@
                         data: 'phone_number',
                         name: 'phone_number'
                     },
-                    {
-                        data: 'position',
-                        name: 'position'
-                    },
+                    // {
+                    //     data: 'position',
+                    //     name: 'position'
+                    // },
 
-                    {
-                        data: 'status',
-                        name: 'status',
-                    },
+                    // {
+                    //     data: 'status',
+                    //     name: 'status',
+                    // },
                     {
                         data: 'modify',
                         name: 'modify',

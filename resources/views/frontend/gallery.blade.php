@@ -6,12 +6,155 @@
     <div class="d_container">
         <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
             labore et dolore magna laboris nisi ut aliquip ex</p>
-            <div class="nav-tabs d-flex justify-content-between mt-5">
-                <button class="tab {{ $name == 'all' ? 'active' : '' }}" data-name="all">All</button>
-                @foreach($names as $n)
-                    <button class="tab {{ $name == $n ? 'active' : '' }}" data-name="{{ $n }}">{{ ucwords(str_replace('-', ' ', $n)) }}</button>
-                @endforeach
+
+
+
+            <div class="image-gallery" id="imageGallery1">
+                <div class="row g-3 px-sm-2 p-0">
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="image-item h-100" data-category="hotel-ground" data-index="0">
+                            <img src="{{ url('frontend/img/d_img/gallery1.png') }}" alt="Hotel & Ground">
+                            <div class="d_image-overlay">
+                                <p>Lorem ipsum dolor sit amet...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="rooms-suites" data-index="1">
+                                    <img src="{{ url('frontend/img/d_img/gallery2.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="fitness-center" data-index="2">
+                                    <img src="{{ url('frontend/img/d_img/galley3.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p> ipsum </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="restaurant-bar" data-index="3">
+                                    <img src="{{ url('frontend/img/d_img/gallery4.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="indoor-pool" data-index="4">
+                                    <img src="{{ url('frontend/img/d_img/gallery5.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+             <div class="image-gallery my-3" id="imageGallery2">
+                <div class="row g-3 px-sm-2 p-0">
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="row g-3 p-0">
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="rooms-suites" data-index="5">
+                                    <img src="{{ url('frontend/img/d_img/gallery7.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="fitness-center" data-index="6">
+                                    <img src="{{ url('frontend/img/d_img/gallery8.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="fitness-center" data-index="7">
+                                    <img src="{{ url('frontend/img/d_img/gallery9.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="fitness-center" data-index="8">
+                                    <img src="{{ url('frontend/img/d_img/gallery10.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="image-item h-100" data-category="fitness-center" data-index="9">
+                            <img src="{{ url('frontend/img/d_img/gallery6.png') }}" alt="Hotel & Ground">
+                            <div class="d_image-overlay">
+                                <p>Lorem ipsum dolor sit amet...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="image-gallery" id="imageGallery3">
+                <div class="row g-3 px-sm-2 p-0">
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="image-item h-100" data-category="hotel-ground" data-index="10">
+                            <img src="{{ url('frontend/img/d_img/gallery11.png') }}" alt="Hotel & Ground">
+                            <div class="d_image-overlay">
+                                <p>Lorem ipsum dolor sit</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 my-2">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="rooms-suites" data-index="11">
+                                    <img src="{{ url('frontend/img/d_img/gallery12.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="image-item d_sub" data-category="fitness-center" data-index="12">
+                                    <img src="{{ url('frontend/img/d_img/gallery13.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="restaurant-bar" data-index="13">
+                                    <img src="{{ url('frontend/img/d_img/gallery14.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 ">
+                                <div class="image-item d_sub" data-category="indoor-pool" data-index="14">
+                                    <img src="{{ url('frontend/img/d_img/gallery15.png') }}" alt="Hotel & Ground">
+                                    <div class="d_image-overlay">
+                                        <p>Lorem ipsum dolor sit amet...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
         <div class="image-gallery" id="imageGallery1">
             <div class="row g-3 px-sm-2 p-0">
@@ -32,125 +175,141 @@
             </div>
         </div>
     </div>
-</section>
 
-<!-- Popup Modal -->
-<div id="imageModal" class="d_modal">
-    <span class="d_close">&times;</span>
-    <div class="position-relative">
-        <div class="owl-carousel owl-theme" id="test1">
-            <!-- Carousel items will be dynamically inserted here -->
-        </div>
-        <div class="d_sildertext"></div>
-    </div>
-</div>
 
-@endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('.tab');
-    const allImages = document.querySelectorAll('.image-item');
-    const modal = document.getElementById('imageModal');
-    const modalCarousel = document.getElementById('test1');
-    const modalText = document.querySelector('.d_sildertext');
-    let filteredImages = [];
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    function filterImages(name) {
-        console.log(`Filtering images for tab: ${name}`); // Debug log
-        filteredImages = Array.from(allImages).filter(img =>
-            name === 'all' || img.getAttribute('data-name') === name
-        );
+            const tabs = document.querySelectorAll('.tab');
+            const galleries = Array.from(document.querySelectorAll('.image-gallery'));
+            const allImages = document.querySelectorAll('.image-item');
+            const modal = document.getElementById('imageModal');
+            const modalCarousel = document.getElementById('test1');
+            const modalText = document.querySelector('.d_sildertext');
+            let filteredImages = [];
 
-        console.log(`Filtered images count: ${filteredImages.length}`); // Debug log
+            function filterAndDistributeImages(category) {
+                // ... (previous code remains the same)
+                filteredImages = Array.from(allImages).filter(img =>
+                    category === 'all' || img.getAttribute('data-category') === category
+                );
 
-        allImages.forEach(img => img.style.display = 'none');
-        filteredImages.forEach(img => img.style.display = 'block');
+                // Hide all images initially
+                allImages.forEach(img => img.style.display = 'none');
 
-        initializeImageClickEvents(); // Ensure this is called after filtering
-    }
+                // Distribute and show filtered images
+                filteredImages.forEach((img, index) => {
+                    const galleryIndex = Math.floor(index / 5);
+                    if (galleryIndex < galleries.length) {
+                        const targetGallery = galleries[galleryIndex];
+                        const targetSlot = targetGallery.querySelector(`.image-item[data-index="${index}"]`);
+                        if (targetSlot) {
+                            // Replace the content of the target slot with the filtered image
+                            targetSlot.innerHTML = img.innerHTML;
+                            targetSlot.setAttribute('data-category', img.getAttribute('data-category'));
+                            targetSlot.style.display = 'block';
+                        }
+                    }
+                });
 
-    function initializeImageClickEvents() {
-        const visibleImages = document.querySelectorAll('.image-item[style="display: block;"]');
-        console.log(`Visible images count: ${visibleImages.length}`); // Debug log
-        visibleImages.forEach((img, index) => {
-            img.onclick = function () {
-                openModal(index);
+                // Show/hide galleries based on content
+                galleries.forEach(gallery => {
+                    const visibleImages = gallery.querySelectorAll('.image-item[style="display: block;"]');
+                    gallery.style.display = visibleImages.length > 0 ? 'block' : 'none';
+                });
+
+                // Reinitialize click events for the newly displayed images
+                initializeImageClickEvents();
+            }
+
+            function initializeImageClickEvents() {
+                const visibleImages = document.querySelectorAll('.image-item[style="display: block;"]');
+                visibleImages.forEach((img, index) => {
+                    img.onclick = function () {
+                        openModal(index);
+                    };
+                });
+            }
+
+            function openModal(index) {
+                modalCarousel.innerHTML = '';
+                filteredImages.forEach((img, idx) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'item';
+                    slide.innerHTML = img.innerHTML;
+                    modalCarousel.appendChild(slide);
+                });
+
+                // Initialize or reinitialize Owl Carousel
+                if (modalCarousel.classList.contains('owl-loaded')) {
+                    $(modalCarousel).trigger('destroy.owl.carousel');
+                }
+                $(modalCarousel).owlCarousel({
+                    items: 1,
+                    loop: true,
+                    nav: true,
+                    dots: false,
+                    startPosition: index,
+                    onInitialized: function (event) {
+                        updateModalText();
+                    }
+                });
+
+                // Show the modal
+                modal.style.display = 'block';
+            }
+
+            function updateModalText() {
+                const currentSlide = modalCarousel.querySelector('.owl-item.active');
+                if (currentSlide) {
+                    const textElement = currentSlide.querySelector('.d_image-overlay p') || currentSlide.querySelector('p');
+                    modalText.textContent = textElement ? textElement.textContent : '';
+                } else {
+                    modalText.textContent = '';
+                }
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(tab => tab.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+                    filterAndDistributeImages(category);
+                });
+            });
+
+            // Close modal when clicking on the close button
+            document.querySelector('.d_close').onclick = function () {
+                modal.style.display = 'none';
             };
-        });
-    }
 
-    function openModal(index) {
-        console.log(`Opening modal for image index: ${index}`); // Debug log
-        modalCarousel.innerHTML = '';
-        filteredImages.forEach((img) => {
-            const slide = document.createElement('div');
-            slide.className = 'item';
-            slide.innerHTML = img.innerHTML;
-            modalCarousel.appendChild(slide);
-        });
+            // Close modal when clicking outside the image
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
 
-        if (modalCarousel.classList.contains('owl-loaded')) {
-            $(modalCarousel).trigger('destroy.owl.carousel');
-        }
-        $(modalCarousel).owlCarousel({
-            items: 1,
-            loop: true,
-            nav: true,
-            dots: false,
-            startPosition: index,
-            onInitialized: function (event) {
+            // Update modal text when carousel changes
+            $(modalCarousel).on('changed.owl.carousel', function (event) {
                 updateModalText();
+            });
+
+            // Find the initially active tab or default to 'all'
+            const initialActiveTab = document.querySelector('.tab.active') || document.querySelector('.tab[data-category="all"]');
+            if (initialActiveTab) {
+                const initialCategory = initialActiveTab.getAttribute('data-category');
+                filterAndDistributeImages(initialCategory);
+            } else {
+                // If no active tab found, default to showing all images
+                filterAndDistributeImages('all');
             }
         });
+    </script>
 
-        modal.style.display = 'block';
-    }
 
-    function updateModalText() {
-        const currentSlide = modalCarousel.querySelector('.owl-item.active');
-        if (currentSlide) {
-            const textElement = currentSlide.querySelector('.d_image-overlay p') || currentSlide.querySelector('p');
-            modalText.textContent = textElement ? textElement.textContent : '';
-        } else {
-            modalText.textContent = '';
-        }
-    }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            tabs.forEach(tab => tab.classList.remove('active'));
-            this.classList.add('active');
-
-            const name = this.getAttribute('data-name');
-            console.log(`Tab clicked: ${name}`); // Debug log
-            filterImages(name); // Ensure this is correctly passing the name
-        });
-    });
-
-    document.querySelector('.d_close').onclick = function () {
-        modal.style.display = 'none';
-    };
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
-
-    $(modalCarousel).on('changed.owl.carousel', function (event) {
-        updateModalText();
-    });
-
-    const initialActiveTab = document.querySelector('.tab.active') || document.querySelector('.tab[data-name="all"]');
-    if (initialActiveTab) {
-        const initialName = initialActiveTab.getAttribute('data-name');
-        console.log(`Initial active tab: ${initialName}`); // Debug log
-        filterImages(initialName);
-    } else {
-        filterImages('all');
-    }
-});
-</script>
-@endpush
+@endsection
+>>>>>>> 84494248840d0b5e107beed611ae5bb7ebc713be

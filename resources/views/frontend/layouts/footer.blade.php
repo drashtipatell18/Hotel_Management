@@ -24,13 +24,13 @@
                                     <h4>Quick Link</h4>
                                     <ul class="footer_ul_res">
                                         <div>
-                                            <li><a class="text-light" href="index.html">Home</a></li>
-                                            <li><a class="text-light" href="about.html">About
+                                            <li><a class="text-light" href="{{ route('index') }}">Home</a></li>
+                                            <li><a class="text-light" href="{{ route('aboutus') }}">About
                                                     Us</a></li>
-                                            <li><a class="text-light" href="rooms.html">Rooms</a></li>
+                                            <li><a class="text-light" href="{{ route('rooms-frontend') }}">Rooms</a></li>
                                         </div>
                                         <div class="div2">
-                                            <li><a class="text-light" href="{{ route('spabook') }}">Spa</a></li>
+                                            <li><a class="text-light" href="{{ route('spa') }}">Spa</a></li>
                                             <li><a class="text-light" href="{{ route('gallery') }}">Gallery</a></li>
                                             <li><a class="text-light" href="{{ route('contact-us') }}">Contact
                                                     Us</a></li>
