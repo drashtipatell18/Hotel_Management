@@ -115,10 +115,10 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Birth Date</label>
-                                            <div class="cal-icon">
+                                            <div class="">
 
-                                                <input type="text"
-                                                    class="form-control datetimepicker @error('date') is-invalid @enderror"name="date"
+                                                <input type="date"
+                                                    class="form-control @error('date') is-invalid @enderror"name="date"
                                                     value="{{ old('date') }}">
                                                 @error('date')
                                                     <div class="error text-danger">{{ $message }}</div>
@@ -290,10 +290,10 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Arrival Date</label>
-                                            <div class="cal-icon">
+                                            <div class="">
 
-                                                <input type="text"
-                                                    class="form-control datetimepicker @error('arrival_date') is-invalid @enderror"
+                                                <input type="date"
+                                                    class="form-control @error('arrival_date') is-invalid @enderror"
                                                     name="arrival_date" value="{{ old('arrival_date') }}">
                                                 @error('arrival_date')
                                                     <div class="error text-danger">{{ $message }}</div>
@@ -306,10 +306,10 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Depature Date</label>
-                                            <div class="cal-icon">
+                                            <div class="">
 
-                                                <input type="text"
-                                                    class="form-control datetimepicker @error('depature_date') is-invalid @enderror"
+                                                <input type="date"
+                                                    class="form-control @error('depature_date') is-invalid @enderror"
                                                     name="depature_date" value="{{ old('depature_date') }}">
                                                 @error('depature_date')
                                                     <div class="error text-danger">{{ $message }}</div>

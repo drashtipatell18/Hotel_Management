@@ -15,6 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('user_id')->nullable();
             $table->string('bkg_customer_id');
             $table->string('name')->nullable();
             $table->string('lname')->nullable();
@@ -31,8 +32,15 @@ class CreateCustomersTable extends Migration
             $table->string('gender')->nullable();
             $table->string('aadharcard')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
+
+           
         });
     }
 

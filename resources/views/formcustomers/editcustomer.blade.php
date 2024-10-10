@@ -120,7 +120,7 @@
                                 <div class="form-group">
                                     <label>Birth Date</label>
                                     <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="date" value="{{ $customerEdit->date }}">
+                                        <input type="date" class="form-control" name="date" value="{{ $customerEdit->date }}">
                                         @error('date')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
@@ -177,9 +177,9 @@
                                         <div class="col-md-4">
                                             <a href="#">
                                                 <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;" 
-                                                    src="{{ file_exists(public_path('/assets/upload/'.$customerEdit->fileupload)) ? 
-                                                        URL::to('assets/upload/'.$customerEdit->fileupload) : 
-                                                        URL::to('assets/upload/men.jpg') }}" 
+                                                    src="{{ file_exists(public_path('/assets/img/'.$customerEdit->fileupload)) ? 
+                                                        URL::to('assets/img/'.$customerEdit->fileupload) : 
+                                                        URL::to('assets/img/men.jpg') }}" 
                                                     alt="Profile Picture">
                                             </a>
                                         </div>
@@ -269,7 +269,7 @@
                                 <div class="form-group">
                                     <label>Arrival Date</label>
                                     <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="arrival_date" value="{{ $customerEdit->arrival_date }}">
+                                        <input type="date" class="form-control"  name="arrival_date" value="{{ $customerEdit->arrival_date }}">
                                         @error('arrival_date')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
@@ -280,7 +280,7 @@
                                 <div class="form-group">
                                     <label>Depature Date</label>
                                     <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker" name="depature_date" value="{{ $customerEdit->depature_date }}">
+                                        <input type="date" class="form-control" name="depature_date" value="{{ $customerEdit->depature_date }}">
                                         @error('depature_date')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
@@ -318,8 +318,8 @@
 </script>
     <script>
         $(function() {
-            $('#datetimepicker3').datetimepicker({
-                format: 'LT'
+            $('.datetimepicker3').datetimepicker({
+                format: 'YYYY-MM-DD',
             });
         });
         </script>

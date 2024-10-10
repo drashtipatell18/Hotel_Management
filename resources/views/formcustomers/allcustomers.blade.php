@@ -23,7 +23,6 @@
                                     <thead>
                                         <tr>
                                             <th>Customer Id</th>
-                                            <th>Booking ID</th>
                                             <th>Profile Pic</th>
                                             <th>Name</th>
                                             <th>Ph.Number</th>
@@ -39,13 +38,12 @@
                                                 {{-- <td hidden class="id">{{ $customers->id }}</td>
                                                     <td hidden class="fileupload">{{ $customers->fileupload }}</td> --}}
                                                 <td>{{ $customers->id }}</td>
-                                                <td>{{ $customers->bkg_customer_id }}</td>
                                                 <td>
                                                     <h2 class="table-avatar">
                                                         <a href="profile.html" class="avatar avatar-sm mr-2">
                                                             <img class="avatar-img rounded-circle"
-                                                                src="{{ URL::to('/assets/upload/' . $customers->fileupload) }}"
-                                                                alt="{{ $customers->fileupload }}"  onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
+                                                                src="{{ URL::to('/assets/img/' . $customers->fileupload) }}"
+                                                                alt="{{ $customers->fileupload }}"  onerror="this.onerror=null; this.src='{{ URL::to('/assets/img/men.jpg') }}';">
                                                         </a>
                                                     </h2>
                                                 </td>
@@ -94,7 +92,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-4 text-center">
                                                                     <img class="avatar-img rounded"
-                                                                        src="{{ URL::to('/assets/upload/' . $customers->fileupload) }}"
+                                                                        src="{{ URL::to('/assets/img/' . $customers->fileupload) }}"
                                                                         alt="{{ $customers->fileupload }}"
                                                                         style="width: 180px; height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ URL::to('/assets/upload/men.jpg') }}';">
                                                                 </div>
