@@ -26,6 +26,7 @@ class User extends Authenticatable
         'country',
         'state',
         'city',
+        'otp',
         'address',
         'join_date',
         'phone_number',

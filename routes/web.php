@@ -385,4 +385,4 @@ Route::post('/register', [IndexController::class, 'storeUser'])->name('register.
 Route::get('/login', [IndexController::class, 'login'])->name('login');
 Route::post('/logoutfrontend', [IndexController::class, 'logoutfrontend'])->name('logoutfrontend');
 Route::post('/loginstore', [IndexController::class, 'authenticate'])->name('login.authenticate');
-
+Route::post('/forget-password', [IndexController::class, 'forgetPassword'])->name('forget.password');

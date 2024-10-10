@@ -37,6 +37,74 @@ class IndexController extends Controller
         // dd('isha');
         return view('frontend.layouts.header');
     }
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        $user->password_reset_otp = $otp;
+        $user->password_reset_otp_expires_at = now()->addMinutes(15);
+        $user->save();
+
+        try {
+            Mail::to($user->email)->send(new PasswordResetOtpMail($otp));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP has been sent to your email.'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Password reset OTP email error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending the OTP. Please try again later.'
+            ], 500);
+        }
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'otp' => 'required|string|size:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)
+                    ->where('password_reset_otp', $request->otp)
+                    ->where('password_reset_otp_expires_at', '>', now())
+                    ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired OTP.'
+            ], 400);
+        }
+
+        // OTP is valid, allow password reset
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP verified successfully.'
+        ]);
+    }
     public function storeUser(Request $request)
     {
                 // Validate input
