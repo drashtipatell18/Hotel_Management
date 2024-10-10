@@ -390,22 +390,18 @@
                                     <!-- Forgot Password Form -->
                                     <div id="forgotPasswordForm" class="form hidden">
                                         <h2>Forgot Password</h2>
-                                        <div class="row  m-0 justify-content-center d-flex">
+                                        <div class="row m-0 justify-content-center d-flex">
                                             <div class="col-lg-10">
-                                                <p class="text-center">Don't
-                                                    worry! It occurs. Please
-                                                    enter the email address
-                                                    linked with your
-                                                    account.</p>
+                                                <p class="text-center">Don't worry! It occurs. Please enter the email address linked with your account.</p>
                                             </div>
                                         </div>
-                                        <input type="email" placeholder="Enter your email">
-                                        <button id="sendCodeBtn">Send
-                                            Code</button>
+                                        <form id="forgotPasswordAjaxForm"> <!-- Ensure this ID is unique -->
+                                            @csrf
+                                            <input type="text" placeholder="Enter your email" name="email" id="email"> <!-- Changed input type to text and added required attribute -->
+                                            <button type="submit" id="submit">Send Code</button>
+                                        </form>
                                     </div>
-
-                                    <!-- OTP Verification Form -->
-                                    <!-- OTP Verification Form -->
+                                        <!-- OTP Verification Form -->
                                     <div id="otpVerificationForm" class="form hidden">
                                         <h2>OTP Verification</h2>
                                         <div class="row  m-0 justify-content-center d-flex">
@@ -499,3 +495,4 @@
 </body>
 
 </html>
+

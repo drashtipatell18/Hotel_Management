@@ -73,7 +73,7 @@
                         <div class="col-12 col-lg-6 my-2">
                             <div class="row g-3">
                     @endif
-                    
+
                     {{-- Sub-images (in a 2x2 grid) --}}
                     <div class="col-6">
                         <div class="image-item d_sub" data-name="{{ $facility->name }}" data-index="{{ $index }}">
@@ -85,7 +85,7 @@
                             @endforeach
                         </div>
                     </div>
-                    
+
                     @if($index == 4)
                         {{-- Close sub-images container --}}
                             </div>
@@ -178,7 +178,7 @@
 @endif
 
 
-              
+
             </div>
     </div>
 
@@ -321,6 +321,4 @@
         }
     });
 </script>
-
-
 @endsection

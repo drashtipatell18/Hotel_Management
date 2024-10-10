@@ -27,7 +27,8 @@
                                             <li><a class="text-light" href="{{ route('index') }}">Home</a></li>
                                             <li><a class="text-light" href="{{ route('aboutus') }}">About
                                                     Us</a></li>
-                                            <li><a class="text-light" href="{{ route('rooms-frontend') }}">Rooms</a></li>
+                                            <li><a class="text-light" href="{{ route('rooms-frontend') }}">Rooms</a>
+                                            </li>
                                         </div>
                                         <div class="div2">
                                             <li><a class="text-light" href="{{ route('spa') }}">Spa</a></li>
@@ -470,7 +471,83 @@
             "positionClass": "toast-top-right",
             "timeOut": "5000",
         }
+        // Handle forgot password
+        $('#forgotPasswordAjaxForm').on('submit', function(e) {
+    e.preventDefault();
+    var email = $('#email').val();
 
+    if (!email) {
+        toastr.error('Please enter your email address.');
+        return;
+    }
+
+    $.ajax({
+        url: '{{ route('forget.password') }}',
+        type: 'POST',
+        data: { email: email, _token: '{{ csrf_token() }}' },
+        dataType: 'json',  // Expect JSON response
+        success: function(response) {
+            if (response.success) {
+                toastr.success(response.message);
+                $('#otpVerificationForm').show();
+            } else {
+                toastr.error(response.message || 'An error occurred. Please try again.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Error:', xhr.responseText);
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON.errors;
+                if (errors && errors.email) {
+                    toastr.error(errors.email[0]);
+                } else {
+                    toastr.error('Validation failed. Please check your input.');
+                }
+            } else {
+                toastr.error('An error occurred. Please try again later.');
+            }
+        }
+    });
+});
+        document.addEventListener('DOMContentLoaded', function() {
+            const otpInputs = document.querySelectorAll('.otp-box');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const resendOtp = document.getElementById('resendOtp');
+
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === this.maxLength) {
+                        if (index < otpInputs.length - 1) {
+                            otpInputs[index + 1].focus();
+                        }
+                    }
+                });
+            });
+
+            verifyBtn.addEventListener('click', function() {
+                const otp = Array.from(otpInputs).map(input => input.value).join('');
+                verifyOtp(otp);
+            });
+
+            resendOtp.addEventListener('click', function() {
+                resendOtpCode();
+            });
+        });
+
+function verifyOtp(otp) {
+    // Send OTP to server for verification
+    // You'll need to implement this part based on your backend API
+    console.log('Verifying OTP:', otp);
+    // Make an AJAX call to your server to verify the OTP
+    // If successful, allow the user to reset their password
+    // If not, show an error message
+}
+
+function resendOtpCode() {
+    // Implement the logic to resend the OTP
+    console.log('Resending OTP');
+    // Make an AJAX call to your server to generate and send a new OTP
+}
         $('#loginAjaxForm').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
