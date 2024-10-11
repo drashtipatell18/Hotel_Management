@@ -29,6 +29,7 @@ class EditProfileController extends Controller
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->dob = $request->dob;
+        $user->address = $request->address;
         // dd($user->dob);
        
     
@@ -58,6 +59,7 @@ class EditProfileController extends Controller
             $customer->email = $user->email;
             $customer->ph_number = $user->phone_number;
             $customer->date = $user->dob;
+            $customer->address = $user->address;
     
             // Only update the fileupload field if a new file was uploaded
             if ($request->hasFile('profile')) {

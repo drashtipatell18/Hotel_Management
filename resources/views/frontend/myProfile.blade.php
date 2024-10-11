@@ -47,8 +47,8 @@
                                 <h5 class="mb-2">{{ $user->lname }} </h5>
                                 <p class="mb-1">Phone</p>
                                 <h5 class="mb-2">{{$user->phone_number}}</h5>
-                                <p class="mb-1">Nationality</p>
-                                <h5 class="mb-2">United States</h5>
+                                <p class="mb-1">Address</p>
+                                <h5 class="mb-2">{{ $user->address }}</h5>
                             </div>
                         </div>
                     </div>
