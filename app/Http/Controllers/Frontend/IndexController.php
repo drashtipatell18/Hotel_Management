@@ -17,6 +17,9 @@ use App\Models\ClientReview;
 use Illuminate\Support\Facades\Mail; // Add this line to import the Mail facade
 use App\Mail\PasswordResetMail;
 
+use App\Models\Customer;
+
+
 class IndexController extends Controller
 {
     public function index()
@@ -133,13 +136,19 @@ class IndexController extends Controller
         $user->role_id = $userroleid;
         $user->save();
 
+        $customer = new Customer();
+        $customer->user_id = $user->id; // Store the user_id from the users table
+        $customer->name = $user->name;
+        $customer->email = $user->email;
+        $customer->ph_number = $user->phone_number;
+        $customer->save(); // Save the customer record
+
         return response()->json([
             'success' => true,
             'message' => 'Registration successful! Please log in.',
             'redirect' => route('index')
         ]);
     }
-
 
     public function login()
     {

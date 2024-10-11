@@ -57,11 +57,12 @@
         background-color: #1A2142;
         color: white !important;
     }
+    .nice-select{
+        width: 100%;
+    border: 1px solid;
+    border-radius: 1px;
 
-
-    
-
- 
+    }
 </style>
 
 <section class="d_p-25 d_room">
@@ -74,12 +75,13 @@
             </div>
         </div>
         <div class="container edit_profile">
-             <form action="{{ route('updateprofiledata') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('updateprofiledata') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row edit_1row pb-3">
-                <div class="col-lg-3">
+                    <div class="col-lg-3">
                         <div class="profile-pic">
-                            <img src="{{ $user->profile ? asset('assets/img/' . $user->profile) : asset('assets/img/men.jpg') }}" style="width: 193px;height: 192px;object-fit: fill;"  class="rounded-circle"  alt="logo">
+                            <img src="{{ $user->profile ? asset('assets/img/' . $user->profile) : asset('assets/img/men.jpg') }}"
+                                style="width: 193px;height: 192px;object-fit: fill;" class="rounded-circle" alt="logo">
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -118,14 +120,15 @@
                                                 </div>
                                             </div>
                                             <input class="select_drp" type="tel" id="phone_number" name="phone_number"
-                                               value="{{ $user->phone_number }}">
+                                                value="{{ $user->phone_number }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-group">
                                         <label for="dob">Date of Birth (DD/MM/YYYY)</label>
-                                        <input type="date"  id="dob" name="dob" value="{{ $user->dob }}">
+                                        <input type="date" class="birthdate" id="dob" name="dob"
+                                            value="{{ $user->dob }}">
                                         <div class="custom-date-icon">
                                             <i class="fas fa-calendar-alt"></i>
                                         </div>
@@ -136,10 +139,11 @@
                                     </div>
                                 </div>
 
-                               <div class="row">
+                                <div class="row">
                                     <div class="input-group" style="width: 96%;">
                                         <label for="profile_pic">Profile Picture</label>
-                                        <input type="file" id="profile" name="profile" accept="image/*" style="width: 100%;">
+                                        <input type="file" id="profile" name="profile" accept="image/*"
+                                            style="width: 100%;">
                                     </div>
                                 </div>
 
@@ -157,7 +161,10 @@
                             <div class="row">
                                 <div class="input-group" style="width: 96%;">
                                     <label for="state">Country</label>
-                                    <input type="text" id="state" name="state" value="United States">
+                                    <!-- <input type="text" id="state" name="state" value="United States"> -->
+                                    <select id="country" onchange="getStates()" name="country">
+                                        <option value="">Select Country</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -170,13 +177,16 @@
                                     <input type="text" id="state" name="state" value="United States">
                                 </div>
                             </div>
-                          
+
+
+
                         </div>
                     </div>
                 </div>
 
                 <div class="save-button">
-                    <button type="submit" class="Custom_btn text-decoration-none" style="background-color:#1A2142;">Save Changes</button>
+                    <button type="submit" class="Custom_btn text-decoration-none" style="background-color:#1A2142;">Save
+                        Changes</button>
                 </div>
             </form>
         </div>
@@ -186,6 +196,13 @@
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(function () {
+        $('#dob').datetimepicker({
+            format: 'LT'
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         function initDropdown() {

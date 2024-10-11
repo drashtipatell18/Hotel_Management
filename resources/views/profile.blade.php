@@ -41,8 +41,13 @@
                                 @endif
                             </h6>
                             <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i>
-                            <span id="stateSpan1">{{ $staff->state }}</span>
-                            <span id="countrySpan1">{{ $staff->country }}</span>
+                                @if($staff)
+                                    <span id="stateSpan1">{{ $staff->state }}</span>
+                                    <span id="countrySpan1">{{ $staff->country }}</span>
+                                @else
+                                    <span id="stateSpan1">State not available</span>
+                                    <span id="countrySpan1">Country not available</span>
+                                @endif
                             </div>
 
                             @if($staff)

@@ -24,6 +24,7 @@ class Customer extends Model
         'address',
         'gender',
         'aadharcard',
-        'status'
+        'status',
+        'user_id'
     ];
 }
