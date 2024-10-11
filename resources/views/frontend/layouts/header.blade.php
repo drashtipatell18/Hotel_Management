@@ -57,6 +57,10 @@
     height: 150px;
     object-fit: cover;
     } */
+
+    .hidden {
+    display: none;
+}
 </style>
 <body>
     <!-- Page Preloder -->
@@ -198,7 +202,7 @@
                 </form>
             </div>
             <!-- Forgot Password Form -->
-            <div id="newForgotPasswordForm" class="new-form hidden">
+            {{-- <div id="newForgotPasswordForm" class="new-form">
                 <h2>Forgot Password</h2>
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-lg-10">
@@ -226,6 +230,36 @@
                 </div>
                 <button id="newVerifyBtn">Verify</button>
                 <p class="new_verification_resend">Didn't receive code? <span>Resend</span></p>
+            </div> --}}
+
+
+            <div id="newForgotPasswordForm" class="new-form hidden">
+                <h2>Forgot Password</h2>
+                <div class="row m-0 justify-content-center d-flex">
+                    <div class="col-lg-10">
+                        <p class="text-center">Don't worry! It happens. Please enter the email address linked with your account.</p>
+                    </div>
+                </div>
+                <input type="email" id="forgotEmail" placeholder="Enter your email">
+                <button id="newSendCodeBtn">Send Code</button>
+            </div>
+
+            <!-- OTP Verification Form -->
+            <div id="newOtpVerificationForm" class="new-form hidden">
+                <h2>OTP Verification</h2>
+                <div class="row m-0 justify-content-center d-flex">
+                    <div class="col-lg-10">
+                        <p class="text-center">Enter the verification code we just sent to your email address.</p>
+                    </div>
+                </div>
+                <div class="new-otp-inputs">
+                    <input type="text" maxlength="1" class="new-otp-box" id="newOtp1" autofocus>
+                    <input type="text" maxlength="1" class="new-otp-box" id="newOtp2">
+                    <input type="text" maxlength="1" class="new-otp-box" id="newOtp3">
+                    <input type="text" maxlength="1" class="new-otp-box" id="newOtp4">
+                </div>
+                <button id="newVerifyBtn">Verify</button>
+                <p class="new_verification_resend">Didn't receive the code? <span>Resend</span></p>
             </div>
 
             <!-- Create New Password Form -->

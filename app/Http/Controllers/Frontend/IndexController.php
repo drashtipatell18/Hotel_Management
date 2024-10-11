@@ -14,7 +14,10 @@ use App\Models\Facilities;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RoomTypes;
 use App\Models\ClientReview;
-use App\Models\Customer; 
+use Illuminate\Support\Facades\Mail; // Add this line to import the Mail facade
+use App\Mail\PasswordResetMail;
+
+use App\Models\Customer;
 
 
 class IndexController extends Controller
@@ -53,14 +56,13 @@ class IndexController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
+        $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); // Changed range to 0-9999 for 4-digit OTP
         $user->password_reset_otp = $otp;
         $user->password_reset_otp_expires_at = now()->addMinutes(15);
         $user->save();
 
         try {
-            Mail::to($user->email)->send(new PasswordResetOtpMail($otp));
+            Mail::to($user->email)->send(new PasswordResetMail($otp));
 
             return response()->json([
                 'success' => true,
@@ -79,7 +81,7 @@ class IndexController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
-            'otp' => 'required|string|size:6',
+            'otp' => 'required|string|size:4',
         ]);
 
         if ($validator->fails()) {
