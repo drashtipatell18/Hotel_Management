@@ -52,15 +52,19 @@
         background-color: darkgray; /* Optional: Change hover color for better UX */
         color: white; /* Maintain text color on hover */
     }
+    button:disabled {
+    background-color: #ccc; /* Change to a light gray */
+    color: #666; /* Change to a dark gray */
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+}
+
     /* .fixed-size-image {
     width: 500px;
     height: 150px;
     object-fit: cover;
     } */
 
-    .hidden {
-    display: none;
-}
+
 </style>
 <body>
     <!-- Page Preloder -->
@@ -233,7 +237,7 @@
             </div> --}}
 
 
-            <div id="newForgotPasswordForm" class="new-form hidden">
+            <div id="newForgotPasswordForm" class="new-form">
                 <h2>Forgot Password</h2>
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-lg-10">
@@ -422,7 +426,7 @@
 
 
                                     <!-- Forgot Password Form -->
-                                    <div id="forgotPasswordForm" class="form hidden">
+                                    <div id="forgotPasswordForm" class="form">
                                         <h2>Forgot Password</h2>
                                         <div class="row m-0 justify-content-center d-flex">
                                             <div class="col-lg-10">
@@ -453,10 +457,13 @@
                                             <input type="text" maxlength="1" class="otp-box" id="otp4">
                                         </div>
                                         <button id="verifyBtn">Verify</button>
-                                        <p class="verification_resend">Didn't
-                                            receive code?
-                                            <span>Resend</span>
-                                        </p>
+                                        <form id="resendOTPAjaxForm"> <!-- Ensure this ID is unique -->
+                                        @csrf
+                                            <p class="verification_resend">Didn't
+                                                receive code?
+                                                <span id="resendOtp" style="cursor: pointer; color: blue;">Resend</span>
+                                            </p>
+                                        </form>
                                     </div>
 
                                     <!-- Create New Password Form -->
@@ -471,11 +478,11 @@
                                             </div>
                                         </div>
                                         <div class="password-field">
-                                            <input type="password" id="newPassword" placeholder="New Password">
+                                            <input type="password" id="newPassword" name="newPassword" placeholder="New Password">
                                             <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
                                         </div>
                                         <div class="password-field">
-                                            <input type="password" id="confirmNewPassword"
+                                            <input type="password" id="confirmNewPassword" name="confirmNewPassword"
                                                 placeholder="Confirm Password">
                                             <i class="fas fa-eye toggle-password" id="toggleConfirmNewPassword"></i>
                                         </div>
@@ -529,4 +536,76 @@
 </body>
 
 </html>
+
+<script>
+    document.querySelectorAll('.toggle-password').forEach(item => {
+        item.addEventListener('click', function() {
+            const inputField = this.previousElementSibling; // Get the input field
+
+            // Toggle the type of the input field and the icon class
+            if (inputField.type === "password") {
+                inputField.type = "text"; // Change to text (show password)
+                this.classList.add('fa-eye-slash'); // Add eye-slash icon class
+                this.classList.remove('fa-eye'); // Remove eye icon class
+            } else {
+                inputField.type = "password"; // Change back to password (hide password)
+                this.classList.remove('fa-eye-slash'); // Remove eye-slash icon class
+                this.classList.add('fa-eye'); // Add eye icon class
+            }
+        });
+    });
+
+    document.getElementById('forgotPasswordAjaxForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitButton = document.getElementById('submit');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        setTimeout(() => {
+            submitButton.textContent = 'Code Sent'; 
+        }, 2000); 
+    });
+
+    document.getElementById('resendOtp').addEventListener('click', function() {
+        let resendButton = document.getElementById('resendOtp');
+        let verifyButton = document.getElementById('verifyButton');
+
+        // Disable the resend button and change the text to 'Sending...'
+        resendButton.disabled = true;  // Disable the button to prevent multiple clicks
+        resendButton.innerText = 'Sending...';
+
+        // Simulate sending OTP request via AJAX
+        const formData = new FormData(document.getElementById('resendOTPAjaxForm'));
+
+        fetch('/resend-otp', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Successfully sent
+                resendButton.innerText = 'Code Sent';
+                resendButton.style.color = 'green'; // Optional: change color for success
+                verifyButton.disabled = false; // Enable verify button
+            } else {
+                // Handle error
+                resendButton.innerText = 'Resend Code';
+                resendButton.style.color = 'blue'; // Change back to original color
+                resendButton.disabled = false;  // Re-enable the resend button
+                verifyButton.disabled = true; // Keep verify button disabled
+            }
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error resending OTP:', error);
+            resendButton.innerText = 'Resend Code';
+            resendButton.style.color = 'blue';
+            resendButton.disabled = false;  // Re-enable the resend button
+            verifyButton.disabled = true; // Keep verify button disabled
+        });
+    });
+
+</script>
 
