@@ -16,7 +16,7 @@
                             <h5 class="text-center default_model_title">Sign up to get the latest news and Updates</h5>
                             <p class="text-center default_model_p">Join over 3,000 members to get weekly
                                 updates and special deals only available via
-                                email.</p>  
+                                email.</p>
                         </div>
                     </div>
 
@@ -214,7 +214,7 @@
                     @php
                         // Split the comma-separated images into an array
                         $images = explode(',', $facility->image);
-                        
+
                         // Check if the facility name is 'Spa' and select the third image (index 2), else use the first image
                         if ($facility->name == 'Spa') {
                             $selectedImage = $images[2] ?? null;
@@ -410,7 +410,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/offer1.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="Offer_Package.html" class="Custom_btn">Learn More</a>
+                        <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Weekend Gateway</h4>
@@ -426,7 +426,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/offer2.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="Offer_Package.html" class="Custom_btn">Learn More</a>
+                        <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Weekend Gateway</h4>
@@ -442,7 +442,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/offer3.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="Offer_Package.html" class="Custom_btn">Learn More</a>
+                        <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Weekend Gateway</h4>
@@ -458,7 +458,7 @@
                 <div class="Slider_image">
                     <img class="image__img" src="{{ url('frontend/img/offer4.png') }}" alt>
                     <div class="image__overlay3 image__overlay3--primary">
-                        <a href="Offer_Package.html" class="Custom_btn">Learn More</a>
+                        <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
                     </div>
                     <div class="image_onsection bg-light py-3">
                         <h4 class="text-center pb-2">Weekend Gateway</h4>

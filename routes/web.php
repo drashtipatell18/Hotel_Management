@@ -46,7 +46,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\MyBookingController;
 use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
-
+use App\Models\Room;
 
 // =========================================================== Backend Route ============================================================
 
@@ -385,9 +385,9 @@ Route::post('/forget-password', [IndexController::class, 'forgotPassword'])->nam
 Route::post('/verify-otp', [IndexController::class, 'verifyOtp'])->name('verify.otp');
 Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name('password.reset');
 Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');
-
+Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
 
 Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
-    
+
 });
