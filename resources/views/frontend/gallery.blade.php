@@ -1,24 +1,24 @@
 @extends('frontend.layouts.main')
 @section('title', 'Gallery')
 @section('main-container')
-    <style>
-        .fixed-size-image {
-            width: 100%;
-            height: 200px;
-            /* Adjust this value according to your design */
-            object-fit: cover;
-        }
 
-        .image-item {
-            position: relative;
-        }
+<style>
+    .fixed-size-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
 
+    .image-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
         .d_image-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;           
+            height: 100%;
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
@@ -29,137 +29,42 @@
 
         .image-item:hover .d_image-overlay {
             opacity: 1;
-        }
-
-        .d_image-overlay p {
+        }        .d_image-overlay p {
             color: #fff;
             text-align: center;
         }
-    </style>    
-    <section class="d_p-25 d_gallery mt-3">
-        <div class="d_container">
-            <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna
-                laboris nisi ut aliquip ex</p>
-            <div class="nav-tabs d-flex justify-content-between mt-5">
-                <button class="tab active" data-category="all">All</button>
-                <button class="tab" data-category="hotel-ground">Hotel & Ground</button>
-                <button class="tab" data-category="rooms-suites">Rooms & Suites</button>
-                <button class="tab" data-category="fitness-center">Fitness Center</button>
-                <button class="tab" data-category="restaurant-bar">Restaurant & Bar</button>
-                <button class="tab" data-category="indoor-pool">Indoor Pool</button>
-            </div>
+    </style>
 
+<section class="d_p-25 d_gallery mt-3">
+    <div class="d_container">
+        <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna laboris nisi ut aliquip ex</p>
+        <div class="nav-tabs d-flex justify-content-between mt-5">
+            <button class="tab active" data-category="all">All</button>
+            @foreach($facilities as $facility)
+            <button class="tab" data-category="{{ Str::slug($facility->name) }}">{{ $facility->name }}</button>
+            @endforeach
+        </div>
 
-            <div class="image-gallery" id="imageGallery1">
-                <div class="row g-3 px-sm-2 p-0">
-                    @foreach ($hotelImages->chunk(5) as $chunkIndex => $chunk)
-                        @if ($chunkIndex % 2 == 0)
-                            {{-- Odd-indexed loop: 1 large image on the left, 4 small images on the right --}}
-                            <div class="col-12 col-lg-6 my-2">
-                                @if (isset($chunk[0]))
-                                    {{-- Large image on the left --}}
-                                    <div class="image-item h-100" data-index="{{ $chunkIndex * 5 }}">
-                                        <img src="{{ asset('assets/hotel/' . trim($chunk[0]->hotel_image)) }}"
-                                            alt="{{ $chunk[0]->name }}" class="img-fluid large-image">
-                                    </div>
-                                @endif
-<<<<<<< HEAD
-=======
-                            @endforeach
+        <div class="image-gallery" id="imageGallery">
+            <div class="row g-3 px-sm-2 p-0">
+                @foreach($facilities as $index => $facility)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="image-item" data-category="{{ Str::slug($facility->name) }}" data-index="{{ $index }}">
+                        @foreach(explode(',', $facility->image) as $image)
+                        <img src="{{ asset('assets/facilities/' . trim($image)) }}" alt="{{ $facility->name }}"
+                            class="fixed-size-image">
+                        @endforeach
+                        <div class="d_image-overlay">
+                            <p>{{ $facility->name }}</p>
                         </div>
                     </div>
-                @else
-                    @if($index == 1)
-                        {{-- Start of sub-images container --}}
-                        <div class="col-12 col-lg-6 my-2">
-                            <div class="row g-3">
-                    @endif
-
-                    {{-- Sub-images (in a 2x2 grid) --}}
-                    <div class="col-6">
-                        <div class="image-item d_sub" data-name="{{ $facility->name }}" data-index="{{ $index }}">
-                            @foreach(explode(',', $facility->hotel_image) as $key => $image)
-                                @if($key == 0)
-                                    <img src="{{ asset('assets/hotel/' . trim($image)) }}" alt="{{ $facility->name }}"
-                                        class="img-fluid small-grid-image">
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-
-                    @if($index == 4)
-                        {{-- Close sub-images container --}}
->>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
-                            </div>
-                            <div class="col-12 col-lg-6 my-2">
-                                <div class="row g-3">
-                                    {{-- Four small images on the right --}}
-                                    @foreach ($chunk->slice(1) as $index => $facility)
-                                        <div class="col-6">
-                                            <div class="image-item d_sub" data-index="{{ $chunkIndex * 5 + $index + 1 }}">
-                                                <img src="{{ asset('assets/hotel/' . trim($facility->hotel_image)) }}"
-                                                    alt="{{ $facility->name }}" class="img-fluid small-grid-image">
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @else   
-                            {{-- Even-indexed loop: 4 small images on the left, 1 large image on the right --}}
-                            <div class="col-12 col-lg-6 my-2">
-                                <div class="row g-3">
-                                    {{-- Four small images on the left --}}
-                                    @foreach ($chunk->slice(0, 4) as $index => $facility)
-                                        <div class="col-6">
-                                            <div class="image-item d_sub" data-index="{{ $chunkIndex * 5 + $index }}">
-                                                <img src="{{ asset('assets/hotel/' . trim($facility->hotel_image)) }}"
-                                                    alt="{{ $facility->name }}" class="img-fluid small-grid-image">
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 my-2">
-                                @if (isset($chunk[4]))
-                                    {{-- Large image on the right --}}
-                                    <div class="image-item h-100" data-index="{{ $chunkIndex * 5 + 4 }}">
-                                        <img src="{{ asset('assets/hotel/' . trim($chunk[4]->hotel_image)) }}"
-                                            alt="{{ $chunk[4]->name }}" class="img-fluid large-image">
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                    @endforeach
-
-
                 </div>
+                @endforeach
             </div>
-
-
-
-
-
-
         </div>
-        </div>
-
-
-
-<<<<<<< HEAD
-    </section>
-=======
-
-            </div>
     </div>
-
-
-
 </section>
->>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
-
-
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -295,22 +200,7 @@
                 filterAndDistributeImages('all');
             }
         });
-<<<<<<< HEAD
     </script>
 
 
-=======
-
-        // Find the initially active tab or default to 'all'
-        const initialActiveTab = document.querySelector('.tab.active') || document.querySelector('.tab[data-category="all"]');
-        if (initialActiveTab) {
-            const initialCategory = initialActiveTab.getAttribute('data-category');
-            filterAndDistributeImages(initialCategory);
-        } else {
-            // If no active tab found, default to showing all images
-            filterAndDistributeImages('all');
-        }
-    });
-</script>
->>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
 @endsection

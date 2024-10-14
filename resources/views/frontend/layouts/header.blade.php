@@ -561,8 +561,8 @@
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
         setTimeout(() => {
-            submitButton.textContent = 'Code Sent'; 
-        }, 2000); 
+            submitButton.textContent = 'Code Sent';
+        }, 2000);
     });
 
     document.getElementById('resendOtp').addEventListener('click', function() {
