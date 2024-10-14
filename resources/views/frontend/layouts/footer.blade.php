@@ -91,6 +91,7 @@
                 </div>
             </div>
         </div>
+        <button id="scrollToTopBtn">↑</button>
     </div>
 
 </footer>
@@ -811,11 +812,6 @@
             });
         });
 
-
-
-
-
-
         // Make sure Toastr is properly initialized
         toastr.options = {
             "closeButton": true,
@@ -831,8 +827,25 @@
     });
 </script>
 <script>
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
-</script>
+        // Show the button when scrolling down
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        };
+
+        // Scroll to top function
+        scrollToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll animation
+            });
+        };
+    </script>
 </body>
 
 </html>

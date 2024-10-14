@@ -66,6 +66,20 @@
     object-fit: cover;
     } */
 
+    #scrollToTopBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none; /* Hidden by default */
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width:40px;
+    }
+
 
 </style>
 <body>

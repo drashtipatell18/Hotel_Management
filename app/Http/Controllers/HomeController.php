@@ -34,8 +34,10 @@ class HomeController extends Controller
         $allBookings = DB::table('booking')->get();
         $bookingCount = $allBookings->count();
         $availableRoomsCount = DB::table('rooms')->where('status', 'active')->count();
+        $staff = DB::table('staff')->count();
+        $customers = DB::table('customers')->count();
 
-        return view('dashboard.home',compact('allBookings','bookingCount','availableRoomsCount'));
+        return view('dashboard.home',compact('allBookings','bookingCount','availableRoomsCount','staff','customers'));
     }
 
     // profile
