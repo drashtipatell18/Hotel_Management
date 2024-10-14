@@ -3,6 +3,7 @@
 @section('main-container')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
 <style>
     .d_box {
         position: relative;
@@ -78,7 +79,7 @@
                             </div>
                             <div class="col-6">
                                 <p class="mb-1">State</p>
-                                <h5 id="statespan">{{$customer->state ?? 'N/A' }}</h5>
+                                <h5 id="stateSpan" class="mb-2">{{$customer->state ?? 'N/A' }}</h5>
                             </div>
                         </div>
                     </div>
@@ -90,12 +91,11 @@
     </div>
 </section>
 
-
 <script>
     const countrySelect = document.getElementById('country');
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
-    let statesMapping = {};
+
     // Fetch countries on page load
     document.addEventListener('DOMContentLoaded', async () => {
         const selectedCountry = "{{ $customer->country ?? '' }}";
@@ -104,6 +104,7 @@
 
         try {
             const countries = await fetchCountries();
+
             if (document.getElementById('countrySpan').innerHTML) {
                 countries.forEach(country => {
                     if (country.iso2 == document.getElementById('countrySpan').innerText) {
@@ -116,19 +117,15 @@
 
             if (selectedCountry) {
                 const states = await fetchStates(selectedCountry);
-                statesMapping = {}; // Reset mapping
-                states.forEach(state => {
-                    statesMapping[state.iso2] = state.name; // Store state code and name
-                });
 
-                if (document.getElementById('statespan').innerHTML) {
+                if (document.getElementById('stateSpan').innerHTML) {
                     states.forEach(state => {
-                        if (state.iso2 == document.getElementById('statespan').innerText) {
-                            document.getElementById('statespan').innerHTML = state.name;
+                        if (state.iso2 == document.getElementById('stateSpan').innerText) {
+                            document.getElementById('stateSpan').innerHTML = state.name
                         }
                     });
                 }
-              
+               
                 populateStates(states, selectedState);
 
                 if (selectedState) {
@@ -279,6 +276,5 @@
     }
 
 </script>
-
 @endsection
 

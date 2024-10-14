@@ -112,10 +112,10 @@
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
 <script src="{{ url('frontend/js/main.js') }}"></script>
-<!-- <script src="{{ url('frontend/js/d_home.js') }}"></script> -->
+<script src="{{ url('frontend/js/d_home.js') }}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
+
 
 
 

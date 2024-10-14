@@ -374,20 +374,20 @@ Route::get('/spabook',[SpaBookController::class,'spabook'])->name('spabook');
 Route::get('/spabook-know',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
 Route::get('/spacheckout',[SpaBookController::class,'spacheckout'])->name('spacheckout');
 
-// Route::get('/',[IndexController::class,'index']);
 
 
-// web.php
 Route::get('/register', [IndexController::class, 'register'])->name('register');
 Route::post('/register', [IndexController::class, 'storeUser'])->name('register.store');
-
-
 Route::get('/login', [IndexController::class, 'login'])->name('login');
 Route::post('/logoutfrontend', [IndexController::class, 'logoutfrontend'])->name('logoutfrontend');
 Route::post('/loginstore', [IndexController::class, 'authenticate'])->name('login.authenticate');
 Route::post('/forget-password', [IndexController::class, 'forgotPassword'])->name('forget.password');
 Route::post('/verify-otp', [IndexController::class, 'verifyOtp'])->name('verify.otp');
-
-
 Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name('password.reset');
 Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');
+
+
+Route::middleware(['auth.redirect'])->group(function () {
+    Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
+    
+});
