@@ -12,28 +12,32 @@
     .image-item {
         position: relative;
         margin-bottom: 20px;
+        padding: 10px;
     }
-        .d_image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
 
-        .image-item:hover .d_image-overlay {
-            opacity: 1;
-        }        .d_image-overlay p {
-            color: #fff;
-            text-align: center;
-        }
-    </style>
+    .d_image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .image-item:hover .d_image-overlay {
+        opacity: 1;
+    }
+
+    .d_image-overlay p {
+        color: #fff;
+        text-align: center;
+    }
+</style>
 
 <section class="d_p-25 d_gallery mt-3">
     <div class="d_container">
@@ -45,20 +49,28 @@
             <button class="tab" data-category="{{ Str::slug($facility->name) }}">{{ $facility->name }}</button>
             @endforeach
         </div>
-
+        <div id="imageModal" class="d_modal">
+            <span class="d_close">&times;</span>
+            <div class="position-relative">
+                <div class="owl-carousel owl-theme" id="test1">
+                    <!-- Carousel items will be dynamically inserted here -->
+                </div>
+                <div class="d_sildertext"></div>
+            </div>
+        </div>
         <div class="image-gallery" id="imageGallery">
-            <div class="row g-3 px-sm-2 p-0">
+            <div class="row g-3">
                 @foreach($facilities as $index => $facility)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="image-item" data-category="{{ Str::slug($facility->name) }}" data-index="{{ $index }}">
-                        @foreach(explode(',', $facility->image) as $image)
+                    @foreach(explode(',', $facility->image) as $image)
+                    <div class="image-item d_sub" data-category="{{ Str::slug($facility->name) }}" data-index="{{ $index }}">
                         <img src="{{ asset('assets/facilities/' . trim($image)) }}" alt="{{ $facility->name }}"
                             class="fixed-size-image">
-                        @endforeach
                         <div class="d_image-overlay">
-                            <p>{{ $facility->name }}</p>
+
                         </div>
                     </div>
+                    @endforeach
                 </div>
                 @endforeach
             </div>
@@ -66,10 +78,10 @@
     </div>
 </section>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
             const tabs = document.querySelectorAll('.tab');
             const galleries = Array.from(document.querySelectorAll('.image-gallery'));
@@ -200,7 +212,7 @@
                 filterAndDistributeImages('all');
             }
         });
-    </script>
+</script>
 
 
 @endsection
