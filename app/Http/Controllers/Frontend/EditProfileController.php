@@ -12,13 +12,15 @@ class EditProfileController extends Controller
     public function myprofile()
     {
         $user = Auth::user();
-        // dd($user);
-        return view("frontend.myProfile",compact("user"));
+        $customer = Customer::where('user_id', $user->id)->first(); 
+    
+        return view("frontend.myProfile",compact(["user","customer"]));
     }
     public function editProfile()
     {
         $user = Auth::user();
-        return view('frontend.editProfile',compact('user'));
+        $customerEdit = Customer::where('user_id', $user->id)->first();
+        return view('frontend.editProfile',compact('user','customerEdit'));
     }
     public function updateProfileData(Request $request)
     {
@@ -51,6 +53,7 @@ class EditProfileController extends Controller
         $user->save(); 
 
         $customer = Customer::where('user_id', $user->id)->first();
+        
            
 
         if ($customer) {
@@ -60,6 +63,9 @@ class EditProfileController extends Controller
             $customer->ph_number = $user->phone_number;
             $customer->date = $user->dob;
             $customer->address = $user->address;
+            $customer->country = $request->country;
+            $customer->state = $request->state;
+            $customer->city = $request->city;
     
             // Only update the fileupload field if a new file was uploaded
             if ($request->hasFile('profile')) {

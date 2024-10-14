@@ -66,6 +66,9 @@ class CustomerController extends Controller
             $customer->total_numbers  = $request->total_numbers;
             $customer->time  = $request->time;
             $customer->arrival_date   = $request->arrival_date;
+            $customer->country   = $request->country;
+            $customer->state   = $request->state;
+            $customer->city   = $request->city;
             $customer->depature_date  = $request->depature_date;
             $customer->ph_number   = $request->phone_number;
             $customer->aadharcard  = $file_name1;
@@ -86,6 +89,7 @@ class CustomerController extends Controller
     {
         $roomTypes = DB::table('room_types')->get();
         $customerEdit = DB::table('customers')->where('id',$id)->first();
+    
         return view('formcustomers.editcustomer',compact('customerEdit','roomTypes'));
     }
 
@@ -107,6 +111,9 @@ class CustomerController extends Controller
             $customer->total_numbers = $request->input('total_numbers');
             $customer->time = $request->input('time');
             $customer->arrival_date = $request->input('arrival_date');
+            $customer->country = $request->input('country');
+            $customer->state = $request->input('state');
+            $customer->city = $request->input('city');
             $customer->depature_date = $request->input('depature_date');
             $customer->ph_number = $request->input('phone_number');
             $customer->address = $request->input('address');
@@ -141,6 +148,8 @@ class CustomerController extends Controller
                 \Log::info('New file uploaded: ' . $file_name);
             }
             $customer->save(); 
+            Toastr::success('Customer updated successfully :)', 'Success');
+            return redirect()->route('form/allcustomers/page'); // Redirect to the customers page
           
     
             $user = User::findOrFail($customer->user_id);

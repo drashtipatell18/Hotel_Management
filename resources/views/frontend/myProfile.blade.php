@@ -71,13 +71,14 @@
                         <div class="row">
                             <div class="col-6">
                                 <p class="mb-1">City</p>
-                                <h5 class="mb-2">United States </h5>
+                                    <h5 class="mb-2"> {{ $customer->city ?? 'N/A' }} </h5>
+                                
                                 <p class="mb-1">Country</p>
-                                <h5 class="mb-2">United States</h5>
+                                <h5 id="countrySpan" class="mb-2"> {{ $customer->country ?? 'N/A' }}</h5>
                             </div>
                             <div class="col-6">
                                 <p class="mb-1">State</p>
-                                <h5 class="mb-2">United States</h5>
+                                <h5 id="statespan">{{$customer->state ?? 'N/A' }}</h5>
                             </div>
                         </div>
                     </div>
@@ -88,5 +89,196 @@
         </div>
     </div>
 </section>
+
+
+<script>
+    const countrySelect = document.getElementById('country');
+    const stateSelect = document.getElementById('state');
+    const citySelect = document.getElementById('city');
+    let statesMapping = {};
+    // Fetch countries on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+        const selectedCountry = "{{ $customer->country ?? '' }}";
+        const selectedState = "{{ $customer->state ?? '' }}";
+        const selectedCity = "{{ $customer->city ?? '' }}";
+
+        try {
+            const countries = await fetchCountries();
+            if (document.getElementById('countrySpan').innerHTML) {
+                countries.forEach(country => {
+                    if (country.iso2 == document.getElementById('countrySpan').innerText) {
+                        document.getElementById('countrySpan').innerHTML = country.name
+                    }
+                });
+            }
+
+            populateCountries(countries, selectedCountry);
+
+            if (selectedCountry) {
+                const states = await fetchStates(selectedCountry);
+                statesMapping = {}; // Reset mapping
+                states.forEach(state => {
+                    statesMapping[state.iso2] = state.name; // Store state code and name
+                });
+
+                if (document.getElementById('statespan').innerHTML) {
+                    states.forEach(state => {
+                        if (state.iso2 == document.getElementById('statespan').innerText) {
+                            document.getElementById('statespan').innerHTML = state.name;
+                        }
+                    });
+                }
+              
+                populateStates(states, selectedState);
+
+                if (selectedState) {
+                    const cities = await fetchCities(selectedCountry, selectedState);
+                    populateCities(cities, selectedCity);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+
+    async function fetchCountries() {
+        const response = await fetch('https://api.countrystatecity.in/v1/countries', {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // The API returns an array of country objects
+    }
+
+    function populateCountries(countries, selectedCountry = '') {
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.iso2;
+
+
+            option.textContent = country.name;
+            if (country.iso2 === selectedCountry) {
+                option.selected = true;
+            }
+            console.log(option.textContent);
+            countrySelect.appendChild(option);
+        });
+    }
+
+
+
+    // Event listener for country selection
+    countrySelect.addEventListener('change', getStates);
+
+    async function getStates() {
+        const countryCode = countrySelect.value;
+        if (countryCode) {
+            try {
+                const states = await fetchStates(countryCode);
+                populateStates(states);
+                stateSelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        } else {
+            resetStateAndCitySelects();
+        }
+    }
+
+    async function fetchStates(countryCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+
+    function populateStates(states, selectedState = '') {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.iso2;
+            option.textContent = state.name;
+            if (state.iso2 === selectedState) {
+                option.selected = true;
+            }
+            stateSelect.appendChild(option);
+        });
+        resetCitySelect();
+    }
+
+    // Event listener for state selection
+    stateSelect.addEventListener('change', getCities); // Uncomment this line
+
+    async function getCities() {
+        const stateCode = stateSelect.value;
+        const countryCode = countrySelect.value;
+        resetCitySelect();
+        if (stateCode && countryCode) {
+            try {
+                const cities = await fetchCities(countryCode, stateCode);
+                populateCities(cities);
+                citySelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        }
+    }
+
+    async function fetchCities(countryCode, stateCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+    function populateCities(cities, selectedCity = '') {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.name;
+            option.textContent = city.name;
+            if (city.name === selectedCity) {
+                option.selected = true;
+            }
+            citySelect.appendChild(option);
+        });
+    }
+
+    function resetStateAndCitySelects() {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        resetCitySelect();
+        stateSelect.disabled = true;
+    }
+
+    function resetCitySelect() {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        citySelect.disabled = true; // Disable city dropdown until a state is selected
+    }
+
+</script>
+
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
