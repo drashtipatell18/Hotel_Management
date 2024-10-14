@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
+use App\Models\Staff;
 
 class EditProfileController extends Controller
 {
@@ -20,6 +21,8 @@ class EditProfileController extends Controller
     {
         $user = Auth::user();
         $customerEdit = Customer::where('user_id', $user->id)->first();
+       
+
         return view('frontend.editProfile',compact('user','customerEdit'));
     }
     public function updateProfileData(Request $request)
@@ -65,7 +68,9 @@ class EditProfileController extends Controller
             $customer->address = $user->address;
             $customer->country = $request->country;
             $customer->state = $request->state;
-            $customer->city = $request->city;
+            if ($request->has('city')) {
+                $customer->city = $request->city; // Update city if present in the request
+            }
     
             // Only update the fileupload field if a new file was uploaded
             if ($request->hasFile('profile')) {

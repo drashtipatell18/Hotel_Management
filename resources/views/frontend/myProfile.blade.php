@@ -3,7 +3,7 @@
 @section('main-container')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
+
 <style>
     .d_box {
         position: relative;
@@ -78,7 +78,7 @@
                                 <h5 id="countrySpan" class="mb-2"> {{ $customer->country ?? 'N/A' }}</h5>
                             </div>
                             <div class="col-6">
-                                <p class="mb-1">State</p>
+                                <p class="mb-2">State</p>
                                 <h5 id="stateSpan" class="mb-2">{{$customer->state ?? 'N/A' }}</h5>
                             </div>
                         </div>
@@ -92,44 +92,32 @@
 </section>
 
 <script>
-    const countrySelect = document.getElementById('country');
-    const stateSelect = document.getElementById('state');
-    const citySelect = document.getElementById('city');
-
-    // Fetch countries on page load
     document.addEventListener('DOMContentLoaded', async () => {
-        const selectedCountry = "{{ $customer->country ?? '' }}";
-        const selectedState = "{{ $customer->state ?? '' }}";
-        const selectedCity = "{{ $customer->city ?? '' }}";
+        const selectedCountry = "{{ $customer->country ?? '' }}"; // Replace with your backend data
+        const selectedState = "{{ $customer->state ?? '' }}"; // Replace with your backend data
+        const selectedCity = "{{ $customer->city ?? '' }}"; // Replace with your backend data
 
         try {
             const countries = await fetchCountries();
 
             if (document.getElementById('countrySpan').innerHTML) {
                 countries.forEach(country => {
-                    if (country.iso2 == document.getElementById('countrySpan').innerText) {
+                    if (country.iso2 == selectedCountry) {
                         document.getElementById('countrySpan').innerHTML = country.name
                     }
                 });
             }
 
-            populateCountries(countries, selectedCountry);
-
-            if (selectedCountry) {
-                const states = await fetchStates(selectedCountry);
+                const states = await fetchStates(selectedCountry)
 
                 if (document.getElementById('stateSpan').innerHTML) {
-                    states.forEach(state => {
-                        if (state.iso2 == document.getElementById('stateSpan').innerText) {
-                            document.getElementById('stateSpan').innerHTML = state.name
-                        }
-                    });
+                const selectedStateObj = states.find(state => state.iso2 == selectedState);
+                if (selectedStateObj) {
+                    document.getElementById('stateSpan').innerHTML = selectedStateObj.name;
                 }
-               
-                populateStates(states, selectedState);
 
                 if (selectedState) {
-                    const cities = await fetchCities(selectedCountry, selectedState);
+                    const cities = await fetchCities(selectedState);
                     populateCities(cities, selectedCity);
                 }
             }
@@ -144,11 +132,9 @@
                 'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
             }
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const data = await response.json();
         return data; // The API returns an array of country objects
     }
@@ -167,10 +153,6 @@
             countrySelect.appendChild(option);
         });
     }
-
-
-
-    // Event listener for country selection
     countrySelect.addEventListener('change', getStates);
 
     async function getStates() {
@@ -217,64 +199,5 @@
         });
         resetCitySelect();
     }
-
-    // Event listener for state selection
-    stateSelect.addEventListener('change', getCities); // Uncomment this line
-
-    async function getCities() {
-        const stateCode = stateSelect.value;
-        const countryCode = countrySelect.value;
-        resetCitySelect();
-        if (stateCode && countryCode) {
-            try {
-                const cities = await fetchCities(countryCode, stateCode);
-                populateCities(cities);
-                citySelect.disabled = false;
-            } catch (error) {
-                console.error("Error fetching cities:", error);
-            }
-        }
-    }
-
-    async function fetchCities(countryCode, stateCode) {
-        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
-            headers: {
-                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data; // Adjust this based on the API response structure
-    }
-
-    function populateCities(cities, selectedCity = '') {
-        citySelect.innerHTML = '<option value="">Select City</option>';
-        cities.forEach(city => {
-            const option = document.createElement('option');
-            option.value = city.name;
-            option.textContent = city.name;
-            if (city.name === selectedCity) {
-                option.selected = true;
-            }
-            citySelect.appendChild(option);
-        });
-    }
-
-    function resetStateAndCitySelects() {
-        stateSelect.innerHTML = '<option value="">Select State</option>';
-        resetCitySelect();
-        stateSelect.disabled = true;
-    }
-
-    function resetCitySelect() {
-        citySelect.innerHTML = '<option value="">Select City</option>';
-        citySelect.disabled = true; // Disable city dropdown until a state is selected
-    }
-
 </script>
 @endsection
-
