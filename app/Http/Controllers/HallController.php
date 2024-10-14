@@ -17,7 +17,7 @@ class HallController extends Controller
         $selectedFloorId = $request->old('floor_id ');
         $halltypes = HallType::all();
         $selectedHallTypeId = $request->old('halltype_id ');
-        return view('hall/add_hall',compact('floors','halltypes','selectedFloorId','selectedHallTypeId'));
+        return view('hall/add_hall',compact('floors','halltypes','selectedFlo   orId','selectedHallTypeId'));
     }
     public function hallStore(Request $request)
     {

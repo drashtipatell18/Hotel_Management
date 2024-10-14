@@ -33,7 +33,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $position->name }}</td>
-                                                <td>{{ $position->description }}</td>
+                                                <td>{{ implode(' ', array_slice(explode(' ', $position->description), 0, 10)) }}
                                                 <td class="text-right">
                                                     <a class="dropdown-item-sm" style="font-size: 23px; padding: 5px; color: #009688;"  href="{{ url('position/edit/'.$position->id) }}"><i class="fas fa-pencil-alt fa-xs"></i></a>
 

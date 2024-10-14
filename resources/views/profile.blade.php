@@ -36,7 +36,7 @@
                                     Staff
                                 @elseif(Auth::user()->role_id == 2)
                                     Account
-                                @elseif(Auth::user()->role_id == 3)
+                                @elseif(Auth::user()->role_id == 3) 
                                     Customer
                                 @endif
                             </h6>
@@ -211,6 +211,7 @@
 
                                                                 </div>
                                                             </div>
+<<<<<<< Updated upstream
                                                             <div class="col-12 col-sm-12">
                                                                 <div class="form-group">
                                                                     <label>City</label>
@@ -218,6 +219,15 @@
                                                                         <option value="">Select a city</option>
                                                                     </select>
                                                                 </div>
+=======
+                                                        </div>
+                                                        <div class="col-12 col-sm-12">   
+                                                            <div class="form-group">
+                                                                <label>City</label>
+                                                                <select id="city" class="form-control" name="city">
+                                                                    <option value="">Select a city</option>
+                                                                </select>
+>>>>>>> Stashed changes
                                                             </div>
                                                         @endif
 

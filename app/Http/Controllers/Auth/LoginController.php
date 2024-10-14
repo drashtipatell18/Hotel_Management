@@ -72,7 +72,7 @@ class LoginController extends Controller
             return redirect()->intended('home');
         } else {
             Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
-            return redirect('login');
+            return redirect('admin/login');
         }
     }
 

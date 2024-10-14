@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HallType;
 use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
+use Brian2694\Toastr\Facades\Toastr;    
 
 class HallTypeController extends Controller
 {
