@@ -41,7 +41,7 @@ class ResetPasswordController extends Controller
             $user->remember_token = Str::random(40);
             $user->password = Hash::make($request->new_password);
             $user->save();
-            return redirect('/login')->with('success', 'Password successfully reset.');
+            return redirect('admin/login')->with('success', 'Password successfully reset.');
         } else {
             return redirect()->back()->with('danger', 'Invalid token or user not found.');
         }

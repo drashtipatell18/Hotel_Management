@@ -11,8 +11,9 @@
                     <div class="col">
                         <div class="mt-5">
                             <h4 class="
-                            card-title float-left mt-2">Floors</h4> <a href="{{ route('floor/add') }}"
-                                class="btn btn-primary float-right veiwbutton"><i class="fas fa-plus mr-2"></i>Add Floor</a>
+                            card-title float-left mt-2">Floors</h4> <a
+                                href="{{ route('floor/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                    class="fas fa-plus mr-2"></i>Add Floor</a>
                         </div>
                     </div>
                 </div>
@@ -38,13 +39,12 @@
 
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $floor->floor_name }}</td>
-                                                <td>{{ $floor->description }}</td>
+                                                <td>{{ implode(' ', array_slice(explode(' ', $floor->description), 0, 10)) }}
                                                 <td class="text-right">
                                                     <a class="dropdown-item-sm"
                                                         style="font-size: 23px; padding: 5px; color: #009688;"
                                                         href="{{ url('floor/edit/' . $floor->id) }}"><i
-                                                            class="f
-                                                            as fa-pencil-alt fa-xs"></i></a>
+                                                            class="fas fa-pencil-alt fa-xs"></i></a>
 
                                                     <a href="{{ route('floor.delete', ['id' => $floor->id]) }}"
                                                         onclick="retu

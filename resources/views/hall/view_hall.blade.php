@@ -46,6 +46,11 @@
                                                     </a>
                                                 </td>
                                                 <td class="text-right">
+                                                    <a data-toggle="modal" data-target="#exampleModal{{ $hall->id }}"
+                                                        class="view-customer"
+                                                        style="font-size: 23px; padding: 5px; color: #009688; cursor:pointer">
+                                                        <i class="fas fa-eye fa-xs"></i>
+                                                    </a>
                                                     <a class="dropdown-item-sm"
                                                         style="font-size: 23px; padding: 5px; color: #009688;"
                                                         href="{{ url('hall/edit/' . $hall->id) }}"><i
@@ -58,6 +63,61 @@
                                                     </a>
                                                 </td>
                                             </tr>
+
+                                            
+                                            <div class="modal fade" id="exampleModal{{ $hall->id }}" tabindex="-1"
+                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document"
+                                                    style="max-width: 990px; width: 990px; height: 500px;">
+                                                    <div class="modal-content" style="border-radius: 10px; height: 100%;">
+                                                        <div class="modal-header text-white"
+                                                            style="background-color: #009688; color: white !important;">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hall Details
+                                                            </h5>
+                                                            <button type="button" class="close text-white"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body mt-4"
+                                                            style="padding: 20px; height: calc(100% - 120px); overflow-y: auto;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h6 class="text-muted">Hall Details</h6>
+                                                                    <hr>
+                                                                    <div class="row">
+                                                                        <div class="col-md-11">
+                                                                            <p><strong>Hall Name:</strong> 
+                                                                                <span>{{ $hall->hall_name }}</span>
+                                                                            </p> 
+                                                                            <p><strong>Hall Capacity:</strong> 
+                                                                                <span>{{ $hall->hall_capacity }}</span>
+                                                                            </p>
+                                                                           
+                                                                            <p><strong>Title:</strong> 
+                                                                                <span>{{ $hall->title }}</span>
+                                                                            </p>
+                                                                            <p><strong>Base Price:</strong> 
+                                                                                <span>{{ $hall->base_price }}</span>
+                                                                            </p>
+                                                                            <p><strong>Description:</strong> 
+                                                                                <span>{{ $hall->description }}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div class="modal-footer bg-light mb-1" style="height: 60px;">
+                                                            <button type="button" class="btn btn-info hover-btn"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         @endforeach
                                     </tbody>
                                 </table>
