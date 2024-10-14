@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ url('frontend/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
 
     <!-- font-family  -->
