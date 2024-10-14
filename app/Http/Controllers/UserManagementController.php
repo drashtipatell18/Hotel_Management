@@ -26,6 +26,7 @@ class UserManagementController extends Controller
     public function userView($user_id)
     {
         $userData = User::where('user_id',$user_id)->first();
+       
         return view('usermanagement.useredit',compact('userData'));
     }
 
@@ -48,6 +49,9 @@ class UserManagementController extends Controller
             'position'     => $request->position,
             'department'   => $request->department,
             'role_id'      => 0, // Set role_id dynamically
+            'country'      => $request->country,
+            'state'        => $request->state,
+            'city'         => $request->city
         ];
 
         if ($request->hasFile('profile')) {
@@ -187,6 +191,7 @@ class UserManagementController extends Controller
         $user->position = $request->position;
         $user->department = $request->department;
         $user->password = bcrypt($request->password);
+       
 
         if ($request->hasFile('profile')) {
             $fileName = time() . '.' . $request->profile->extension();

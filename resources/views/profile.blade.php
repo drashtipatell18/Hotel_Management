@@ -45,8 +45,8 @@
                                     <span id="stateSpan1">{{ $staff->state }}</span>
                                     <span id="countrySpan1">{{ $staff->country }}</span>
                                 @else
-                                    <span id="stateSpan1">State not available</span>
-                                    <span id="countrySpan1">Country not available</span>
+                                    <span id="stateSpan2">{{$userData->state}}</span>
+                                    <span id="countrySpan2">{{$userData->country}}</span>
                                 @endif
                             </div>
 
@@ -98,7 +98,9 @@
                                             <p class="col-sm-9 mb-0">
                                                 @if(Auth::check())
                                                     @if(Auth::user()->role_id === 0)
-                                                        {{ Auth::user()->address }},
+                                                        {{ Auth::user()->address }},<br/>
+                                                        <span id="stateSpan3">{{ $userData->state }}</span><br/>
+                                                        <span id="countrySpan3">{{ $userData->country }}</span>
 
                                                     @elseif(Auth::user()->role_id === 1)
                                                         {{ $staff->address }}<br />
@@ -185,7 +187,7 @@
                                                             </div>
                                                         </div>
 
-                                                        @if(auth()->user()->role_id == 1)
+                                                        @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 0)
                                                             <div class="col-12 col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Country</label>
@@ -211,7 +213,6 @@
 
                                                                 </div>
                                                             </div>
-<<<<<<< Updated upstream
                                                             <div class="col-12 col-sm-12">
                                                                 <div class="form-group">
                                                                     <label>City</label>
@@ -219,15 +220,6 @@
                                                                         <option value="">Select a city</option>
                                                                     </select>
                                                                 </div>
-=======
-                                                        </div>
-                                                        <div class="col-12 col-sm-12">   
-                                                            <div class="form-group">
-                                                                <label>City</label>
-                                                                <select id="city" class="form-control" name="city">
-                                                                    <option value="">Select a city</option>
-                                                                </select>
->>>>>>> Stashed changes
                                                             </div>
                                                         @endif
 
@@ -278,7 +270,7 @@
     </div>
 </div>
 
-<!-- Get All Country => State => City -->
+<!--  STAFF === Get All Country => State => City -->    
 <script>
     const countrySelect = document.getElementById('country');
     const stateSelect = document.getElementById('state');
@@ -326,6 +318,206 @@
                     states.forEach(state => {
                         if (state.iso2 == document.getElementById('stateSpan').innerText) {
                             document.getElementById('stateSpan').innerHTML = state.name
+                        }
+                    });
+                }
+                populateStates(states, selectedState);
+
+                if (selectedState) {
+                    const cities = await fetchCities(selectedCountry, selectedState);
+                    populateCities(cities, selectedCity);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+
+    async function fetchCountries() {
+        const response = await fetch('https://api.countrystatecity.in/v1/countries', {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // The API returns an array of country objects
+    }
+
+    function populateCountries(countries, selectedCountry = '') {
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.iso2;
+
+
+            option.textContent = country.name;
+            if (country.iso2 === selectedCountry) {
+                option.selected = true;
+            }
+            console.log(option.textContent);
+            countrySelect.appendChild(option);
+        });
+    }
+
+
+
+    // Event listener for country selection
+    countrySelect.addEventListener('change', getStates);
+
+    async function getStates() {
+        const countryCode = countrySelect.value;
+        if (countryCode) {
+            try {
+                const states = await fetchStates(countryCode);
+                populateStates(states);
+                stateSelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        } else {
+            resetStateAndCitySelects();
+        }
+    }
+
+    async function fetchStates(countryCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+
+    function populateStates(states, selectedState = '') {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.iso2;
+            option.textContent = state.name;
+            if (state.iso2 === selectedState) {
+                option.selected = true;
+            }
+            stateSelect.appendChild(option);
+        });
+        resetCitySelect();
+    }
+
+    // Event listener for state selection
+    stateSelect.addEventListener('change', getCities); // Uncomment this line
+
+    async function getCities() {
+        const stateCode = stateSelect.value;
+        const countryCode = countrySelect.value;
+        resetCitySelect();
+        if (stateCode && countryCode) {
+            try {
+                const cities = await fetchCities(countryCode, stateCode);
+                populateCities(cities);
+                citySelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        }
+    }
+
+    async function fetchCities(countryCode, stateCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+    function populateCities(cities, selectedCity = '') {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.name;
+            option.textContent = city.name;
+            if (city.name === selectedCity) {
+                option.selected = true;
+            }
+            citySelect.appendChild(option);
+        });
+    }
+
+    function resetStateAndCitySelects() {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        resetCitySelect();
+        stateSelect.disabled = true;
+    }
+
+    function resetCitySelect() {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        citySelect.disabled = true; // Disable city dropdown until a state is selected
+    }
+
+</script>
+
+<!--  ADMIN === Get All Country => State => City -->    
+<script>
+    const countrySelect1 = document.getElementById('country');
+    const stateSelect1 = document.getElementById('state');
+    const citySelect1 = document.getElementById('city');
+
+    // Fetch countries on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+        const selectedCountry = "{{ $userData->country ?? '' }}";
+        const selectedState = "{{ $userData->state ?? '' }}";
+        const selectedCity = "{{ $userData->city ?? '' }}";
+
+        try {
+            const countries = await fetchCountries();
+            if (document.getElementById('countrySpan2').innerHTML) {
+                countries.forEach(country => {
+                    if (country.iso2 == document.getElementById('countrySpan2').innerText) {
+                        document.getElementById('countrySpan2').innerHTML = country.name
+                    }
+                });
+            }
+
+            if (document.getElementById('countrySpan3').innerHTML) {
+                countries.forEach(country => {
+                    if (country.iso2 == document.getElementById('countrySpan3').innerText) {
+                        document.getElementById('countrySpan3').innerHTML = country.name
+                    }
+                });
+            }
+
+            populateCountries(countries, selectedCountry);
+
+            if (selectedCountry) {
+                const states = await fetchStates(selectedCountry);
+                if (document.getElementById('stateSpan2').innerHTML) {
+                    states.forEach(state => {
+                        if (state.iso2 == document.getElementById('stateSpan2').innerText) {
+                            document.getElementById('stateSpan2').innerHTML = state.name
+                        }
+                    });
+                }
+
+                if (document.getElementById('stateSpan3').innerHTML) {
+                    states.forEach(state => {
+                        if (state.iso2 == document.getElementById('stateSpan3').innerText) {
+                            document.getElementById('stateSpan3').innerHTML = state.name
                         }
                     });
                 }

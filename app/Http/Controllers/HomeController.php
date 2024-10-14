@@ -43,9 +43,10 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $staff = Staff::with('position')->where('id', $user->staff_id)->first();
-
+        $userData = User::where('id',$user->id)->first();
        
-        return view('profile',compact('staff'));
+       
+        return view('profile',compact('staff','userData'));
     }
 
     public function update(Request $request)
@@ -79,6 +80,9 @@ class HomeController extends Controller
             $user->email = $request->email;
             $user->phone_number = $request->phone_number;
             $user->address = $request->address;
+            $user->country = $request->country;
+            $user->state = $request->state;
+            $user->city = $request->city;
             $user->save();
     
             return redirect()->back()->with('success', 'Address updated successfully.');

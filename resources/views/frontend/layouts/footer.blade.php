@@ -107,7 +107,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- <script src="{{ url('js/jquery-3.3.1.min.js') }}"></script> -->
 <script src="{{ url('frontend/js/bootstrap.min.js') }}"></script>
-<!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
+<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
@@ -117,7 +117,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
-<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
+<!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
  
 
 <!-- <script>

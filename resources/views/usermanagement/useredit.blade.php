@@ -41,29 +41,34 @@
                                     <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ $userData->phone_number }}">
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4">
+
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Position</label>
-                                    <input type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ $userData->position }}">
+                                    <label>Country</label>
+                                    <!-- <input type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country', $staff->country ?? '') }}"> -->
+                                    <select id="country" onchange="getStates()" name="country" class="form-control">
+                                        <option value="">Select Country</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Department</label>
-                                    <input type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ $userData->department }}">
+                                    <label>State</label>
+                                    <!-- <input type="text" class="form-control @error('state') is-invalid @enderror" name="state" value="{{ old('state', $staff->state ?? '') }}"> -->
+                                    <select name="state" onchange="getCities()" id="state" class="form-control">
+                                        <option value="">Select State</option>
+                                    </select>
                                 </div>
-                            </div> -->
-
-                            <!-- <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Profile Image</label>
-                                    <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input @error('profile') is-invalid @enderror" id="customFile" name="profile" value="{{ old('profile') }}">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
+                                    <label>City</label>
+                                    <!-- <input type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city', $staff->city ?? '') }}"> -->
+                                    <select name="city" id="city" class="form-control">
+                                        <option value="">Select a city</option>
+                                    </select>
                                 </div>
-                            </div> -->
-
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -94,9 +99,9 @@
             </form>
         </div>
     </div>
-@endsection
+
 <script>
-    function previewImage(event, previewElementId) {
+     function previewImage(event, previewElementId) {
         const reader = new FileReader();
         reader.onload = function() {
             const output = document.getElementById(previewElementId);
@@ -104,4 +109,167 @@
         }
         reader.readAsDataURL(event.target.files[0]);
     }
+
+    const countrySelect = document.getElementById('country');
+    const stateSelect = document.getElementById('state');
+    const citySelect = document.getElementById('city');
+
+    // Fetch countries on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+        const selectedCountry = "{{ $userData->country ?? '' }}"; // Replace with your backend data
+        const selectedState = "{{ $userData->state ?? '' }}"; // Replace with your backend data
+        const selectedCity = "{{ $userData->city ?? '' }}"; // Replace with your backend data
+
+        try {
+            const countries = await fetchCountries();
+            populateCountries(countries, selectedCountry);
+
+            if (selectedCountry) {
+                const states = await fetchStates(selectedCountry);
+             
+                populateStates(states, selectedState);
+
+                if (selectedState) {
+                    const cities = await fetchCities(selectedCountry, selectedState);
+                    populateCities(cities, selectedCity);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+
+    async function fetchCountries() {
+        const response = await fetch('https://api.countrystatecity.in/v1/countries', {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // The API returns an array of country objects
+    }
+
+    function populateCountries(countries, selectedCountry = '') {
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.iso2;
+            option.textContent = country.name;
+            if (country.iso2 === selectedCountry) {
+                option.selected = true;
+            }
+            countrySelect.appendChild(option);
+        });
+    }
+
+    // Event listener for country selection
+    countrySelect.addEventListener('change', getStates);
+
+    async function getStates() {
+        const countryCode = countrySelect.value;
+        if (countryCode) {
+            try {
+                const states = await fetchStates(countryCode);
+                populateStates(states);
+                stateSelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        } else {
+            resetStateAndCitySelects();
+        }
+    }
+
+    async function fetchStates(countryCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+
+    function populateStates(states, selectedState = '') {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.iso2;
+            option.textContent = state.name;
+            if (state.iso2 === selectedState) {
+                option.selected = true;
+            }
+            stateSelect.appendChild(option);
+        });
+        resetCitySelect();
+    }
+
+    // Event listener for state selection
+    stateSelect.addEventListener('change', getCities); // Uncomment this line
+
+    async function getCities() {
+        const stateCode = stateSelect.value;
+        const countryCode = countrySelect.value;
+        resetCitySelect();
+        if (stateCode && countryCode) {
+            try {
+                const cities = await fetchCities(countryCode, stateCode);
+                populateCities(cities);
+                citySelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        }
+    }
+
+    async function fetchCities(countryCode, stateCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+    function populateCities(cities, selectedCity = '') {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.name;
+            option.textContent = city.name;
+            if (city.name === selectedCity) {
+                option.selected = true;
+            }
+            citySelect.appendChild(option);
+        });
+    }
+
+    function resetStateAndCitySelects() {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        resetCitySelect();
+        stateSelect.disabled = true;
+    }
+
+    function resetCitySelect() {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        citySelect.disabled = true; // Disable city dropdown until a state is selected
+    }
+
 </script>
+@endsection
