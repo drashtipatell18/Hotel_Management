@@ -186,7 +186,7 @@
                                 <img class="image__img " src="{{ url('frontend/img/d_img/spa5.png') }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookK  now')}}" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
