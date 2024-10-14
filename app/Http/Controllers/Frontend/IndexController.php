@@ -14,6 +14,11 @@ use App\Models\Facilities;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RoomTypes;
 use App\Models\ClientReview;
+use Illuminate\Support\Facades\Mail; // Add this line to import the Mail facade
+use App\Mail\PasswordResetMail;
+
+use App\Models\Customer;
+
 
 class IndexController extends Controller
 {
@@ -36,6 +41,73 @@ class IndexController extends Controller
     {
         // dd('isha');
         return view('frontend.layouts.header');
+    }
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); // Changed range to 0-9999 for 4-digit OTP
+        $user->password_reset_otp = $otp;
+        $user->password_reset_otp_expires_at = now()->addMinutes(15);
+        $user->save();
+
+        try {
+            Mail::to($user->email)->send(new PasswordResetMail($otp));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP has been sent to your email.'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Password reset OTP email error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending the OTP. Please try again later.'
+            ], 500);
+        }
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'otp' => 'required|string|size:4',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)
+                    ->where('password_reset_otp', $request->otp)
+                    ->where('password_reset_otp_expires_at', '>', now())
+                    ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired OTP.'
+            ], 400);
+        }
+
+        // OTP is valid, allow password reset
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP verified successfully.'
+        ]);
     }
     public function storeUser(Request $request)
     {
@@ -64,13 +136,19 @@ class IndexController extends Controller
         $user->role_id = $userroleid;
         $user->save();
 
+        $customer = new Customer();
+        $customer->user_id = $user->id; // Store the user_id from the users table
+        $customer->name = $user->name;
+        $customer->email = $user->email;
+        $customer->ph_number = $user->phone_number;
+        $customer->save(); // Save the customer record
+
         return response()->json([
             'success' => true,
             'message' => 'Registration successful! Please log in.',
             'redirect' => route('index')
         ]);
     }
-
 
     public function login()
     {
@@ -143,5 +221,76 @@ class IndexController extends Controller
         return response()->json(['success' => true, 'message' => 'You have been logged out successfully.']);
 
     }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        }
+        $user = User::where('email', $request->email)->first();
+      
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found.']);
+        }
+       
+        // Update the user's password
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Password updated successfully.']);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email', // Ensure email is valid and exists
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+    
+        // Find the user based on the email
+        $user = User::where('email', $request->email)->first();
+       
+    
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.',
+            ]);
+        }
+
+       
+        $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); // Changed range to 0-9999 for 4-digit OTP
+        $user->password_reset_otp = $otp;
+        $user->password_reset_otp_expires_at = now()->addMinutes(15);
+        $user->save();
+    
+        try {
+            Mail::to($user->email)->send(new PasswordResetMail($otp));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP has been sent to your email.'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Password reset OTP email error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending the OTP. Please try again later.'
+            ], 500);
+        }
+    }
+    
 
 }

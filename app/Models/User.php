@@ -26,6 +26,7 @@ class User extends Authenticatable
         'country',
         'state',
         'city',
+        'otp',
         'address',
         'join_date',
         'phone_number',
@@ -35,7 +36,9 @@ class User extends Authenticatable
         'position',
         'department',
         'password',
-        'staff_id'
+        'staff_id',
+        'password_reset_otp',
+        'password_reset_otp_expires_at'
     ];
 
     /**

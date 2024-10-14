@@ -27,7 +27,8 @@
                                             <li><a class="text-light" href="{{ route('index') }}">Home</a></li>
                                             <li><a class="text-light" href="{{ route('aboutus') }}">About
                                                     Us</a></li>
-                                            <li><a class="text-light" href="{{ route('rooms-frontend') }}">Rooms</a></li>
+                                            <li><a class="text-light" href="{{ route('rooms-frontend') }}">Rooms</a>
+                                            </li>
                                         </div>
                                         <div class="div2">
                                             <li><a class="text-light" href="{{ route('spa') }}">Spa</a></li>
@@ -104,10 +105,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 <!-- Toastr JS (if you're using it) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 <script src="{{ url('js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ url('frontend/js/bootstrap.min.js') }}"></script>
-<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
+<!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
 <script src="{{ url('frontend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
@@ -115,10 +115,11 @@
 <!-- <script src="{{ url('frontend/js/d_home.js') }}"></script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
 
 
 
-<script>
+<!-- <script>
     fetch('header.html')
         .then(response => response.text())
         .then(data => {
@@ -129,7 +130,7 @@
         .then(data => {
             document.getElementById('footer').innerHTML = data;
         });
-</script>
+</script> -->
 
 <script>
     window.onload = function () {
@@ -318,14 +319,14 @@
             });
         }
 
-        if(filterButtons && galleryItems){
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const category = this.getAttribute('data-category');
-                filterGallery(category);
+        if (filterButtons && galleryItems) {
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const category = this.getAttribute('data-category');
+                    filterGallery(category);
+                });
             });
-        });
-    }
+        }
 
         // Initialize with 'all' category
         filterGallery('all');
@@ -462,22 +463,192 @@
     });
 </script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Initialize Toastr
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
             "positionClass": "toast-top-right",
-            "timeOut": "5000",
+            "timeOut": "1000",
+        }
+        $('#otpVerificationForm').hide();
+        $('#createNewPasswordForm').hide();
+
+        $('#forgotPasswordForm').on('submit', function (e) {
+            e.preventDefault();
+            var email = $('#email').val();
+
+            $.ajax({
+                url: '{{ route('forget.password') }}', // Correctly reference the named route
+                type: 'POST',
+                data: {
+                    email: email,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $('#forgotPasswordForm').hide();
+                        $('#otpVerificationForm').removeClass('hidden').show();
+
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    if (errors && errors.email) {
+                        toastr.error(errors.email[0]);
+                    } else {
+                        toastr.error('An error occurred. Please try again later.');
+                    }
+                }
+            });
+        });
+        $('#verifyBtn').on('click', function (e) { // Change from 'submit' to 'click'
+            e.preventDefault();
+            const otp = Array.from(document.querySelectorAll('.otp-box')).map(input => input.value).join(''); // Collect OTP from all inputs
+
+            $.ajax({
+                url: '/verify-otp',
+                type: 'POST',
+                data: {
+                    email: $('#email').val(), // Ensure you have an email input somewhere
+                    otp: otp, // Use the collected OTP
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $('#otpVerificationForm').hide();
+                        $('#createNewPasswordForm').removeClass('hidden').show();
+                        // Redirect to password reset page or show password reset form
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    toastr.error('An error occurred. Please try again later.');
+                }
+            });
+        });
+
+        $('#resendOtp').on('click', function (e) {
+            e.preventDefault();
+            const email = $('#email').val(); // Get the email
+
+            $.ajax({
+                url: '{{ route('resend.otp') }}', // Add your route for resending OTP
+                type: 'POST',
+                data: {
+                    email: email,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    toastr.error('An error occurred while resending OTP. Please try again later.');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const otpInputs = document.querySelectorAll('.otp-box');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const resendOtp = document.getElementById('resendOtp');
+
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', function () {
+                    if (this.value.length === this.maxLength) {
+                        if (index < otpInputs.length - 1) {
+                            otpInputs[index + 1].focus();
+                        }
+                    }
+                });
+            });
+
+            verifyBtn.addEventListener('click', function () {
+                const otp = Array.from(otpInputs).map(input => input.value).join('');
+                verifyOtp(otp);
+            });
+
+            resendOtp.addEventListener('click', function () {
+                resendOtpCode();
+            });
+        });
+
+        function verifyOtp(otp) {
+            // Send OTP to server for verification
+            // You'll need to implement this part based on your backend API
+            console.log('Verifying OTP:', otp);
+            // Make an AJAX call to your server to verify the OTP
+            // If successful, allow the user to reset their password
+            // If not, show an error message
         }
 
-        $('#loginAjaxForm').on('submit', function(e) {
+        // function resendOtpCode() {
+        //     // Implement the logic to resend the OTP
+        //     console.log('Resending OTP');
+        //     // Make an AJAX call to your server to generate and send a new OTP
+        // }
+
+
+        document.getElementById('createPasswordBtn').addEventListener('click', function () {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            // Check if both fields are filled
+            if (!newPassword || !confirmNewPassword) {
+                toastr.error('Both fields are required.', 'Error');
+                return;
+            }
+
+            // Check if the passwords match
+            if (newPassword !== confirmNewPassword) {
+                toastr.error('Passwords do not match.', 'Error');
+                return;
+            }
+
+            fetch('/password/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ newPassword: newPassword, email: document.getElementById('email').value })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        toastr.success('Password changed successfully!', 'Success');
+                        // Hide the modal or form after successful password change
+                        $('#createNewPasswordForm').hide(); // Adjust this line to hide your modal if applicable
+                        // Optionally, if you want to also close the modal, you might want to call:
+                        $('#authModal').hide(); // Uncomment and replace 'yourModalId' with the actual modal ID
+                    } else {
+                        toastr.error(data.message, 'Error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toastr.error('An error occurred while resetting your password.', 'Error');
+                });
+        });
+
+
+
+        $('#loginAjaxForm').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
                 url: "{{ route('login.authenticate') }}",
                 method: 'POST',
                 data: $(this).serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
                         window.location.href = response.redirect;
@@ -497,7 +668,7 @@
                         }
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
                         if (errors.email) {
@@ -514,16 +685,16 @@
                     } else {
                         toastr.error('An error occurred. Please try again.');
                     }
-                            }
+                }
             });
         });
-        $('#mobileloginAjaxForm').on('submit', function(e) {
+        $('#mobileloginAjaxForm').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
                 url: "{{ route('login.authenticate') }}",
                 method: 'POST',
                 data: $(this).serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
                         window.location.href = response.redirect;
@@ -543,7 +714,7 @@
                         }
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
                         if (errors.email) {
@@ -556,7 +727,7 @@
                         var errors = xhr.responseJSON.errors;
                         if (errors.role) {
                             toastr.error(errors.role[0]);
-                            }
+                        }
                     } else {
                         toastr.error('An error occurred. Please try again.');
                     }
@@ -564,7 +735,7 @@
             });
         });
 
-        $('#registerAjaxForm').submit(function(e) {
+        $('#registerAjaxForm').submit(function (e) {
             e.preventDefault();
             var form = $(this);
             var url = "{{ route('register.store') }}";
@@ -573,26 +744,26 @@
                 type: "POST",
                 url: url,
                 data: form.serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = response.redirect;
                         }, 2000);
                     } else {
                         toastr.error('Registration failed. Please try again.');
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     var errors = xhr.responseJSON.errors;
-                    $.each(errors, function(key, value) {
+                    $.each(errors, function (key, value) {
                         toastr.error(value[0]);
                     });
                 }
             });
         });
 
-        $('#mobileregisterAjaxForm').submit(function(e) {
+        $('#mobileregisterAjaxForm').submit(function (e) {
             e.preventDefault();
             var form = $(this);
             var url = "{{ route('register.store') }}";
@@ -601,19 +772,19 @@
                 type: "POST",
                 url: url,
                 data: form.serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = response.redirect;
                         }, 2000);
                     } else {
                         toastr.error('Registration failed. Please try again.');
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     var errors = xhr.responseJSON.errors;
-                    $.each(errors, function(key, value) {
+                    $.each(errors, function (key, value) {
                         toastr.error(value[0]);
                     });
                 }
@@ -625,19 +796,24 @@
             }
         });
 
-        $('#logoutButton').click(function() {
+        $('#logoutButton').click(function () {
             $.ajax({
                 url: '{{ route("logoutfrontend") }}', // Adjust the route as necessary
                 type: 'POST',
-                success: function(response) {
+                success: function (response) {
                     toastr.success("You have been logged out successfully.");
                     window.location.href = '/'; // Redirect after logout
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     toastr.error("Logout failed. Please try again.");
                 }
             });
         });
+
+
+
+
+
 
         // Make sure Toastr is properly initialized
         toastr.options = {
@@ -652,6 +828,9 @@
             "hideMethod": "fadeOut"
         };
     });
+</script>
+<script>
+
 </script>
 </body>
 

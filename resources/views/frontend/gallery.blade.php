@@ -64,6 +64,33 @@
                                             alt="{{ $chunk[0]->name }}" class="img-fluid large-image">
                                     </div>
                                 @endif
+<<<<<<< HEAD
+=======
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    @if($index == 1)
+                        {{-- Start of sub-images container --}}
+                        <div class="col-12 col-lg-6 my-2">
+                            <div class="row g-3">
+                    @endif
+
+                    {{-- Sub-images (in a 2x2 grid) --}}
+                    <div class="col-6">
+                        <div class="image-item d_sub" data-name="{{ $facility->name }}" data-index="{{ $index }}">
+                            @foreach(explode(',', $facility->hotel_image) as $key => $image)
+                                @if($key == 0)
+                                    <img src="{{ asset('assets/hotel/' . trim($image)) }}" alt="{{ $facility->name }}"
+                                        class="img-fluid small-grid-image">
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+
+                    @if($index == 4)
+                        {{-- Close sub-images container --}}
+>>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
                             </div>
                             <div class="col-12 col-lg-6 my-2">
                                 <div class="row g-3">
@@ -119,7 +146,17 @@
 
 
 
+<<<<<<< HEAD
     </section>
+=======
+
+            </div>
+    </div>
+
+
+
+</section>
+>>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
 
 
 
@@ -258,7 +295,22 @@
                 filterAndDistributeImages('all');
             }
         });
+<<<<<<< HEAD
     </script>
 
 
+=======
+
+        // Find the initially active tab or default to 'all'
+        const initialActiveTab = document.querySelector('.tab.active') || document.querySelector('.tab[data-category="all"]');
+        if (initialActiveTab) {
+            const initialCategory = initialActiveTab.getAttribute('data-category');
+            filterAndDistributeImages(initialCategory);
+        } else {
+            // If no active tab found, default to showing all images
+            filterAndDistributeImages('all');
+        }
+    });
+</script>
+>>>>>>> d3097a32ee047217a210b45ad299d21daa0836be
 @endsection

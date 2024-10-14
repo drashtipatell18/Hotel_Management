@@ -385,4 +385,9 @@ Route::post('/register', [IndexController::class, 'storeUser'])->name('register.
 Route::get('/login', [IndexController::class, 'login'])->name('login');
 Route::post('/logoutfrontend', [IndexController::class, 'logoutfrontend'])->name('logoutfrontend');
 Route::post('/loginstore', [IndexController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/forget-password', [IndexController::class, 'forgotPassword'])->name('forget.password');
+Route::post('/verify-otp', [IndexController::class, 'verifyOtp'])->name('verify.otp');
 
+
+Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name('password.reset');
+Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');

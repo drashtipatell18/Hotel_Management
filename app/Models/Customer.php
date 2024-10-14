@@ -13,6 +13,9 @@ class Customer extends Model
         'bkg_customer_id',
         'name',
         'lname',
+        'country',
+        'state',
+        'city',
         'room_type',
         'total_numbers',
         'date',
@@ -24,6 +27,7 @@ class Customer extends Model
         'address',
         'gender',
         'aadharcard',
-        'status'
+        'status',
+        'user_id'
     ];
 }

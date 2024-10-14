@@ -40,9 +40,16 @@
                                     Customer
                                 @endif
                             </h6>
-                            <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i> Florida, United States
+                            <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i>
+                                @if($staff)
+                                    <span id="stateSpan1">{{ $staff->state }}</span>
+                                    <span id="countrySpan1">{{ $staff->country }}</span>
+                                @else
+                                    <span id="stateSpan1">State not available</span>
+                                    <span id="countrySpan1">Country not available</span>
+                                @endif
                             </div>
-                          
+
                             @if($staff)
                                 <div class="about-text">{{ $staff->position->name }}</div>
                             @else
@@ -92,12 +99,11 @@
                                                 @if(Auth::check())
                                                     @if(Auth::user()->role_id === 0)
                                                         {{ Auth::user()->address }},
-                                                        
-                                                    @elseif(Auth::user()->role_id=== 1)
-                                                        {{ $staff->address }}<br/>
-                                                        {{ $staff->country }}<br/>
-                                                        {{ $staff->state }}
-                                                       
+
+                                                    @elseif(Auth::user()->role_id === 1)
+                                                        {{ $staff->address }}<br />
+                                                        <span id="stateSpan">{{ $staff->state }}</span><br/>
+                                                        <span id="countrySpan">{{ $staff->country }}</span>
                                                     @else
                                                         <em>No address available</em>
                                                     @endif
@@ -167,9 +173,11 @@
                                                                 <label>Address</label>
                                                                 @if(Auth::check())
                                                                     @if(Auth::user()->role_id == 0)
-                                                                        <textarea class="form-control" name="address" rows="3">{{ Auth::user()->address }}</textarea>
+                                                                        <textarea class="form-control" name="address"
+                                                                            rows="3">{{ Auth::user()->address }}</textarea>
                                                                     @elseif(Auth::user()->role_id == 1)
-                                                                        <textarea class="form-control" name="address" rows="3"> {{ $staff->address ?? '' }}</textarea>
+                                                                        <textarea class="form-control" name="address"
+                                                                            rows="3"> {{ $staff->address ?? '' }}</textarea>
                                                                     @else
                                                                         <em>No address available</em>
                                                                     @endif
@@ -284,10 +292,43 @@
 
         try {
             const countries = await fetchCountries();
+
+            if (document.getElementById('countrySpan').innerHTML) {
+                countries.forEach(country => {
+                    if (country.iso2 == document.getElementById('countrySpan').innerText) {
+                        document.getElementById('countrySpan').innerHTML = country.name
+                    }
+                });
+            }
+
+            if (document.getElementById('countrySpan1').innerHTML) {
+                countries.forEach(country => {
+                    if (country.iso2 == document.getElementById('countrySpan1').innerText) {
+                        document.getElementById('countrySpan1').innerHTML = country.name
+                    }
+                });
+            }
+
             populateCountries(countries, selectedCountry);
 
             if (selectedCountry) {
                 const states = await fetchStates(selectedCountry);
+
+                if (document.getElementById('stateSpan1').innerHTML) {
+                    states.forEach(state => {
+                        if (state.iso2 == document.getElementById('stateSpan1').innerText) {
+                            document.getElementById('stateSpan1').innerHTML = state.name
+                        }
+                    });
+                }
+
+                if (document.getElementById('stateSpan1').innerHTML) {
+                    states.forEach(state => {
+                        if (state.iso2 == document.getElementById('stateSpan').innerText) {
+                            document.getElementById('stateSpan').innerHTML = state.name
+                        }
+                    });
+                }
                 populateStates(states, selectedState);
 
                 if (selectedState) {
@@ -319,8 +360,8 @@
         countries.forEach(country => {
             const option = document.createElement('option');
             option.value = country.iso2;
-            
-           
+
+
             option.textContent = country.name;
             if (country.iso2 === selectedCountry) {
                 option.selected = true;
@@ -330,7 +371,7 @@
         });
     }
 
-    
+
 
     // Event listener for country selection
     countrySelect.addEventListener('change', getStates);
