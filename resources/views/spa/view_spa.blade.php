@@ -38,8 +38,7 @@
                                                 <td>{{ $spa->name }}</td>
                                                 <td>{{ $spa->category }}</td>
                                                 <td>{{ $spa->description }}</td>
-                                                <td>{{ $spa->image }}</td>
-                                                <td>{{ $spa->price }}</td>
+                                                <td><img src="{{ asset($spa->image) }}" style="width: 100px; height: auto;"></td>                                                <td>{{ $spa->price }}</td>
                                                 <td class="text-right">
                                                     <a class="dropdown-item-sm" style="font-size: 23px; padding: 5px; color: #009688;"  href="{{ url('spa/edit/'.$spa->id) }}"><i class="fas fa-pencil-alt fa-xs"></i></a>
                                                     <a href="{{ route('spa.delete', ['id' => $spa->id]) }}" onclick="return confirm('Are you sure you want to delete this Spa?');" style="font-size: 23px; padding: 5px; color: #009688;">
