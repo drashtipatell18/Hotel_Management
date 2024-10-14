@@ -42,6 +42,12 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['spa/list']) }}">
+                    <a href="{{ route('spa/list') }}">
+                        <img src="{{ url('assets/icons/spa.png') }}" style="width: 20px; height:20px"><span>Spa</span>
+                    </a>
+                </li>
+
                 <li class="{{ set_active(['form/allcustomers/page']) }}">
                     <a href="{{ route('form/allcustomers/page') }}"><i class="fas fa-user"></i> <span>Customers</span></a>
                 </li>

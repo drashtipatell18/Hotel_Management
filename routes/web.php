@@ -20,6 +20,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\SpasController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\HallTypeController;
 use App\Http\Controllers\UserManagementController;
@@ -332,6 +333,16 @@ Route::controller(FacilitiesController::class)->group(function () {
     Route::get('/facilities/delete/{id}','facilitiesDelete')->name('facilities.delete');
     Route::delete('/facilities/image/delete/{id}', [FacilitiesController::class, 'deleteImage'])->name('facilities.image.delete');
 
+});
+
+//Spa
+Route::controller(SpasController::class)->group(function () {
+    Route::get('spa/list', 'spaList')->name('spa/list');
+    Route::get('spa/add', 'spaCreate')->name('spa/add');
+    Route::post('spa/store', 'spaStore')->name('spa/store');
+    Route::get('spa/edit/{id}', 'spaEdit');
+    Route::post('spa/update/{id}', 'spaUpdate')->name('spa/update');
+    Route::get('/spa/delete/{id}','spaDelete')->name('spa.delete');
 });
 
 // Client Review
