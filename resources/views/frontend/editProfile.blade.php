@@ -260,6 +260,7 @@
 
         try {
             const countries = await fetchCountries();
+
             populateCountries(countries, selectedCountry);
 
             if (selectedCountry) {

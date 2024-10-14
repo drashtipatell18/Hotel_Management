@@ -105,20 +105,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 <!-- Toastr JS (if you're using it) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{{ url('js/jquery-3.3.1.min.js') }}"></script>
+<!-- <script src="{{ url('js/jquery-3.3.1.min.js') }}"></script> -->
 <script src="{{ url('frontend/js/bootstrap.min.js') }}"></script>
 <!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
 <script src="{{ url('frontend/js/jquery-ui.min.js') }}"></script>
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
 <script src="{{ url('frontend/js/main.js') }}"></script>
-<script src="{{ url('frontend/js/d_home.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<!-- <script src="{{ url('frontend/js/d_home.js') }}"></script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
-
+<script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script>
+ 
 
 <!-- <script>
     fetch('header.html')
