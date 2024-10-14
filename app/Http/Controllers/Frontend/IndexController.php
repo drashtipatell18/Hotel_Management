@@ -228,16 +228,16 @@ class IndexController extends Controller
             'email' => 'required|email',
             'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
         $user = User::where('email', $request->email)->first();
-      
+
         if (!$user) {
             return response()->json(['success' => false, 'message' => 'User not found.']);
         }
-       
+
         // Update the user's password
         $user->password = Hash::make($request->newPassword);
         $user->save();
@@ -251,18 +251,18 @@ class IndexController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email', // Ensure email is valid and exists
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors(),
             ], 422);
         }
-    
+
         // Find the user based on the email
         $user = User::where('email', $request->email)->first();
-       
-    
+
+
         if (!$user) {
             return response()->json([
                 'success' => false,
@@ -270,12 +270,12 @@ class IndexController extends Controller
             ]);
         }
 
-       
+
         $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); // Changed range to 0-9999 for 4-digit OTP
         $user->password_reset_otp = $otp;
         $user->password_reset_otp_expires_at = now()->addMinutes(15);
         $user->save();
-    
+
         try {
             Mail::to($user->email)->send(new PasswordResetMail($otp));
 
@@ -291,6 +291,10 @@ class IndexController extends Controller
             ], 500);
         }
     }
-    
+
+    public function offerDetails()
+    {
+        return view('frontend.Offer_Package');
+    }
 
 }
