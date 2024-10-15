@@ -384,7 +384,7 @@ Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->nam
 Route::get('/spabook',[SpaBookController::class,'spabook'])->name('spabook');
 Route::get('/spabook-know/{id}',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
 Route::get('/spacheckout',[SpaBookController::class,'spacheckout'])->name('spacheckout');
-
+Route::post('/spacheckout-store',[SpaBookController::class,'spacheckoutStore'])->name('spacheckout.store');
 
 
 Route::get('/register', [IndexController::class, 'register'])->name('register');

@@ -720,7 +720,7 @@ ol {
     color: #727272;
 }
 
-.d_form .d_inquiry .d_cta a {
+.d_form .d_inquiry .d_cta button {
     padding: 10px 90px;
     color: #fff;
     background-color: #1A2142;
@@ -729,7 +729,7 @@ ol {
     font-size: 16px;
     transition: .3s all ease-in-out;
 }
-.d_form .d_inquiry .d_cta a:hover{
+.d_form .d_inquiry .d_cta button:hover{
     background-color: #030c38;
 }
 .d_form .d_inquiry img{
@@ -1060,7 +1060,7 @@ ol {
     font-weight: 500;
     min-height: 1.2em;
     border: none;
-}  
+}
 
 
 #d_test2 .owl-dots .owl-dot {
@@ -1080,14 +1080,14 @@ ol {
     font-size: 20px;
 }
 
-  
+
   .custom-select {
     display: inline-block;
     width: 100%;
     background: transparent;
-    cursor: pointer; 
+    cursor: pointer;
   }
-  
+
   .custom-select-trigger {
     font-size: 16px;
     display: flex;
@@ -1096,7 +1096,7 @@ ol {
     border-radius: 20px;
     margin-right: 10px;
   }
- 
+
   .custom-options {
     position: absolute;
     width: 100%;
@@ -1107,20 +1107,20 @@ ol {
     display: none;
     font-weight: 500;
     z-index: 2000;
-    cursor: pointer; 
+    cursor: pointer;
     color: #727272;
   }
-  
+
   .custom-option {
     padding: 0 20px;
     font-size: 16px;
-    cursor: pointer; 
+    cursor: pointer;
   }
-  
+
   .custom-option:hover {
     color: #1A2142;
   }
-  
+
   .custom-select.open .custom-options {
     display: block;
   }
@@ -1130,9 +1130,9 @@ ol {
     display: inline-block;
     width: 100%;
     background: transparent;
-    cursor: pointer; 
+    cursor: pointer;
   }
-  
+
   .custom-select-trigger1 {
     font-size: 16px;
     display: flex;
@@ -1141,7 +1141,7 @@ ol {
     border-radius: 20px;
     margin-right: 10px;
   }
- 
+
   .custom-options1 {
     position: absolute;
     width: 100%;
@@ -1152,20 +1152,20 @@ ol {
     display: none;
     font-weight: 500;
     z-index: 2000;
-    cursor: pointer; 
+    cursor: pointer;
     color: #727272;
   }
-  
+
   .custom-option1 {
     padding: 0 20px;
     font-size: 16px;
-    cursor: pointer; 
+    cursor: pointer;
   }
-  
+
   .custom-option1:hover {
     color: #1A2142;
   }
-  
+
   .custom-select1.open1 .custom-options1 {
     display: block;
   }
@@ -1278,8 +1278,8 @@ ol {
 
 .d_detail .custom-date-icon {
     position: absolute;
-    left: -17px; 
-    top: 10%; 
+    left: -17px;
+    top: 10%;
     right: 6%;
     pointer-events: none;
     width: 20px;
@@ -1338,7 +1338,7 @@ ol {
     .d_detail .d_item .d_total .d_cta a{
         padding: 10px 70px;
     }
-   
+
 }
 
 @media(max-width:1199px) {
@@ -1458,7 +1458,7 @@ ol {
         padding: 10px 50px;
     }
 }
- 
+
 
 @media(max-width:991px) {
     .d_room .d_box .d_content .d_icondesc {

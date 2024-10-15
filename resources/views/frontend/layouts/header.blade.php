@@ -79,7 +79,9 @@
         cursor: pointer;
         width:40px;
     }
-
+    .error{
+        color:red;
+    }
 
 </style>
 <body>
