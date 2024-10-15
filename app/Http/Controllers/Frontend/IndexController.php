@@ -16,6 +16,7 @@ use App\Models\RoomTypes;
 use App\Models\ClientReview;
 use Illuminate\Support\Facades\Mail; // Add this line to import the Mail facade
 use App\Mail\PasswordResetMail;
+use App\Models\Room;
 
 use App\Models\Customer;
 
@@ -34,8 +35,10 @@ class IndexController extends Controller
         $standardSuitesCount = RoomTypes::where('room_name', 'Standard double Room')->count();
 
         $clientReviews = ClientReview::all();
+        $roomCount = Room::count();
+        $maxMemberCapacity = Room::max('total_member_capacity');
 
-        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews'));
+        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews','roomCount','maxMemberCapacity'));
     }
     public function register()
     {

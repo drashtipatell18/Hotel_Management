@@ -55,7 +55,7 @@ class RoomsController extends Controller
             'room_type_id' => 'required|integer',
             'ac_non_ac' => 'required|string|max:255',
             'food_id' => 'required|integer',
-            'bed_count' => 'required|integer',
+            'bed_type' => 'required',
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -72,16 +72,18 @@ class RoomsController extends Controller
             $room = new Room;
             $room->floor_id = $request->floor_id;
             $room->room_number = $request->room_number;
+            $room->room_name = $request->room_name;
             $room->room_type_id = $request->room_type_id;
             $room->ac_non_ac = $request->ac_non_ac;
             $room->food_id = $request->food_id;
-            $room->bed_count = $request->bed_count;
+            $room->bed_type = $request->bed_type;
             $room->rent = $request->rent;
             $room->phone_number = $request->phone_number;
             $room->image = $file_name;
             $room->room_size = $request->room_size;
             $room->from_date = $request->from_date;
             $room->to_date = $request->to_date;
+            $room->total_member_capacity = $request->total_member_capacity;
             $room->message = $request->message;
 
 
@@ -106,7 +108,7 @@ class RoomsController extends Controller
             'room_type_id' => 'required|integer',
             'ac_non_ac' => 'required|string|max:255',
             'food_id' => 'required|integer',
-            'bed_count' => 'required|integer',
+            'bed_type' => 'required',
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -127,15 +129,17 @@ class RoomsController extends Controller
             // Update other fields
             $room->floor_id = $request->input('floor_id');
             $room->room_number = $request->input('room_number');
+            $room->room_name = $request->input('room_name');
             $room->room_type_id = $request->input('room_type_id');
             $room->ac_non_ac = $request->input('ac_non_ac');
             $room->food_id = $request->input('food_id');
-            $room->bed_count = $request->input('bed_count');
+            $room->bed_type = $request->input('bed_type');
             $room->rent = $request->input('rent');
             $room->phone_number = $request->input('phone_number');
             $room->room_size = $request->input('room_size');
             $room->from_date = $request->input('from_date');
             $room->to_date = $request->input('to_date');
+            $room->total_member_capacity = $request->input('total_member_capacity');
             $room->message = $request->input('message');
 
             $room->save();

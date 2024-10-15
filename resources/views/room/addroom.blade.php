@@ -59,6 +59,16 @@
                                 @enderror
                                 </div>
                             </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room Name</label>
+                                    <input type="text" class="form-control @error('room_name') is-invalid @enderror" id="room_name" name="room_name" value="{{ old('room_name') }}">
+                                    @error('room_name')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -101,7 +111,7 @@
                                 @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Bed Count</label>
                                     <select class="form-control @error('bed_count') is-invalid @enderror" id="bed_count" name="bed_count">
@@ -114,6 +124,16 @@
                                         <option value="6">6</option>
                                     </select>
                                     @error('bed_count')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div> -->
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Bed Type</label>
+                                    <input type="text" class="form-control @error('bed_type') is-invalid @enderror" id="bed_type" name="bed_type" value="{{ old('bed_type') }}">
+                                    @error('bed_type')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                                 </div>
@@ -194,6 +214,15 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Toal Member Capacity</label>
+                                    <input type="number" class="form-control @error('total_member_capacity') is-invalid @enderror" id="total_member_capacity" name="total_member_capacity" value="{{ old('total_member_capacity') }}">
+                                    @error('total_member_capacity')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
 
 
                             <div class="col-md-12">
