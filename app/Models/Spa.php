@@ -10,5 +10,5 @@ class Spa extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "spas";
-    protected $fillable = ['name', 'category', 'description', 'image', 'price'];
+    protected $fillable = ['category', 'description', 'image', 'price'];
 }

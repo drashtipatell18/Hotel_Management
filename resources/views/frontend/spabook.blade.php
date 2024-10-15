@@ -28,177 +28,27 @@
             </div>
             <div class="image-gallery" id="imageGallery">
                 <div class="row g-3 px-sm-2 p-0 ">
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="massage">
+                    @foreach ($spas as $spa)
+                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="{{ $spa->category }}">
                         <div class="order__item  h-100">
                             <div class="Slider_image m-0 h-100">
-                                <img class="image__img h-100" src="{{ url('frontend/img/d_img/spa1.png') }}" alt>
+                                <img class="image__img h-100" src="{{ url('spa/'.$spa->image) }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
                                         <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
+                                        <h4 class="text-center pb-2">{{ $spa->description }}</h4>
                                         <div class="d-flex justify-content-center align-items-center">
                                             <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
+                                            <p class=" mb-0">{{ $spa->price }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="coupleritual">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa3.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="facial">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img" src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="facial">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa5.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="seasonaloffer">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="massage">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa1.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="seasonaloffer">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa3.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="signature">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa6.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="signature">
-                        <div class="order__item  h-100">
-                            <div class="Slider_image m-0 h-100">
-                                <img class="image__img " src="{{ url('frontend/img/d_img/spa5.png') }}" alt>
-                                <div>
-                                    <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
-                                    </div>
-                                    <div class="image_onsection d_boxsec bg-light py-3">
-                                        <h4 class="text-center pb-2">Custom Massage (100 min)</h4>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                            <p class=" mb-0">Starting from $120</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
