@@ -175,6 +175,30 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Check In</label>
+                                    <div class="">
+                                        <input type="date" id="from_date" class="form-control" name="from_date" value="{{ $roomEdit->from_date }}">
+                                        @error('from_date')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Check Out</label>
+                                    <div class="">
+                                        <input type="date" id="to_date" class="form-control" name="to_date" value="{{ $roomEdit->to_date }}">
+                                        @error('to_date')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>

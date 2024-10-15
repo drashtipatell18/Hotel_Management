@@ -11,12 +11,21 @@ use Illuminate\Support\Facades\DB;
 
 class RoomsController extends Controller
 {
-    public function allrooms()
+    public function allrooms(Request $request)
     {
-        $allRooms = Room::with('roomType','food','floor')->get();
-        return view('room.allroom',compact('allRooms'));
-    }
+        $query = Room::with('roomType', 'food', 'floor');
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $fromDate = $request->input('from_date');
+            $toDate = $request->input('to_date');
 
+            $query->where('from_date', '>=', $fromDate)
+                  ->where('to_date', '<=', $toDate);
+        }
+
+        $allRooms = $query->get();
+        return view('room.allroom', compact('allRooms'));
+    }
+    
 
     public function addRoom(Request $request)
     {
@@ -71,6 +80,8 @@ class RoomsController extends Controller
             $room->phone_number = $request->phone_number;
             $room->image = $file_name;
             $room->room_size = $request->room_size;
+            $room->from_date = $request->from_date;
+            $room->to_date = $request->to_date;
             $room->message = $request->message;
 
 
@@ -123,6 +134,8 @@ class RoomsController extends Controller
             $room->rent = $request->input('rent');
             $room->phone_number = $request->input('phone_number');
             $room->room_size = $request->input('room_size');
+            $room->from_date = $request->input('from_date');
+            $room->to_date = $request->input('to_date');
             $room->message = $request->input('message');
 
             $room->save();

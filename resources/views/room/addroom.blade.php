@@ -168,6 +168,32 @@
                                 </div>
                             </div>
 
+                            
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Check In Date</label>
+                                        <div class="">
+                                            <input type="date" id="from_date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date') }}">
+                                        </div>
+                                        @error('from_date')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Check Out Date</label>
+                                        <div class="">
+                                            <input type="date" id="to_date" class="form-control @error('to_date') is-invalid @enderror" name="to_date" value="{{ old('to_date') }}">
+                                        </div>
+                                        @error('to_date')
+                                                <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                </div>
+                            </div>
+
 
 
                             <div class="col-md-12">
