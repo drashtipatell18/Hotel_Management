@@ -48,6 +48,12 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['offer/package/list']) }}">
+                    <a href="{{ route('offer/package/list') }}">
+                        <img src="{{ url('assets/icons/offerPackage.png') }}" style="width: 20px; height:20px"><span>Offer Package</span>
+                    </a>
+                </li>
+
                 <li class="{{ set_active(['form/allcustomers/page']) }}">
                     <a href="{{ route('form/allcustomers/page') }}"><i class="fas fa-user"></i> <span>Customers</span></a>
                 </li>

@@ -34,6 +34,7 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\AdditionalFilterController;
 use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\ClientReviewController;
+use App\Http\Controllers\OffersPackageController;
 
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\AboutUsController;
@@ -343,6 +344,16 @@ Route::controller(SpasController::class)->group(function () {
     Route::get('spa/edit/{id}', 'spaEdit');
     Route::post('spa/update/{id}', 'spaUpdate')->name('spa/update');
     Route::get('/spa/delete/{id}','spaDelete')->name('spa.delete');
+});
+
+// offer & package
+Route::controller(OffersPackageController::class)->group(function () {
+    Route::get('offer/package/add', 'offerPackageCreate')->name('offer/package/add');
+    Route::post('offer/package/store', 'offerPackageStore')->name('offer/package/store');
+    Route::get('offer/package/list', 'offerPackageList')->name('offer/package/list');
+    Route::get('offer/package/edit/{id}', 'offerPackageEdit')->name('offer/package/edit');
+    Route::post('offer/package/update/{id}', 'offerPackageUpdate')->name('offer/package/update');
+    Route::get('/offer/package/delete/{id}','offerPackageDelete')->name('offerPackage.delete');
 });
 
 // Client Review
