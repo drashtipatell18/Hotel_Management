@@ -12,9 +12,10 @@ class SpaBookController extends Controller
         $spas = Spa::all();
         return view('frontend.spabook', compact('spas'));
     }
-    public function spabookKnow()
+    public function spabookKnow($id)
     {
-        return view('frontend.spabooknow');
+        $spas = Spa::find($id);
+        return view('frontend.spabooknow', compact('spas'));
     }
     public function spacheckout()
     {

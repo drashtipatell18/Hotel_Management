@@ -382,7 +382,7 @@ Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobook
 Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
 
 Route::get('/spabook',[SpaBookController::class,'spabook'])->name('spabook');
-Route::get('/spabook-know',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
+Route::get('/spabook-know/{id}',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
 Route::get('/spacheckout',[SpaBookController::class,'spacheckout'])->name('spacheckout');
 
 

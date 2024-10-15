@@ -32,10 +32,10 @@
                     <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="{{ $spa->category }}">
                         <div class="order__item  h-100">
                             <div class="Slider_image m-0 h-100">
-                                <img class="image__img h-100" src="{{ url('spa/'.$spa->image) }}" alt>
+                                <img class="image__img h-100" src="{{ url('assets/spas/'.$spa->image) }}" alt>
                                 <div>
                                     <div class="image__overlay3 image__overlay3--primary">
-                                        <a href="{{ route('spabookKnow')}}" class="Custom_btn">Book Now</a>
+                                        <a href="{{ route('spabookKnow', $spa->id) }}" class="Custom_btn">Book Now</a>
                                     </div>
                                     <div class="image_onsection d_boxsec bg-light py-3">
                                         <h4 class="text-center pb-2">{{ $spa->description }}</h4>

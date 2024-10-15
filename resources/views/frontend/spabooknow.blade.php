@@ -64,7 +64,7 @@
                     <div class="d_item">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5>Book</h5>
-                            <h6>From $120/person</h6>
+                            <h6>From ${{ $spas->price }}/person</h6>
                         </div>
                         <div class="row g-3 mt-1">
                             <div class="col-12">
@@ -94,22 +94,22 @@
                                                 <div class="custom-option d-flex justify-content-between align-items-center"
                                                     data-time="09:00 am - 10:40 am" data-price="120">
                                                     <div class="d_time">09:00 am - 10:40 am</div>
-                                                    <div class="d_price">$120</div>
+                                                    <div class="d_price">${{ $spas->price }}</div>
                                                 </div>
                                                 <div class="custom-option d-flex justify-content-between align-items-center"
                                                     data-time="10:00 am - 11:40 am" data-price="140">
                                                     <div class="d_time">10:00 am - 11:40 am</div>
-                                                    <div class="d_price">$140</div>
+                                                    <div class="d_price">${{ $spas->price }}</div>
                                                 </div>
                                                 <div class="custom-option d-flex justify-content-between align-items-center"
                                                     data-time="11:00 am - 12:40 pm" data-price="150">
                                                     <div class="d_time">11:00 am - 12:40 pm</div>
-                                                    <div class="d_price">$150</div>
+                                                    <div class="d_price">${{ $spas->price }}</div>
                                                 </div>
                                                 <div class="custom-option d-flex justify-content-between align-items-center"
                                                     data-time="12:00 pm - 01:40 pm" data-price="150">
                                                     <div class="d_time">12:00 pm - 01:40 pm</div>
-                                                    <div class="d_price">$150</div>
+                                                    <div class="d_price">${{ $spas->price }}</div>
                                                 </div>
                                             </div>
                                         </div>

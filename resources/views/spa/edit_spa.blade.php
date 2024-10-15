@@ -59,7 +59,8 @@
                                     @foreach($imageFiles as $image)
                                     <div class="col-md-2 mb-3">
                                         <div class="text-center">
-                                            <img src="{{ asset('storage/' . $image) }}" class="img-fluid rounded mb-2"
+                                            <img src="{{ asset('assets/spas/' . $image) }}"
+                                                class="img-fluid rounded mb-2"
                                                 style="width: 100%; height: 100px; object-fit: cover;">
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2"
                                                 onclick="removePreview(this)">
