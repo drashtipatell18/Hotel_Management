@@ -17,10 +17,10 @@ class SpasController extends Controller
      {
         return view('spa.add_spa');
      }
+
      public function spaStore(Request $request)
-     {
+    {
         $request->validate([
-            'name' => 'required',
             'category' => 'required',
             'description' => 'required',
             'image' => 'required',
@@ -28,21 +28,34 @@ class SpasController extends Controller
 
         ]);
 
-        $image = $request->file('image');
-        $imageName = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
+        try {
+            $imagePaths = []; // Array to store the image paths
 
+            // Check if images are uploaded
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $imageName = time().'_'.$image->getClientOriginalName();
+                    $image->move(public_path('/assets/spas/'), $imageName);
+                    $imagePaths[] = $imageName; // Store the image name
+                }
+            }
 
-        Spa::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'description' => $request->description,
-            'image' => $imageName,
-            'price' => $request->price,
-        ]);
-        return redirect()->route('spa/list')->with('success', 'Spa created successfully');
+            // Create a new Facilities record
+            $spas = new Spa;
+            $spas->category = $request->input('category');
+            $spas->description = $request->input('description');
+            $spas->image = implode(',', $imagePaths); // Store paths as a comma-separated string
+            $spas->price = $request->input('price');
+            $spas->save();
 
-     }
+            return redirect()->route('spa/list')
+                ->with('success', 'Spa added successfully!');
+        } catch (\Exception $e) {
+            Log::error('Error saving spa: ' . $e->getMessage());
+            return redirect()->route('spa/list')
+                ->with('error', 'There was a problem adding the spa.');
+        }
+    }
 
      public function spaEdit($id)
      {
@@ -53,27 +66,37 @@ class SpasController extends Controller
      public function spaUpdate(Request $request, $id)
      {
         $request->validate([
-            'name' => 'required',
             'category' => 'required',
             'description' => 'required',
             'image' => 'required',
             'price' => 'required',
         ]);
 
-        $spa = Spa::find($id);
-        $image = $request->file('image');
-        $imageName = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
+        try {
+            $imagePaths = []; // Array to store the image paths
 
-        $spa->update([
-            'name' => $request->name,
-            'category' => $request->category,
-            'description' => $request->description,
-            'image' => $imageName,
-            'price' => $request->price,
-        ]);
+            // Check if images are uploaded
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $imageName = time().'_'.$image->getClientOriginalName();
+                    $image->move(public_path('/assets/spas/'), $imageName);
+                    $imagePaths[] = $imageName; // Store the image name
+                }
+            }
+            $spa = Spa::find($id);
+            $spa->category = $request->input('category');
+            $spa->description = $request->input('description');
+            $spa->image = implode(',', $imagePaths); // Store paths as a comma-separated string
+            $spa->price = $request->input('price');
+            $spa->save();
+        } catch (\Exception $e) {
+            Log::error('Error saving spa: ' . $e->getMessage());
+            return redirect()->route('spa/list')
+                ->with('error', 'There was a problem adding the spa.');
+        }
         return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
      }
+
 
      public function spaDelete($id)
      {
