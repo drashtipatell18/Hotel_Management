@@ -1,41 +1,72 @@
 @extends('layouts.master')
 @section('content')
-    {{-- message --}}
-    {!! Toastr::message() !!}
-    <div class="page-wrapper">
-        <div class="content container-fluid">
-            <div class="page-header">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">All Rooms</h4>
-                            <a href="{{ route('form/addroom/page') }}" class="btn btn-primary float-right veiwbutton"><i class="fas fa-plus mr-2"></i>Add Room</a>
+<style>
+    .veiwbutton1{
+        padding: 6px 16px ;
+    }
+</style>
+{{-- message --}}
+{!! Toastr::message() !!}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="mt-5 d-flex justify-content-between">
+                        <h4 class="card-title float-left mt-2">All Rooms</h4>
+                        <div class="d-flex align-items-center">
+                            <div class="me-2" style="margin-right:12px">
+                                <a href="{{ url()->current() }}" class="btn btn-secondary btn-sm w-100 veiwbutton1">All Records</a>
+                            </div>
+                            <a href="{{ route('form/addroom/page') }}" class="btn btn-primary veiwbutton">
+                                <i class="fas fa-plus mr-2"></i>Add Room</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card card-table">
-                        <div class="card-body booking_card">
-                            <div class="table-responsive">
-                                <table class="datatable1 table table-stripped table table-hover table-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Booking ID</th>
-                                            <th>Room Image</th>
-                                            <th>Floor Name</th>
-                                            <th>Room Number</th>
-                                            <th>Room Type</th>
-                                            <th>Bed Count</th>
-                                            <th>Rent</th>
-                                            <th>Ph.Number</th>
-                                            <th>Status</th>
-                                            <th class="text-right">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($allRooms as $rooms )
+        </div>
+
+        <!-- Date Filter Form -->
+        <form id="filterForm" method="GET" action="">
+            <div class="row mb-4 align-items-end">
+                <div class="col-md-2">
+                    <label for="from_date" class="form-label">From Date:</label>
+                    <input type="date" name="from_date" id="from_date" class="form-control form-control-sm"
+                        value="{{ request('from_date') }}">
+                </div>
+                <div class="col-md-2" style="padding-right:0px">
+                    <label for="to_date" class="form-label">To Date:</label>
+                    <input type="date" name="to_date" id="to_date" class="form-control form-control-sm"
+                        value="{{ request('to_date') }}">
+                </div>
+                <div class="col-md-1 ms-auto">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Filter Records</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body booking_card">
+                        <div class="table-responsive">
+                            <table class="datatable1 table table-stripped table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>Room Image</th>
+                                        <th>Floor Name</th>
+                                        <th>Room Number</th>
+                                        <th>Room Type</th>
+                                        <th>Bed Count</th>
+                                        <th>Rent</th>
+                                        <th>Ph.Number</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($allRooms as $rooms)
                                         <tr>
                                             {{-- <td hidden class="id">{{ $rooms->room_number }}</td>
                                             <td hidden class="image">{{ $rooms->image }}</td> --}}
@@ -43,8 +74,9 @@
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="profile.html" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle"  src="{{ file_exists(public_path('assets/upload/'.$rooms->image)) && $rooms->image ? URL::to('/assets/upload/'.$rooms->image) : URL::to('/assets/upload/imagen para todo.jpg') }}" 
-                                                        alt="{{ $rooms->image ?? 'Default Image' }}">
+                                                        <img class="avatar-img rounded-circle"
+                                                            src="{{ file_exists(public_path('assets/upload/' . $rooms->image)) && $rooms->image ? URL::to('/assets/upload/' . $rooms->image) : URL::to('/assets/upload/imagen para todo.jpg') }}"
+                                                            alt="{{ $rooms->image ?? 'Default Image' }}">
                                                     </a>
                                                 </h2>
                                             </td>
@@ -57,8 +89,7 @@
                                             <td>
                                                 <a href="javascript:void(0);"
                                                     class="btn btn-sm toggle-status {{ $rooms->status == 'active' ? 'bg-success-light' : 'bg-danger-light' }} mr-2"
-                                                    data-id="{{ $rooms->id }}"
-                                                    data-status="{{ $rooms->status }}">
+                                                    data-id="{{ $rooms->id }}" data-status="{{ $rooms->status }}">
                                                     {{ $rooms->status == 'active' ? 'Available' : 'Not Available' }}
                                                 </a>
                                             </td>
@@ -73,14 +104,16 @@
                                                     style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                                 </a>
-                                                <a href="{{ route('form/room/delete', ['id' => $rooms->id]) }}" onclick="return confirm('Are you sure you want to delete this Room?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                <a href="{{ route('form/room/delete', ['id' => $rooms->id]) }}"
+                                                    onclick="return confirm('Are you sure you want to delete this Room?');"
+                                                    style="font-size: 23px; padding: 5px; color: #009688;">
                                                     <i class="fas fa-trash fa-xs"></i>
                                                 </a>
                                             </td>
                                         </tr>
 
-                                         <!-- View Modal -->
-                                         <div class="modal fade" id="exampleModal{{ $rooms->id }}" tabindex="-1"
+                                        <!-- View Modal -->
+                                        <div class="modal fade" id="exampleModal{{ $rooms->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document"
                                                 style="max-width: 990px; width: 990px; height: 500px;">
@@ -89,8 +122,8 @@
                                                         style="background-color: #009688; color: white !important;">
                                                         <h5 class="modal-title" id="exampleModalLabel">Room Details
                                                         </h5>
-                                                        <button type="button" class="close text-white"
-                                                            data-dismiss="modal" aria-label="Close">
+                                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                                            aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -109,7 +142,8 @@
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <p><strong>Floor Name:</strong> <span
-                                                                                id="floor-floor_name">{{  $rooms->floor->floor_name  }}</span></p>
+                                                                                id="floor-floor_name">{{  $rooms->floor->floor_name  }}</span>
+                                                                        </p>
                                                                         <p><strong>Room Number:</strong> <span
                                                                                 id="floor-room_number">{{ $rooms->room_number }}</span>
                                                                         </p>
@@ -134,7 +168,7 @@
                                                                                 id="floor-arrival-date">{{ $rooms->phone_number }}</span>
                                                                         </p>
                                                                         <p><strong>Room Size:</strong> <span
-                                                                            id="floor-arrival-date">{{ $rooms->room_size }}</span>
+                                                                                id="floor-arrival-date">{{ $rooms->room_size }}</span>
                                                                         </p>
                                                                         <p><strong>Meassage:</strong> <span
                                                                                 id="floor-departure-date">{{ $rooms->message }}</span>
@@ -157,58 +191,58 @@
                                         {{-- End Model --}}
 
 
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    @section('script')
-    <script>
-        $(document).ready(function() {
-            $('.datatable1').DataTable();
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@section('script')
+<script>
+    $(document).ready(function () {
+        $('.datatable1').DataTable();
 
-            $(document).on('click', '.toggle-status', function() {
-                var roomId = $(this).data('id');
-                var currentStatus = $(this).data('status');
-                var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-                var button = $(this);
+        $(document).on('click', '.toggle-status', function () {
+            var roomId = $(this).data('id');
+            var currentStatus = $(this).data('status');
+            var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            var button = $(this);
 
-                $.ajax({
-                    url: '{{ route('update.room.status') }}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        room_id: roomId,
-                        status: newStatus
-                    },
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            // Update the status data attribute
-                            button.data('status', response.new_status);
+            $.ajax({
+                url: '{{ route('update.room.status') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    room_id: roomId,
+                    status: newStatus
+                },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        // Update the status data attribute
+                        button.data('status', response.new_status);
 
-                            // Update button text based on the new status
-                            var displayText = response.new_status === 'active' ? 'Available' : 'Not Available';
-                            button.text(displayText);
+                        // Update button text based on the new status
+                        var displayText = response.new_status === 'active' ? 'Available' : 'Not Available';
+                        button.text(displayText);
 
-                            // Update button classes based on the new status
-                            if (response.new_status === 'active') {
-                                button.removeClass('bg-danger-light').addClass('bg-success-light');
-                            } else {
-                                button.removeClass('bg-success-light').addClass('bg-danger-light');
-                            }
+                        // Update button classes based on the new status
+                        if (response.new_status === 'active') {
+                            button.removeClass('bg-danger-light').addClass('bg-success-light');
+                        } else {
+                            button.removeClass('bg-success-light').addClass('bg-danger-light');
                         }
                     }
-                });
+                }
             });
-
         });
-    </script>
-    @endsection
+
+    });
+</script>
+@endsection
 
 @endsection

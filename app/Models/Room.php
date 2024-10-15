@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Room extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['floor_id','room_number','room_type_id','ac_non_ac','food_id','bed_count','rent','phone_number','image','room_size','message','status'];
+    protected $fillable = ['floor_id','room_name','room_number','room_type_id','ac_non_ac','food_id','bed_count','rent','phone_number','image','room_size','message','status','from_date','to_date'];
 
 
     public function roomType()
