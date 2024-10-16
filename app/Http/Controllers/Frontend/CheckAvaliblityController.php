@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use Carbon\Carbon;
+use App\Models\RoomTypes;
+use App\Models\SmokingPrefrence;
+use App\Models\AdditionalPrefrence;
 class CheckAvaliblityController extends Controller
 {
     public function checkAvilabilty(Request $request)
@@ -22,9 +25,26 @@ class CheckAvaliblityController extends Controller
                 ->where('to_date', '<=', $toDate);
         }
 
-        $availableRooms = $query->get();
+        if ($request->filled('sort_by')) {
+            if ($request->input('sort_by') === 'high_to_low') {
+                // Sort by rent in descending order (high to low)
+                $query->orderBy('rent', 'desc');
+            } elseif ($request->input('sort_by') === 'low_to_high') {
+                // Sort by rent in ascending order (low to high)
+                $query->orderBy('rent', 'asc');
+            }
+        }
 
-        return view('frontend.check_avilabilty', compact('availableRooms'));
+        $availableRooms = $query->get();
+        $roomCount = Room::count();
+        $maxMemberCapacity = Room::max('total_member_capacity');
+        $roomTypes = RoomTypes::all();
+        $smokingPrefrences = SmokingPrefrence::all();
+        $additionalPrefrence = AdditionalPrefrence::all();
+       
+
+
+        return view('frontend.check_avilabilty', compact('availableRooms','roomCount','maxMemberCapacity','roomTypes','smokingPrefrences','additionalPrefrence'));
     }
 
 
