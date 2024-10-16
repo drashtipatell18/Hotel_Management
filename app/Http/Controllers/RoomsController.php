@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use App\Models\SmokingPrefrence;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
+use App\Models\AdditionalPrefrence;
 
 class RoomsController extends Controller
 {
@@ -33,7 +35,10 @@ class RoomsController extends Controller
         $user = DB::table('users')->get();
         $floors = DB::table('floors')->whereNull('deleted_at')->get();
         $foods = Food::all();
-        return view('room.addroom',compact('user','room_types','floors','foods'));
+        $smokingPrefrences = SmokingPrefrence::all();
+        $additionalPrefrence = AdditionalPrefrence::all();
+
+        return view('room.addroom',compact('user','room_types','floors','foods','smokingPrefrences','additionalPrefrence'));
     }
     public function editRoom($id)
     {
@@ -42,8 +47,10 @@ class RoomsController extends Controller
         $user = DB::table('users')->get();
         $floors = DB::table('floors')->whereNull('deleted_at')->get();
         $foods = Food::all();
+        $smokingPrefrences = SmokingPrefrence::all();
+        $additionalPrefrence = AdditionalPrefrence::all();
 
-        return view('room.editroom',compact('user','room_types','roomEdit','floors','foods'));
+        return view('room.editroom',compact('user','room_types','roomEdit','floors','foods','smokingPrefrences','additionalPrefrence'));
     }
 
     public function saveRecordRoom(Request $request)
@@ -84,6 +91,8 @@ class RoomsController extends Controller
             $room->from_date = $request->from_date;
             $room->to_date = $request->to_date;
             $room->total_member_capacity = $request->total_member_capacity;
+            $room->smoking_id = $request->smoking_id;
+            $room->view_id = $request->view_id;
             $room->message = $request->message;
 
 
@@ -140,6 +149,8 @@ class RoomsController extends Controller
             $room->from_date = $request->input('from_date');
             $room->to_date = $request->input('to_date');
             $room->total_member_capacity = $request->input('total_member_capacity');
+            $room->smoking_id = $request->input('smoking_id');
+            $room->view_id = $request->input('view_id');
             $room->message = $request->input('message');
 
             $room->save();

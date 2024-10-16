@@ -111,23 +111,7 @@
                                 @enderror
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Bed Count</label>
-                                    <select class="form-control @error('bed_count') is-invalid @enderror" id="bed_count" name="bed_count">
-                                        <option disabled selected>--Select--</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                    @error('bed_count')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                                </div>
-                            </div> -->
+                      
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -221,6 +205,36 @@
                                     @error('total_member_capacity')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Smoking Preference</label>
+                                    <select class="form-control @error('smoking_id') is-invalid @enderror" id="smoking_id" name="smoking_id">
+                                        <option disabled selected>--Select Smoking Prefrence--</option>
+                                        @foreach($smokingPrefrences as $preference)
+                                            <option value="{{ $preference->id }}">{{ $preference->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('smoking_id')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Additional Preference</label>
+                                    <select class="form-control @error('view_id') is-invalid @enderror" id="view_id" name="view_id">
+                                        <option disabled selected>--Select Additional Prefrence--</option>
+                                        @foreach($additionalPrefrence as $preference)
+                                            <option value="{{ $preference->id }}">{{ $preference->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('smoking_id')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 

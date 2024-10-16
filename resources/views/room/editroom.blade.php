@@ -217,6 +217,37 @@
                             </div>
 
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Smoking Prefrence</label>
+                                    <select class="form-control @error('smoking_id') is-invalid @enderror" id="smoking_id" name="smoking_id">
+                                        <option selected disabled> --Select Smoking Prefrence-- </option>
+                                            @foreach ($smokingPrefrences as $smoking )
+                                                <option value="{{ $smoking->id }}" {{ $smoking->id == $roomEdit->smoking_id ? 'selected' : '' }}>{{ $smoking->name }}</option>
+                                            @endforeach
+                                    </select>
+                                    @error('smoking_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Additiooanl Prefrence</label>
+                                    <select class="form-control @error('view_id') is-invalid @enderror" id="view_id" name="view_id">
+                                        <option selected disabled> --Select Additional Prefrence-- </option>
+                                            @foreach ($additionalPrefrence as $additional )
+                                                <option value="{{ $additional->id }}" {{ $additional->id == $roomEdit->view_id ? 'selected' : '' }}>{{ $additional->name }}</option>
+                                            @endforeach
+                                    </select>
+                                    @error('view_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>
