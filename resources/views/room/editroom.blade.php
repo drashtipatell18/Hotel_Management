@@ -65,6 +65,16 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label>Room Name</label>
+                                    <input type="text" class="form-control @error('room_name') is-invalid @enderror" id="room_name" name="room_name" value="{{ $roomEdit->room_name }}">
+                                    @error('room_name')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label>Room Type</label>
                                     <select class="form-control @error('room_type_id') is-invalid @enderror" id="room_type_id" name="room_type_id">
                                         <option selected disabled> --Select Room Type-- </option>
@@ -108,23 +118,18 @@
                                 @enderror
                                 </div>
                             </div>
+                        
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Bed Count</label>
-                                    <select class="form-control @error('bed_count') is-invalid @enderror" id="bed_count" name="bed_count">
-                                        <option disabled {{ empty($roomEdit->bed_count) ? 'selected' : '' }}> --Select Bed Count-- </option>
-                                        <option value="1" {{ $roomEdit->bed_count == '1' ? 'selected' : '' }}>1</option>
-                                        <option value="2" {{ $roomEdit->bed_count == '2' ? 'selected' : '' }}>2</option>
-                                        <option value="3" {{ $roomEdit->bed_count == '3' ? 'selected' : '' }}>3</option>
-                                        <option value="4" {{ $roomEdit->bed_count == '4' ? 'selected' : '' }}>4</option>
-                                        <option value="5" {{ $roomEdit->bed_count == '5' ? 'selected' : '' }}>5</option>
-                                        <option value="6" {{ $roomEdit->bed_count == '6' ? 'selected' : '' }}>6</option>
-                                    </select>
-                                    @error('bed_count')
+                                    <label>Bed Type</label>
+                                    <input type="text" class="form-control @error('bed_type') is-invalid @enderror" id="bed_type" name="bed_type" value="{{ $roomEdit->bed_type }}">
+                                    @error('bed_type')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rent</label>
@@ -198,6 +203,19 @@
                                     </div>
                                 </div>
                             </div>
+
+                           
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Toal Member Capacity</label>
+                                    <input type="number" class="form-control @error('total_member_capacity') is-invalid @enderror" id="total_member_capacity" name="total_member_capacity" value="{{$roomEdit->total_member_capacity}}">
+                                    @error('total_member_capacity')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
 
                             <div class="col-md-12">
                                 <div class="form-group">

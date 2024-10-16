@@ -80,7 +80,7 @@
                                 <div class="guest-selector">
                                     <div class="selected-guests">
                                         <span id="guest-summary">1 Room,
-                                            1 Adult, 0 Child</span>
+                                            1 Total Member</span>
                                     </div>
                                     <div class="guest-dropdown">
                                         <div class="d-flex justify-content-between">
@@ -92,25 +92,21 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <span>Adults</span>
+                                            <span>Total<br/> Member</span>
                                             <div class="guest-item">
-                                                <button class="decrement" data-type="adult">-</button>
-                                                <span id="adult-count">1</span>
-                                                <button class="increment" data-type="adult">+</button>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Children</span>
-                                            <div class="guest-item">
-                                                <button class="decrement" data-type="child">-</button>
-                                                <span id="child-count">1</span>
-                                                <button class="increment" data-type="child">+</button>
+                                                <button class="decrement" data-type="member">-</button>
+                                                <span id="member-count">1</span>
+                                                <button class="increment" data-type="member">+</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <input type="hidden" name="rooms" id="rooms-input" value="1">
+                        <input type="hidden" name="total_member" id="members-input" value="1">
+
                         <div class="d-flex align-items-center hero_checkAvalibility">
                             <button class="Custom_btn" type="submit"><a class="text-decoration-none text-light">Check
                                     Availability</a></button>
@@ -512,24 +508,41 @@
 </div>
 
 <script>
+    const initialRoomCount = {{ $roomCount }}; // Pass the room count from Laravel to JavaScript
+    const initialMemberCount = {{ $maxMemberCapacity }}; // Pass max member capacity from Laravel
+
+    const roomCountElement = document.getElementById('room-count');
+    const memberCountElement = document.getElementById('member-count');
+    const roomsInput = document.getElementById('rooms-input');
+    const membersInput = document.getElementById('members-input');
+    const form = document.getElementById('availability-form');
+
+    // Initialize room and member count on page load
+    roomCountElement.textContent = 1; // Default count is 1
+    memberCountElement.textContent = 1;
+
+    // Toggle dropdown visibility
     document.querySelector('.selected-guests').addEventListener('click', function () {
         document.querySelector('.guest-dropdown').classList.toggle('show');
     });
 
-    // Update the summary text at the top
+    // Update the summary text and hidden inputs for form submission
     const updateSummary = () => {
-        const roomCount = document.getElementById('room-count').textContent;
-        const adultCount = document.getElementById('adult-count').textContent;
-        const childCount = document.getElementById('child-count').textContent;
+        const roomCount = roomCountElement.textContent;
+        const memberCount = memberCountElement.textContent;
 
         document.getElementById('guest-summary').textContent =
-            `${roomCount} Room${roomCount > 1 ? 's' : ''}, ${adultCount} Adult${adultCount > 1 ? 's' : ''}, ${childCount} Child${childCount > 1 ? 'ren' : ''}`;
+            `${roomCount} Room${roomCount > 1 ? 's' : ''}, ${memberCount} Total Member${memberCount > 1 ? 's' : ''}`;
+
+        // Update hidden inputs with the current values
+        roomsInput.value = roomCount;
+        membersInput.value = memberCount;
     };
 
     // Handle the increment and decrement buttons
     document.querySelectorAll('.increment, .decrement').forEach(button => {
         button.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent the default action (e.g., form submission)
+            event.preventDefault(); // Prevent any URL changes
 
             const type = this.getAttribute('data-type');
             const elementId = type + '-count';
@@ -537,17 +550,38 @@
             let value = parseInt(element.textContent);
 
             if (this.classList.contains('increment')) {
-                value++;
-            } else if (this.classList.contains('decrement') && value > 0) {
-                value--;
+                // Increment logic
+                if (type === 'room') {
+                    if (value < initialRoomCount) {
+                        value++;
+                    }
+                } else if (type === 'member') {
+                    if (value < initialMemberCount) {
+                        value++;
+                    }
+                }
+            } else if (this.classList.contains('decrement')) {
+                // Decrement logic
+                if (value > 1) { // Prevent values below 1
+                    value--;
+                }
             }
 
+            // Update the count
             element.textContent = value;
-            updateSummary();
+
+            updateSummary(); // Update the summary
         });
     });
+
+    // Update the summary and inputs on form submission to ensure correct values are sent
+    form.addEventListener('submit', function (event) {
+        // Update hidden inputs with the current values before form submission
+        updateSummary();
+    });
+
+    // Initial summary update
+    updateSummary();
 </script>
-
-
 
 @endsection

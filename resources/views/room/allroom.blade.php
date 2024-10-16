@@ -58,7 +58,7 @@
                                         <th>Floor Name</th>
                                         <th>Room Number</th>
                                         <th>Room Type</th>
-                                        <th>Bed Count</th>
+                                        <th>Bed Type</th>
                                         <th>Rent</th>
                                         <th>Ph.Number</th>
                                         <th>Status</th>
@@ -83,7 +83,7 @@
                                             <td>{{ $rooms->floor->floor_name }}</td>
                                             <td>{{ $rooms->room_number }}</td>
                                             <td>{{ $rooms->roomType ? $rooms->roomType->room_name : 'N/A' }}</td>
-                                            <td>{{ $rooms->bed_count }}</td>
+                                            <td>{{ $rooms->bed_type }}</td>
                                             <td>{{ $rooms->rent }}</td>
                                             <td>{{ $rooms->phone_number }}</td>
                                             <td>
@@ -158,8 +158,8 @@
                                                                         </p>
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <p><strong>Bed Count:</strong> <span
-                                                                                id="floor-total-number">{{ $rooms->bed_count }}</span>
+                                                                        <p><strong>Bed Type:</strong> <span
+                                                                                id="floor-total-number">{{ $rooms->bed_type }}</span>
                                                                         </p>
                                                                         <p><strong>Rent:</strong> <span
                                                                                 id="floor-time">{{ $rooms->rent }}</span>
