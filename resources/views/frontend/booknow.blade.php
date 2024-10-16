@@ -4,9 +4,9 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ url('frontend/js/d_home.js') }}"></script> -->
+
 
 <section class="d_booknow">
     <div class="d_img col">
@@ -411,6 +411,21 @@
 </section>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const mainImage = document.querySelector('.d_booknow .d_img img');
+    const thumbnails = document.querySelectorAll('.d_subimg img');
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function () {
+            // Get the source of the clicked thumbnail
+            const newSrc = this.getAttribute('src');
+
+            // Set the main image source to the clicked thumbnail's source
+            mainImage.setAttribute('src', newSrc);
+        });
+    });
+});
+
     document.addEventListener('DOMContentLoaded', () => {
         // Constants
         const PRICE_PER_NIGHT = 1250;
@@ -530,6 +545,34 @@
         // Initial calculation
         calculateTotal();
     });
+</script>
+<script>
+    $(function () {
+    // Function to get today's date in dd/mm/yy format
+    function getTodayDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        var yyyy = today.getFullYear();
+        return dd + '/' + mm + '/' + yyyy;
+    }
+
+    $(".d_cal .ds").datepicker({
+        dateFormat: "dd/mm/yy",
+        defaultDate: new Date(),
+        onSelect: function (dateText, inst) {
+            $(this).val(dateText);
+        }
+    });
+
+    // Set default date to today for both inputs
+    $(".d_cal .ds").val(getTodayDate());
+
+    $(".d_cal .datepicker-trigger").on("click", function () {
+        var input = $(this).siblings(".ds");
+        input.datepicker("show");
+    });
+});
 </script>
 
 @endsection
