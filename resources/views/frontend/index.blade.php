@@ -159,25 +159,25 @@
                     </div>
                     <div class="row m-0">
                         @if (!empty($amenities))
-                            @foreach ($amenities as $amenity)
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
-                                    <div class="service_img">
-                                        @if ($amenity && $amenity->image)
-                                            <img src="{{ asset('assets/amenities/' . $amenity->image) }}"
-                                                alt="{{ $amenity->name }}">
-                                        @else
-                                            <img src="{{ asset('assets/amenities/default.png') }}" alt="Default Image">
-                                        @endif
-                                        <p class="mb-0 text-center text-light">
-                                            {{ $amenity->name ?? 'Unknown Amenity' }}
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="col-12 text-center text-light">
-                                <p>No amenities available.</p>
+                        @foreach ($amenities as $amenity)
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-6 hotel_amelity_col pt-5">
+                            <div class="service_img">
+                                @if ($amenity && $amenity->image)
+                                <img src="{{ asset('assets/amenities/' . $amenity->image) }}"
+                                    alt="{{ $amenity->name }}">
+                                @else
+                                <img src="{{ asset('assets/amenities/default.png') }}" alt="Default Image">
+                                @endif
+                                <p class="mb-0 text-center text-light">
+                                    {{ $amenity->name ?? 'Unknown Amenity' }}
+                                </p>
                             </div>
+                        </div>
+                        @endforeach
+                        @else
+                        <div class="col-12 text-center text-light">
+                            <p>No amenities available.</p>
+                        </div>
                         @endif
                     </div>
 
@@ -208,33 +208,33 @@
     </div>
     <div class="gallery__slider owl-carousel">
         @foreach ($facilities as $facility)
-                <div class="gallery__item">
-                    <div class="Slider_image">
-                        @php
-                            // Split the comma-separated images into an array
-                            $images = explode(',', $facility->image);
+        <div class="gallery__item">
+            <div class="Slider_image">
+                @php
+                // Split the comma-separated images into an array
+                $images = explode(',', $facility->image);
 
-                            // Check if the facility name is 'Spa' and select the third image (index 2), else use the first image
-                            if ($facility->name == 'Spa') {
-                                $selectedImage = $images[2] ?? null;
-                            } elseif ($facility->name == 'Indoor Pool') {
-                                $selectedImage = $images[2] ?? null;
-                            } else {
-                                $selectedImage = $images[0] ?? null;
-                            }
-                        @endphp
+                // Check if the facility name is 'Spa' and select the third image (index 2), else use the first image
+                if ($facility->name == 'Spa') {
+                $selectedImage = $images[2] ?? null;
+                } elseif ($facility->name == 'Indoor Pool') {
+                $selectedImage = $images[2] ?? null;
+                } else {
+                $selectedImage = $images[0] ?? null;
+                }
+                @endphp
 
-                        @if ($selectedImage && file_exists(public_path('assets/facilities/' . $selectedImage)))
-                            <img src="{{ asset('assets/facilities/' . $selectedImage) }}" alt="{{ $facility->name }}">
-                        @else
-                            <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
-                        @endif
+                @if ($selectedImage && file_exists(public_path('assets/facilities/' . $selectedImage)))
+                <img src="{{ asset('assets/facilities/' . $selectedImage) }}" alt="{{ $facility->name }}">
+                @else
+                <img src="{{ asset('assets/facilities/default.png') }}" alt="Default Image">
+                @endif
 
-                        <div class="image__overlay image__overlay--primary">
-                            <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
-                        </div>
-                    </div>
+                <div class="image__overlay image__overlay--primary">
+                    <div class="image__title">{{ $facility->name ?? 'Unknown Facility' }}</div>
                 </div>
+            </div>
+        </div>
         @endforeach
 
     </div>
@@ -262,26 +262,26 @@
     </div>
     <div class="order__slider owl-carousel">
         @foreach ($roomTypes as $roomType)
-            <div class="order__item">
-                <div class="Slider_image">
-                    @if ($roomType->images->isNotEmpty())
-                        <img class="image__img" src="{{ URL::to('/assets/upload/' . $roomType->images->first()->room_image) }}"
-                            alt="{{ $roomType->room_name }}">
-                    @else
-                        <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
-                    @endif
-                    <div class="image__overlay3 image__overlay3--primary">
-                        <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
-                    </div>
-                    <div class="image_onsection bg-light py-3">
-                        <h4 class="text-center pb-2">{{ $roomType->room_name }}</h4>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                            <p class="text-dark mb-0">${{ $roomType->base_price }}</p>
-                        </div>
+        <div class="order__item">
+            <div class="Slider_image">
+                @if ($roomType->images->isNotEmpty())
+                <img class="image__img" src="{{ URL::to('/assets/upload/' . $roomType->images->first()->room_image) }}"
+                    alt="{{ $roomType->room_name }}">
+                @else
+                <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
+                @endif
+                <div class="image__overlay3 image__overlay3--primary">
+                    <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
+                </div>
+                <div class="image_onsection bg-light py-3">
+                    <h4 class="text-center pb-2">{{ $roomType->room_name }}</h4>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <!-- <i class="fa-solid fa-tag px-2"></i> -->
+                        <p class="text-dark mb-0">${{ $roomType->base_price }}</p>
                     </div>
                 </div>
             </div>
+        </div>
         @endforeach
 
 
@@ -356,27 +356,35 @@
         <div class="row m-0">
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="count_imgbox p-5">
-                    <h2 class="text-center outlined-text"><?php echo $premiumRoomsCount ?? 0; ?></h2>
+                    <h2 class="text-center outlined-text">
+                        <?php echo $premiumRoomsCount ?? 0; ?>
+                    </h2>
                     <h3 class="text-center text-light">Premium
                         Rooms</h3>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="count_imgbox p-5">
-                    <h2 class="text-center outlined-text"><?php echo $deluxeSuitesCount ?? 0; ?></h2>
+                    <h2 class="text-center outlined-text">
+                        <?php echo $deluxeSuitesCount ?? 0; ?>
+                    </h2>
                     <h3 class="text-center text-light">Deluxe
                         Suites</h3>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="count_imgbox p-5">
-                    <h2 class="text-center outlined-text"><?php echo $HoneymoonRoomsCount ?? 0; ?></h2>
+                    <h2 class="text-center outlined-text">
+                        <?php echo $HoneymoonRoomsCount ?? 0; ?>
+                    </h2>
                     <h3 class="text-center text-light">Honeymoon Suite Room</h3>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-6">
                 <div class="count_imgbox p-5">
-                    <h2 class="text-center outlined-text"><?php echo $standardSuitesCount ?? 0; ?></h2>
+                    <h2 class="text-center outlined-text">
+                        <?php echo $standardSuitesCount ?? 0; ?>
+                    </h2>
                     <h3 class="text-center text-light">Standard double Room</h3>
                 </div>
             </div>
@@ -403,72 +411,30 @@
         </div>
     </div>
     <div class="order__slider owl-carousel">
+        @if (isset($offerPackages) && $offerPackages->isNotEmpty())
+        @foreach ($offerPackages as $offerPackage)
         <div class="order__item">
             <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/offer1.png') }}" alt>
+                <img class="image__img" src="{{ URL::to('/images/' . $offerPackage->image) }}"
+                    alt="{{ $offerPackage->title }}">
                 <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
+                    <a href="{{ route('offerDetails', $offerPackage->id) }}" class="Custom_btn">Learn More</a>
                 </div>
                 <div class="image_onsection bg-light py-3">
-                    <h4 class="text-center pb-2">Weekend Gateway</h4>
+                    <h4 class="text-center pb-2">{{ $offerPackage->title }}</h4>
                     <div class="d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0">Book 2 Nights on Fri,
-                            Sat or Sun. </p>
+                        <p class="text-dark mb-0">{{ $offerPackage->description }}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="order__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/offer2.png') }}" alt>
-                <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
-                </div>
-                <div class="image_onsection bg-light py-3">
-                    <h4 class="text-center pb-2">Weekend Gateway</h4>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0">Book 2 Nights on Fri,
-                            Sat or Sun. </p>
-                    </div>
-                </div>
-            </div>
+        @endforeach
+        @else
+        <div class="col-12 text-center text-light">
+            <p>No offers available at this time.</p>
         </div>
-        <div class="order__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/offer3.png') }}" alt>
-                <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
-                </div>
-                <div class="image_onsection bg-light py-3">
-                    <h4 class="text-center pb-2">Weekend Gateway</h4>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0">Book 2 Nights on Fri,
-                            Sat or Sun. </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="order__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/offer4.png') }}" alt>
-                <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('offerDetails') }}" class="Custom_btn">Learn More</a>
-                </div>
-                <div class="image_onsection bg-light py-3">
-                    <h4 class="text-center pb-2">Weekend Gateway</h4>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0">Book 2 Nights on Fri,
-                            Sat or Sun. </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Repeat other items as needed -->
+        @endif
     </div>
 
 </section>
@@ -496,21 +462,21 @@
         <div class="testimonai__container">
             <div class="Testimonials_slider owl-carousel">
                 @foreach($clientReviews as $review)
-                    <div class="gallery__item gallery__item2">
-                        <div class="testimonial-container">
-                            <div class="testimonial-box">
-                                <p class="testimonial-text">"{{ $review->description }}"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img class="image__img" src="{{ URL::to('/assets/upload/' . $review->image) }}"
-                                    alt="{{ $review->client_name }}">
-                                <div class="author-info">
-                                    <h3>{{ $review->client_name }}</h3>
-                                    <p>{{ $review->country }}, {{$review->state}}</p>
-                                </div>
+                <div class="gallery__item gallery__item2">
+                    <div class="testimonial-container">
+                        <div class="testimonial-box">
+                            <p class="testimonial-text">"{{ $review->description }}"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img class="image__img" src="{{ URL::to('/assets/upload/' . $review->image) }}"
+                                alt="{{ $review->client_name }}">
+                            <div class="author-info">
+                                <h3>{{ $review->client_name }}</h3>
+                                <p>{{ $review->country }}, {{$review->state}}</p>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
                 <!-- Repeat other items as needed -->
             </div>

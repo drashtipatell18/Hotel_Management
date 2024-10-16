@@ -24,7 +24,7 @@
                                             <th>Hotel</th>
                                             <th>Title</th>
                                             <th>Description</th>
-                                            <th>Image</th>
+                                            {{-- <th>Image</th> --}}
                                             <th>Discount Type</th>
                                             <th>Discount Value</th>
                                             <th>Start Date</th>
@@ -40,7 +40,7 @@
                                                 <td>{{ $offerPackage->hotel_id }}</td>
                                                 <td>{{ $offerPackage->title }}</td>
                                                 <td>{{ $offerPackage->description }}</td>
-                                                <td>{{ $offerPackage->image }}</td>
+                                                {{-- <td>{{ $offerPackage->image }}</td> --}}
                                                 <td>{{ $offerPackage->discount_type }}</td>
                                                 <td>{{ $offerPackage->discount_value }}</td>
                                                 <td>{{ $offerPackage->start_date }}</td>

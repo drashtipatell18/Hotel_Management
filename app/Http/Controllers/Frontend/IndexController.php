@@ -14,6 +14,7 @@ use App\Models\Facilities;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RoomTypes;
 use App\Models\ClientReview;
+use App\Models\OfferPackage;
 use Illuminate\Support\Facades\Mail; // Add this line to import the Mail facade
 use App\Mail\PasswordResetMail;
 
@@ -27,7 +28,7 @@ class IndexController extends Controller
         $amenities = Amenities::all();
         $facilities = Facilities::all();
         $roomTypes = RoomTypes::all();
-
+        $offerPackages = OfferPackage::distinct()->get();
         $premiumRoomsCount = RoomTypes::where('room_name', 'Premium Rooms')->count();
         $deluxeSuitesCount = RoomTypes::where('room_name', 'Deluxe Room')->count();
         $HoneymoonRoomsCount = RoomTypes::where('room_name', 'Honeymoon Suite Room')->count();
@@ -35,7 +36,7 @@ class IndexController extends Controller
 
         $clientReviews = ClientReview::all();
 
-        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews'));
+        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews','offerPackages'));
     }
     public function register()
     {

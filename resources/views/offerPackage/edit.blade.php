@@ -42,6 +42,12 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" class="form-control" id="image" name="image">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label for="discount_type">Discount Type</label>
                                         <input type="text" class="form-control" id="discount_type" name="discount_type" value="{{ $offerPackage->discount_type }}">
                                     </div>

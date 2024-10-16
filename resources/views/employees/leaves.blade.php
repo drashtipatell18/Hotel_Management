@@ -20,7 +20,7 @@
                         <div class="row formtype">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Empployee Name</label>
+                                    <label>Employee Name</label>
                                     <input class="form-control" type="text" value="BKG-0001">
                                 </div>
                             </div>
