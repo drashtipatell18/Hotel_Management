@@ -43,165 +43,177 @@
                         <h5>Book</h5>
                         <h6>From $1250/Night</h6>
                     </div>
-                    <div class="row g-3 mt-1">
-                        <div class="col-12">
-                            <div class="d_filed d-flex justify-content-between align-items-center">
-                                <div class="d_formsubtitle">Check in</div>
-                                <div class="d-flex align-items-center d_cal">
-                                    <input type="text" class="ds" name="checkin" style="width: 88px;">
-                                    <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                        style="color: #ffffff;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d_filed d-flex justify-content-between align-items-center">
-                                <div class="d_formsubtitle">Check out</div>
-                                <div class="d-flex align-items-center d_cal">
-                                    <input type="text" class="ds" name="checkout" style="width: 88px;">
-                                    <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                        style="color: #ffffff;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d_filed d-flex justify-content-between align-items-center">
-                                <div class="d_formsubtitle">Rooms</div>
-                                <div class="d-flex d_btn">
-                                    <button class="btn-decrement" data-target="room"><i
-                                            class="fa-solid fa-minus"></i></button>
-                                    <span id="room-count" class="mx-2">1</span>
-                                    <button class="btn-increment" data-target="room"><i
-                                            class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d_filed d-flex justify-content-between align-items-center">
-                                <div class="d_formsubtitle">Adults</div>
-                                <div class="d-flex d_btn">
-                                    <button class="btn-decrement" data-target="adult"><i
-                                            class="fa-solid fa-minus"></i></button>
-                                    <span id="adult-count" class="mx-2">1</span>
-                                    <button class="btn-increment" data-target="adult"><i
-                                            class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d_filed d-flex justify-content-between align-items-center">
-                                <div class="d_formsubtitle">Children</div>
-                                <div class="d-flex d_btn">
-                                    <button class="btn-decrement" data-target="children"><i
-                                            class="fa-solid fa-minus"></i></button>
-                                    <span id="children-count" class="mx-2">1</span>
-                                    <button class="btn-increment" data-target="children"><i
-                                            class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d_extra mt-4">
-                        <h4>Extra Service</h4>
-                        <div class="row g-2 mt-1 d_exservice">
+                    <form action="{{ route('booknow.store') }}" method="post">
+                        @csrf
+                        <div class="row g-3 mt-1">
                             <div class="col-12">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" class="me-2" id="extra-room-clean"
-                                            name="extra-room-clean">
-                                        <label for="extra-room-clean">Room Clean</label>
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Check in</div>
+                                    <div class="d-flex align-items-center d_cal">
+                                        <input type="text" class="ds" name="checkin" style="width: 88px;">
+                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
+                                            style="color: #ffffff;"></i>
                                     </div>
-                                    <p class="mb-0">$100/Night</p>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="d_filed border-0 p-0 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" class="me-2" id="extra-massage" name="extra-massage">
-                                        <label for="extra-massage">Massage</label>
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Check out</div>
+                                    <div class="d-flex align-items-center d_cal">
+                                        <input type="text" class="ds" name="checkout" style="width: 88px;">
+                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
+                                            style="color: #ffffff;"></i>
                                     </div>
-                                    <div class="d-flex d_btn align-items-center">
-                                        <p class="mb-0 me-2">$30/person</p>
-                                        <button class="btn-service-decrement" data-target="massage"><i
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Rooms</div>
+                                    <div class="d-flex d_btn">
+                                        <button class="btn-decrement" data-target="room"><i
                                                 class="fa-solid fa-minus"></i></button>
-                                        <span id="massage-count" class="mx-2">1</span>
-                                        <button class="btn-service-increment" data-target="massage"><i
+                                        <span id="room-count" class="mx-2">1</span>
+                                        <button class="btn-increment" data-target="room"><i
                                                 class="fa-solid fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="d_filed border-0 p-0 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" class="me-2" id="extra-day-spa" name="extra-day-spa">
-                                        <label for="extra-day-spa">Day Spa</label>
-                                    </div>
-                                    <div class="d-flex d_btn align-items-center">
-                                        <p class="mb-0 me-2">$20/person</p>
-                                        <button class="btn-service-decrement" data-target="day-spa"><i
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Adults</div>
+                                    <div class="d-flex d_btn">
+                                        <button class="btn-decrement" data-target="adult"><i
                                                 class="fa-solid fa-minus"></i></button>
-                                        <span id="day-spa-count" class="mx-2">1</span>
-                                        <button class="btn-service-increment" data-target="day-spa"><i
+                                        <span id="adult-count" class="mx-2">1</span>
+                                        <button class="btn-increment" data-target="adult"><i
+                                                class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Children</div>
+                                    <div class="d-flex d_btn">
+                                        <button class="btn-decrement" data-target="children"><i
+                                                class="fa-solid fa-minus"></i></button>
+                                        <span id="children-count" class="mx-2">1</span>
+                                        <button class="btn-increment" data-target="children"><i
                                                 class="fa-solid fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="d_total mt-3">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button p-0" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Total Cost
-                                        </button>
-                                    </h2>
-                                    <h5 id="total-cost">$1350</h5>
+                        <div class="d_extra mt-4">
+                            <h4>Extra Service</h4>
+                            <div class="row g-2 mt-1 d_exservice">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="me-2" id="extra-room-clean"
+                                                name="extra-room-clean">
+                                            <label for="extra-room-clean">Room Clean</label>
+                                        </div>
+                                        <p class="mb-0">$100/Night</p>
+                                    </div>
                                 </div>
-                                <div id="collapseOne" class="accordion-collapse collapse "
-                                    data-bs-parent="#accordionExample">
-                                    <hr>
-                                    <div class="row g-2">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d_title">Total Base price</div>
-                                                <div class="d_price" data-type="base">$1250</div>
-                                            </div>
+                                <div class="col-12">
+                                    <div class="d_filed border-0 p-0 d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="me-2" id="extra-massage" name="extra-massage">
+                                            <label for="extra-massage">Massage</label>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d_title">Taxes</div>
-                                                <div class="d_price" data-type="taxes">$0</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d_title">Extra : Room Clean</div>
-                                                <div class="d_price" data-type="extra">$100</div>
-                                            </div>
+                                        <div class="d-flex d_btn align-items-center">
+                                            <p class="mb-0 me-2">$30/person</p>
+                                            <button class="btn-service-decrement" data-target="massage"><i
+                                                    class="fa-solid fa-minus"></i></button>
+                                            <span id="massage-count" class="mx-2">1</span>
+                                            <button class="btn-service-increment" data-target="massage"><i
+                                                    class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d_title1"><b>Total</b></div>
-                                                <div class="d_price1" id="total-price"><b>$1350</b></div>
-                                            </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d_filed border-0 p-0 d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="me-2" id="extra-day-spa" name="extra-day-spa">
+                                            <label for="extra-day-spa">Day Spa</label>
+                                        </div>
+                                        <div class="d-flex d_btn align-items-center">
+                                            <p class="mb-0 me-2">$20/person</p>
+                                            <button class="btn-service-decrement" data-target="day-spa"><i
+                                                    class="fa-solid fa-minus"></i></button>
+                                            <span id="day-spa-count" class="mx-2">1</span>
+                                            <button class="btn-service-increment" data-target="day-spa"><i
+                                                    class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="d_cta mt-3 text-center">
-                            <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay
-                                Now</a>
-                        </div>
-                    </div>
+                        <hr>
+                        <div class="d_total mt-3">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button p-0" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                Total Cost
+                                            </button>
+                                        </h2>
+                                        <h5 id="total-cost">$1350</h5>
+                                    </div>
+                                    <div id="collapseOne" class="accordion-collapse collapse "
+                                        data-bs-parent="#accordionExample">
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d_title">Total Base price</div>
+                                                    <div class="d_price" data-type="base">$1250</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d_title">Taxes</div>
+                                                    <div class="d_price" data-type="taxes">$0</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d_title">Extra : Room Clean</div>
+                                                    <div class="d_price" data-type="extra">$100</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d_title1"><b>Total</b></div>
+                                                    <div class="d_price1" id="total-price"><b>$1350</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d_cta mt-3 text-center">
+                                    <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay
+                                        Now</a>
+                                </div>
+                            </div>
+                            <div class="drashti">
+                                <input type="hidden" name="room_id" value="{{ $room->id }}">
+                                <input type="hidden" name="checkin" value="{{ $room->check_in }}">
+                                <input type="hidden" name="checkout" value="{{ $room->check_out }}">
+                                <input type="hidden" name="adult" value="1">
+                                <input type="hidden" name="children" value="1">
+                                <input type="hidden" name="extra_room_clean" value="1">
+                                <input type="hidden" name="extra_massage" value="1">
+                                <input type="hidden" name="extra_day_spa" value="1">
+                            </div>
                 </div>
             </div>
             <div class="col-12 col-lg-8 ps-lg-5">
@@ -306,6 +318,7 @@
                                 <li>Service station with Lavazza coffee machine, kettle and tea</li>
                                 <li>Bathroom with rain shower</li>
                                 <li>Comfortable terry towels and bathrobes</li>
+
                             </ul>
                         </div>
                     </div>

@@ -341,6 +341,7 @@
             
             availableRooms.forEach(room => {
                 const imageUrl = room.image ? `/assets/upload/${room.image}` : '/assets/upload/default.png'; // Fallback image
+                const reserveUrl = `/booknow/${room.id}`;
                 const roomHtml = `<div class="col-xs-12 col-sm-6">
                         <div class="d_box position-relative">
                             <div class="d_img">
@@ -373,7 +374,7 @@
                                     <div class="col-12 col-lg-1 p-0"></div>
                                     <div class="col-12 col-lg-3 p-0">
                                         <div class="d_cta">
-                                            <a href="{{ route('booknow')}}" class="d-block">Reserve</a>
+                                           <a href="${reserveUrl}" class="d-block">Reserve</a>
                                         </div>
                                     </div>
                                 </div>
@@ -387,7 +388,7 @@
             roomCountElement.textContent = availableRooms.length;
         }
     }
-    
+
 
     // Initial render
     document.addEventListener('DOMContentLoaded', () => {
@@ -559,7 +560,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const dropdown = document.querySelector('.dropdown');
             const dropdownToggle = document.querySelector('.dropdown-toggle');
-            const dropdownMenu = document.querySelector('.dropdown-menu');selectedSort 
+            const dropdownMenu = document.querySelector('.dropdown-menu');selectedSort
             const tabLinks = document.querySelectorAll('#v-pills-tab .nav-link');
             const tabContents = document.querySelectorAll('#v-pills-tabContent .tab-pane');
 
