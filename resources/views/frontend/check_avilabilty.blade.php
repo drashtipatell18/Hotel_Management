@@ -338,7 +338,7 @@
         if (roomContainer) {
             roomContainer.innerHTML = ''; // Clear existing rooms
 
-            
+
             availableRooms.forEach(room => {
                 const imageUrl = room.image ? `/assets/upload/${room.image}` : '/assets/upload/default.png'; // Fallback image
                 const reserveUrl = `/booknow/${room.id}`;
@@ -607,36 +607,43 @@
 <!-- ========================================================= Filter ============================================== -->
 
 <script>
-    // Function to filter rooms based on selected criteria
     function filterRooms() {
-  
-        const selectedRoomTypes = Array.from(document.querySelectorAll('input[name="roomType[]"]:checked')).map(cb => cb.value);
-        const selectedSmokingPreferences = Array.from(document.querySelectorAll('input[name="smokingPreference[]"]:checked')).map(cb => cb.value);
-        const selectedViews = Array.from(document.querySelectorAll('input[name="view[]"]:checked')).map(cb => cb.value);
+    const checkedCheckbox = document.querySelector('input[type="checkbox"]:checked');
+    const selectedValue = checkedCheckbox ? checkedCheckbox.value : null;
+    const selectedCategory = checkedCheckbox ? checkedCheckbox.name : null;
 
-        const filteredRooms = availableRooms.filter(room => {
-            // Check if the room type matches the selected room types
-            const matchesRoomType = selectedRoomTypes.length === 0 || selectedRoomTypes.includes(String(room.room_type_id)) || selectedRoomTypes.includes('all'); 
-            // Check if the smoking preference matches the selected preferences
-            const matchesSmokingPreference = selectedSmokingPreferences.length === 0 || selectedSmokingPreferences.includes(String(room.smoking_id)) ;
-            console.log(selectedSmokingPreferences,room.smoking_id);
-            
-            // Check if the view matches the selected views
-            const matchesView = selectedViews.length === 0 || selectedViews.includes(String(room.view_id));
-            // Return the room details if all conditions match
-            return matchesRoomType && matchesSmokingPreference && matchesView;
-        });
-   
-        renderRooms(filteredRooms);
-    }
+    const filteredRooms = availableRooms.filter(room => {
+        if (!selectedValue || selectedValue === 'all') return true;
 
-    // Event listeners for filter checkboxes
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', filterRooms);
+        switch (selectedCategory) {
+            case 'roomType[]':
+                return String(room.room_type_id) === selectedValue;
+            case 'smokingPreference[]':
+                return String(room.smoking_id) === selectedValue;
+            case 'view[]':
+                return String(room.view_id) === selectedValue;
+            default:
+                return true;
+        }
     });
 
-    // Ensure to call filterRooms on page load to apply any existing filters
-    document.addEventListener('DOMContentLoaded', filterRooms);
+    renderRooms(filteredRooms);
+}
+
+// Event listener for all checkboxes
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        // Uncheck all other checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            if (cb !== this) cb.checked = false;
+        });
+
+        filterRooms();
+    });
+});
+
+// Call filterRooms on page load to apply any existing filters
+document.addEventListener('DOMContentLoaded', filterRooms);
 </script>
 
 
