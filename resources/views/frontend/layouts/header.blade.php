@@ -55,10 +55,16 @@
         color: white; /* Maintain text color on hover */
     }
     button:disabled {
-    background-color: #ccc; /* Change to a light gray */
-    color: #666; /* Change to a dark gray */
-    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
-}
+        background-color: #ccc; /* Change to a light gray */
+        color: #666; /* Change to a dark gray */
+        cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+    }
+
+    .header__logo{
+        height: 69px;
+        width: 69px;
+        padding: 0px !important;
+    }
 
     /* .fixed-size-image {
     width: 500px;
@@ -121,7 +127,8 @@
         <div class="offcanvas__logo">
             <a href="{{ route('index') }}">
                 <!-- <img src="img/logo.png" alt=""> -->
-                <h2 class="text-light">Logo</h2>
+                <!-- <h2 class="text-light">Logo</h2> -->
+                <img class="w-100 h-100" src="{{ url('assets/img/Logo.png') }}" alt="">
             </a>
         </div>
         <!-- <div id="mobile-menu-wrap"></div> -->
@@ -310,11 +317,12 @@
         <div class="header__nav__option">
             <div class="d_container">
                 <div class="row m-0">
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 align-self-center">
                         <div class="header__logo">
                             <a href="{{ route('index') }}">
                                 <!-- <img src="img/logo.png" alt=""> -->
-                                <h2 class="text-light">Logo</h2>
+                                <!-- <h2 class="text-light">Logo</h2> -->
+                                <img  class="w-100 h-100" src="{{ url('assets/img/Frame.png') }}" alt="">
                             </a>
                         </div>
                     </div>
