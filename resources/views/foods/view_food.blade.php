@@ -32,7 +32,7 @@
                                         <tbody>
                                             @foreach ($foods as $food )
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td> +
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <a href="{{ URL::to('/assets/upload/'.$food->food_image) }}" data-lightbox="food" data-title="{{ $food->name }}" class="avatar avatar-sm mr-2">
                                                         <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$food->food_image) }}" alt="{{ $food->food_image }}" width="80px">
