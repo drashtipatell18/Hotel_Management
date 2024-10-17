@@ -170,62 +170,40 @@
                                                     All</a></div>
                                             <ul class="list-unstyled">
                                                 <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="all">All</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="deluxe">Deluxe Room</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="king">King Room</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="classic">Classic Room</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="queen">Queen Room</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="premium">Premium Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="deluxeSuite">Deluxe Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="junior">Junior Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="family">Family Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="presidential">Presidential Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="executive">Executive Suite</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="roomType" value="studio">Studio Suite</li>
+                                                        name="roomType[]" value="all">All</li>
+                                                @foreach ($roomTypes as $roomType)
+                                                    <li class="d-flex align-items-center">
+                                                        <input type="checkbox" class="room-type-checkbox" name="roomType[]" value="{{ $roomType->id }}">
+                                                        {{ $roomType->room_name }}
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <div class="tab-pane fade d_tab border-0" id="v-pills-messages" role="tabpanel"
                                             aria-labelledby="v-pills-messages-tab" tabindex="0">
-                                            <div class="d_clear"><a href="" class="text-end text-decoration-none">Clear
-                                                    All</a></div>
+                                            <div class="d_clear"><a href="#" class="text-end text-decoration-none">Clear
+                                                All</a></div>
                                             <ul class="list-unstyled">
-
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="smokingPreference" value="noPreference">No Preference
+                                            @foreach($smokingPrefrences as $preference)
+                                                <li class="d-flex align-items-center">
+                                                    <input type="checkbox" name="smokingPreference[]" value="{{ $preference->id }}">
+                                                    {{ $preference->name }}
                                                 </li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="smokingPreference" value="smoking">Smoking</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox"
-                                                        name="smokingPreference" value="noSmoking">No Smoking</li>
+                                            @endforeach
                                             </ul>
-                                            </ul>
+                                            
                                         </div>
                                         <div class="tab-pane fade d_tab border-0" id="v-pills-settings" role="tabpanel"
                                             aria-labelledby="v-pills-settings-tab" tabindex="0">
                                             <div class="d_clear"><a href="" class="text-end text-decoration-none">Clear
                                                     All</a></div>
                                             <ul class="list-unstyled">
-                                                <li class="d-flex align-items-center"><input type="checkbox" name="view"
-                                                        value="pool">Pool View</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox" name="view"
-                                                        value="sky">Sky View</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox" name="view"
-                                                        value="garden">Garden View</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox" name="view"
-                                                        value="city">City View</li>
-                                                <li class="d-flex align-items-center"><input type="checkbox" name="view"
-                                                        value="forest">Forest View</li>
+                                            @foreach($additionalPrefrence as $preference)
+                                                <li class="d-flex align-items-center">
+                                                    <input type="checkbox" name="view[]" value="{{ $preference->id }}">
+                                                    {{ $preference->name }}
+                                                </li>
+                                            @endforeach
 
                                             </ul>
                                         </div>
@@ -340,12 +318,20 @@
 
             
             availableRooms.forEach(room => {
-                const imageUrl = room.image ? `/assets/upload/${room.image}` : '/assets/upload/default.png'; // Fallback image
+                let imageHtml = '';
+                if (room.images && room.images.length > 0) {
+                    const firstImage = room.images[0]; // Get the first image
+                    const imageUrl = firstImage ? `/assets/upload/${firstImage.image}` : '/assets/upload/default.png'; // Fallback image
+                    imageHtml = `<img src="${imageUrl}" alt="${room.room_name}" class="room-image">`;
+                } else {
+                    imageHtml = `<img src="/assets/upload/default.png" alt="${room.room_name}" class="room-image">`;
+                }
+
                 const reserveUrl = `/booknow/${room.id}`;
                 const roomHtml = `<div class="col-xs-12 col-sm-6">
                         <div class="d_box position-relative">
                             <div class="d_img">
-                                 <img src="${imageUrl}" alt="${room.room_name}">
+                                 ${imageHtml}
                             </div>
                             <div class="d_night">
                                 <div class="d_price">
@@ -374,7 +360,7 @@
                                     <div class="col-12 col-lg-1 p-0"></div>
                                     <div class="col-12 col-lg-3 p-0">
                                         <div class="d_cta">
-                                           <a href="${reserveUrl}" class="d-block">Reserve</a>
+                                           <a href="${reserveUrl}" class="d-block reserve-btn" data-room-id="${room.id}">Reserve</a> 
                                         </div>
                                     </div>
                                 </div>
@@ -386,6 +372,15 @@
 
             });
             roomCountElement.textContent = availableRooms.length;
+
+            document.querySelectorAll('.reserve-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const roomId = this.getAttribute('data-room-id');
+                    window.location.href = `/booknow/${roomId}`; 
+                });
+            });
+
         }
     }
 

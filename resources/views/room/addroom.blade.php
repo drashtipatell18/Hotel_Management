@@ -142,7 +142,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Room Image</label>
                                     <div class="row">
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -238,6 +238,26 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="image">Room Images</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image[]" multiple onchange="previewImages(event)">
+                                        <label class="custom-file-label" for="image">Choose files</label>
+                                        @error('image')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label>Image Preview</label>
+                                    <div id="imagePreview" class="row">
+                                        <!-- Image previews will be appended here -->
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -259,12 +279,38 @@
     </div>
 @endsection
 <script>
-    function previewImage(event, previewElementId) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const output = document.getElementById(previewElementId);
-            output.src = reader.result;
+        function previewImages(event) {
+        const previewContainer = document.getElementById('imagePreview');
+        const files = event.target.files;
+
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-fluid rounded mb-2';
+                img.style.width = '100%';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+
+                const div = document.createElement('div');
+                div.className = 'col-md-2 mb-3';
+                div.innerHTML = `
+                    <div class="text-center">
+                        ${img.outerHTML}
+                        <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </div>
+                `;
+
+                previewContainer.appendChild(div);
+            };
+            reader.readAsDataURL(file);
         }
-        reader.readAsDataURL(event.target.files[0]);
     }
-</script>
+
+    function removePreview(element) {
+        element.parentElement.parentElement.remove();
+    }
+    </script>

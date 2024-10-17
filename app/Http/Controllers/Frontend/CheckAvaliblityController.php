@@ -32,7 +32,7 @@ class CheckAvaliblityController extends Controller
 
        
 
-        $availableRooms = $query->get();
+        $availableRooms = Room::with('images')->get();
         $roomCount = Room::count();
         $maxMemberCapacity = Room::max('total_member_capacity');
         $roomTypes = RoomTypes::all();

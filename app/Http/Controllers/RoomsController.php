@@ -10,6 +10,8 @@ use App\Models\RoomTypes;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use App\Models\AdditionalPrefrence;
+use App\Models\RoomImages;
+use File;
 
 class RoomsController extends Controller
 {
@@ -42,40 +44,46 @@ class RoomsController extends Controller
     }
     public function editRoom($id)
     {
-        $roomEdit = DB::table('rooms')->where('id',$id)->first();
+        $roomEdit = Room::with('images')->findOrFail($id);
         $room_types = RoomTypes::all();
         $user = DB::table('users')->get();
         $floors = DB::table('floors')->whereNull('deleted_at')->get();
         $foods = Food::all();
         $smokingPrefrences = SmokingPrefrence::all();
         $additionalPrefrence = AdditionalPrefrence::all();
+        
 
         return view('room.editroom',compact('user','room_types','roomEdit','floors','foods','smokingPrefrences','additionalPrefrence'));
     }
 
+
+    
     public function saveRecordRoom(Request $request)
     {
-
+        // Validate the request
         $request->validate([
             'floor_id' => 'required|integer',
             'room_number' => 'required|integer',
             'room_type_id' => 'required|integer',
             'ac_non_ac' => 'required|string|max:255',
             'food_id' => 'required|integer',
-            'bed_type' => 'required',
+            'bed_type' => 'required|string|max:255',
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'room_size' => 'required',
+            'room_size' => 'required|string|max:255',
+            'from_date' => 'nullable|date',
+            'to_date' => 'nullable|date',
+            'total_member_capacity' => 'nullable|integer',
+            'smoking_id' => 'nullable|integer',
+            'view_id' => 'nullable|integer',
             'message' => 'nullable|string',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // Validate each image file
         ]);
-
-        DB::beginTransaction();
+    
+        DB::beginTransaction(); // Begin the transaction
+    
         try {
-            $photo = $request->file('image');
-            $file_name = time() . '_' . $photo->getClientOriginalName();
-            $photo->move(public_path('assets/upload/'), $file_name);
-
+            // Save the room first
             $room = new Room;
             $room->floor_id = $request->floor_id;
             $room->room_number = $request->room_number;
@@ -86,7 +94,6 @@ class RoomsController extends Controller
             $room->bed_type = $request->bed_type;
             $room->rent = $request->rent;
             $room->phone_number = $request->phone_number;
-            $room->image = $file_name;
             $room->room_size = $request->room_size;
             $room->from_date = $request->from_date;
             $room->to_date = $request->to_date;
@@ -94,20 +101,34 @@ class RoomsController extends Controller
             $room->smoking_id = $request->smoking_id;
             $room->view_id = $request->view_id;
             $room->message = $request->message;
-
-
-            $room->save();
-
-            DB::commit();
+    
+            $room->save(); // Save the room to get the room ID
+    
+            // Check if images are uploaded
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('/assets/upload/'), $imageName);
+    
+                    // Store image in the RoomImages table
+                    RoomImages::create([
+                        'room_id' => $room->id, // Use the saved room's ID
+                        'image' => $imageName,
+                    ]);
+                }
+            }
+    
+            DB::commit(); // Commit the transaction
             Toastr::success('Create new room successfully :)', 'Success');
             return redirect()->route('form/allrooms/page');
-
-        } catch(\Exception $e) {
-            DB::rollback();
-            Toastr::error('Add Room fail :)', 'Error');
-            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback the transaction if something goes wrong
+            Toastr::error('Failed to create room: ' . $e->getMessage(), 'Error');
+            return back()->withInput();
         }
     }
+    
+    
 
     public function updateRecord(Request $request, $id)
     {
@@ -120,21 +141,16 @@ class RoomsController extends Controller
             'bed_type' => 'required',
             'rent' => 'required|numeric',
             'phone_number' => 'required|digits:10',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'array', // Changed to array for multiple images
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image in the array
             'room_size' => 'required',
             'message' => 'nullable|string',
         ]);
+    
         DB::beginTransaction();
         try {
             $room = Room::findOrFail($id);
-
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image');
-                $file_name = rand() . '.' . $photo->getClientOriginalName();
-                $photo->move(public_path('/assets/upload/'), $file_name);
-                $room->image = $file_name;
-            }
-
+    
             // Update other fields
             $room->floor_id = $request->input('floor_id');
             $room->room_number = $request->input('room_number');
@@ -152,19 +168,39 @@ class RoomsController extends Controller
             $room->smoking_id = $request->input('smoking_id');
             $room->view_id = $request->input('view_id');
             $room->message = $request->input('message');
-
+    
+            if ($request->hasFile('image')) {
+                // Get existing image names for the room
+                $existingImages = RoomImages::where('room_id', $room->id)->pluck('image')->toArray();
+    
+                foreach ($request->file('image') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('/assets/upload/'), $imageName);
+    
+                    // Only store the image if it doesn't already exist for the room
+                    if (!in_array($imageName, $existingImages)) {
+                        RoomImages::create([
+                            'room_id' => $room->id, // Use the saved room's ID
+                            'image' => $imageName,
+                        ]);
+                    }
+                }
+            }
+    
             $room->save();
+    
             DB::commit();
-
+    
             Toastr::success('Room Updated successfully :)', 'Success');
             return redirect()->route('form/allrooms/page');
         } catch (\Exception $e) {
             DB::rollback();
-
+    
             Toastr::error('Update Room failed :)', 'Error');
             return redirect()->back();
         }
     }
+    
 
 
     public function updateStatus(Request $request)
@@ -204,6 +240,20 @@ class RoomsController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'Room not found']);
         }
+    }
+
+    public function deleteImage($id)
+    {
+        $image = RoomImages::findOrFail($id);
+        $imagePath = public_path('assets/upload/' . $image->image);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        // Delete the image record from the database
+        $image->delete();
+
+        return response()->json(['success' => true]);
     }
 
 }

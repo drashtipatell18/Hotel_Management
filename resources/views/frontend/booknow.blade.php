@@ -10,22 +10,22 @@
 
 <section class="d_booknow">
     <div class="d_img col">
-        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
+        <!-- Check if there are images and display the first one, else show the default room image -->
+        @if($room->images->isNotEmpty())
+            <img src="{{ url('assets/upload/' . $room->images->first()->image) }}" alt="{{ $room->room_name }}">
+        @else
+            <img src="{{ url('assets/upload/' . $room->image) }}" alt="{{ $room->room_name }}">
+        @endif
     </div>
+    
     <div class="d_container">
         <div class="d_subimg d-flex justify-content-center mt-4">
-            <div class="d_subnavimg me-2  me-sm-3">
-                <img src="{{ url('frontend/img/d_img/room2.png') }}" alt="">
-            </div>
-            <div class="d_subnavimg me-2 me-sm-3">
-                <img src="{{ url('frontend/img/d_img/room3.png') }}" alt="">
-            </div>
-            <div class="d_subnavimg me-2 me-sm-3">
-                <img src="{{ url('frontend/img/d_img/room4.png') }}" alt="">
-            </div>
-            <div class="d_subnavimg">
-                <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
-            </div>
+            <!-- Display the other images as thumbnails -->
+            @foreach($room->images as $image)
+                <div class="d_subnavimg me-2 me-sm-3">
+                    <img src="{{ url('assets/upload/' . $image->image) }}" alt="">
+                </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -41,7 +41,7 @@
                 <div class="d_item">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Book</h5>
-                        <h6>From $1250/Night</h6>
+                        <h6>From ${{ $room->rent }}/Night</h6>
                     </div>
                     <form action="{{ route('booknow.store') }}" method="post">
                         @csrf
@@ -50,7 +50,7 @@
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Check in</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds" name="checkin" style="width: 88px;">
+                                        <input type="text" class="ds" name="check_in_date" style="width: 88px;">
                                         <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
                                             style="color: #ffffff;"></i>
                                     </div>
@@ -60,7 +60,7 @@
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Check out</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds" name="checkout" style="width: 88px;">
+                                        <input type="text" class="ds" name="check_out_date" style="width: 88px;">
                                         <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
                                             style="color: #ffffff;"></i>
                                     </div>
@@ -223,7 +223,7 @@
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center me-sm-4 me-1">
                                 <img src="{{ url('frontend/img/d_img/icon3.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
+                                <div class="d_icondesc">{{$room->room_size}}</div>
                             </div>
                             <div class="d-flex align-items-center me-sm-4 me-1">
                                 <img src="{{ url('frontend/img/d_img/user.png') }}" class="me-2" alt="">
@@ -231,7 +231,7 @@
                             </div>
                             <div class="d-flex align-items-center me-sm-4 me-1">
                                 <img src="{{ url('frontend/img/d_img/bed.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double Bed</div>
+                                <div class="d_icondesc">{{ $room->bed_type}}</div>
                             </div>
                             <div class="d-flex align-items-center">
                                 <img src="{{ url('frontend/img/d_img/bath.png') }}" class="me-2" alt="">
@@ -239,13 +239,8 @@
                             </div>
                         </div>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                        ridiculus mus. </p>
-                    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-                        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                        justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
-                        pretium. Integer tincidunt. </p>
+                    <p>{{$room->message}} </p>
+                    
                     <div class="d_amenties mt-xl-3 mt-3 ">
                         <h5>Room Amenities</h5>
                         <div class="row g-xl-3 g-0 mt-md-1">
