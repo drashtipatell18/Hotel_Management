@@ -90,7 +90,7 @@ class SpasController extends Controller
             $spa->price = $request->input('price');
             $spa->save();
         } catch (\Exception $e) {
-            Log::error('Error saving spa: ' . $e->getMessage());
+            // Log::error('Error saving spa: ' . $e->getMessage());
             return redirect()->route('spa/list')
                 ->with('error', 'There was a problem adding the spa.');
         }
