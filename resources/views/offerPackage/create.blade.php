@@ -19,18 +19,24 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="hotel_id">Hotel ID</label>
-                                        <select class="form-control" id="hotel_id" name="hotel_id">
+                                        <select class="form-control @error('hotel_id') is-invalid @enderror" id="hotel_id" name="hotel_id">
                                             <option value="">Select Hotel</option>
                                             @foreach ($hotels as $key => $hotel)
                                                 <option value="{{ $key }}">{{ $hotel }}</option>
                                             @endforeach
                                         </select>
+                                        @error('hotel_id')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" name="title">
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title">
+                                        @error('title')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -48,25 +54,37 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="discount_type">Discount Type</label>
-                                        <input type="text" class="form-control" id="discount_type" name="discount_type">
+                                        <input type="text" class="form-control @error('discount_type') is-invalid @enderror" id="discount_type" name="discount_type">
+                                        @error('discount_type')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="discount_value">Discount Value</label>
-                                        <input type="text" class="form-control" id="discount_value" name="discount_value">
+                                        <input type="text" class="form-control @error('discount_value') is-invalid @enderror" id="discount_value" name="discount_value">
+                                        @error('discount_value')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="start_date">Start Date</label>
-                                        <input type="date" class="form-control" id="start_date" name="start_date">
+                                        <input type="date" class="form-control @error('start_date') is-invalid @enderror" id="start_date" name="start_date">
+                                        @error('start_date')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="end_date">End Date</label>
-                                        <input type="date" class="form-control" id="end_date" name="end_date">
+                                        <input type="date" class="form-control @error('end_date') is-invalid @enderror" id="end_date" name="end_date">
+                                        @error('end_date')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -74,8 +92,11 @@
                                         <label for="is_active">Is Active</label>
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="is_active" name="is_active">
-                                            <label class="custom-control-label" for="is_active">Active</label>
+                                            <label class="custom-control-label @error('is_active') is-invalid @enderror" for="is_active">Active</label>
                                         </div>
+                                        @error('is_active')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center">

@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row">   
                 <div class="col-sm-12">
                     <div class="card card-table">
                         <div class="card-body booking_card">
@@ -21,12 +21,15 @@
                                 <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="category">Category</label>
-                                    <input type="text" class="form-control" id="category" name="category">
+                                    <input type="text" class="form-control @error('category') is-invalid @enderror" id="category" name="category">
+                                    @error('category')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 </div>
                                 <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="description">Description</label>
+                                        <label for="description">Description</label>
                                         <input type="text" class="form-control" id="description" name="description">
                                     </div>
                                 </div>
