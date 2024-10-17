@@ -381,7 +381,8 @@ Route::get('/contact-us',[ContactController::class,'contactus'])->name('contact-
 Route::post('/contact-us/store',[ContactController::class,'contactusStore'])->name('contactStore');
 
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
-Route::get('/booknow',[BookNowController::class,'booknow'])->name('booknow');
+Route::get('/booknow/{id}',[BookNowController::class,'booknow'])->name('booknow');
+Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
 Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
 Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');

@@ -337,7 +337,7 @@
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // log in model 
+        // log in model
         // Get elements
         const modal = document.getElementById('authModal');
         const openModalBtn = document.getElementById('openModalBtn');
@@ -532,3 +532,4 @@
 
     </script>
 @endpush
+
