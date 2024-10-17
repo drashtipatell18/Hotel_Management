@@ -29,7 +29,7 @@ class IndexController extends Controller
         $amenities = Amenities::all();
         $facilities = Facilities::all();
         $roomTypes = RoomTypes::all();
-        $offerPackages = OfferPackage::distinct()->get();
+        $offerPackages = OfferPackage::all();
         $premiumRoomsCount = RoomTypes::where('room_name', 'Premium Rooms')->count();
         $deluxeSuitesCount = RoomTypes::where('room_name', 'Deluxe Room')->count();
         $HoneymoonRoomsCount = RoomTypes::where('room_name', 'Honeymoon Suite Room')->count();
@@ -39,7 +39,7 @@ class IndexController extends Controller
         $roomCount = Room::count();
         $maxMemberCapacity = Room::max('total_member_capacity');
         
-        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews','roomCount','maxMemberCapacity'));
+        return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews','roomCount','maxMemberCapacity','offerPackages'));
     }
     public function register()
     {

@@ -125,7 +125,7 @@
                                 <label for="lowToHigh">Price: Low to High</label>
                             </li>
                             <li class="d-flex align-items-center">
-                                <input type="radio" name="sort" value="recommended" id="recommended" checked>
+                                <input type="radio" name="sort" value="recommended" id="recommended">
                                 <label for="recommended">Recommended</label>
                             </li>
                         </ul>
@@ -507,51 +507,9 @@
 
     //========================================================== Frontend Filtrt Dropdown ===================================================
 
-    // Sort functionality
-    function sortRooms(sortBy) {
-        let sortedRooms = [...availableRooms]; // Use availableRooms instead of rooms
-
-        switch (sortBy) {
-            case 'highToLow':
-                sortedRooms.sort((a, b) => b.rent - a.rent); // Use rent instead of price
-                break;
-            case 'lowToHigh':
-                sortedRooms.sort((a, b) => a.rent - b.rent);
-                break;
-            case 'recommended':
-                // Reset to original order
-                sortedRooms = [...availableRooms];
-                break;
-        }
-
-        renderRooms(availableRooms);
-    }
 
     // Dropdown handling
     document.addEventListener('DOMContentLoaded', function () {
-        // Sort dropdown
-        const sortDropdown = document.querySelector('.dropdown:has(a:contains("Sort by"))');
-        if (sortDropdown) {
-            const sortButton = sortDropdown.querySelector('.dropdown-toggle');
-            const sortMenu = sortDropdown.querySelector('.dropdown-menu');
-
-            sortButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Remove show class from filter dropdown
-                const filterDropdown = document.querySelector('.dropdown:has(a:contains("Filter"))');
-                if (filterDropdown) {
-                    filterDropdown.querySelector('.dropdown-menu').classList.remove('show');
-                    filterDropdown.classList.remove('show');
-                }
-
-                // Toggle sort dropdown
-                sortMenu.classList.toggle('show');
-                sortDropdown.classList.toggle('show');
-            });
-        }
-
         // Filter dropdown
         const filterDropdown = document.querySelector('.dropdown:has(a:contains("Filter"))');
         if (filterDropdown) {
@@ -579,30 +537,6 @@
                 e.stopPropagation();
             });
         }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (e) {
-            const sortDropdown = document.querySelector('.dropdown:has(a:contains("Sort by"))');
-            const filterDropdown = document.querySelector('.dropdown:has(a:contains("Filter"))');
-
-            if (!e.target.closest('.dropdown')) {
-                if (sortDropdown) {
-                    sortDropdown.querySelector('.dropdown-menu').classList.remove('show');
-                    sortDropdown.classList.remove('show');
-                }
-                if (filterDropdown) {
-                    filterDropdown.querySelector('.dropdown-menu').classList.remove('show');
-                    filterDropdown.classList.remove('show');
-                }
-            }
-        });
-
-        // Event listeners for sort options
-        document.querySelectorAll('input[name="sort"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                sortRooms(e.target.value);
-            });
-        });
 
         // Event listeners for filter checkboxes
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
@@ -668,28 +602,8 @@
 
 </script>
 
-<!-- Filter Working Backens Side -->
- 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const dropdownMenu = document.querySelector('.dropdown-menu');
 
-    dropdownMenu.addEventListener('change', function (e) {
-        const sortOption = e.target.value;
-
-        // Apply filter based on the selected sort option
-        applySortFilter(sortOption);
-    });
-
-    function applySortFilter(sortBy) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('sort_by', sortBy);
-
-        // Reload the page with the selected sort filter
-        window.location.href = url.toString();
-    }
-});
-</script>
+<!-- ========================================================= Filter ============================================== -->
 
 <script>
     // Function to filter rooms based on selected criteria
@@ -722,6 +636,78 @@
 
     // Ensure to call filterRooms on page load to apply any existing filters
     document.addEventListener('DOMContentLoaded', filterRooms);
+</script>
+
+
+<!-- ========================================= Sort By Filter ===================================================== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortRadios = document.querySelectorAll('input[name="sort"]');
+
+        // Add event listeners to the radio buttons
+        sortRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                const selectedValue = this.value;
+                applySortFilter(selectedValue); // Apply the sort filter and reload
+            });
+        });
+
+        // Ensure the correct radio button is selected on page load (if applicable)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sortBy = urlParams.get('sort_by');
+
+        if (sortBy) {
+            const selectedRadio = document.querySelector(`input[name="sort"][value="${sortBy}"]`);
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+            }
+            sortRooms(sortBy); // Apply sorting when the page loads
+        }
+
+        // Dropdown toggle logic
+        const sortButton = document.querySelector('.dropdown-toggle');
+        const sortMenu = document.querySelector('#dropdownMenu');
+
+        sortButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            sortMenu.classList.toggle('show');
+        });
+
+        // Close the dropdown when clicking outside of it
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.dropdown')) {
+                sortMenu.classList.remove('show');
+            }
+        });
+
+        // Function to apply sorting and reload the page with the sort parameter in URL
+        function applySortFilter(sortBy) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('sort_by', sortBy);
+
+            // Reload the page with the selected sort filter in the URL
+            window.location.href = url.toString();
+        }
+
+        // Function to sort rooms (for dynamic sorting without reload)
+        function sortRooms(sortBy) {
+            let sortedRooms = [...availableRooms]; // Assuming availableRooms is defined elsewhere
+
+            switch (sortBy) {
+                case 'high_to_low':
+                    sortedRooms.sort((a, b) => b.rent - a.rent); // Assuming 'rent' is the sorting property
+                    break;
+                case 'low_to_high':
+                    sortedRooms.sort((a, b) => a.rent - b.rent);
+                    break;
+                case 'recommended':
+                    sortedRooms = [...availableRooms]; // Reset to the default order
+                    break;
+            }
+
+            renderRooms(sortedRooms); // Assuming renderRooms updates the room list dynamically
+        }
+    });
 </script>
 
 @endsection
