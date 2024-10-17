@@ -151,27 +151,6 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Room Image</label>
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="image" name="image" onchange="previewImage(event, 'profilePicPreview')">
-                                                <input type="hidden" class="form-control" name="hidden_fileupload" value="{{ $roomEdit->image }}">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href="#">
-                                                <img id="profilePicPreview" class="avatar-img" style="width: 50px; height: 50px; object-fit: cover;"  src="{{ file_exists(public_path('assets/upload/' . $roomEdit->image)) && $roomEdit->image ? URL::to('/assets/upload/' . $roomEdit->image) : URL::to('/assets/upload/imagen para todo.jpg') }}" 
-                                                alt="{{ $roomEdit->image ?? 'Default Image' }}">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label>Room Size</label>
                                     <input type="text" class="form-control @error('room_size') is-invalid @enderror" id="room_size" name="room_size" value="{{$roomEdit->room_size}}">
                                     @error('room_size')
@@ -247,6 +226,32 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="image">Room Images</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image[]" multiple onchange="previewImages(event)">
+                                        <label class="custom-file-label" for="image">Choose files</label>
+                                        @error('image')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row" id="imagePreview">
+                                    @foreach($roomEdit->images as $image)
+                                        <div class="col-md-2 mb-3" id="image-{{ $image->id }}">
+                                            <div class="text-center">
+                                                <img src="{{ URL::to('/assets/upload/'.$image->image) }}" alt="Hotel Image" class="img-fluid rounded mb-2" style="width: 100%; height: 100px; object-fit: cover;">
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="deleteImage('{{ $image->id }}')">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -274,16 +279,60 @@
         });
         </script>
 
-        <script>
-                function previewImage(event, previewElementId) {
-                    const reader = new FileReader();
-                    reader.onload = function() {
-                        const output = document.getElementById(previewElementId);
-                        output.src = reader.result;
+    <script>
+        function previewImages(event) {
+            const previewContainer = document.getElementById('imagePreview');
+            const files = event.target.files;
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-fluid rounded mb-2';
+                    img.style.width = '100%';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+
+                    const div = document.createElement('div');
+                    div.className = 'col-md-2 mb-3';
+                    div.innerHTML = `
+                        <div class="text-center">
+                            ${img.outerHTML}
+                            <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </div>
+                    `;
+
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview(element) {
+            element.parentElement.parentElement.remove();
+        }
+        function deleteImage(imageId) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                $.ajax({
+                    url: '/room/image/delete/' + imageId, // Replace with your actual delete route
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Optionally reload the page or remove the image element
+                        } else {
+                            alert('Failed to delete the image');
+                        }
                     }
-                    reader.readAsDataURL(event.target.files[0]);
-                }
-        </script>
+                });
+            }
+        }
+    </script>
 
     @endsection
 @endsection

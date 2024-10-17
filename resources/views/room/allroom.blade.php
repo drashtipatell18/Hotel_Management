@@ -68,17 +68,22 @@
                                 <tbody>
                                     @foreach ($allRooms as $rooms)
                                         <tr>
-                                            {{-- <td hidden class="id">{{ $rooms->room_number }}</td>
-                                            <td hidden class="image">{{ $rooms->image }}</td> --}}
                                             <td>{{ $rooms->id }}</td>
                                             <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar avatar-sm mr-2">
-                                                        <img class="avatar-img rounded-circle"
-                                                            src="{{ file_exists(public_path('assets/upload/' . $rooms->image)) && $rooms->image ? URL::to('/assets/upload/' . $rooms->image) : URL::to('/assets/upload/imagen para todo.jpg') }}"
-                                                            alt="{{ $rooms->image ?? 'Default Image' }}">
+                                                @if($rooms->images->isNotEmpty())
+                                                    <a href="{{ URL::to('/assets/upload/'.$rooms->images->first()->image) }}" data-lightbox="room-{{ $rooms->id }}" data-title="{{ $rooms->room_name }}" class="avatar avatar-sm mr-2">
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/'.$rooms->images->first()->image) }}" alt="{{ $rooms->name }}" width="80px">
                                                     </a>
-                                                </h2>
+                                                    @foreach ($rooms->images->slice(1) as $image)
+                                                        <a href="{{ URL::to('/assets/upload/'.$image->image) }}" data-lightbox="room-{{ $rooms->id }}" data-title="{{ $rooms->room_name }}" style="display: none;">
+                                                            <img src="{{ URL::to('/assets/upload/'.$image->image) }}" alt="{{ $rooms->room_name }}">
+                                                        </a>
+                                                    @endforeach
+                                                @else
+                                                <a class="avatar avatar-sm mr-2">
+                                                    <img class="avatar-img rounded-circle" src="{{ URL::to('/assets/upload/imagen para todo.jpg') }}" alt="Default Image" width="80px">
+                                                </a>
+                                                @endif
                                             </td>
                                             <td>{{ $rooms->floor->floor_name }}</td>
                                             <td>{{ $rooms->room_number }}</td>
