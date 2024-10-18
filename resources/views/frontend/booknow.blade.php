@@ -18,6 +18,24 @@
         font-weight: 600;
         transition: .3s all ease-in-out;
     }
+    
+    .reserve-btn {
+        border-radius: 2px;
+        padding: 10px 0;
+        background-color: #fff;
+        color: #1A2142;
+        font-size: 20px;
+        line-height: 24px;
+        text-decoration: none;
+        font-weight: bolder;
+        transition: .3s all ease-in-out;
+        display: block;
+        text-align: center;
+    }
+    .reserve-btn:hover{
+        text-decoration: none;
+        color: #1A2142;
+    }
 </style>
 
 <section class="d_booknow">
@@ -219,8 +237,11 @@
                         </div>
                         <div class="drashti">
                             <input type="hidden" name="room_id" value="{{ $room->id }}">
-                            <input type="hidden" name="checkin" value="{{ $room->check_in }}">
-                            <input type="hidden" name="checkout" value="{{ $room->check_out }}">
+                            <input type="hidden" name="room_count" value="{{ $room->room_count }}">
+                            <input type="hidden" name="member_count" value="{{ $room->member_count }}">
+                            <input type="hidden" name="bed_type" value="{{ $room->bed_type }}">
+
+                           
                             <!-- <input type="hidden" name="adult" value="1">
                             <input type="hidden" name="children" value="1">
                             <input type="hidden" name="extra_room_clean" value="1">
@@ -310,166 +331,194 @@
             </div>
         </div>
         <div class="row g-lg-5 g-4 m-0">
+            @foreach($similarRooms as $similarRoom)
             <div class="col-xs-12 col-sm-6">
                 <div class="d_box position-relative">
                     <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
+                        <!-- Fetch the first image for the current similar room -->
+                        @if($similarRoom->images->isNotEmpty())
+                            <img src="{{ url('assets/upload/' . $similarRoom->images->first()->image) }}" alt="{{ $similarRoom->room_name }}">
+                        @else
+                            <img src="{{ url('path/to/default/image.jpg') }}" alt="{{ $similarRoom->room_name }}">
+                        @endif
                     </div>
                     <div class="d_night">
                         <div class="d_price">
-                            <h6>${{ $room->rent}}/ Night</h6>
+                            <h6>${{ $similarRoom->rent }}/ Night</h6>
                         </div>
                     </div>
                     <div class="d_content">
                         <div class="d_icon d-flex align-items-center">
                             <div class="d-flex align-items-center me-3">
                                 <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">{{ $room->room_size}}</div>
+                                <div class="d_icondesc">{{ $similarRoom->room_size }}</div>
                             </div>
                             <div class="d-flex align-items-center me-3">
                                 <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
+                                <div class="d_icondesc">Guests</div>
                             </div>
                             <div class="d-flex align-items-center">
                                 <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">{{ $room->bed_type}}</div>
+                                <div class="d_icondesc">{{ $similarRoom->bed_type }}</div>
                             </div>
                         </div>
                         <div class="row m-0 g-2 mt-1 align-items-center">
                             <div class="col-12 col-lg-8 p-0">
-                                <h3>{{ $room->room_name }}</h3>
+                                <h3>{{ $similarRoom->room_name }}</h3>
                             </div>
                             <div class="col-12 col-lg-1 p-0"></div>
                             <div class="col-12 col-lg-3 p-0">
-                                <div class="d_cta">
-                                    <a href="" class="d-block text-center">Reserve</a>
-                                </div>
+                                <!-- Reserve button passing room_id -->
+                                <a href="javascript:void(0);" class="d-block text-center reserve-btn" data-room-id="{{ $similarRoom->id }}">Reserve</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            @endforeach
         </div>
     </div>
 </section>
 
 <script>
- // book now images
-
- document.addEventListener("DOMContentLoaded", function () {
-    const mainImage = document.querySelector('.d_booknow .d_img img');
-    const thumbnails = document.querySelectorAll('.d_subimg img');
-
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function () {
-            const newSrc = this.getAttribute('src');
-            mainImage.setAttribute('src', newSrc);
-        });
+    document.querySelectorAll('.reserve-btn').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const roomId = this.getAttribute('data-room-id');
+        // Redirect to the booking page with the room ID
+        window.location.href = `/booknow/${roomId}`;
     });
+});
+</script>
 
-    const PRICE_PER_NIGHT = 1250;
-    const ROOM_CLEAN_PRICE = 100;
-    const MASSAGE_PRICE = 30;
-    const DAY_SPA_PRICE = 20;
 
-    const checkInInput = document.querySelector('input[name="checkin"]');
-    const checkOutInput = document.querySelector('input[name="checkout"]');
-    const roomCount = document.getElementById('room-count');
+<script>
+    // book now images
 
-    const updateDisplay = (element, value) => {
-        if (element) element.textContent = value;
-    };
+    document.addEventListener("DOMContentLoaded", function () {
+        const mainImage = document.querySelector('.d_booknow .d_img img');
+        const thumbnails = document.querySelectorAll('.d_subimg img');
 
-    const calculateNights = () => {
-        const checkIn = new Date(checkInInput.value);
-        const checkOut = new Date(checkOutInput.value);
-        return checkIn && checkOut && checkOut > checkIn ?
-            Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
-    };
-
-    const calculateTotal = () => {
-        const nights = calculateNights();
-        const rooms = parseInt(roomCount.textContent);
-        const basePrice = PRICE_PER_NIGHT * nights * rooms;
-
-        let extraPrice = 0;
-        // Assuming you will implement checkbox logic later
-        // if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
-        // if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
-        // if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
-
-        const taxes = 0; // Assuming no taxes for now
-        const total = basePrice + extraPrice + taxes;
-
-        // Update the relevant displays (assuming you've defined these variables)
-        // updateDisplay(basePriceDisplay, `$${basePrice}`);
-        // updateDisplay(taxesDisplay, `$${taxes}`);
-        // updateDisplay(extraDisplay, `$${extraPrice}`);
-        // updateDisplay(totalPriceDisplay, `$${total}`);
-        // updateDisplay(totalCostDisplay, `$${total}`);
-    };
-
-    const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
-        incrementBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default action
-            countElement.textContent = parseInt(countElement.textContent) + 1;
-            calculateTotal();
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function () {
+                const newSrc = this.getAttribute('src');
+                mainImage.setAttribute('src', newSrc);
+            });
         });
-        decrementBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default action
-            if (parseInt(countElement.textContent) > minValue) {
-                countElement.textContent = parseInt(countElement.textContent) - 1;
-                calculateTotal();
-            }
-        });
-    };
 
-    addCounterListeners(
-        document.querySelector('.btn-increment[data-target="room"]'),
-        document.querySelector('.btn-decrement[data-target="room"]'),
-        roomCount, 1
-    );
+        const PRICE_PER_NIGHT = 1250;
+        const ROOM_CLEAN_PRICE = 100;
+        const MASSAGE_PRICE = 30;
+        const DAY_SPA_PRICE = 20;
 
-    // Other event listeners remain unchanged
-    [checkInInput, checkOutInput].forEach(input => {
-        input.addEventListener('change', calculateTotal);
-    });
+        const checkInInput = document.querySelector('input[name="checkin"]');
+        const checkOutInput = document.querySelector('input[name="checkout"]');
+        const roomCount = document.getElementById('room-count');
+        const memberCount = document.getElementById('member-count');
 
-    // Book Now button with AJAX functionality
-    document.querySelector('.d_cta a').addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default link behavior
-        const bookingData = {
-            checkin: checkInInput.value,
-            checkout: checkOutInput.value,
-            roomCount: roomCount.textContent,
+        const updateDisplay = (element, value) => {
+            if (element) element.textContent = value;
         };
 
-        // Use AJAX to send bookingData to the server
-        fetch('your-server-endpoint-here', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(bookingData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle success, maybe redirect or show a success message
-            console.log(data);
-            // Example redirect
-            window.location = 'checkout.html';
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        const calculateNights = () => {
+            const checkIn = new Date(checkInInput.value);
+            const checkOut = new Date(checkOutInput.value);
+            return checkIn && checkOut && checkOut > checkIn ? 
+                Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
+        };
+
+        const calculateTotal = () => {
+            const nights = calculateNights();
+            const rooms = parseInt(roomCount.textContent);
+            const members = parseInt(memberCount.textContent);
+            const basePrice = PRICE_PER_NIGHT * nights * rooms;
+
+            let extraPrice = 0;
+            // Assuming you will implement checkbox logic later
+            // if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
+            // if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
+            // if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
+
+            const taxes = 0; // Assuming no taxes for now
+            const total = basePrice + extraPrice + taxes;
+
+            // Update the relevant displays (assuming you've defined these variables)
+            // updateDisplay(basePriceDisplay, `$${basePrice}`);
+            // updateDisplay(taxesDisplay, `$${taxes}`);
+            // updateDisplay(extraDisplay, `$${extraPrice}`);
+            // updateDisplay(totalPriceDisplay, `$${total}`);
+            // updateDisplay(totalCostDisplay, `$${total}`);
+        };
+
+        const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
+            incrementBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default action
+                countElement.textContent = parseInt(countElement.textContent) + 1;
+                calculateTotal();
+            });
+            decrementBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default action
+                if (parseInt(countElement.textContent) > minValue) {
+                    countElement.textContent = parseInt(countElement.textContent) - 1;
+                    calculateTotal();
+                }
+            });
+        };
+
+        addCounterListeners(
+            document.querySelector('.btn-increment[data-target="room"]'),
+            document.querySelector('.btn-decrement[data-target="room"]'),
+            roomCount, 1
+        );
+
+        // Add listeners for member count
+        addCounterListeners(
+            document.querySelector('.btn-increment[data-target="member"]'),
+            document.querySelector('.btn-decrement[data-target="member"]'),
+            memberCount, 1
+        );
+
+        // Other event listeners remain unchanged
+        [checkInInput, checkOutInput].forEach(input => {
+            input.addEventListener('change', calculateTotal);
         });
+
+        // Book Now button with AJAX functionality
+        document.querySelector('.d_cta a').addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            const bookingData = {
+                checkin: checkInInput.value,
+                checkout: checkOutInput.value,
+                roomCount: roomCount.textContent,
+                memberCount: memberCount.textContent,
+            };
+
+            // Use AJAX to send bookingData to the server
+            fetch('your-server-endpoint-here', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookingData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle success, maybe redirect or show a success message
+                console.log(data);
+                // Example redirect
+                window.location = 'checkout.html';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+
+        calculateTotal();
     });
-
-    calculateTotal();
-});
-
-
 </script>
+
+
+
 <script>
     $(function () {
         // Function to get today's date in dd/mm/yy format

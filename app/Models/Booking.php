@@ -16,7 +16,7 @@ class Booking extends Model
         'room_type_id',
         'room_number',
         'room_count',
-        'total_member',
+        'member_count',
         'floor_id',
         'ac_non_ac',
         'bed_count',

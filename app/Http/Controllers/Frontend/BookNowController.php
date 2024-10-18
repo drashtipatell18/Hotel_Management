@@ -15,7 +15,7 @@ class BookNowController extends Controller
     public function booknow($roomId)
     {
         $room = Room::find($roomId);
-
+        
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
         }
@@ -24,13 +24,18 @@ class BookNowController extends Controller
         $amenities = Amenities::whereIn('id', $amenityIds)->get();
         $roomCount = Room::count();
         $maxMemberCapacity = Room::max('total_member_capacity');
+
+        $bedType = $room->bed_type;
+       
+        $similarRooms = Room::where('bed_type', $bedType)->get();
        
 
         $roomImages = $room->images;
-        return view('frontend.booknow', compact('room', 'roomImages','amenities','roomCount','maxMemberCapacity'));
+        return view('frontend.booknow', compact('room', 'roomImages','amenities','roomCount','maxMemberCapacity','similarRooms'));
     }
     public function booknowStore(Request $request)
     {
+       
        
         $users = Auth::user();
         
@@ -40,8 +45,9 @@ class BookNowController extends Controller
         $book->room_id = $request->room_id;
         $book->check_in_date = $request->check_in_date;
         $book->check_out_date = $request->check_out_date;
-        $book->room_count = $request->room_count;
-        $book->total_member = $request->total_member;
+     
+        $book->room_count = $request->input('roomCount');
+        $book->member_count = $request->input('member_count');
     
         $book->save();
         return redirect()->back()->with('success', 'Booking created successfully');
