@@ -119,40 +119,7 @@
                                                 Total Cost
                                             </button>
                                         </h2>
-                                        <h5 id="total-cost">$1350</h5>
-                                    </div>
-                                    <div id="collapseOne" class="accordion-collapse collapse "
-                                        data-bs-parent="#accordionExample">
-                                        <hr>
-                                        <!-- <div class="row g-2">
-                                                    <div class="col-12">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d_title">Total Base price</div>
-                                                            <div class="d_price" data-type="base">$1250</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d_title">Taxes</div>
-                                                            <div class="d_price" data-type="taxes">$0</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d_title">Extra : Room Clean</div>
-                                                            <div class="d_price" data-type="extra">$100</div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="d_title1"><b>Total</b></div>
-                                                    <div class="d_price1" id="total-price"><b>$1350</b></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <h5 id="total-cost">$0</h5>
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +134,10 @@
                             <input type="hidden" name="room_id" value="{{ $room->id }}">
                             <input type="hidden" name="checkin" value="{{ $room->check_in }}">
                             <input type="hidden" name="checkout" value="{{ $room->check_out }}">
+                            <input type="hidden" name="room_type_id" value="{{ $room->room_type_id }}">
+                            <input type="hidden" name="room_number" value="{{ $room->room_number }}">
+                            <input type="hidden" name="floor_id" value="{{ $room->floor_id }}">
+                            <input type="hidden" name="ac_non_ac" value="{{ $room->ac_non_ac }}">
                             <!-- <input type="hidden" name="adult" value="1">
                                     <input type="hidden" name="children" value="1">
                                     <input type="hidden" name="extra_room_clean" value="1">
@@ -463,14 +434,25 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let roomCount = 1; // Initial room count
+        const pricePerRoom = {{ $room->rent }}; // Price for one room
         const roomCountElement = document.getElementById('room-count');
         const roomCountInput = document.getElementById('room_count_input');
+        const totalCostElement = document.getElementById('total-cost');
+        const totalPriceElement = document.getElementById('total-price');
+
+        // Function to update total cost
+        function updateTotalCost() {
+            const totalCost = roomCount * pricePerRoom; // Calculate total cost
+            totalCostElement.textContent = `$${totalCost}`; // Update displayed total cost
+            totalPriceElement.innerHTML = `<b>$${totalCost}</b>`; // Update collapsed total price
+        }
 
         // Handle increment button click
         document.querySelector('.btn-increment[data-target="room"]').addEventListener('click', function () {
             roomCount++; // Increment the count
             roomCountElement.textContent = roomCount; // Update the displayed count
             roomCountInput.value = roomCount; // Update the hidden input value
+            updateTotalCost(); // Update the total cost
         });
 
         // Handle decrement button click
@@ -479,6 +461,7 @@
                 roomCount--; // Decrement the count
                 roomCountElement.textContent = roomCount; // Update the displayed count
                 roomCountInput.value = roomCount; // Update the hidden input value
+                updateTotalCost(); // Update the total cost
             }
         });
     });

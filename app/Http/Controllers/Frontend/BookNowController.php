@@ -9,12 +9,14 @@ use App\Models\Booking;
 use App\Models\RoomImages;
 use App\Models\Amenities;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class BookNowController extends Controller
 {
     public function booknow($roomId)
     {
         $room = Room::find($roomId);
+       
         
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
@@ -35,16 +37,18 @@ class BookNowController extends Controller
     }
     public function booknowStore(Request $request)
     {
-       
-       
         $users = Auth::user();
-        
- 
         $book = new Booking();
         $book->customer_id = $users->id;
         $book->room_id = $request->room_id;
-        $book->check_in_date = $request->check_in_date;
-        $book->check_out_date = $request->check_out_date;
+        $book->check_in_date = Carbon::createFromFormat('d/m/Y', $request->check_in_date)->format('Y-m-d');
+        $book->check_out_date = Carbon::createFromFormat('d/m/Y', $request->check_out_date)->format('Y-m-d');
+        $book->room_type_id = $request->room_type_id;
+        $book->room_number = $request->room_number;
+        $book->floor_id = $request->floor_id;
+        $book->ac_non_ac = $request->ac_non_ac;
+        $book->booking_date = Carbon::now()->format('Y-m-d');
+
      
         $book->room_count = $request->input('room_count');
         $book->member_count = $request->input('member_count');
