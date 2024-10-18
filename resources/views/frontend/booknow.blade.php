@@ -102,7 +102,7 @@
                                                 class="fa-solid fa-plus"></i></button>
                                     </div>
                                 </div>
-                                <input type="hidden" name="total_member" id="member_count_input" value="1">
+                                <input type="hidden" name="member_count" id="member_count_input" value="1">
                             </div>
 
                         </div>

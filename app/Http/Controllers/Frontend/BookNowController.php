@@ -46,7 +46,7 @@ class BookNowController extends Controller
         $book->check_in_date = $request->check_in_date;
         $book->check_out_date = $request->check_out_date;
      
-        $book->room_count = $request->input('roomCount');
+        $book->room_count = $request->input('room_count');
         $book->member_count = $request->input('member_count');
     
         $book->save();
