@@ -35,20 +35,21 @@ use App\Http\Controllers\AdditionalFilterController;
 use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\ClientReviewController;
 use App\Http\Controllers\OffersPackageController;
+use App\Http\Controllers\HotelAmenitiesController;
 
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\AboutUsController;
 use App\Http\Controllers\Frontend\RoomsFrontendController;
 use App\Http\Controllers\Frontend\SpaController;
 use App\Http\Controllers\Frontend\GalleryFrontendController;
-use App\Http\Controllers\Frontend\ContactFrontendController;
+
 use App\Http\Controllers\Frontend\CheckAvaliblityController;
 use App\Http\Controllers\Frontend\BookNowController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\MyBookingController;
 use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
-use App\Models\Room;
+
 
 // =========================================================== Backend Route ============================================================
 
@@ -188,7 +189,7 @@ Route::controller(HotelController::class)->group(function () {
     Route::delete('/hotel/image/delete/{id}', [HotelController::class, 'deleteImage'])->name('hotel.image.delete');
 });
 
-// Amenities
+// Room Amenities
 Route::controller(AmenitiesController::class)->group(function () {
     Route::get('amenities/add', 'amenitiesCreate')->name('amenities/add');
     Route::post('amenities/store', 'amenitiesStore')->name('amenities/store');
@@ -196,6 +197,17 @@ Route::controller(AmenitiesController::class)->group(function () {
     Route::get('amenities/edit/{id}', 'amenitiesEdit');
     Route::post('amenities/update/{id}', 'amenitiesUpdate')->name('amenities/update');
     Route::get('/amenities/delete/{id}','amenitiesDelete')->name('amenities.delete');
+
+});
+
+// Hotel Amenities
+Route::controller(HotelAmenitiesController::class)->group(function () {
+    Route::get('amenities/hotel/add', 'amenitiesHotelCreate')->name('amenities/hotel/add');
+    Route::post('amenities/hotel/store', 'amenitiesHotelStore')->name('amenities/hotel/store');
+    Route::get('amenities/hotel/list', 'amenitiesHotelList')->name('amenities/hotel/list');
+    Route::get('amenities/hotel/edit/{id}', 'amenitiesHotelEdit');
+    Route::post('amenities/hotel/update/{id}', 'amenitiesHotelUpdate')->name('amenities/hotel/update');
+    Route::get('/amenities/hotel/delete/{id}','amenitiesHotelDelete')->name('amenitiesHotel.delete');
 
 });
 

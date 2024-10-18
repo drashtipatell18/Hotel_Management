@@ -7,11 +7,11 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title mt-5">Add Room Amenities</h3>
+                        <h3 class="page-title mt-5">Add Hotel Amenities</h3>
                     </div>
                 </div>
             </div>
-            <form action="{{ route('amenities/store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('amenities/hotel/store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12">

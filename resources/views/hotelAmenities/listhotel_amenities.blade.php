@@ -37,8 +37,8 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Room Amenities</h4> <a href="{{ route('amenities/add') }}" class="btn btn-primary float-right veiwbutton"><i
-                                class="fas fa-plus mr-2"></i>Add Room Amenities</a> </div>
+                            <h4 class="card-title float-left mt-2">Hotel Amenities</h4> <a href="{{ route('amenities/hotel/add') }}" class="btn btn-primary float-right veiwbutton"><i
+                                class="fas fa-plus mr-2"></i>Add Hotel Amenities</a> </div>
                         </div>
                     </div>
                 </div>
@@ -69,10 +69,10 @@
                                                 <td>{{ $amenities->name }}</td>
                                                 <td>{{ $amenities->description }}</td>
                                                 <td class="text-right">
-                                                    <a href="{{ url('amenities/edit/'.$amenities->id) }}" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <a href="{{ url('amenities/hotel/edit/'.$amenities->id) }}" style="font-size: 23px; padding: 5px; color: #009688;">
                                                         <i class="fas fa-pencil-alt fa-xs"></i>
                                                     </a>
-                                                    <a href="{{ route('amenities.delete', ['id' => $amenities->id]) }}" onclick="return confirm('Are you sure you want to delete this Amenities?');" style="font-size: 23px; padding: 5px; color: #009688;">
+                                                    <a href="{{ route('amenitiesHotel.delete', ['id' => $amenities->id]) }}" onclick="return confirm('Are you sure you want to delete this Amenities?');" style="font-size: 23px; padding: 5px; color: #009688;">
                                                         <i class="fas fa-trash fa-xs"></i>
                                                     </a>
                                                 </td>

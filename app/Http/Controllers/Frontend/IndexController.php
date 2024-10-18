@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\HotelAmenity;
 use Carbon\Carbon;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -26,7 +27,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $amenities = Amenities::all();
+        $amenities = HotelAmenity::all();
         $facilities = Facilities::all();
         $roomTypes = RoomTypes::all();
         $offerPackages = OfferPackage::all();

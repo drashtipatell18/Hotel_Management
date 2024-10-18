@@ -17,7 +17,7 @@
             <img src="{{ url('assets/upload/' . $room->image) }}" alt="{{ $room->room_name }}">
         @endif
     </div>
-    
+
     <div class="d_container">
         <div class="d_subimg d-flex justify-content-center mt-4">
             <!-- Display the other images as thumbnails -->
@@ -200,25 +200,25 @@
                                 </div>
                             </div>
                             <div class="d_cta mt-3 text-center">
-                                    <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay
-                                        Now</a>
-                                </div>
+                                <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay
+                                    Now</a>
                             </div>
-                            <div class="drashti">
-                                <input type="hidden" name="room_id" value="{{ $room->id }}">
-                                <input type="hidden" name="checkin" value="{{ $room->check_in }}">
-                                <input type="hidden" name="checkout" value="{{ $room->check_out }}">
-                                <input type="hidden" name="adult" value="1">
-                                <input type="hidden" name="children" value="1">
-                                <input type="hidden" name="extra_room_clean" value="1">
-                                <input type="hidden" name="extra_massage" value="1">
-                                <input type="hidden" name="extra_day_spa" value="1">
-                            </div>
+                        </div>
+                        <div class="drashti">
+                            <input type="hidden" name="room_id" value="{{ $room->id }}">
+                            <input type="hidden" name="checkin" value="{{ $room->check_in }}">
+                            <input type="hidden" name="checkout" value="{{ $room->check_out }}">
+                            <input type="hidden" name="adult" value="1">
+                            <input type="hidden" name="children" value="1">
+                            <input type="hidden" name="extra_room_clean" value="1">
+                            <input type="hidden" name="extra_massage" value="1">
+                            <input type="hidden" name="extra_day_spa" value="1">
+                        </div>
                 </div>
             </div>
             <div class="col-12 col-lg-8 ps-lg-5">
                 <div class="d_right">
-                    <h2>1 King Bed, Forest View, Loft Guest Room</h2>
+                    <h2>{{ $room->room_name }}</h2>
                     <div class="d_icon mt-3 mb-4">
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center me-sm-4 me-1">
@@ -240,66 +240,28 @@
                         </div>
                     </div>
                     <p>{{$room->message}} </p>
-                    
-                    <div class="d_amenties mt-xl-3 mt-3 ">
+
+
+                    <div class="d_amenties mt-xl-3 mt-3">
                         <h5>Room Amenities</h5>
                         <div class="row g-xl-3 g-0 mt-md-1">
-                            <div class="col-12 col-sm-4 col-xl-3">
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea1.png') }}" alt="">
-                                    <div class="d_textdesc">Air Conditioning</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea2.png') }}" alt="">
-                                    <div class="d_textdesc">Slippers</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea3.png') }}" alt="">
-                                    <div class="d_textdesc">Shampoo</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea4.png') }}" alt="">
-                                    <div class="d_textdesc">Pet Friendly</div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4 col-xl-3">
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea5.png') }}" alt="">
-                                    <div class="d_textdesc">Cable TV</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea6.png') }}" alt="">
-                                    <div class="d_textdesc">Towels</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea7.png') }}" alt="">
-                                    <div class="d_textdesc">Safe Box</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea8.png') }}" alt="">
-                                    <div class="d_textdesc">Welcome Drinks</div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4 col-xl-3">
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea9.png') }}" alt="">
-                                    <div class="d_textdesc">Wi-Fi & Internet</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea10.png') }}" alt="">
-                                    <div class="d_textdesc">Hair Dryer</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea11.png') }}" alt="">
-                                    <div class="d_textdesc">Espresso Machine</div>
-                                </div>
-                                <div class="d-flex align-items-center d_feature">
-                                    <img src="{{ url('frontend/img/d_img/fea12.png') }}" alt="">
-                                    <div class="d_textdesc">Inroom Refrigerator</div>
-                                </div>
-                            </div>
+                            @if($amenities && $amenities->count() > 0)
+                                @foreach($amenities as $amenity)
+                                    <div class="col-12 col-sm-4 col-xl-3">
+                                        <div class="d-flex align-items-center d_feature">
+                                            <img src="{{ url('/assets/amenities/' . $amenity->image) }}"
+                                                alt="{{ $amenity->name }}">
+                                            <div class="d_textdesc">{{ $amenity->name }}</div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>No amenities available for this room.</p>
+                            @endif
                         </div>
                     </div>
+
+
                     <div class="d_suite mt-xl-3 mt-3">
                         <h5>What’s included in this suite?</h5>
                         <div class="mt-3">
@@ -343,14 +305,14 @@
                     </div>
                     <div class="d_night">
                         <div class="d_price">
-                            <h6>$1050/ Night</h6>
+                            <h6>${{ $room->rent}}/ Night</h6>
                         </div>
                     </div>
                     <div class="d_content">
                         <div class="d_icon d-flex align-items-center">
                             <div class="d-flex align-items-center me-3">
                                 <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
+                                <div class="d_icondesc">{{ $room->room_size}}</div>
                             </div>
                             <div class="d-flex align-items-center me-3">
                                 <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
@@ -358,12 +320,12 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
+                                <div class="d_icondesc">{{ $room->bed_type}}</div>
                             </div>
                         </div>
                         <div class="row m-0 g-2 mt-1 align-items-center">
                             <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
+                                <h3>{{ $room->room_name }}</h3>
                             </div>
                             <div class="col-12 col-lg-1 p-0"></div>
                             <div class="col-12 col-lg-3 p-0">
@@ -375,64 +337,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="d_box position-relative">
-                    <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room2.png') }}" alt="">
-                    </div>
-                    <div class="d_night">
-                        <div class="d_price">
-                            <h6>$500/ Night</h6>
-                        </div>
-                    </div>
-                    <div class="d_content">
-                        <div class="d_icon d-flex align-items-center">
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
-                            </div>
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
-                            </div>
-                        </div>
-                        <div class="row m-0 g-2 mt-1 align-items-center">
-                            <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
-                            </div>
-                            <div class="col-12 col-lg-1 p-0"></div>
-                            <div class="col-12 col-lg-3 p-0">
-                                <div class="d_cta">
-                                    <a href="" class="d-block text-center">Reserve</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </section>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const mainImage = document.querySelector('.d_booknow .d_img img');
-    const thumbnails = document.querySelectorAll('.d_subimg img');
+        const mainImage = document.querySelector('.d_booknow .d_img img');
+        const thumbnails = document.querySelectorAll('.d_subimg img');
 
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function () {
-            // Get the source of the clicked thumbnail
-            const newSrc = this.getAttribute('src');
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function () {
+                // Get the source of the clicked thumbnail
+                const newSrc = this.getAttribute('src');
 
-            // Set the main image source to the clicked thumbnail's source
-            mainImage.setAttribute('src', newSrc);
+                // Set the main image source to the clicked thumbnail's source
+                mainImage.setAttribute('src', newSrc);
+            });
         });
     });
-});
 
     document.addEventListener('DOMContentLoaded', () => {
         // Constants
@@ -556,31 +480,31 @@
 </script>
 <script>
     $(function () {
-    // Function to get today's date in dd/mm/yy format
-    function getTodayDate() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-        var yyyy = today.getFullYear();
-        return dd + '/' + mm + '/' + yyyy;
-    }
-
-    $(".d_cal .ds").datepicker({
-        dateFormat: "dd/mm/yy",
-        defaultDate: new Date(),
-        onSelect: function (dateText, inst) {
-            $(this).val(dateText);
+        // Function to get today's date in dd/mm/yy format
+        function getTodayDate() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            var yyyy = today.getFullYear();
+            return dd + '/' + mm + '/' + yyyy;
         }
-    });
 
-    // Set default date to today for both inputs
-    $(".d_cal .ds").val(getTodayDate());
+        $(".d_cal .ds").datepicker({
+            dateFormat: "dd/mm/yy",
+            defaultDate: new Date(),
+            onSelect: function (dateText, inst) {
+                $(this).val(dateText);
+            }
+        });
 
-    $(".d_cal .datepicker-trigger").on("click", function () {
-        var input = $(this).siblings(".ds");
-        input.datepicker("show");
+        // Set default date to today for both inputs
+        $(".d_cal .ds").val(getTodayDate());
+
+        $(".d_cal .datepicker-trigger").on("click", function () {
+            var input = $(this).siblings(".ds");
+            input.datepicker("show");
+        });
     });
-});
 </script>
 
 @endsection

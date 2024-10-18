@@ -8,16 +8,19 @@
 
                     <li class="list-divider"></li>
 
-                    <li class="{{ set_active(['hotel/list']) }}">
-                        <a href="{{ route('hotel/list') }}"><i class="fas fa-hotel"></i><span>Hotel</span></a>
-                    </li>
-
-                <li class="{{ set_active(['amenities/list']) }}">
-                    <a href="{{ route('amenities/list') }}">
-                        <img src="{{ url('assets/icons/amenitys.png') }}" style="width: 20px; height:20px;"><span>Amenities</span>
+                
+                <li class="submenu">
+                    <a href="#">
+                        <img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px">
+                        <span> Hotel </span>
+                        <span class="menu-arrow"></span>
                     </a>
-                    </li>
-
+                    <ul class="submenu_class" style="display: none;">
+                        <li><a class="{{ set_active(['hotel/list']) }}" href="{{ route('hotel/list') }}">Hotel</a></li>
+                        <li><a class="{{ set_active(['amenities/hotel/list']) }}" href="{{ route('amenities/hotel/list') }}">Hotel Amenities </a></li>
+                    </ul>
+                </li>
+              
                 <li class="{{ set_active(['facilities/list']) }}">
                     <a href="{{ route('facilities/list') }}">
                         <img src="{{ url('assets/icons/facility.png') }}" style="width: 25px; height:25px"><span>Facilities</span>
@@ -68,6 +71,7 @@
                     <ul class="submenu_class" style="display: none;">
                         <li><a class="{{ set_active(['roomtype/list']) }}" href="{{ route('roomtype/list') }}">Room Types</a></li>
                         <li><a class="{{ set_active(['form/allrooms/page']) }}" href="{{ route('form/allrooms/page') }}">Rooms</a></li>
+                        <li><a class="{{ set_active(['amenities/list']) }}" href="{{ route('amenities/list') }}">Rooms Amenities </a></li>
                     </ul>
                 </li>
 
