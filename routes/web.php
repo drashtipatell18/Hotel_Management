@@ -132,6 +132,9 @@ Route::controller(BookingController::class)->group(function () {
     Route::get('/get-room-details/{roomId}', 'getRoomDetails');
     Route::get('/get-customer-details/{customerName}',  'getCustomerDetails');
     Route::post('/update-booking-status',  'updateStatus')->name('update.booking.status');
+
+
+    
 });
 
 // ---------------------------- customers --------------------------//
@@ -396,6 +399,8 @@ Route::post('/contact-us/store',[ContactController::class,'contactusStore'])->na
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
 
 Route::get('/booknow/{roomId}', [BookNowController::class, 'booknow'])->name('booknow');
+
+Route::post('/booknow/updateCounts', [BookNowController::class, 'updateCounts'])->name('booknow.updateCounts');
 
 // Route::get('/booknow/{id}',[BookNowController::class,'booknow'])->name('booknow');
 

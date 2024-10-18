@@ -7,6 +7,18 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<style>
+    .bookButton {
+        padding: 10px 93px;
+        background-color: #fff;
+        color: #1A2142;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 2px;
+        font-weight: 600;
+        transition: .3s all ease-in-out;
+    }
+</style>
 
 <section class="d_booknow">
     <div class="d_img col">
@@ -80,17 +92,17 @@
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Adults</div>
+                                    <div class="d_formsubtitle">Total Member</div>
                                     <div class="d-flex d_btn">
-                                        <button class="btn-decrement" data-target="adult"><i
+                                        <button class="btn-decrement" data-target="member"><i
                                                 class="fa-solid fa-minus"></i></button>
-                                        <span id="adult-count" class="mx-2">1</span>
-                                        <button class="btn-increment" data-target="adult"><i
+                                        <span id="member-count" class="mx-2">1</span>
+                                        <button class="btn-increment" data-target="member"><i
                                                 class="fa-solid fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Children</div>
                                     <div class="d-flex d_btn">
@@ -101,9 +113,9 @@
                                                 class="fa-solid fa-plus"></i></button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="d_extra mt-4">
+                        <!-- <div class="d_extra mt-4">
                             <h4>Extra Service</h4>
                             <div class="row g-2 mt-1 d_exservice">
                                 <div class="col-12">
@@ -149,7 +161,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <hr>
                         <div class="d_total mt-3">
                             <div class="accordion" id="accordionExample">
@@ -167,7 +179,7 @@
                                     <div id="collapseOne" class="accordion-collapse collapse "
                                         data-bs-parent="#accordionExample">
                                         <hr>
-                                        <div class="row g-2">
+                                        <!-- <div class="row g-2">
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="d_title">Total Base price</div>
@@ -186,7 +198,7 @@
                                                     <div class="d_price" data-type="extra">$100</div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <hr>
                                         <div class="row">
                                             <div class="col-12">
@@ -200,19 +212,20 @@
                                 </div>
                             </div>
                             <div class="d_cta mt-3 text-center">
-                                <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay
-                                    Now</a>
+                                <!-- <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay -->
+                                    <!-- Now</a> -->
+                                    <button class="d-block d-sm-inline-block text-center bookButton" type="submit">Book Your Stay Now</button>
                             </div>
                         </div>
                         <div class="drashti">
                             <input type="hidden" name="room_id" value="{{ $room->id }}">
                             <input type="hidden" name="checkin" value="{{ $room->check_in }}">
                             <input type="hidden" name="checkout" value="{{ $room->check_out }}">
-                            <input type="hidden" name="adult" value="1">
+                            <!-- <input type="hidden" name="adult" value="1">
                             <input type="hidden" name="children" value="1">
                             <input type="hidden" name="extra_room_clean" value="1">
                             <input type="hidden" name="extra_massage" value="1">
-                            <input type="hidden" name="extra_day_spa" value="1">
+                            <input type="hidden" name="extra_day_spa" value="1"> -->
                         </div>
                 </div>
             </div>
@@ -241,13 +254,12 @@
                     </div>
                     <p>{{$room->message}} </p>
 
-
                     <div class="d_amenties mt-xl-3 mt-3">
                         <h5>Room Amenities</h5>
-                        <div class="row g-xl-3 g-0 mt-md-1">
+                        <div class="row g-0 mt-md-1"> <!-- Changed g-2 to g-0 for no gap -->
                             @if($amenities && $amenities->count() > 0)
                                 @foreach($amenities as $amenity)
-                                    <div class="col-12 col-sm-4 col-xl-3">
+                                    <div class="col-12 col-sm-4 col-xl-4 p-0"> <!-- Added p-0 to remove padding -->
                                         <div class="d-flex align-items-center d_feature">
                                             <img src="{{ url('/assets/amenities/' . $amenity->image) }}"
                                                 alt="{{ $amenity->name }}">
@@ -343,140 +355,120 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mainImage = document.querySelector('.d_booknow .d_img img');
-        const thumbnails = document.querySelectorAll('.d_subimg img');
+ // book now images
 
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', function () {
-                // Get the source of the clicked thumbnail
-                const newSrc = this.getAttribute('src');
+ document.addEventListener("DOMContentLoaded", function () {
+    const mainImage = document.querySelector('.d_booknow .d_img img');
+    const thumbnails = document.querySelectorAll('.d_subimg img');
 
-                // Set the main image source to the clicked thumbnail's source
-                mainImage.setAttribute('src', newSrc);
-            });
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function () {
+            const newSrc = this.getAttribute('src');
+            mainImage.setAttribute('src', newSrc);
         });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // Constants
-        const PRICE_PER_NIGHT = 1250;
-        const ROOM_CLEAN_PRICE = 100;
-        const MASSAGE_PRICE = 30;
-        const DAY_SPA_PRICE = 20;
+    const PRICE_PER_NIGHT = 1250;
+    const ROOM_CLEAN_PRICE = 100;
+    const MASSAGE_PRICE = 30;
+    const DAY_SPA_PRICE = 20;
 
-        // DOM Elements
-        const checkInInput = document.querySelector('input[name="checkin"]');
-        const checkOutInput = document.querySelector('input[name="checkout"]');
-        const roomCount = document.getElementById('room-count');
-        const adultCount = document.getElementById('adult-count');
-        const childrenCount = document.getElementById('children-count');
-        const roomCleanCheckbox = document.getElementById('extra-room-clean');
-        const massageCheckbox = document.getElementById('extra-massage');
-        const daySpaCheckbox = document.getElementById('extra-day-spa');
-        const massageCount = document.getElementById('massage-count');
-        const daySpaCount = document.getElementById('day-spa-count');
-        const totalCostDisplay = document.getElementById('total-cost');
-        const basePriceDisplay = document.querySelector('.d_price[data-type="base"]');
-        const taxesDisplay = document.querySelector('.d_price[data-type="taxes"]');
-        const extraDisplay = document.querySelector('.d_price[data-type="extra"]');
-        const totalPriceDisplay = document.getElementById('total-price');
+    const checkInInput = document.querySelector('input[name="checkin"]');
+    const checkOutInput = document.querySelector('input[name="checkout"]');
+    const roomCount = document.getElementById('room-count');
 
-        // Helper Functions
-        const updateDisplay = (element, value) => {
-            if (element) element.textContent = value;
-        };
+    const updateDisplay = (element, value) => {
+        if (element) element.textContent = value;
+    };
 
-        const calculateNights = () => {
-            const checkIn = new Date(checkInInput.value);
-            const checkOut = new Date(checkOutInput.value);
-            return checkIn && checkOut && checkOut > checkIn ?
-                Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
-        };
+    const calculateNights = () => {
+        const checkIn = new Date(checkInInput.value);
+        const checkOut = new Date(checkOutInput.value);
+        return checkIn && checkOut && checkOut > checkIn ?
+            Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 1;
+    };
 
-        const calculateTotal = () => {
-            const nights = calculateNights();
-            const rooms = parseInt(roomCount.textContent);
-            const basePrice = PRICE_PER_NIGHT * nights * rooms;
+    const calculateTotal = () => {
+        const nights = calculateNights();
+        const rooms = parseInt(roomCount.textContent);
+        const basePrice = PRICE_PER_NIGHT * nights * rooms;
 
-            let extraPrice = 0;
-            if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
-            if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
-            if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
+        let extraPrice = 0;
+        // Assuming you will implement checkbox logic later
+        // if (roomCleanCheckbox.checked) extraPrice += ROOM_CLEAN_PRICE;
+        // if (massageCheckbox.checked) extraPrice += MASSAGE_PRICE * parseInt(massageCount.textContent);
+        // if (daySpaCheckbox.checked) extraPrice += DAY_SPA_PRICE * parseInt(daySpaCount.textContent);
 
-            const taxes = 0; // Assuming no taxes for now
-            const total = basePrice + extraPrice + taxes;
+        const taxes = 0; // Assuming no taxes for now
+        const total = basePrice + extraPrice + taxes;
 
-            updateDisplay(basePriceDisplay, `$${basePrice}`);
-            updateDisplay(taxesDisplay, `$${taxes}`);
-            updateDisplay(extraDisplay, `$${extraPrice}`);
-            updateDisplay(totalPriceDisplay, `$${total}`);
-            updateDisplay(totalCostDisplay, `$${total}`);
-        };
+        // Update the relevant displays (assuming you've defined these variables)
+        // updateDisplay(basePriceDisplay, `$${basePrice}`);
+        // updateDisplay(taxesDisplay, `$${taxes}`);
+        // updateDisplay(extraDisplay, `$${extraPrice}`);
+        // updateDisplay(totalPriceDisplay, `$${total}`);
+        // updateDisplay(totalCostDisplay, `$${total}`);
+    };
 
-        // Event Listeners
-        const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
-            incrementBtn.addEventListener('click', () => {
-                countElement.textContent = parseInt(countElement.textContent) + 1;
+    const addCounterListeners = (incrementBtn, decrementBtn, countElement, minValue = 0) => {
+        incrementBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default action
+            countElement.textContent = parseInt(countElement.textContent) + 1;
+            calculateTotal();
+        });
+        decrementBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default action
+            if (parseInt(countElement.textContent) > minValue) {
+                countElement.textContent = parseInt(countElement.textContent) - 1;
                 calculateTotal();
-            });
-            decrementBtn.addEventListener('click', () => {
-                if (parseInt(countElement.textContent) > minValue) {
-                    countElement.textContent = parseInt(countElement.textContent) - 1;
-                    calculateTotal();
-                }
-            });
+            }
+        });
+    };
+
+    addCounterListeners(
+        document.querySelector('.btn-increment[data-target="room"]'),
+        document.querySelector('.btn-decrement[data-target="room"]'),
+        roomCount, 1
+    );
+
+    // Other event listeners remain unchanged
+    [checkInInput, checkOutInput].forEach(input => {
+        input.addEventListener('change', calculateTotal);
+    });
+
+    // Book Now button with AJAX functionality
+    document.querySelector('.d_cta a').addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        const bookingData = {
+            checkin: checkInInput.value,
+            checkout: checkOutInput.value,
+            roomCount: roomCount.textContent,
         };
 
-        // Room, Adult, Children counters
-        addCounterListeners(
-            document.querySelector('.btn-increment[data-target="room"]'),
-            document.querySelector('.btn-decrement[data-target="room"]'),
-            roomCount, 1
-        );
-        addCounterListeners(
-            document.querySelector('.btn-increment[data-target="adult"]'),
-            document.querySelector('.btn-decrement[data-target="adult"]'),
-            adultCount, 1
-        );
-        addCounterListeners(
-            document.querySelector('.btn-increment[data-target="children"]'),
-            document.querySelector('.btn-decrement[data-target="children"]'),
-            childrenCount
-        );
-
-        // Extra services counters
-        addCounterListeners(
-            document.querySelector('.btn-service-increment[data-target="massage"]'),
-            document.querySelector('.btn-service-decrement[data-target="massage"]'),
-            massageCount, 1
-        );
-        addCounterListeners(
-            document.querySelector('.btn-service-increment[data-target="day-spa"]'),
-            document.querySelector('.btn-service-decrement[data-target="day-spa"]'),
-            daySpaCount, 1
-        );
-
-        // Checkbox listeners
-        [roomCleanCheckbox, massageCheckbox, daySpaCheckbox].forEach(checkbox => {
-            checkbox.addEventListener('change', calculateTotal);
+        // Use AJAX to send bookingData to the server
+        fetch('your-server-endpoint-here', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle success, maybe redirect or show a success message
+            console.log(data);
+            // Example redirect
+            window.location = 'checkout.html';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
         });
-
-        // Date input listeners
-        [checkInInput, checkOutInput].forEach(input => {
-            input.addEventListener('change', calculateTotal);
-        });
-
-        // Book Now button
-        document.querySelector('.d_cta a').addEventListener('click', (e) => {
-            e.preventDefault();
-            // alert('Booking functionality is not yet implemented.');
-            window.location = 'checkout.html'
-        });
-
-        // Initial calculation
-        calculateTotal();
     });
+
+    calculateTotal();
+});
+
+
 </script>
 <script>
     $(function () {
@@ -505,6 +497,7 @@
             input.datepicker("show");
         });
     });
+
 </script>
 
 @endsection
