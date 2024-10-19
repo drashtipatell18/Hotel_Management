@@ -230,6 +230,9 @@
                 <div class="col-xs-12 col-sm-6">
                     <div class="d_box position-relative">
                         <div class="d_img">
+                            @if($similarRoom->offer && $similarRoom->offer->discount_value > 0)
+                                <div class="d_ribbon">{{ $similarRoom->offer->discount_value }}% Saving</div>
+                            @endif
                             @if($similarRoom->images->isNotEmpty())
                                 <img src="{{ url('assets/upload/' . $similarRoom->images->first()->image) }}"
                                     alt="{{ $similarRoom->room_name }}">

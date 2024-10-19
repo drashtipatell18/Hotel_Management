@@ -328,6 +328,9 @@
                 }
 
                 const reserveUrl = `/booknow/${room.id}`;
+                const discountValue = room.offer ? room.offer.discount_value : 0;
+                const savingText = discountValue > 0 ? `${discountValue}% Saving` : '';
+
                 const roomHtml = `<div class="col-xs-12 col-sm-6">
                         <div class="d_box position-relative">
                             <div class="d_img">
@@ -335,6 +338,7 @@
                             </div>
                             <div class="d_night">
                                 <div class="d_price">
+                                 ${savingText ? `<div class="d_ribbon">${savingText}</div>` : ''}
                                     <h6>$${room.rent}/ Night</h6>
                                 </div>
                             </div>

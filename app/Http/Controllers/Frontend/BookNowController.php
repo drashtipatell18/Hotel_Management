@@ -31,8 +31,6 @@ class BookNowController extends Controller
         $similarRooms = Room::where('bed_type', $bedType)->get();
         $roomImages = $room->images;
 
-
-
         if ($room->offer_id) {
             // Assuming the offer has a discount_value attribute
             $offer = OfferPackage::find($room->offer_id);
@@ -42,9 +40,17 @@ class BookNowController extends Controller
             $discountValue = 0;
             $discountedPrice = $room->rent;
         }
+
+        $availableRooms = Room::with(['offer']) // Assuming you have defined a relationship called `offer`
+        ->whereNotNull('offer_id')
+        ->get();
+
+        $availableRoomsWithDiscounts = $availableRooms->filter(function($room) {
+            return $room->offer && $room->offer->discount_value > 0; // Adjust 'discount_value' according to your Offer model
+        });
         
     
-        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms','discountedPrice','discountValue'));
+        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms','discountedPrice','discountValue','availableRoomsWithDiscounts','availableRooms'));
     }
     
     public function booknowStore(Request $request)

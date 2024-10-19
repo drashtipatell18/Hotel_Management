@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\RoomTypes;
 use App\Models\SmokingPrefrence;
 use App\Models\AdditionalPrefrence;
+use App\Models\OfferPackage;
 class CheckAvaliblityController extends Controller
 {
     public function checkAvilabilty(Request $request)
@@ -30,16 +31,22 @@ class CheckAvaliblityController extends Controller
             }
         }
 
-       
-
         $availableRooms = Room::with('images')->get();
         $roomCount = Room::count();
         $maxMemberCapacity = Room::max('total_member_capacity');
         $roomTypes = RoomTypes::all();
         $smokingPrefrences = SmokingPrefrence::all();
         $additionalPrefrence = AdditionalPrefrence::all();
+
+      
+
+        $availableRoomsWithDiscounts = $availableRooms->filter(function($room) {
+            return $room->offer && $room->offer->discount_value > 0; // Adjust 'discount_value' according to your Offer model
+        });
+
+     
        
-        return view('frontend.check_avilabilty', compact('availableRooms','roomCount','maxMemberCapacity','roomTypes','smokingPrefrences','additionalPrefrence'));
+        return view('frontend.check_avilabilty', compact('availableRooms','roomCount','maxMemberCapacity','roomTypes','smokingPrefrences','additionalPrefrence','availableRoomsWithDiscounts'));
     }
 
 
