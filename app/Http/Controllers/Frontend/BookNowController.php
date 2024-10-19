@@ -37,17 +37,37 @@ class BookNowController extends Controller
     }
     public function booknowStore(Request $request)
     {
+        // dd($request->all());
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You need to login to proceed with the booking.');
+        }
+
+        $checkInDateTime = $request->input('check_in_datetime');
+        $checkInDate = \Carbon\Carbon::parse($checkInDateTime)->toDateString(); // Get the date part
+        $checkInTime = \Carbon\Carbon::parse($checkInDateTime)->toTimeString(); // Get the time part
+
+        $checkOutDateTime = $request->input('check_out_datetime');
+        $checkOutDate = \Carbon\Carbon::parse($checkOutDateTime)->toDateString(); // Get the date part
+        $checkOutTime = \Carbon\Carbon::parse($checkOutDateTime)->toTimeString(); // Get the time part
+
+
+
         $users = Auth::user();
         $book = new Booking();
         $book->customer_id = $users->id;
         $book->room_id = $request->room_id;
-        $book->check_in_date = Carbon::createFromFormat('d/m/Y', $request->check_in_date)->format('Y-m-d');
-        $book->check_out_date = Carbon::createFromFormat('d/m/Y', $request->check_out_date)->format('Y-m-d');
+        $book->check_in_date = $checkInDate;
+        $book->check_in_time = $checkInTime;
+
+        $book->check_out_date = $checkOutDate;
+        $book->check_out_time = $checkOutTime;
+        
         $book->room_type_id = $request->room_type_id;
         $book->room_number = $request->room_number;
         $book->floor_id = $request->floor_id;
         $book->ac_non_ac = $request->ac_non_ac;
         $book->booking_date = Carbon::now()->format('Y-m-d');
+        $book->total_cost = $request->input('total_cost');
 
      
         $book->room_count = $request->input('room_count');

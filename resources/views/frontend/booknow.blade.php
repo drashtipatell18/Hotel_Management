@@ -18,6 +18,8 @@
         font-weight: 600;
         transition: .3s all ease-in-out;
     }
+
+  
 </style>
 
 <section class="d_booknow">
@@ -62,21 +64,19 @@
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Check in</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds" name="check_in_date" style="width: 88px;">
-                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                            style="color: #ffffff;"></i>
+                                        <input type="datetime-local" class="ds" id="checkIn" name="check_in_datetime" style="color: black; background-color: white; padding-left: 7px; width:185px">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Check out</div>
+                                    <div class="d_formsubtitle">Check Out</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds" name="check_out_date" style="width: 88px;">
-                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                            style="color: #ffffff;"></i>
+                                        <input type="datetime-local" class="ds" id="checkOut" name="check_out_datetime"  style="color: black; background-color: white; padding-left: 7px; width:185px">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
@@ -90,6 +90,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="room_count" id="room_count_input" value="1">
+                                <input type="hidden" id="total_cost_input" name="total_cost" value="0">
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
@@ -119,13 +120,12 @@
                                                 Total Cost
                                             </button>
                                         </h2>
-                                        <h5 id="total-cost">$0</h5>
+                                        <h5 id="total_cost">$0</h5>
                                     </div>
+                                    <input type="hidden" id="total_cost_input" name="total_cost" value="0">
                                 </div>
                             </div>
                             <div class="d_cta mt-3 text-center">
-                                <!-- <a href="/checkout.html" class="d-block d-sm-inline-block text-center">Book Your Stay -->
-                                <!-- Now</a> -->
                                 <button class="d-block d-sm-inline-block text-center bookButton" type="submit">Book
                                     Your Stay Now</button>
                             </div>
@@ -138,11 +138,6 @@
                             <input type="hidden" name="room_number" value="{{ $room->room_number }}">
                             <input type="hidden" name="floor_id" value="{{ $room->floor_id }}">
                             <input type="hidden" name="ac_non_ac" value="{{ $room->ac_non_ac }}">
-                            <!-- <input type="hidden" name="adult" value="1">
-                                    <input type="hidden" name="children" value="1">
-                                    <input type="hidden" name="extra_room_clean" value="1">
-                                    <input type="hidden" name="extra_massage" value="1">
-                                    <input type="hidden" name="extra_day_spa" value="1"> -->
                         </div>
                     </form>
                 </div>
@@ -403,48 +398,27 @@
         calculateTotal();
     });
 </script>
-<script>
-    $(function () {
-        // Function to get today's date in dd/mm/yy format
-        function getTodayDate() {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-            var yyyy = today.getFullYear();
-            return dd + '/' + mm + '/' + yyyy;
-        }
 
-        $(".d_cal .ds").datepicker({
-            dateFormat: "dd/mm/yy",
-            defaultDate: new Date(),
-            onSelect: function (dateText, inst) {
-                $(this).val(dateText);
-            }
-        });
-
-        // Set default date to today for both inputs
-        $(".d_cal .ds").val(getTodayDate());
-
-        $(".d_cal .datepicker-trigger").on("click", function () {
-            var input = $(this).siblings(".ds");
-            input.datepicker("show");
-        });
-    });
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let roomCount = 1; // Initial room count
+        let memberCount = 1;
         const pricePerRoom = {{ $room->rent }}; // Price for one room
         const roomCountElement = document.getElementById('room-count');
         const roomCountInput = document.getElementById('room_count_input');
-        const totalCostElement = document.getElementById('total-cost');
+        const totalCostElement = document.getElementById('total_cost');
         const totalPriceElement = document.getElementById('total-price');
+        const totalCostInput = document.getElementById('total_cost_input');
+        const memberCountElement = document.getElementById('member-count');
+        const memberCountInput = document.getElementById('member_count_input');
+        
 
         // Function to update total cost
         function updateTotalCost() {
             const totalCost = roomCount * pricePerRoom; // Calculate total cost
             totalCostElement.textContent = `$${totalCost}`; // Update displayed total cost
             totalPriceElement.innerHTML = `<b>$${totalCost}</b>`; // Update collapsed total price
+            totalCostInput.value = totalCost; 
         }
 
         // Handle increment button click
@@ -464,15 +438,7 @@
                 updateTotalCost(); // Update the total cost
             }
         });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let memberCount = 1; // Initial member count
-        const memberCountElement = document.getElementById('member-count');
-        const memberCountInput = document.getElementById('member_count_input');
 
-        // Handle increment button click for Total Member
         document.querySelector('.btn-increment[data-target="member"]').addEventListener('click', function () {
             memberCount++; // Increment the member count
             memberCountElement.textContent = memberCount; // Update the displayed count
@@ -487,7 +453,32 @@
                 memberCountInput.value = memberCount; // Update the hidden input value
             }
         });
+        updateTotalCost();
+
     });
 </script>
+
+<script>
+    $(function () {
+        // Function to get today's date and time in the format YYYY-MM-DDTHH:MM
+        function getCurrentDateTime() {
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            var dd = String(today.getDate()).padStart(2, '0');
+            var hh = String(today.getHours()).padStart(2, '0');
+            var min = String(today.getMinutes()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+        }
+
+        $(".d_cal .ds").val(getCurrentDateTime());
+
+        $(".d_cal .datepicker-trigger").on("click", function () {
+            var input = $(this).siblings(".ds");
+            input.datepicker("show");
+        });
+    });
+</script>
+
 
 @endsection

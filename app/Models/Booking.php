@@ -20,7 +20,7 @@ class Booking extends Model
         'floor_id',
         'ac_non_ac',
         'bed_count',
-        'rent',
+        'total_cost',
         'total_numbers',
         'booking_date',
         'time',
