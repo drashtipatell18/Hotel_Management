@@ -71,6 +71,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
+<<<<<<< Updated upstream
                                     <div class="d_formsubtitle">Check Out</div>
                                     <div class="d-flex align-items-center d_cal">
                                         <input type="datetime-local" class="ds" id="checkOut" name="check_out_datetime"  style="color: black; background-color: white; padding-left: 7px; width:185px">
@@ -78,6 +79,37 @@
                                 </div>
 
                             </div>
+=======
+                                    <div class="d_formsubtitle">Check-in Time</div>
+                                    <div class="d-flex align-items-center d_cal">
+                                        <input type="time" class="ds" name="check_in_time" id="check_in_time" style="width: 88px;">
+                                        <i class="fa-solid fa-clock ms-sm-1" style="color: #ffffff;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+{{--                             
+                            <div class="col-12">
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Check out</div>
+                                    <div class="d-flex align-items-center d_cal">
+                                        <input type="time" name="check_in_time" id="check_in_time" class="ds" style="width: 88px;" placeholder="HH:MM">
+
+                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
+                                            style="color: #ffffff;"></i>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="d_filed d-flex justify-content-between align-items-center">
+                                    <div class="d_formsubtitle">Check-out Time</div>
+                                    <div class="d-flex align-items-center d_cal">
+                                        <input type="text" class="ds timepicker" name="check_out_time" id="check_out_time" style="width: 88px;" placeholder="HH:MM">
+                                        <i class="fa-solid fa-clock ms-sm-1" style="color: #ffffff;"></i>
+                                    </div>
+                                </div>
+                            </div> --}}
+>>>>>>> Stashed changes
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Rooms</div>
@@ -402,8 +434,12 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let roomCount = 1; // Initial room count
+<<<<<<< Updated upstream
         let memberCount = 1;
         const pricePerRoom = {{ $room->rent }}; // Price for one room
+=======
+        const pricePerRoom = {{ $room->rent ?? 0}}; // Price for one room
+>>>>>>> Stashed changes
         const roomCountElement = document.getElementById('room-count');
         const roomCountInput = document.getElementById('room_count_input');
         const totalCostElement = document.getElementById('total_cost');
@@ -456,6 +492,22 @@
         updateTotalCost();
 
     });
+</script>
+<script>
+    $(document).ready(function() {
+        // Initialize timepicker for the Check-in Time
+        $('#check_in_time').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,           // Time interval in minutes
+            minTime: '06:00am',      // Minimum selectable time
+            maxTime: '11:00pm',      // Maximum selectable time
+            defaultTime: '02:00pm',  // Default selected time
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+
 </script>
 
 <script>
