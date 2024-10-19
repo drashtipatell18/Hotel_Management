@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use App\Models\OfferPackage;
 use App\Models\SmokingPrefrence;
 use Illuminate\Http\Request;
 use App\Models\Room;
@@ -39,8 +40,9 @@ class RoomsController extends Controller
         $foods = Food::all();
         $smokingPrefrences = SmokingPrefrence::all();
         $additionalPrefrence = AdditionalPrefrence::all();
+        $offerPackages = OfferPackage::where('is_active','1')->get();
 
-        return view('room.addroom',compact('user','room_types','floors','foods','smokingPrefrences','additionalPrefrence'));
+        return view('room.addroom',compact('user','room_types','floors','foods','smokingPrefrences','additionalPrefrence','offerPackages'));
     }
     public function editRoom($id)
     {
@@ -51,9 +53,10 @@ class RoomsController extends Controller
         $foods = Food::all();
         $smokingPrefrences = SmokingPrefrence::all();
         $additionalPrefrence = AdditionalPrefrence::all();
+        $offerPackages = OfferPackage::where('is_active','1')->get();
         
 
-        return view('room.editroom',compact('user','room_types','roomEdit','floors','foods','smokingPrefrences','additionalPrefrence'));
+        return view('room.editroom',compact('user','room_types','roomEdit','floors','foods','smokingPrefrences','additionalPrefrence','offerPackages'));
     }
 
 
@@ -101,6 +104,7 @@ class RoomsController extends Controller
             $room->smoking_id = $request->smoking_id;
             $room->view_id = $request->view_id;
             $room->message = $request->message;
+            $room->offer_id = $request->offer_id;
     
             $room->save(); // Save the room to get the room ID
     
@@ -168,6 +172,7 @@ class RoomsController extends Controller
             $room->smoking_id = $request->input('smoking_id');
             $room->view_id = $request->input('view_id');
             $room->message = $request->input('message');
+            $room->offer_id = $request->input('offer_id');
     
             if ($request->hasFile('image')) {
                 // Get existing image names for the room

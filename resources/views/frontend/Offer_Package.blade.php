@@ -102,157 +102,72 @@
                 </div>
             </div>
         </div>
-        <div class="row m-0 g-lg-5 g-4 m-0 ">
-            <div class="col-xs-12 col-sm-6">
-                <div class="d_box position-relative">
-                    <!-- Ribbon for 10% Saving -->
-                    <div class="d_ribbon">10% Saving</div>
-                    <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
-                    </div>
-                    <div class="d_content">
-                        <div class="d_icon d-flex align-items-center">
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
-                            </div>
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
+        <div class="row m-0 g-lg-5 g-4 m-0">
+            @foreach($availableRooms as $offerRoom)
+                <div class="col-xs-12 col-sm-6">
+                    <div class="d_box position-relative">
+                    @if($offerRoom->offer && $offerRoom->offer->discount_value)
+                            <div class="d_ribbon">{{ $offerRoom->offer->discount_value }}% Saving</div>
+                    @endif
+                        <div class="d_img">
+                            @if($offerRoom->images->isNotEmpty())
+                                <img src="{{ url('assets/upload/' . $offerRoom->images->first()->image) }}"
+                                    alt="{{ $offerRoom->room_name }}">
+                            @else
+                                <img src="{{ url('path/to/default/image.jpg') }}" alt="{{ $offerRoom->room_name }}">
+                            @endif
+                        </div>
+                        <div class="d_night">
+                            <div class="d_price">
+                                <h6>${{ $offerRoom->rent }}/ Night</h6>
                             </div>
                         </div>
-                        <div class="row m-0 m-0 g-2 mt-0 align-items-center">
-                            <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
+                        <div class="d_content">
+                            <div class="d_icon d-flex align-items-center">
+                                <div class="d-flex align-items-center me-3">
+                                    <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
+                                    <div class="d_icondesc">{{ $offerRoom->room_size }}</div>
+                                </div>
+                                <div class="d-flex align-items-center me-3">
+                                    <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
+                                    <div class="d_icondesc">Guests</div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
+                                    <div class="d_icondesc">{{ $offerRoom->bed_type }}</div>
+                                </div>
                             </div>
-                            <div class="col-12 col-lg-1 p-0"></div>
-                            <div class="col-12 col-lg-3 p-0">
+                            <div class="row m-0 g-2 mt-1 align-items-center">
+                                <div class="col-12 col-lg-8 p-0">
+                                    <h3>{{ $offerRoom->room_name }}</h3>
+                                </div>
+                                <div class="col-12 col-lg-1 p-0"></div>
+                                <div class="col-12 col-lg-3 p-0">
                                 <div class="d_cta">
-                                    <a href="" class="d-block text-center">Book Now</a>
+                                    <a href="javascript:void(0);" class="d-block text-center reserve-btn" data-room-id="{{ $offerRoom->id }}">Reserve</a>
+                                </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="d_box position-relative">
-                    <!-- Ribbon for 10% Saving -->
-                    <div class="d_ribbon">10% Saving</div>
-                    <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
-                    </div>
-                    <div class="d_content">
-                        <div class="d_icon d-flex align-items-center">
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
-                            </div>
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
-                            </div>
-                        </div>
-                        <div class="row m-0 m-0 g-2 mt-0 align-items-center">
-                            <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
-                            </div>
-                            <div class="col-12 col-lg-1 p-0"></div>
-                            <div class="col-12 col-lg-3 p-0">
-                                <div class="d_cta">
-                                    <a href="" class="d-block text-center">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row m-0 g-lg-5 g-4 m-0 pt-2 pb-5">
-            <div class="col-xs-12 col-sm-6">
-                <div class="d_box position-relative">
-                    <!-- Ribbon for 10% Saving -->
-                    <div class="d_ribbon">10% Saving</div>
-                    <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
-                    </div>
-                    <div class="d_content">
-                        <div class="d_icon d-flex align-items-center">
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
-                            </div>
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
-                            </div>
-                        </div>
-                        <div class="row m-0 m-0 g-2 mt-0 align-items-center">
-                            <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
-                            </div>
-                            <div class="col-12 col-lg-1 p-0"></div>
-                            <div class="col-12 col-lg-3 p-0">
-                                <div class="d_cta">
-                                    <a href="" class="d-block text-center">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="d_box position-relative">
-                    <!-- Ribbon for 10% Saving -->
-                    <div class="d_ribbon">10% Saving</div>
-                    <div class="d_img">
-                        <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
-                    </div>
-                    <div class="d_content">
-                        <div class="d_icon d-flex align-items-center">
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon1.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">80m2</div>
-                            </div>
-                            <div class="d-flex align-items-center me-3">
-                                <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Guets</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2" alt="">
-                                <div class="d_icondesc">Double bed</div>
-                            </div>
-                        </div>
-                        <div class="row m-0 m-0 g-2 mt-0 align-items-center">
-                            <div class="col-12 col-lg-8 p-0">
-                                <h3>1 King Bed, Forest View, Loft Guest Room</h3>
-                            </div>
-                            <div class="col-12 col-lg-1 p-0"></div>
-                            <div class="col-12 col-lg-3 p-0">
-                                <div class="d_cta">
-                                    <a href="" class="d-block text-center">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </div>
 </section>
 @endsection
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.reserve-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const roomId = this.getAttribute('data-room-id');
+            window.location.href = `/booknow/${roomId}`;
+        });
+    });
+})
+</script>
+
+

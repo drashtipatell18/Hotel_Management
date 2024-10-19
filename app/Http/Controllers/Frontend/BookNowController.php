@@ -10,6 +10,7 @@ use App\Models\RoomImages;
 use App\Models\Amenities;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\OfferPackage;
 
 class BookNowController extends Controller
 {
@@ -29,8 +30,20 @@ class BookNowController extends Controller
         $bedType = $room->bed_type;
         $similarRooms = Room::where('bed_type', $bedType)->get();
         $roomImages = $room->images;
+
+
+
+        if ($room->offer_id) {
+            // Assuming the offer has a discount_value attribute
+            $offer = OfferPackage::find($room->offer_id);
+            $discountValue = $offer ? $offer->discount_value : 0;
+            $discountedPrice = $room->rent * ($discountValue / 100);
+        } else {
+            $discountedPrice = $room->rent;
+        }
+        
     
-        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms'));
+        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms','discountedPrice'));
     }
     
     public function booknowStore(Request $request)
@@ -67,33 +80,21 @@ class BookNowController extends Controller
         $book = new Booking();
         $book->customer_id = $users->id;
         $book->room_id = $request->room_id;
-<<<<<<< Updated upstream
+
         $book->check_in_date = $checkInDate;
         $book->check_in_time = $checkInTime;
 
         $book->check_out_date = $checkOutDate;
         $book->check_out_time = $checkOutTime;
-        
-=======
-        // $book->check_in_date = Carbon::createFromFormat('d/m/Y', $request->check_in_date)->format('Y-m-d');
-        // $book->check_out_date = Carbon::createFromFormat('d/m/Y', $request->check_out_date)->format('Y-m-d');
->>>>>>> Stashed changes
+
+
         $book->room_type_id = $request->room_type_id;
         $book->room_number = $request->room_number;
         $book->floor_id = $request->floor_id;
         $book->ac_non_ac = $request->ac_non_ac;
-<<<<<<< Updated upstream
-        $book->booking_date = Carbon::now()->format('Y-m-d');
         $book->total_cost = $request->input('total_cost');
-
-     
         $book->room_count = $request->input('room_count');
-=======
         $book->booking_date = Carbon::now()->format('Y-m-d h:m:s');
-    
-        // Save room and member count
-        $book->room_count = $roomCount;
->>>>>>> Stashed changes
         $book->member_count = $request->input('member_count');
     
         // Save total cost

@@ -226,6 +226,21 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Offer Packages</label>
+                                    <select class="form-control @error('offer_id') is-invalid @enderror" id="offer_id" name="offer_id">
+                                        <option selected disabled> --Select Offer Packages-- </option>
+                                            @foreach ($offerPackages as $packages )
+                                                <option value="{{ $packages->id }}" {{ $packages->id == $roomEdit->offer_id ? 'selected' : '' }}>{{ $packages->title }}</option>
+                                            @endforeach
+                                    </select>
+                                    @error('offer_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="image">Room Images</label>

@@ -26,4 +26,9 @@ class OfferPackage extends Model
     {
         return $this->belongsTo(Hotel::class);
     }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class, 'offer_id');
+    }
 }

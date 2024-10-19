@@ -18,8 +18,6 @@
         font-weight: 600;
         transition: .3s all ease-in-out;
     }
-
-  
 </style>
 
 <section class="d_booknow">
@@ -55,7 +53,11 @@
                 <div class="d_item">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Book</h5>
-                        <h6>From ${{ $room->rent }}/Night</h6>
+                        <h6>Price:  ${{ $room->rent }}<br />
+                            @if($room->offer_id) <!-- Check if offer_id is available -->
+                                Discounted Price: ${{ number_format($discountedPrice, 2) }}
+                            @endif
+                        </h6>
                     </div>
                     <form action="{{ route('booknow.store') }}" method="post">
                         @csrf
@@ -64,52 +66,22 @@
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Check in</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="datetime-local" class="ds" id="checkIn" name="check_in_datetime" style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                        <input type="datetime-local" class="ds" id="checkIn" name="check_in_datetime"
+                                            style="color: black; background-color: white; padding-left: 7px; width:185px">
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
-<<<<<<< Updated upstream
                                     <div class="d_formsubtitle">Check Out</div>
                                     <div class="d-flex align-items-center d_cal">
-                                        <input type="datetime-local" class="ds" id="checkOut" name="check_out_datetime"  style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                        <input type="datetime-local" class="ds" id="checkOut" name="check_out_datetime"
+                                            style="color: black; background-color: white; padding-left: 7px; width:185px">
                                     </div>
                                 </div>
 
                             </div>
-=======
-                                    <div class="d_formsubtitle">Check-in Time</div>
-                                    <div class="d-flex align-items-center d_cal">
-                                        <input type="time" class="ds" name="check_in_time" id="check_in_time" style="width: 88px;">
-                                        <i class="fa-solid fa-clock ms-sm-1" style="color: #ffffff;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-{{--                             
-                            <div class="col-12">
-                                <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Check out</div>
-                                    <div class="d-flex align-items-center d_cal">
-                                        <input type="time" name="check_in_time" id="check_in_time" class="ds" style="width: 88px;" placeholder="HH:MM">
-
-                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                            style="color: #ffffff;"></i>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-12">
-                                <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Check-out Time</div>
-                                    <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds timepicker" name="check_out_time" id="check_out_time" style="width: 88px;" placeholder="HH:MM">
-                                        <i class="fa-solid fa-clock ms-sm-1" style="color: #ffffff;"></i>
-                                    </div>
-                                </div>
-                            </div> --}}
->>>>>>> Stashed changes
                             <div class="col-12">
                                 <div class="d_filed d-flex justify-content-between align-items-center">
                                     <div class="d_formsubtitle">Rooms</div>
@@ -293,7 +265,8 @@
                                 <div class="col-12 col-lg-1 p-0"></div>
                                 <div class="col-12 col-lg-3 p-0">
                                     <div class="d_cta">
-                                        <a href="javascript:void(0);" class="d-block text-center reserve-btn" data-room-id="{{ $similarRoom->id }}">Reserve</a>
+                                        <a href="javascript:void(0);" class="d-block text-center reserve-btn"
+                                            data-room-id="{{ $similarRoom->id }}">Reserve</a>
                                     </div>
                                 </div>
                             </div>
@@ -308,13 +281,13 @@
 
 <script>
     document.querySelectorAll('.reserve-btn').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
-        const roomId = this.getAttribute('data-room-id');
-        // Redirect to the booking page with the room ID
-        window.location.href = `/booknow/${roomId}`;
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const roomId = this.getAttribute('data-room-id');
+            // Redirect to the booking page with the room ID
+            window.location.href = `/booknow/${roomId}`;
+        });
     });
-});
 </script>
 <script>
     // book now images
@@ -434,12 +407,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let roomCount = 1; // Initial room count
-<<<<<<< Updated upstream
         let memberCount = 1;
-        const pricePerRoom = {{ $room->rent }}; // Price for one room
-=======
-        const pricePerRoom = {{ $room->rent ?? 0}}; // Price for one room
->>>>>>> Stashed changes
+        const pricePerRoom = {{ $discountedPrice ?? 0}}; // Price for one room
         const roomCountElement = document.getElementById('room-count');
         const roomCountInput = document.getElementById('room_count_input');
         const totalCostElement = document.getElementById('total_cost');
@@ -447,14 +416,14 @@
         const totalCostInput = document.getElementById('total_cost_input');
         const memberCountElement = document.getElementById('member-count');
         const memberCountInput = document.getElementById('member_count_input');
-        
+
 
         // Function to update total cost
         function updateTotalCost() {
             const totalCost = roomCount * pricePerRoom; // Calculate total cost
             totalCostElement.textContent = `$${totalCost}`; // Update displayed total cost
             totalPriceElement.innerHTML = `<b>$${totalCost}</b>`; // Update collapsed total price
-            totalCostInput.value = totalCost; 
+            totalCostInput.value = totalCost;
         }
 
         // Handle increment button click
@@ -494,7 +463,7 @@
     });
 </script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Initialize timepicker for the Check-in Time
         $('#check_in_time').timepicker({
             timeFormat: 'HH:mm',
