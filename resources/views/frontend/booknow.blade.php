@@ -54,9 +54,6 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Book</h5>
                         <h6>Price:  ${{ $room->rent }}<br />
-                            @if($room->offer_id) <!-- Check if offer_id is available -->
-                                Discounted Price: ${{ number_format($discountedPrice, 2) }}
-                            @endif
                         </h6>
                     </div>
                     <form action="{{ route('booknow.store') }}" method="post">
@@ -113,6 +110,7 @@
                         </div>
 
                         <hr>
+                        <h6>Discount: <span style="float:right">{{ $discountValue }}%</span></h6>
                         <div class="d_total mt-3">
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
@@ -129,6 +127,7 @@
                                     <input type="hidden" id="total_cost_input" name="total_cost" value="0">
                                 </div>
                             </div>
+                            
                             <div class="d_cta mt-3 text-center">
                                 <button class="d-block d-sm-inline-block text-center bookButton" type="submit">Book
                                     Your Stay Now</button>
@@ -409,6 +408,7 @@
         let roomCount = 1; // Initial room count
         let memberCount = 1;
         const pricePerRoom = {{ $discountedPrice ?? 0}}; // Price for one room
+        const discountedPrice = {{ $room->discountedPrice ?? 0 }};
         const roomCountElement = document.getElementById('room-count');
         const roomCountInput = document.getElementById('room_count_input');
         const totalCostElement = document.getElementById('total_cost');
@@ -420,7 +420,7 @@
 
         // Function to update total cost
         function updateTotalCost() {
-            const totalCost = roomCount * pricePerRoom; // Calculate total cost
+            const totalCost = roomCount * (discountedPrice > 0 ? discountedPrice : pricePerRoom); // Calculate total cost
             totalCostElement.textContent = `$${totalCost}`; // Update displayed total cost
             totalPriceElement.innerHTML = `<b>$${totalCost}</b>`; // Update collapsed total price
             totalCostInput.value = totalCost;

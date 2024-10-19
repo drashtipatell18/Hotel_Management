@@ -39,11 +39,12 @@ class BookNowController extends Controller
             $discountValue = $offer ? $offer->discount_value : 0;
             $discountedPrice = $room->rent * ($discountValue / 100);
         } else {
+            $discountValue = 0;
             $discountedPrice = $room->rent;
         }
         
     
-        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms','discountedPrice'));
+        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms','discountedPrice','discountValue'));
     }
     
     public function booknowStore(Request $request)
