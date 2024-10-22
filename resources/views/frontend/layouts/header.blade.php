@@ -66,7 +66,7 @@
         padding: 0px !important;
     }
 
- 
+
 
     #scrollToTopBtn {
         position: fixed;
@@ -531,7 +531,6 @@
                 </div>
                 <form id="logoutButton" action="{{ url('logoutfrontend')}}" method="POST">
                     @csrf
-
                     <div class="modal-body">
                         <p>Are you sure you want to Logout?</p>
                     </div>

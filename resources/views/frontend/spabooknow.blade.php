@@ -3,8 +3,6 @@
 @section('main-container')
 
 
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
@@ -197,45 +195,6 @@
 
 @endsection
 
-    <!-- Js Plugins -->
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar').innerHTML = data;
-            });
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer').innerHTML = data;
-            });
-    </script>
-    <!-- Js Plugins -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
-
-    <!-- <script src="js/jquery-ui.min.js"></script> -->
-    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <script src="js/d_home.js"></script>
-    <script src="js/main.js"></script>
-
-    <script>
-        $('#d_test2').owlCarousel({
-            items: 1,
-            loop: true,
-            margin: 10,
-            nav: false,
-            dotsEach: true
-
-        })
-    </script>
 
     <script>
 
@@ -427,3 +386,4 @@
             });
         });
     </script>
+    

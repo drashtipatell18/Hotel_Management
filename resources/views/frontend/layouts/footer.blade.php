@@ -119,7 +119,7 @@
 
 
 <!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
- 
+
 
 <!-- <script>
     fetch('header.html')
@@ -798,19 +798,22 @@
             }
         });
 
-        $('#logoutButton').click(function () {
-            $.ajax({
-                url: '{{ route("logoutfrontend") }}', // Adjust the route as necessary
-                type: 'POST',
-                success: function (response) {
-                    toastr.success("You have been logged out successfully.");
-                    window.location.href = '/'; // Redirect after logout
-                },
-                error: function (xhr) {
-                    toastr.error("Logout failed. Please try again.");
-                }
-            });
+        $('#logoutButton').on('submit', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        $.ajax({
+            url: '{{ route("logoutfrontend") }}', // Adjust the route as necessary
+            type: 'POST',
+            data: $(this).serialize(), // Serialize the form data
+            success: function (response) {
+                toastr.success("You have been logged out successfully.");
+                window.location.href = '/'; // Redirect after logout
+            },
+            error: function (xhr) {
+                toastr.error("Logout failed. Please try again.");
+            }
         });
+    });
 
         // Make sure Toastr is properly initialized
         toastr.options = {
@@ -827,7 +830,7 @@
     });
 </script>
 <script>
-        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
         // Show the button when scrolling down
         window.onscroll = function() {
@@ -845,7 +848,7 @@
                 behavior: 'smooth' // Smooth scroll animation
             });
         };
-    </script>
+</script>
 </body>
 
 </html>
