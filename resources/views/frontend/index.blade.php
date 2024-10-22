@@ -1,16 +1,16 @@
 @extends('frontend.layouts.main')
-
 @section('main-container')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Default Modal -->
-<div id="defaultModal" class="unique-modal" style="display: none;">
-    <div class="unique-modal-content">
-        <div class="row y_default_m_row">
-            <span class="unique-close" onclick="closeModal()">&times;</span>
-            <div class="col-lg-5 p-0 unique-modal-content_img">
+<!-- <div id="defaultModal" class="unique-modal" style="display: none;"> -->
+    <!-- <div class="unique-modal-content"> -->
+        <!-- <div class="row y_default_m_row"> -->
+            <!-- <span class="unique-close" onclick="closeModal()">&times;</span> -->
+            <!-- <div class="col-lg-5 p-0 unique-modal-content_img"> -->
                 <!-- <img class="unique-modal-content_img" src="{{ url('frontend/img/Welcom_popup.png') }}" alt=""> -->
-            </div>
-            <div class="col-lg-7 unique-modal-content_text">
+            <!-- </div> -->
+            <!-- <div class="col-lg-7 unique-modal-content_text">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-12">
                         <h5 class="text-center default_model_title">Sign up to get the latest news and Updates</h5>
@@ -26,10 +26,10 @@
 
                 </div>
                 <p class="text-center pt-4">No, Thanks</p>
-            </div>
-        </div>
-    </div>
-</div>
+            </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+<!-- </div> -->
 
 <!-- Hero Section Begin -->
 <section class=" set-bg" data-setbg="{{ url('frontend/img/hero.jpg') }}">
@@ -506,6 +506,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script>
     const initialRoomCount = {{ $roomCount }}; // Pass the room count from Laravel to JavaScript

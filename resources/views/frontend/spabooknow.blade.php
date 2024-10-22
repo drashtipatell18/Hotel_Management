@@ -2,23 +2,9 @@
 @section('title', 'SpaBook Know')
 @section('main-container')
 
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <!-- <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css"> -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
-    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/d_style.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
         .over {
@@ -65,16 +51,17 @@
                             <h6>From ${{ $spas->price }}/person</h6>
                         </div>
                         <div class="row g-3 mt-1">
-                            <div class="col-12">
-                                <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Check in</div>
-                                    <div class="d-flex align-items-center d_cal">
-                                        <input type="text" class="ds" name="checkin" style="width: 88px;">
-                                        <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
-                                            style="color: #ffffff;"></i>
+                        <div class="col-12">
+                                    <div class="d_filed d-flex justify-content-between align-items-center">
+                                        <div class="d_formsubtitle">Check in</div>
+                                        <div class="d-flex align-items-center d_cal">
+                                            <input type="datetime-local" class="ds" id="checkIn"
+                                                name="check_in_datetime"
+                                                style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
                             <div class="col-12">
                                 <div
                                     class="d_filed d_select d-flex justify-content-between align-items-center position-relative">
@@ -192,10 +179,6 @@
     </section>
 
     <!-- Detail section end -->
-
-@endsection
-
-
     <script>
 
         // select functionality
@@ -387,3 +370,6 @@
         });
     </script>
     
+@endsection
+
+
