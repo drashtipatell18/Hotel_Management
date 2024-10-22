@@ -69,7 +69,7 @@
                                                     class="img-fluid rounded mb-2"
                                                     style="width: 100%; height: 100px; object-fit: cover;">
                                                 <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2"
-                                                    onclick="removePreview(this)">
+                                                    onclick="removePreview(this, '{{ $image }}')">
                                                     <i class="fas fa-trash-alt"></i> Delete
                                                 </a>
                                             </div>
@@ -77,6 +77,7 @@
                                         @endforeach
                                         @endif
                                     </div>
+                                    <input type="hidden" name="remove_images[]" id="remove_images" value="">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -180,5 +181,14 @@
 
     }
 
+    function removePreview(element, imageName) {
+    // Remove the image preview from the UI
+    element.parentElement.parentElement.remove();
 
+    // Update the hidden input field to include the image name to be removed
+    const removeImagesInput = document.getElementById('remove_images');
+    let currentValues = removeImagesInput.value ? removeImagesInput.value.split(',') : [];
+    currentValues.push(imageName);
+    removeImagesInput.value = currentValues.join(',');
+}
 </script>

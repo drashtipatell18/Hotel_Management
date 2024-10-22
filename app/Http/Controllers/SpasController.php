@@ -68,7 +68,7 @@ class SpasController extends Controller
         $request->validate([
             'category' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            // 'image' => 'required',
             'price' => 'required',
         ]);
 
