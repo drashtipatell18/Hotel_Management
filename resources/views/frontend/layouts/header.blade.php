@@ -13,6 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    
     <link rel="stylesheet" href="{{ url('frontend/css/elegant-icons.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/nice-select.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/jquery-ui.min.css') }}" type="text/css">
@@ -340,14 +341,12 @@
                             @if (Auth::check())
                                 <div class="header__nav__widget">
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            {{ Auth::user()->name }}
+                                        <a style="padding:10px" class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <li><a class="dropdown-item" href="#">Booking</a></li>
                                         </ul>
                                     </div>
                                 </div>&nbsp;&nbsp;
@@ -355,7 +354,7 @@
 
                             <div class="header__nav__widget">
                                 @auth
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
+                                <a style="padding-left: 28px;padding-right: 25px;" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
                                 @else
                                 <a href="#" id="openModalBtn">Login</a>
                                 @endauth

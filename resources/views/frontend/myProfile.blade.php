@@ -1,9 +1,7 @@
 @extends('frontend.layouts.main')
 @section('title', 'Edit Profile')
 @section('main-container')
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
     .d_box {
         position: relative;
@@ -12,6 +10,9 @@
     .d_night {
         position: relative;
         z-index: 0; /* Ensures the ribbon stays above the price */
+    }
+    .dropdown-toggle::after {
+        display: contents;
     }
 </style>
 

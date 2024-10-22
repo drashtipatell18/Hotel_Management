@@ -3,6 +3,7 @@
 @section('main-container')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
     .d_box {
         position: relative;
@@ -64,6 +65,14 @@
         border-radius: 1px;
 
     }
+    .dropdown-toggle::after {
+        display: contents;
+    }
+    .edit_profile .profile-pic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
 <section class="d_p-25 d_room">
@@ -105,24 +114,8 @@
                                         <input type="text" id="email" name="email" value="{{ $user->email }}" required>
                                     </div>
                                     <div class="input-group">
-                                        <label for="phone">Phone</label>
-                                        <div class="phone-group y_select_drop">
-                                            <div class="custom-dropdown1 w-auto" style="border-radius:0px;">
-                                                <button class="text-decoration-none m-0 y_select_btn">+1
-
-                                                </button>
-
-                                                <div class="dropdown-content">
-                                                    <span data-value="+1">+1</span>
-                                                    <span data-value="+1">+1</span>
-                                                    <span data-value="+44">+44</span>
-                                                    <span data-value="+61">+61</span>
-                                                    <!-- Add more options as needed -->
-                                                </div>
-                                            </div>
-                                            <input class="select_drp" type="tel" id="phone_number" name="phone_number"
-                                                value="{{ $user->phone_number }}">
-                                        </div>
+                                        <label for="email">Phone</label>
+                                        <input type="tel" id="phone_number" name="phone_number" value="{{ $user->phone_number }}">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -195,9 +188,6 @@
         </div>
     </div>  
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
