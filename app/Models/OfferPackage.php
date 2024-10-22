@@ -14,6 +14,7 @@ class OfferPackage extends Model
     protected $fillable = [
         'hotel_id',
         'title',
+        'offer_include',
         'description',
         'image',
         'discount_type',

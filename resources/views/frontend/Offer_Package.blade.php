@@ -1,7 +1,6 @@
 @extends('frontend.layouts.main')
 @section('title', 'Offer Package')
 @section('main-container')
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
     .d_box {
@@ -12,6 +11,9 @@
     .d_night {
         position: relative;
         z-index: 0;
+    }
+    .dropdown-toggle::after {
+        display: contents;
     }
 </style>
 <!-- Breadcrumb Begin -->
@@ -35,7 +37,7 @@
             <div class="col-lg-9 p-0">
                 <div class="section-title">
                     <!-- <p class="text-center">Weekend Gateway</p> -->
-                    <h5 class="text-center ">Weekend Gateway</h5>
+                    <h5 class="text-center ">{{ $offerPackage->title }}</h5>
                     <div class="d-flex justify-content-center align-items-center offer_haed">
                         <i class="y_offer_sec_i fa-solid fa-tag px-2"></i>
                         <p class="text-dark mb-0 y_offer_sec_p">10 % savings on
@@ -45,15 +47,16 @@
             </div>
         </div>
         <div class="row px-5 m-0 p-0  pb-5">
-            <div class="col-lg-4 about_sec1_col d-flex justify-content-center">
-                <img src="{{ url('frontend/img/room1.png') }}" alt>
-            </div>
-            <div class="col-lg-4 about_sec1_col d-flex justify-content-center">
-                <img src="{{ url('frontend/img/room1.png') }}" alt>
-            </div>
-            <div class="col-lg-4 about_sec1_col d-flex justify-content-center">
-                <img src="{{ url('frontend/img/room1.png') }}" alt>
-            </div>
+            @php
+                $images = explode(',', $offerPackage->image);
+                $firstThreeImages = array_slice($images, 0, 3);
+            @endphp
+
+            @foreach($firstThreeImages as $image)
+                <div class="col-lg-4 about_sec1_col d-flex justify-content-center">
+                    <img src="{{ url('images/' . trim($image)) }}" alt="Offer Image">
+                </div>
+            @endforeach
         </div>
         <div class="row m-0  d-flex justify-content-center">
             <div class="col-lg-9">
@@ -61,14 +64,7 @@
                     <!-- <p class="text-center">Weekend Gateway</p> -->
                     <h5 class="text-center ">Offer Details</h5>
                 </div>
-                <p class="text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sollicitudin
-                    facilisis consequat. Sed in est sed dui maximus tempor. Donec ullamcorper volutpat dolor ac posuere.
-                    Vivamus commodo lacus ac ornare tincidunt. Vivamus in lectus orci. Fusce sit amet consectetur nulla.
-                </p>
-                <p class="text-start">Maecenas non arcu neque. Nam iaculis, nulla pulvinar bibendum accumsan, nulla
-                    sapien vestibulum mi, nec interdum velit quam suscipit eros. In vitae lorem mi. Ut nec leo nec augue
-                    congue bibendum. Maecenas rutrum nibh gravida enim fermentum consectetur.</p>
-
+                <p class="text-start">{{ $offerPackage->description }}</p>
             </div>
         </div>
 
@@ -78,20 +74,15 @@
                     <!-- <p class="text-center">Weekend Gateway</p> -->
                     <h5 class="text-center ">Offer Includes</h5>
                 </div>
-                <p class="text-start">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sollicitudin
-                    facilisis consequat. Sed in est sed dui maximus tempor. Donec ullamcorper volutpat dolor ac posuere.
-                    Vivamus commodo lacus ac ornare tincidunt. Vivamus in lectus orci. Fusce sit amet consectetur nulla.
+                <p class="text-start">{{ $offerPackage->offer_include }}
                 </p>
-                <p class="text-start">Maecenas non arcu neque. Nam iaculis, nulla pulvinar bibendum accumsan, nulla
-                    sapien vestibulum mi, nec interdum velit quam suscipit eros. In vitae lorem mi. Ut nec leo nec augue
-                    congue bibendum. Maecenas rutrum nibh gravida enim fermentum consectetur.</p>
-
             </div>
         </div>
     </div>
 
 </section>
-<!-- About Section1 End -->
+
+
 
 <section class="d_p-25 d_room">
     <div class="d_container">
@@ -157,7 +148,7 @@
     </div>
 </section>
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.reserve-btn').forEach(button => {

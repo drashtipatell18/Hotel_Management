@@ -47,6 +47,12 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label for="description">Offer Include</label>
+                                        <textarea class="form-control" id="offer_include" name="offer_include"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label for="image">Images</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image[]" multiple onchange="previewImages(event)">

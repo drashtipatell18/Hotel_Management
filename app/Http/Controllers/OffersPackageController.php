@@ -45,6 +45,7 @@ class OffersPackageController extends Controller
                 'hotel_id' => $request->input('hotel_id'),
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
+                'offer_include' => $request->input('offer_include'),
                 'image' => implode(',', $imageNames), // Store as JSON
                 'discount_type' => $request->input('discount_type'),
                 'discount_value' => $request->input('discount_value'),
@@ -97,6 +98,7 @@ class OffersPackageController extends Controller
         $offerPackage->update([
             'hotel_id' => $request->input('hotel_id'),
             'title' => $request->input('title'),
+            'offer_include' => $request->input('offer_include'),
             'description' => $request->input('description'),
             'image' => implode(',', array_values($imageNames)),
             'discount_type' => $request->input('discount_type'),
