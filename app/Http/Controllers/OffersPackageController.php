@@ -108,8 +108,6 @@ class OffersPackageController extends Controller
             'is_active' => $request->input('is_active') === 'on' ? 1 : 0,
         ]);
 
-        $updatedOfferPackage = OfferPackage::find($id);
-
         return redirect()->route('offer/package/list')->with('success', 'Offer Package updated successfully');
     }
 
