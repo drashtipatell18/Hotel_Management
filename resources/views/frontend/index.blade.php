@@ -408,30 +408,35 @@
     </div>
     <div class="order__slider owl-carousel">
         @if (isset($offerPackages) && $offerPackages->isNotEmpty())
-        @foreach ($offerPackages as $offerPackage)
-        <div class="order__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ URL::to('/images/' . $offerPackage->image) }}"
-                    alt="{{ $offerPackage->title }}">
-                <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('offerDetails', $offerPackage->id) }}" class="Custom_btn">Learn More</a>
-                </div>
-                <div class="image_onsection bg-light py-3">
-                    <h4 class="text-center pb-2">{{ $offerPackage->title }}</h4>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0">{{ $offerPackage->description }}</p>
+            @foreach ($offerPackages as $offerPackage)
+                @php
+                    // Split the images by comma and get the first one
+                    $images = explode(',', $offerPackage->image);
+                    $firstImage = $images[0]; // Get the first image
+                @endphp
+                <div class="order__item">
+                    <div class="Slider_image">
+                        <img class="image__img" src="{{ URL::to('/images/' . $firstImage) }}" alt="{{ $offerPackage->title }}">
+                        <div class="image__overlay3 image__overlay3--primary">
+                            <a href="{{ route('offerPackage', $offerPackage->id) }}" class="Custom_btn">Learn More</a>
+                        </div>
+                        <div class="image_onsection bg-light py-3">
+                            <h4 class="text-center pb-2">{{ $offerPackage->title }}</h4>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-tag px-2"></i>
+                                <p class="text-dark mb-0">{{ $offerPackage->description }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        @endforeach
+            @endforeach
         @else
-        <div class="col-12 text-center text-light">
-            <p>No offers available at this time.</p>
-        </div>
+            <div class="col-12 text-center text-light">
+                <p>No offers available at this time.</p>
+            </div>
         @endif
     </div>
+
 
 </section>
 <!-- offer Section End -->

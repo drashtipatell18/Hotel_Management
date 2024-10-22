@@ -42,6 +42,12 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label for="description">Offer Include</label>
+                                        <textarea class="form-control" id="offer_include" name="offer_include">{{ $offerPackage->offer_include }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label for="roomType_image">Image</label>
                                         <div class="custom-file">
                                             <input type="file"

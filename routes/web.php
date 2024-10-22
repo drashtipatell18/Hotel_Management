@@ -370,6 +370,7 @@ Route::controller(OffersPackageController::class)->group(function () {
     Route::get('offer/package/edit/{id}', 'offerPackageEdit')->name('offer/package/edit');
     Route::post('offer/package/update/{id}', 'offerPackageUpdate')->name('offer/package/update');
     Route::get('/offer/package/delete/{id}','offerPackageDelete')->name('offerPackage.delete');
+    Route::delete('/offer/image/delete/{id}',  'deleteImage')->name('image.delete');
 });
 
 // Client Review
@@ -395,25 +396,21 @@ Route::get('/gallery',[GalleryFrontendController::class,'gallery'])->name('galle
 
 Route::get('/contact-us',[ContactController::class,'contactus'])->name('contact-us');
 Route::post('/contact-us/store',[ContactController::class,'contactusStore'])->name('contactStore');
-
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
-
 Route::get('/booknow/{roomId}', [BookNowController::class, 'booknow'])->name('booknow');
 
-Route::post('/booknow/updateCounts', [BookNowController::class, 'updateCounts'])->name('booknow.updateCounts');
 
-// Route::get('/booknow/{id}',[BookNowController::class,'booknow'])->name('booknow');
 
 Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::post('/checkout-store',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
 Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
 Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
-
 Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');
 
 Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
 Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobooking');
-Route::get('/offer-package',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
+Route::get('/offer-package/{id}',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
 
 Route::get('/spabook',[SpaBookController::class,'spabook'])->name('spabook');
 Route::get('/spabook-know/{id}',[SpaBookController::class,'spabookKnow'])->name('spabookKnow');
