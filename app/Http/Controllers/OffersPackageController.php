@@ -65,7 +65,6 @@ class OffersPackageController extends Controller
 
     public function offerPackageUpdate(Request $request, $id)
     {
-        dd($request->all());
         // $request->validate([
         //     'hotel_id' => 'required',
         //     'title' => 'required',
@@ -79,8 +78,8 @@ class OffersPackageController extends Controller
         // ]);
         $offerPackage = OfferPackage::find($id);
 
-        $images = $request->file('images'); // Change to handle multiple images
-        $imageNames = json_decode($offerPackage->image, true); // Decode existing images
+        $images = $request->file('image'); // Change to handle multiple images
+        $imageNames = json_decode($offerPackage->image, true) ?? []; // Ensure it's an array
 
         if ($images) {
             foreach ($images as $image) {
