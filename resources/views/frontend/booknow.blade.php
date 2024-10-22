@@ -199,24 +199,20 @@
                             </div>
                         </div>
 
-
-                        <div class="d_suite mt-xl-3 mt-3">
-                            <h5>What’s included in this suite?</h5>
-                            <div class="mt-3">
-                                <ul class="px-3">
-                                    <li>Private balcony</li>
-                                    <li>140x200 cm Elite bed</li>
-                                    <li>Upholstered seat beside the panoramic window</li>
-                                    <li>TV-UHD screen for watching mountaineering films</li>
-                                    <li>Writing desk with USB ports for documenting your adventures</li>
-                                    <li>Room safe for your top mountain photos</li>
-                                    <li>Service station with Lavazza coffee machine, kettle and tea</li>
-                                    <li>Bathroom with rain shower</li>
-                                    <li>Comfortable terry towels and bathrobes</li>
-
-                                </ul>
+                        @if($room->include_suites)
+                            <div class="d_suite mt-xl-3 mt-3">
+                                <h5>What’s included in this suite?</h5>
+                                <div class="mt-3">
+                                    <ul class="px-3">
+                                        @foreach(explode('</p>', $room->include_suites) as $paragraph)
+                                            @if(trim(strip_tags($paragraph)))
+                                                <li>{!! nl2br(trim($paragraph)) !!}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -266,7 +262,7 @@
                                     <div class="d-flex align-items-center me-3">
                                         <img src="{{ url('frontend/img/d_img/icon2.png') }}" class="me-2"
                                             alt="">
-                                        <div class="d_icondesc">Guests</div>
+                                            <div class="d_icondesc">2 Guests</div>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <img src="{{ url('frontend/img/d_img/bedroom.png') }}" class="me-2"

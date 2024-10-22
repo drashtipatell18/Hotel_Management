@@ -105,6 +105,7 @@ class RoomsController extends Controller
             $room->view_id = $request->view_id;
             $room->message = $request->message;
             $room->offer_id = $request->offer_id;
+            $room->include_suites = $request->include_suites;
     
             $room->save(); // Save the room to get the room ID
     
@@ -173,6 +174,7 @@ class RoomsController extends Controller
             $room->view_id = $request->input('view_id');
             $room->message = $request->input('message');
             $room->offer_id = $request->input('offer_id');
+            $room->include_suites = $request->input('include_suites');
     
             if ($request->hasFile('image')) {
                 // Get existing image names for the room

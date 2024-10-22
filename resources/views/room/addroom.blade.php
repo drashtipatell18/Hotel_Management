@@ -19,6 +19,9 @@
         white-space: nowrap;
         z-index: 2;
     }
+    .ck-editor__editable {
+        min-height: 400px; /* Adjust to the desired height */
+    }
 </style>
     {{-- message --}}
     {!! Toastr::message() !!}
@@ -273,6 +276,15 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Includes In This Suites</label>
+                                    <textarea class="form-control" id="editor" name="include_suites">{{ old('include_suites') }}</textarea>
+                                    @error('include_suites')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -281,7 +293,6 @@
                                     @error('message')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-
                                 </div>
                             </div>
                         </div>
@@ -292,7 +303,27 @@
             </form>
         </div>
     </div>
-@endsection
+
+    <!-- Ck Editor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            toolbar: {
+                items: [
+                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'
+                ]
+            },
+            // Adjusting editor height
+            height: 400 // You can change the value as per your requirement
+        })
+        .then(editor => {
+            editor.ui.view.editable.element.style.height = '400px'; // Set height here
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 <script>
         function previewImages(event) {
         const previewContainer = document.getElementById('imagePreview');
@@ -328,4 +359,8 @@
     function removePreview(element) {
         element.parentElement.parentElement.remove();
     }
-    </script>
+</script>
+
+@endsection
+
+
