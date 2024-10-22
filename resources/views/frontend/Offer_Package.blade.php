@@ -15,6 +15,10 @@
     .dropdown-toggle::after {
         display: contents;
     }
+    .d_room .d_night {
+        left:71%;
+    }
+
 </style>
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
