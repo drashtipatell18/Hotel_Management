@@ -79,10 +79,10 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="First Name*" name="" id="">
+                            <input type="text" placeholder="First Name*" name="first_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="First Name*" name="" id="">
+                            <input type="text" placeholder="Last Name*" name="last_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="d-flex">
@@ -98,16 +98,16 @@
                                 </div>
 
 
-                                <input type="text" placeholder="Phone*" class="rounded-top-0 rounded-bottom-0 " name=""
+                                <input type="text" placeholder="Phone*" class="rounded-top-0 rounded-bottom-0 " name="phone"
                                     id="">
                             </div>
 
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="email" placeholder="Nationality*" name="" id="">
+                            <input type="email" placeholder="Email*" name="email" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="email" placeholder="Nationality*" name="" id="">
+                            <input type="email" placeholder="Nationality*" name="nationality" id="">
                         </div>
                     </div>
                 </div>
@@ -119,22 +119,22 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="House No. / Block No. / Flat No.*" name="" id="">
+                            <input type="text" placeholder="House No. / Block No. / Flat No.*" name="house_no" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Building Name / Street Name / Colony*" name="" id="">
+                            <input type="text" placeholder="Building Name / Street Name / Colony*" name="buling_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="City*" name="" id="">
+                            <input type="text" placeholder="City*" name="city" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="State*" name="" id="">
+                            <input type="text" placeholder="State*" name="state" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Pincode*" name="" id="">
+                            <input type="text" placeholder="Pincode*" name="pincode" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Country*" name="" id="">
+                            <input type="text" placeholder="Country*" name="country" id="">
                         </div>
                     </div>
                 </div>
@@ -209,19 +209,19 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Card Holder Name*" name="" id="">
+                            <input type="text" placeholder="Card Holder Name*" name="cardholder_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Card Number*" name="" id="">
+                            <input type="text" placeholder="Card Number*" name="card_number" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Expiry Date MM/YY" name="" id="">
+                            <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="CVV*" name="" id="">
+                            <input type="text" placeholder="CVV*" name="cvv" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Enter Captcha*" name="" id="">
+                            <input type="text" placeholder="Enter Captcha*" name="captcha" id="">
                         </div>
                         <div class="col-6 col-xl-4">
                             <div class="d-flex align-items-center">
@@ -252,7 +252,7 @@
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="d_cta">
-                                <a href="" class="d-block d-sm-inline-block text-center">Confirm Your Stay</a>
+                                <button type="submit" class="d-block d-sm-inline-block text-center">Confirm Your Stay</button>
                             </div>
                         </div>
                     </div>

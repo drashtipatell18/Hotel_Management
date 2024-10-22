@@ -56,7 +56,7 @@ class BookNowController extends Controller
         // dd($discountValue);
         return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms', 'discountedPrice', 'discountValue', 'availableRoomsWithDiscounts', 'availableRooms', 'discount'));
     }
-    
+
     public function booknowStore(Request $request)
     {
         // dd($request->all());
@@ -75,18 +75,18 @@ class BookNowController extends Controller
 
 
         $users = Auth::user();
-        
+
         // Fetch the room details to get the price per room
         $room = Room::find($request->room_id);
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
         }
-    
+
         // Calculate total cost
         $roomCount = $request->input('room_count');
         $pricePerRoom = $room->rent;
         $totalCost = $roomCount * $pricePerRoom;
-    
+
         // Create a new booking entry
         $book = new Booking();
         $book->customer_id = $users->id;
@@ -124,15 +124,15 @@ class BookNowController extends Controller
             $discountedPrice = $room->rent;
             $discount = $discountValue;
         }
-    
-        // Save total cost
-    
-    
-        $book->save();
-    
-        return redirect()->back()->with('success', 'Booking created successfully');
-    }
-    
 
-    
+        // Save total cost
+
+
+        $book->save();
+
+        return redirect()->route('checkout')->with('success', 'Booking created successfully');
+    }
+
+
+
 }

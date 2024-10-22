@@ -42,8 +42,40 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="image">Image</label>
-                                        <input type="file" class="form-control" id="image" name="image">
+                                        <label for="roomType_image">Image</label>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input @error('image') is-invalid @enderror" id="image"
+                                                name="image[]" multiple onchange="previewImages(event)">
+                                            <label class="custom-file-label" for="room_image">Choose files</label>
+                                            @error('image')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label>Image Preview</label>
+                                    <div id="imagePreview" class="row">
+                                        <!-- Show existing images if editing -->
+                                        @if(isset($offerPackage->image) && $offerPackage->image)
+                                        @php
+                                        $imageFiles = explode(',', $offerPackage->image);
+                                        @endphp
+                                        @foreach($imageFiles as $image)
+                                        <div class="col-md-2 mb-3">
+                                            <div class="text-center">
+                                                <img src="{{ asset('images/' . $image) }}"
+                                                    class="img-fluid rounded mb-2"
+                                                    style="width: 100%; height: 100px; object-fit: cover;">
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2"
+                                                    onclick="removePreview(this)">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -91,3 +123,62 @@
     </div>
 </div>
 @endsection
+<script>
+    // Image Preview
+    function previewImages(event) {
+        const previewContainer = document.getElementById('imagePreview');
+        const files = event.target.files;
+
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-fluid rounded mb-2';
+                img.style.width = '100%';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+
+                const div = document.createElement('div');
+                div.className = 'col-md-2 mb-3';
+                div.innerHTML = `
+                  <div class="text-center">
+                      ${img.outerHTML}
+                      <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                          <i class="fas fa-trash-alt"></i> Delete
+                      </a>
+                  </div>
+              `;
+
+                previewContainer.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removePreview(element) {
+        element.parentElement.parentElement.remove();
+    }
+    function deleteImage(facilitiesId, imageFileName) {
+        if (confirm('Are you sure you want to delete this image?')) {
+            $.ajax({
+                url: '{{ url('facilities/image/delete') }}/' + facilitiesId, // Append the smokingId to the URL
+                method: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    image_file_name: imageFileName
+                },
+                success: function (response) {
+                    if (response.success) {
+                        location.reload(); // Optionally reload the page or remove the image element
+                    } else {
+                        alert('Failed to delete the image');
+                    }
+                }
+            });
+        }
+
+    }
+
+
+</script>
