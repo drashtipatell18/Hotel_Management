@@ -59,11 +59,11 @@
                                     @foreach($imageFiles as $image)
                                     <div class="col-md-2 mb-3">
                                         <div class="text-center">
-                                            <img src="{{ asset('assets/spas/' . $image) }}"
+                                            <img src="{{ asset('/images/' . $image) }}"
                                                 class="img-fluid rounded mb-2"
                                                 style="width: 100%; height: 100px; object-fit: cover;">
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2"
-                                                onclick="removePreview(this)">
+                                                onclick="removePreview(this, '{{ $image }}')">
                                                 <i class="fas fa-trash-alt"></i> Delete
                                             </a>
                                         </div>
@@ -71,6 +71,7 @@
                                     @endforeach
                                     @endif
                                 </div>
+                                <input type="hidden" name="remove_images[]" id="remove_images" value="">
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -120,9 +121,6 @@
             }
         }
 
-        function removePreview(element) {
-            element.parentElement.parentElement.remove();
-        }
         function deleteImage(facilitiesId, imageFileName) {
             if (confirm('Are you sure you want to delete this image?')) {
                 $.ajax({
@@ -143,6 +141,20 @@
             }
 
         }
+        function removePreview(element, imageName) {
+    // Remove the image preview from the UI
+    element.parentElement.parentElement.remove();
 
+    // Update the hidden input field to include the image name to be removed
+    const removeImagesInput = document.getElementById('remove_images');
+    let currentValues = removeImagesInput.value ? removeImagesInput.value.split(',') : [];
+
+    // Check if imageName is defined before pushing
+    if (imageName) {
+        currentValues.push(imageName);
+    }
+
+    removeImagesInput.value = currentValues.join(',');
+}
 
     </script>

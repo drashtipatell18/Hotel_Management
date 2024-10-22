@@ -181,14 +181,5 @@
 
     }
 
-    function removePreview(element, imageName) {
-    // Remove the image preview from the UI
-    element.parentElement.parentElement.remove();
 
-    // Update the hidden input field to include the image name to be removed
-    const removeImagesInput = document.getElementById('remove_images');
-    let currentValues = removeImagesInput.value ? removeImagesInput.value.split(',') : [];
-    currentValues.push(imageName);
-    removeImagesInput.value = currentValues.join(',');
-}
 </script>

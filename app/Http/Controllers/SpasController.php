@@ -20,41 +20,41 @@ class SpasController extends Controller
 
      public function spaStore(Request $request)
      {
-         $request->validate([
-             'category' => 'required',
-             'description' => 'required',
-             'image' => 'required|array', // Ensure 'image' is an array
-             'image.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validate each image
-             'price' => 'required|numeric', // Ensure price is numeric
-         ]);
+        // Uncommenting validation to ensure required fields are checked
+        $request->validate([
+            'category' => 'required',
+            'description' => 'required',
+            'image' => 'required|array', // Ensure 'image' is an array
+            'image.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validate each image
+            'price' => 'required|numeric', // Ensure price is numeric
+        ]);
 
-         $imagePaths = []; // Array to store the image paths
+        $images = $request->file('image'); // Change to handle multiple images
+        $imagePaths = []; // Array to store the image paths
 
-         // Check if images are uploaded
-         if ($request->hasFile('image')) {
-             foreach ($request->file('image') as $image) {
-                 // Check if the image is valid
-                 if ($image->isValid()) {
-                     $imageName = time().'_'.$image->getClientOriginalName();
-                     $image->move(public_path('/assets/spas/'), $imageName);
-                     $imagePaths[] = $imageName; // Store the image name
-                 } else {
-                     return redirect()->route('spa/list')
-                         ->with('error', 'One or more images are invalid.');
-                 }
-             }
-         }
+        // Check if images are uploaded
+        if ($images) {
+            foreach ($images as $image) {
+                $imageName = time() . uniqid() . '.' . $image->getClientOriginalExtension(); // Unique name for each image
+                $image->move(public_path('/images'), $imageName); // Ensure the path is correct
+                $imagePaths[] = $imageName; // Store the image name
+            }
+        }
 
-         // Create a new Spa record
-         $spas = new Spa;
-         $spas->category = $request->input('category');
-         $spas->description = $request->input('description');
-         $spas->image = implode(',', $imagePaths); // Store paths as a comma-separated string
-         $spas->price = $request->input('price');
-         $spas->save();
+        // Check if Spa creation is successful
+        $spa = Spa::create([
+            'category' => $request->input('category'),
+            'description' => $request->input('description'),
+            'image' => implode(',', $imagePaths),
+            'price' => $request->input('price'),
+        ]);
 
-         return redirect()->route('spa/list')
-             ->with('success', 'Spa added successfully!');
+        if ($spa) {
+            return redirect()->route('spa/list')
+                ->with('success', 'Spa added successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Failed to add spa. Please try again.');
+        }
      }
 
      public function spaEdit($id)
@@ -65,36 +65,47 @@ class SpasController extends Controller
 
      public function spaUpdate(Request $request, $id)
      {
-        $request->validate([
-            'category' => 'required',
-            'description' => 'required',
-            // 'image' => 'required',
-            'price' => 'required',
-        ]);
-
-        try {
-            $imagePaths = []; // Array to store the image paths
-
-            // Check if images are uploaded
-            if ($request->hasFile('image')) {
-                foreach ($request->file('image') as $image) {
-                    $imageName = time().'_'.$image->getClientOriginalName();
-                    $image->move(public_path('/assets/spas/'), $imageName);
-                    $imagePaths[] = $imageName; // Store the image name
-                }
-            }
-            $spa = Spa::find($id);
-            $spa->category = $request->input('category');
-            $spa->description = $request->input('description');
-            $spa->image = implode(',', $imagePaths); // Store paths as a comma-separated string
-            $spa->price = $request->input('price');
-            $spa->save();
-        } catch (\Exception $e) {
-            // Log::error('Error saving spa: ' . $e->getMessage());
-            return redirect()->route('spa/list')
-                ->with('error', 'There was a problem adding the spa.');
+        $spa = Spa::find($id);
+        if (!$spa) {
+            return redirect()->back()->with('error', 'Spa not found.');
         }
-        return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
+
+        // Handle images
+        $images = $request->file('image');
+        $existingImageNames = explode(',', $spa->image) ?? [];
+        $imageNames = $existingImageNames;
+
+        if ($images) {
+            foreach ($images as $image) {
+                $imageName = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('/images'), $imageName); // Ensure the path is correct
+                $imageNames[] = $imageName;
+            }
+        }
+
+        if ($request->has('remove_images')) {
+            $imagesToRemove = $request->input('remove_images');
+            foreach ($imagesToRemove as $imageToRemove) {
+                $filePath = public_path('/images/' . $imageToRemove); // Ensure this points to a file
+                if (file_exists($filePath) && is_file($filePath)) { // Check if it's a file
+                    unlink($filePath); // Only unlink if it's a file
+                }
+                $imageNames = array_diff($imageNames, [$imageToRemove]);
+            }
+        }
+
+        // Update spa details
+        $spa->category = $request->input('category');
+        $spa->description = $request->input('description');
+        $spa->image = implode(',', $imageNames);
+        $spa->price = $request->input('price');
+
+        // Save the updated spa
+        if ($spa->save()) {
+            return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update spa. Please try again.');
+        }
      }
 
 
