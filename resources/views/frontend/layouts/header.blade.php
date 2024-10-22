@@ -66,11 +66,7 @@
         padding: 0px !important;
     }
 
-    /* .fixed-size-image {
-    width: 500px;
-    height: 150px;
-    object-fit: cover;
-    } */
+ 
 
     #scrollToTopBtn {
         position: fixed;
@@ -320,8 +316,6 @@
                     <div class="col-lg-2 align-self-center">
                         <div class="header__logo">
                             <a href="{{ route('index') }}">
-                                <!-- <img src="img/logo.png" alt=""> -->
-                                <!-- <h2 class="text-light">Logo</h2> -->
                                 <img  class="w-100 h-100" src="{{ url('assets/img/Frame.png') }}" alt="">
                             </a>
                         </div>
@@ -535,7 +529,7 @@
                 <div class="modal-header justify-content-center">
                     <h1 class="modal-title fs-5 " id="exampleModalLabel">Logout</h1>
                 </div>
-                <form id="logoutButton">
+                <form id="logoutButton" action="{{ url('logoutfrontend')}}" method="POST">
                     @csrf
 
                     <div class="modal-body">
@@ -543,13 +537,12 @@
                     </div>
                     <div class="modal-footer d-block">
                         <div class="row">
-                            <div class="col-6"><a type="button" class="btn " data-bs-dismiss="modal">Cancel</a></div>
-
                             <div class="col-6">
-                                {{-- <a type="submit" style="background-color: #1A2142;color: #fff;"class="btn ">Yes</a> --}}
-                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;" >Yes</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                             </div>
-
+                            <div class="col-6">
+                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;">Yes</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -557,7 +550,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 </body>
 
@@ -635,3 +628,17 @@
 
 </script>
 
+<script>
+    document.addEventListener('click', function (event) {
+    const dropdownToggle = document.getElementById('dropdownMenuButton1');
+    const dropdownMenu = dropdownToggle.nextElementSibling; // The dropdown menu
+
+    // Check if the click is outside the dropdown toggle and dropdown menu
+    if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        const bsDropdown = bootstrap.Dropdown.getInstance(dropdownToggle); // Get the Bootstrap instance
+        if (bsDropdown) {
+            bsDropdown.hide(); // Hide the dropdown if it's open
+        }
+    }
+});
+</script>
