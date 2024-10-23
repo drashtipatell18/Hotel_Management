@@ -44,7 +44,12 @@
                     <h5 class="text-center ">{{ $offerPackage->title }}</h5>
                     <div class="d-flex justify-content-center align-items-center offer_haed">
                         <i class="y_offer_sec_i fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0 y_offer_sec_p">{{ $offerPackage->discount_value }} % savings {{$offerPackage->discount_type}}</p>
+                        @php
+                            use Carbon\Carbon;
+                            $startDate = Carbon::parse($offerPackage->start_date);
+                            $endDate = Carbon::parse($offerPackage->end_date);
+                        @endphp
+                        <p class="text-dark mb-0 y_offer_sec_p">{{ $offerPackage->discount_value }} % savings {{ $startDate->format('l, F j') }} - {{ $endDate->format('l, F j') }}</p>
                     </div>
                 </div>
             </div>
