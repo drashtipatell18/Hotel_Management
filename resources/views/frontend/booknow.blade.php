@@ -135,6 +135,7 @@
                                             <h5 id="total_cost">$0</h5>
                                         </div>
                                         <input type="hidden" id="total_cost_input" name="total_cost" value="0">
+                                        <input type="hidden" id="booking_id" name="booking_id" value="{{ $room->booking_id }}">
                                     </div>
                                 </div>
 

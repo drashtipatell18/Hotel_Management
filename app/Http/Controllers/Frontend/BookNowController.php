@@ -130,7 +130,7 @@ class BookNowController extends Controller
 
         $book->save();
 
-        return redirect()->route('checkout')->with('success', 'Booking created successfully');
+        return redirect()->route('checkout',$book->id)->with('success', 'Booking created successfully');
     }
 
 

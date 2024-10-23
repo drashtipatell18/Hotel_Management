@@ -134,7 +134,7 @@ Route::controller(BookingController::class)->group(function () {
     Route::post('/update-booking-status',  'updateStatus')->name('update.booking.status');
 
 
-    
+
 });
 
 // ---------------------------- customers --------------------------//
@@ -402,8 +402,8 @@ Route::get('/booknow/{roomId}', [BookNowController::class, 'booknow'])->name('bo
 
 
 Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
-Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
-Route::post('/checkout-store',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
+Route::get('/checkout/{id}',[CheckoutController::class,'checkout'])->name('checkout');
+Route::post('/checkout-store/{id}',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
 Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
 Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
 Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');

@@ -4,7 +4,8 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 <style>
     .custom-dropdown {
         position: relative;
@@ -68,8 +69,10 @@
 <!-- Form section start -->
 
 <section class="d_p-25 d_form">
-    <div class="d_container">
-        <div class="row">
+    <form action="{{ route('chckout.store',$id) }}" method="post" id="checkoutForm">
+        @csrf
+        <div class="d_container">
+            <div class="row">
             <div class="col-12 col-lg-7">
                 <div class="d_inquiry">
                     <div class="row mb-3">
@@ -146,7 +149,7 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12">
-                            <textarea type="text" placeholder="Additional Message" name="" id="" rows="7"></textarea>
+                            <textarea type="text" placeholder="Additional Message" name="additional_info" id="" rows="7"></textarea>
                         </div>
                     </div>
                 </div>
@@ -257,6 +260,8 @@
                         </div>
                     </div>
                 </div>
+            </form>
+
             </div>
             <!-- <div class="col-12 col-sm-1"></div> -->
             <div class="col-12 col-lg-5 p-sm-4 ">
@@ -330,206 +335,115 @@
         </div>
     </div>
 </section>
-
-
 @endsection
-
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
     <script>
-        // log in model
-        // Get elements
-        const modal = document.getElementById('authModal');
-        const openModalBtn = document.getElementById('openModalBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const registerBtn = document.getElementById('registerBtn');
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-        const sendCodeBtn = document.getElementById('sendCodeBtn');
-        const verifyBtn = document.getElementById('verifyBtn');
-
-        const modalHeader = document.getElementById('modalHeader');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-        const otpVerificationForm = document.getElementById('otpVerificationForm');
-        const createNewPasswordForm = document.getElementById('createNewPasswordForm');
-
-        const toggleLoginPassword = document.getElementById('toggleLoginPassword');
-        const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
-        const toggleNewPassword = document.getElementById('toggleNewPassword');
-        const toggleConfirmNewPassword = document.getElementById('toggleConfirmNewPassword');
-
-        // Function to reset the modal to the login form
-        function resetModal() {
-            loginForm.style.display = "block";
-            registerForm.style.display = "none";
-            forgotPasswordForm.style.display = "none";
-            otpVerificationForm.style.display = "none";
-            createNewPasswordForm.style.display = "none";
-            modalHeader.style.display = "flex";
-            loginBtn.classList.add('active');
-            registerBtn.classList.remove('active');
-        }
-
-        // Open modal and reset to login form
-        openModalBtn.onclick = function () {
-            modal.style.display = "block";
-            resetModal();  // Reset modal every time it's opened
-        }
-
-        // Switch to login form
-        loginBtn.onclick = function () {
-            resetModal();  // Reset to login form
-        }
-
-        // Switch to register form
-        registerBtn.onclick = function () {
-            registerForm.style.display = "block";
-            loginForm.style.display = "none";
-            forgotPasswordForm.style.display = "none";
-            otpVerificationForm.style.display = "none";
-            createNewPasswordForm.style.display = "none";
-            modalHeader.style.display = "flex";
-            registerBtn.classList.add('active');
-            loginBtn.classList.remove('active');
-        }
-
-        // Switch to forgot password form
-        forgotPasswordBtn.onclick = function () {
-            forgotPasswordForm.style.display = "block";
-            loginForm.style.display = "none";
-            registerForm.style.display = "none";
-            otpVerificationForm.style.display = "none";
-            createNewPasswordForm.style.display = "none";
-            modalHeader.style.display = "none";
-        }
-
-        // Switch to OTP verification form
-        sendCodeBtn.onclick = function () {
-            otpVerificationForm.style.display = "block";
-            forgotPasswordForm.style.display = "none";
-            modalHeader.style.display = "none";
-        }
-
-        // Switch to create new password form
-        verifyBtn.onclick = function () {
-            createNewPasswordForm.style.display = "block";
-            otpVerificationForm.style.display = "none";
-            modalHeader.style.display = "none";
-        }
-
-        // Close the modal when clicking outside
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // Toggle password visibility
-        function togglePasswordVisibility(inputId, toggleIcon) {
-            const passwordInput = document.getElementById(inputId);
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = "password";
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-
-        // Event listeners for toggling password visibility
-        toggleLoginPassword.onclick = function () {
-            togglePasswordVisibility('loginPassword', toggleLoginPassword);
-        };
-
-        toggleRegisterPassword.onclick = function () {
-            togglePasswordVisibility('registerPassword', toggleRegisterPassword);
-        };
-
-        toggleNewPassword.onclick = function () {
-            togglePasswordVisibility('newPassword', toggleNewPassword);
-        };
-
-        toggleConfirmNewPassword.onclick = function () {
-            togglePasswordVisibility('confirmNewPassword', toggleConfirmNewPassword);
-        };
-        const createPasswordBtn = document.getElementById('createPasswordBtn');
-
-        // Function to close the modal
-        function closeModal() {
-            modal.style.display = "none";
-        }
-
-        // Event listener for the "Create Password" button
-        createPasswordBtn.onclick = function () {
-            closeModal();  // Close the modal when "Create Password" is clicked
-        };
-
-        // Close the modal when clicking outside
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                closeModal();  // Close the modal when clicking outside
-            }
-        };
-        // Function to change modal margin when the register form is open
-        function adjustModalMargin() {
-            if (registerForm.style.display === "block") {
-                document.querySelector('.login_model').style.margin = "5% auto";
-            } else {
-                document.querySelector('.login_model').style.margin = "10% auto";
-            }
-        }
-
-        // Modify the existing register button event to adjust the margin
-        registerBtn.onclick = function () {
-            registerForm.style.display = "block";
-            loginForm.style.display = "none";
-            forgotPasswordForm.style.display = "none";
-            otpVerificationForm.style.display = "none";
-            createNewPasswordForm.style.display = "none";
-            modalHeader.style.display = "flex";
-            registerBtn.classList.add('active');
-            loginBtn.classList.remove('active');
-
-            // Adjust modal margin when register form is shown
-            adjustModalMargin();
-        }
-
-        // Ensure margin resets when switching to login form
-        loginBtn.onclick = function () {
-            resetModal();  // Reset to login form
-            adjustModalMargin();  // Reset margin to 10% for login
-        }
-        const customOverlay = document.getElementById('customOverlay');
-
-        // Function to open the modal and show the overlay
-        openModalBtn.onclick = function () {
-            modal.style.display = "block";
-            loginForm.style.display = "block"
-            customOverlay.style.display = "block"; // Show the black overlay
-            resetModal();  // Reset modal every time it's opened
-        }
-
-        // Function to close the modal and hide the overlay
-        function closeModal() {
-            modal.style.display = "none";
-            customOverlay.style.display = "none"; // Hide the black overlay
-        }
-
-        // Event listener for the "Create Password" button to close the modal
-        createPasswordBtn.onclick = function () {
-            closeModal();  // Close the modal when "Create Password" is clicked
-        };
-
-        // Close the modal and overlay when clicking outside the modal
-        window.onclick = function (event) {
-            if (event.target == modal || event.target == customOverlay) {
-                closeModal();  // Close the modal and hide the overlay when clicking outside
-            }
-        }
-
+           $(document).ready(function() {
+            $("#checkoutForm").validate({
+                rules: {
+                    first_name: {
+                        required: true
+                    },
+                    last_name: {
+                        required: true
+                    },
+                    phone: {
+                        required: true,
+                        digits: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    nationality: {
+                        required: true
+                    },
+                    additional_info: {
+                        required: true
+                    },
+                    house_no: {
+                        required: true
+                    },
+                    buling_name: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    state: {
+                        required: true
+                    },
+                    country: {
+                        required: true
+                    },
+                    pincode: {
+                        required: true
+                    },
+                    cardholder_name: {
+                        required: true
+                    },
+                    card_number: {
+                        required: true,
+                        creditcard: true
+                    },
+                    expiry_date: {
+                        required: true
+                    },
+                    cvv: {
+                        required: true,
+                        digits: true,
+                        minlength: 3,
+                        maxlength: 4
+                    },
+                },
+                messages: {
+                    first_name: "Please enter your first name",
+                    last_name: "Please enter your last name",
+                    phone: {
+                        required: "Please enter your phone number",
+                        digits: "Please enter only digits"
+                    },
+                    email: {
+                        required: "Please enter your email",
+                        email: "Please enter a valid email address"
+                    },
+                    nationality: "Please enter your nationality",
+                    additional_info: "Please enter your additional information",
+                    house_no: "Please enter your house number",
+                    buling_name: "Please enter your building name",
+                    city: "Please enter your city",
+                    state: "Please enter your state",
+                    country: "Please enter your country",
+                    pincode: "Please enter your pincode",
+                    cardholder_name: "Please enter the cardholder's name",
+                    card_number: {
+                        required: "Please enter your card number",
+                        creditcard: "Please enter a valid credit card number"
+                    },
+                    expiry_date: "Please enter the expiry date",
+                    cvv: {
+                        required: "Please enter the CVV",
+                        digits: "Please enter only digits",
+                        minlength: "CVV must be at least 3 digits",
+                        maxlength: "CVV must be at most 4 digits"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+        });
     </script>
 @endpush
 

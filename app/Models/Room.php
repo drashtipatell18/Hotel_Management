@@ -26,7 +26,7 @@ class Room extends Model
     }
     public function images()
     {
-        return $this->hasMany(RoomImages::class, 'room_id', 'id');
+        return $this->hasMany(RoomImages::class, 'room_id');
     }
     public function offer() {
         return $this->belongsTo(OfferPackage::class); // Adjust this as per your database structure

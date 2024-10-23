@@ -14,4 +14,16 @@ class RoomImages extends Model
         'room_id',
         'image',
     ];
+    public function roomimages()
+{
+    // Instead of belongsTo, we should access images through the room
+    return $this->hasManyThrough(
+        RoomImages::class,
+        Room::class,
+        'id', // Foreign key on rooms table
+        'room_id', // Foreign key on room_images table
+        'room_id', // Local key on checkouts table
+        'id' // Local key on rooms table
+        );
+    }
 }
