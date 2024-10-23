@@ -416,7 +416,7 @@
                 @endphp
                 <div class="order__item">
                     <div class="Slider_image">
-                        <img class="image__img" src="{{ URL::to('/images/' . $firstImage) }}" alt="{{ $offerPackage->title }}">
+                        <img class="image__img" src="{{ URL::to('assets/offer/' . $firstImage) }}" alt="{{ $offerPackage->title }}">
                         <div class="image__overlay3 image__overlay3--primary">
                             <a href="{{ route('offerPackage', $offerPackage->id) }}" class="Custom_btn">Learn More</a>
                         </div>

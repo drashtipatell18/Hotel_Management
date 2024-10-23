@@ -15,6 +15,10 @@
     .dropdown-toggle::after {
         display: contents;
     }
+   .d_room .d_night .d_price{
+    margin-left:37pc;
+   }
+
 </style>
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
@@ -40,8 +44,7 @@
                     <h5 class="text-center ">{{ $offerPackage->title }}</h5>
                     <div class="d-flex justify-content-center align-items-center offer_haed">
                         <i class="y_offer_sec_i fa-solid fa-tag px-2"></i>
-                        <p class="text-dark mb-0 y_offer_sec_p">10 % savings on
-                            Booking 2 Nights on Fri, Sat or Sun.</p>
+                        <p class="text-dark mb-0 y_offer_sec_p">{{ $offerPackage->discount_value }} % savings {{$offerPackage->discount_type}}</p>
                     </div>
                 </div>
             </div>
@@ -54,7 +57,7 @@
 
             @foreach($firstThreeImages as $image)
                 <div class="col-lg-4 about_sec1_col d-flex justify-content-center">
-                    <img src="{{ url('images/' . trim($image)) }}" alt="Offer Image">
+                    <img src="{{ url('assets/offer/' . trim($image)) }}" alt="Offer Image">
                 </div>
             @endforeach
         </div>
@@ -110,7 +113,7 @@
                         </div>
                         <div class="d_night">
                             <div class="d_price">
-                                <h6>${{ $offerRoom->rent }}/ Night</h6>
+                                <h6>${{ $offerRoom->rent }}</h6>
                             </div>
                         </div>
                         <div class="d_content">

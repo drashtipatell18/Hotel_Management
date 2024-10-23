@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\OfferPackage;
 use Illuminate\Http\Request;
 use App\Models\Hotel;
+use File;
+use DB;
 
 class OffersPackageController extends Controller
 {
@@ -16,46 +18,54 @@ class OffersPackageController extends Controller
 
     public function offerPackageStore(Request $request)
     {
-
+        // Validate the form inputs
         $request->validate([
             'hotel_id' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for multiple images
             'discount_type' => 'required',
             'discount_value' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'is_active' => 'required',
         ]);
-        $images = $request->file('image'); // Change to handle multiple images
-        $imageNames = []; // Array to hold image names
 
-        // Check if $images is an array before iterating
-        if (is_array($images)) {
-            foreach ($images as $image) {
-                $imageName = time().uniqid().'.'.$image->getClientOriginalExtension(); // Unique name for each image
-                $image->move('images', $imageName);
-                $imageNames[] = $imageName; // Store the image name
+        // Create new OfferPackage
+        $offerPackage = new OfferPackage;
+        $offerPackage->hotel_id = $request->hotel_id;
+        $offerPackage->title = $request->title;
+        $offerPackage->description = $request->description;
+        $offerPackage->offer_include = $request->offer_include;
+        $offerPackage->discount_type = $request->discount_type;
+        $offerPackage->discount_value = $request->discount_value;
+        $offerPackage->start_date = $request->start_date;
+        $offerPackage->end_date = $request->end_date;
+        $offerPackage->is_active = $request->is_active === 'on' ? 1 : 0;
+        
+        // Array to store the image names
+        $imageNames = [];
+
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                // Generate a unique image name
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                // Move the image to the desired folder
+                $image->move(public_path('/assets/offer/'), $imageName);
+                // Add the image name to the array
+                $imageNames[] = $imageName;
             }
+
+            // Convert the array to a comma-separated string
+            $offerPackage->image = implode(',', $imageNames);
         }
-        // dd($imageNames);
-        OfferPackage::create(
-            [
-                'hotel_id' => $request->input('hotel_id'),
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'offer_include' => $request->input('offer_include'),
-                'image' => implode(',', $imageNames), // Store as JSON
-                'discount_type' => $request->input('discount_type'),
-                'discount_value' => $request->input('discount_value'),
-                'start_date' => $request->input('start_date'),
-                'end_date' => $request->input('end_date'),
-                'is_active' => $request->input('is_active') === 'on' ? 1 : 0,
-            ]
-        );
-        return redirect()->route('offer/package/list')->with('success', 'Offer Package created successfully');
+
+        // Save the offer package
+        $offerPackage->save();
+
+        return redirect()->route('offer/package/list')->with('success', 'Offer package created successfully!');
     }
+
 
     public function offerPackageEdit($id)
     {
@@ -64,61 +74,105 @@ class OffersPackageController extends Controller
         return view('offerPackage.edit', compact('offerPackage', 'hotels'));
     }
 
+   
     public function offerPackageUpdate(Request $request, $id)
     {
-        $offerPackage = OfferPackage::find($id);
+        // Validate the input data
+        $request->validate([
+            'hotel_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for multiple images
+            'discount_type' => 'required',
+            'discount_value' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'is_active' => 'required',
+        ]);
+
+        // Find the offer package by ID
+        $offerPackage = OfferPackage::findOrFail($id);
+        $offerPackage->hotel_id = $request->hotel_id;
+        $offerPackage->title = $request->title;
+        $offerPackage->description = $request->description;
+        $offerPackage->offer_include = $request->offer_include;
+        $offerPackage->discount_type = $request->discount_type;
+        $offerPackage->discount_value = $request->discount_value;
+        $offerPackage->start_date = $request->start_date;
+        $offerPackage->end_date = $request->end_date;
+        $offerPackage->is_active = $request->is_active === 'on' ? 1 : 0;
 
         // Handle images
-        $images = $request->file('image');
-        $existingImageNames = explode(',', $offerPackage->image) ?? [];
-        $imageNames = $existingImageNames;
+        $imageNames = explode(',', $offerPackage->image);
 
-        if ($images) {
-            foreach ($images as $image) {
-                $imageName = time() . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move('images', $imageName);
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                // Generate a unique image name
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                // Move the image to the desired folder
+                $image->move(public_path('/assets/offer/'), $imageName);
+                // Add the new image name to the array
                 $imageNames[] = $imageName;
             }
         }
 
-        if ($request->has('remove_images')) {
-            $imagesToRemove = $request->input('remove_images');
-            foreach ($imagesToRemove as $imageToRemove) {
-                $filePath = public_path('images/' . $imageToRemove); // Ensure this points to a file
-                if (file_exists($filePath) && is_file($filePath)) { // Check if it's a file
-                    unlink($filePath); // Only unlink if it's a file
-                } else {
-                    // Optionally log or handle the case where the file does not exist or is a directory
-                    // Log::warning("Attempted to delete a non-file: " . $filePath);
-                }
-                $imageNames = array_diff($imageNames, [$imageToRemove]);
-            }
-        }
+        // Store unique image names
+        $offerPackage->image = implode(',', array_unique($imageNames));
 
-        $offerPackage->update([
-            'hotel_id' => $request->input('hotel_id'),
-            'title' => $request->input('title'),
-            'offer_include' => $request->input('offer_include'),
-            'description' => $request->input('description'),
-            'image' => implode(',', array_values($imageNames)),
-            'discount_type' => $request->input('discount_type'),
-            'discount_value' => $request->input('discount_value'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-            'is_active' => $request->input('is_active') === 'on' ? 1 : 0,
-        ]);
+        // Save the updated offer package
+        $offerPackage->save();
 
         return redirect()->route('offer/package/list')->with('success', 'Offer Package updated successfully');
     }
-
-
+    
     public function offerPackageDelete($id)
     {
-        $offerPackage = OfferPackage::find($id);
-        $offerPackage->delete();
-        return redirect()->route('offer/package/list')->with('success', 'Offer Package deleted successfully');
+        try {
+            $offerPackage = OfferPackage::find($id);
+            if ($offerPackage) {
+                $offerPackage->delete();
+                Toastr::success('Room deleted successfully :)', 'Success');
+                return redirect()->route('offer/package/list');
+            } else {
+                Toastr::error('Room not found :)', 'Error');
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            Toastr::error('Room deletion failed :)', 'Error');
+            return redirect()->back();
+        }
     }
 
+    public function deleteImage($id)
+    {
+        // Find the OfferPackage
+        $offerPackage = OfferPackage::findOrFail($id);
+        
+        // Split the images into an array
+        $image = explode(',', $offerPackage->image); // Assuming 'images' is the field name
+    
+        // Check if there are images to delete
+        if (!empty($image)) {
+            // Get the first image name to delete
+            $imageName = array_shift($image); // Remove the first image from the array
+            
+            // Update the images field in the database
+            $offerPackage->image = implode(',', $image);
+            $offerPackage->save();
+            
+            // Prepare the path for deletion
+            $imagePath = public_path('assets/offer/' . $imageName);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+            
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully.']);
+        }
+        
+        return response()->json(['success' => false, 'message' => 'No images found to delete.']);
+    }
+    
+    
     public function offerPackageList()
     {
         $offerPackages = OfferPackage::all();
