@@ -370,7 +370,7 @@ Route::controller(OffersPackageController::class)->group(function () {
     Route::get('offer/package/edit/{id}', 'offerPackageEdit')->name('offer/package/edit');
     Route::post('offer/package/update/{id}', 'offerPackageUpdate')->name('offer/package/update');
     Route::get('/offer/package/delete/{id}','offerPackageDelete')->name('offerPackage.delete');
-    Route::delete('/offer/image/delete/{id}',  'deleteImage')->name('image.delete');
+    Route::delete('offer/image/delete/{id}',  'deleteImage')->name('offer/image/delete');
 });
 
 // Client Review
