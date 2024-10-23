@@ -37,7 +37,13 @@
                                                 <td>{{ $spa->category }}</td>
                                                 <td>{{ $spa->description }}</td>
                                                 <td>{{ $spa->price }}</td>
-                                                <td><img src="{{ asset('assets/spas/'.$spa->image) }}" style="width: 40px; height: 40px;" class="avatar-img rounded-circle"></td>
+                                                <td>
+                                                    @php
+                                                        $images = explode(',', $spa->image); // Split images by comma
+                                                        $firstImage = $images[0]; // Get the first image
+                                                    @endphp 
+                                                    <img src="{{ asset('assets/spa/'.$firstImage) }}" style="width: 40px; height: 40px;" class="avatar-img rounded-circle">
+                                                </td>
 
                                                 <td class="text-right">
                                                     <a data-toggle="modal" data-target="#exampleModal{{ $spa->id }}"

@@ -360,6 +360,7 @@ Route::controller(SpasController::class)->group(function () {
     Route::get('spa/edit/{id}', 'spaEdit');
     Route::post('spa/update/{id}', 'spaUpdate')->name('spa/update');
     Route::get('/spa/delete/{id}','spaDelete')->name('spa.delete');
+    Route::delete('spa/image/delete/{id}',  'deleteImage')->name('spa/image/delete');
 });
 
 // offer & package

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Spa;
 use App\Http\Controllers\Controller;
+use DB;
+use File;
 
 class SpasController extends Controller
 {
@@ -29,26 +31,26 @@ class SpasController extends Controller
             'price' => 'required|numeric', // Ensure price is numeric
         ]);
 
-        $images = $request->file('image'); // Change to handle multiple images
-        $imagePaths = []; // Array to store the image paths
+        $spa = new Spa;
+        $spa->category = $request->category;
+        $spa->description = $request->description;
+        $spa->price = $request->price;
+        $imageNames = [];
 
-        // Check if images are uploaded
-        if ($images) {
-            foreach ($images as $image) {
-                $imageName = time() . uniqid() . '.' . $image->getClientOriginalExtension(); // Unique name for each image
-                $image->move(public_path('/images'), $imageName); // Ensure the path is correct
-                $imagePaths[] = $imageName; // Store the image name
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                // Generate a unique image name
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                // Move the image to the desired folder
+                $image->move(public_path('/assets/spa/'), $imageName);
+                // Add the image name to the array
+                $imageNames[] = $imageName;
             }
+
+            // Convert the array to a comma-separated string
+            $spa->image = implode(',', $imageNames);
         }
-
-        // Check if Spa creation is successful
-        $spa = Spa::create([
-            'category' => $request->input('category'),
-            'description' => $request->input('description'),
-            'image' => implode(',', $imagePaths),
-            'price' => $request->input('price'),
-        ]);
-
+        $spa->save();
         if ($spa) {
             return redirect()->route('spa/list')
                 ->with('success', 'Spa added successfully!');
@@ -65,41 +67,31 @@ class SpasController extends Controller
 
      public function spaUpdate(Request $request, $id)
      {
-        $spa = Spa::find($id);
+        $spa = Spa::findOrFail($id);
         if (!$spa) {
             return redirect()->back()->with('error', 'Spa not found.');
         }
 
-        // Handle images
-        $images = $request->file('image');
-        $existingImageNames = explode(',', $spa->image) ?? [];
-        $imageNames = $existingImageNames;
+        // Update spa details
+        $spa->category = $request->category;
+        $spa->description = $request->description;
+        $spa->price = $request->input('price');
 
-        if ($images) {
-            foreach ($images as $image) {
-                $imageName = time() . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('/images'), $imageName); // Ensure the path is correct
+        $imageNames = explode(',', $spa->image);
+
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                // Generate a unique image name
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                // Move the image to the desired folder
+                $image->move(public_path('/assets/spa/'), $imageName);
+                // Add the new image name to the array
                 $imageNames[] = $imageName;
             }
         }
 
-        if ($request->has('remove_images')) {
-            $imagesToRemove = $request->input('remove_images');
-            foreach ($imagesToRemove as $imageToRemove) {
-                $filePath = public_path('/images/' . $imageToRemove); // Ensure this points to a file
-                if (file_exists($filePath) && is_file($filePath)) { // Check if it's a file
-                    unlink($filePath); // Only unlink if it's a file
-                }
-                $imageNames = array_diff($imageNames, [$imageToRemove]);
-            }
-        }
-
-        // Update spa details
-        $spa->category = $request->input('category');
-        $spa->description = $request->input('description');
-        $spa->image = implode(',', $imageNames);
-        $spa->price = $request->input('price');
-
+        $spa->image = implode(',', array_unique($imageNames));
+        $spa->save();
         // Save the updated spa
         if ($spa->save()) {
             return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
@@ -114,6 +106,35 @@ class SpasController extends Controller
         $spa = Spa::find($id);
         $spa->delete();
         return redirect()->route('spa/list')->with('success', 'Spa deleted successfully');
+     }
+
+     public function deleteImage($id)
+     {
+         // Find the OfferPackage
+         $spa = Spa::findOrFail($id);
+         
+         // Split the images into an array
+         $image = explode(',', $spa->image); // Assuming 'images' is the field name
+     
+         // Check if there are images to delete
+         if (!empty($image)) {
+             // Get the first image name to delete
+             $imageName = array_shift($image); // Remove the first image from the array
+             
+             // Update the images field in the database
+             $spa->image = implode(',', $image);
+             $spa->save();
+             
+             // Prepare the path for deletion
+             $imagePath = public_path('assets/spa/' . $imageName);
+             if (File::exists($imagePath)) {
+                 File::delete($imagePath);
+             }
+             
+             return response()->json(['success' => true, 'message' => 'Image deleted successfully.']);
+         }
+         
+         return response()->json(['success' => false, 'message' => 'No images found to delete.']);
      }
 
 }

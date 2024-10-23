@@ -51,26 +51,28 @@
                             <div class="form-group mt-3">
                                 <label>Image Preview</label>
                                 <div id="imagePreview" class="row">
-                                    <!-- Show existing images if editing -->
-                                    @if(isset($spa->image) && $spa->image)
-                                    @php
-                                    $imageFiles = explode(',', $spa->image);
-                                    @endphp
-                                    @foreach($imageFiles as $image)
-                                    <div class="col-md-2 mb-3">
-                                        <div class="text-center">
-                                            <img src="{{ asset('/images/' . $image) }}"
-                                                class="img-fluid rounded mb-2"
-                                                style="width: 100%; height: 100px; object-fit: cover;">
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2"
-                                                onclick="removePreview(this, '{{ $image }}')">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </a>
-                                        </div>
+                                        @if(isset($spa->image) && $spa->image)
+                                            @php
+                                                $imageFiles = explode(',', $spa->image);
+                                            @endphp
+                                            @foreach($imageFiles as $imageFile)
+                                                @php
+                                                    $imagePath = 'assets/spa/' . trim($imageFile); // Path relative to public
+                                                @endphp
+                                                <div class="col-md-2 mb-3">
+                                                    <div class="text-center">
+                                                        <img src="{{ asset($imagePath) }}"
+                                                            class="img-fluid rounded mb-2"
+                                                            style="width: 100%; height: 100px; object-fit: cover;">
+                                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" 
+                                                            onclick="deleteImage('{{ $spa->id }}', '{{ trim($imageFile) }}')">
+                                                                <i class="fas fa-trash-alt"></i> Delete
+                                                            </a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    @endforeach
-                                    @endif
-                                </div>
                                 <input type="hidden" name="remove_images[]" id="remove_images" value="">
                             </div>
                             <div class="col-md-12">
@@ -89,72 +91,61 @@
     </div>
     @endsection
     <script>
-        // Image Preview
+    // Image Preview
         function previewImages(event) {
-            const previewContainer = document.getElementById('imagePreview');
-            const files = event.target.files;
+        const previewContainer = document.getElementById('imagePreview');
+        const files = event.target.files;
 
-            for (const file of files) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'img-fluid rounded mb-2';
-                    img.style.width = '100%';
-                    img.style.height = '100px';
-                    img.style.objectFit = 'cover';
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'img-fluid rounded mb-2';
+                img.style.width = '100%';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
 
-                    const div = document.createElement('div');
-                    div.className = 'col-md-2 mb-3';
-                    div.innerHTML = `
-                      <div class="text-center">
-                          ${img.outerHTML}
-                          <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
-                              <i class="fas fa-trash-alt"></i> Delete
-                          </a>
-                      </div>
-                  `;
+                const div = document.createElement('div');
+                div.className = 'col-md-2 mb-3';
+                div.innerHTML = `
+                    <div class="text-center">
+                        ${img.outerHTML}
+                        <a href="javascript:void(0);" class="btn btn-danger btn-sm mt-2" onclick="removePreview(this)">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </div>
+                `;
 
-                    previewContainer.appendChild(div);
-                };
-                reader.readAsDataURL(file);
-            }
+                previewContainer.appendChild(div);
+            };
+            reader.readAsDataURL(file);
         }
-
-        function deleteImage(facilitiesId, imageFileName) {
-            if (confirm('Are you sure you want to delete this image?')) {
-                $.ajax({
-                    url: '{{ url('facilities/image/delete') }}/' + facilitiesId, // Append the smokingId to the URL
-                    method: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        image_file_name: imageFileName
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            location.reload(); // Optionally reload the page or remove the image element
-                        } else {
-                            alert('Failed to delete the image');
-                        }
-                    }
-                });
-            }
-
-        }
-        function removePreview(element, imageName) {
-    // Remove the image preview from the UI
-    element.parentElement.parentElement.remove();
-
-    // Update the hidden input field to include the image name to be removed
-    const removeImagesInput = document.getElementById('remove_images');
-    let currentValues = removeImagesInput.value ? removeImagesInput.value.split(',') : [];
-
-    // Check if imageName is defined before pushing
-    if (imageName) {
-        currentValues.push(imageName);
     }
 
-    removeImagesInput.value = currentValues.join(',');
-}
+    function removePreview(element) {
+        element.parentElement.parentElement.remove();
+    }
+    function deleteImage(spaId, imageFileName) {
+        if (confirm('Are you sure you want to delete this image?')) {
+            $.ajax({
+                url: '{{ url('spa/image/delete') }}/' + spaId, // Append the smokingId to the URL
+                method: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    image_file_name: imageFileName
+                },
+                success: function(response) {
+                    if (response.success) {
+                        location.reload(); // Optionally reload the page or remove the image element
+                    } else {
+                        alert('Failed to delete the image');
+                    }
+                }
+            });
+        }
 
-    </script>
+    }
+
+
+</script>
