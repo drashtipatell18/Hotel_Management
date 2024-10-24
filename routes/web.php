@@ -49,6 +49,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\MyBookingController;
 use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
+use App\Http\Controllers\Frontend\CaptchaController;
 
 
 // =========================================================== Backend Route ============================================================
@@ -431,6 +432,14 @@ Route::post('/verify-otp', [IndexController::class, 'verifyOtp'])->name('verify.
 Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name('password.reset');
 Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');
 Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
+
+Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha'])->name('reloadCaptcha');
+Route::post('/verify-captcha', function(Request $request) {
+    if (captcha_check($request->captcha)) {
+        return response()->json(['success' => true]);
+    }
+    return response()->json(['success' => false]);
+});
 
 Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
