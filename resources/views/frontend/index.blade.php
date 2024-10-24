@@ -267,7 +267,7 @@
                 <img class="image__img" src="{{ URL::to('/assets/upload/default.png') }}" alt="Default Image">
                 @endif
                 <div class="image__overlay3 image__overlay3--primary">
-                    <a href="{{ route('check-avilabilty') }}" class="Custom_btn">Reserve</a>
+                    <a href="{{ route('booknowroomtype', $roomType->id) }}" class="Custom_btn">Reserve</a>
                 </div>
                 <div class="image_onsection bg-light py-3">
                     <h4 class="text-center pb-2">{{ $roomType->room_name }}</h4>

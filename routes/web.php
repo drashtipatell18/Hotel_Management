@@ -399,6 +399,7 @@ Route::get('/contact-us',[ContactController::class,'contactus'])->name('contact-
 Route::post('/contact-us/store',[ContactController::class,'contactusStore'])->name('contactStore');
 Route::get('/check-avilabilty',[CheckAvaliblityController::class,'checkAvilabilty'])->name('check-avilabilty');
 Route::get('/booknow/{roomId}', [BookNowController::class, 'booknow'])->name('booknow');
+Route::get('/booknowroomtype/{roomId}', [BookNowController::class, 'booknowroomtype'])->name('booknowroomtype');
 
 
 

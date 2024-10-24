@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Booking;
 use App\Models\RoomImages;
 use App\Models\Amenities;
+use App\Models\RoomTypes;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\OfferPackage;
@@ -113,7 +114,7 @@ class BookNowController extends Controller
         if ($room->offer_id) {
             // Assuming the offer has a discount_value attribute
             $offer = OfferPackage::find($room->offer_id);
-        
+
             // Check if the offer exists
             if ($offer) {
                 $discountValue = $offer->discount_value;
@@ -138,6 +139,45 @@ class BookNowController extends Controller
         return redirect()->route('checkout',$book->id)->with('success', 'Booking created successfully');
     }
 
+    public function booknowroomtype($roomId)
+    {
+        $room = RoomTypes::find($roomId);
+        if (!$room) {
+            return redirect()->back()->with('error', 'Room not found.');
+        }
+
+        $amenityIds = explode(',', $room->amenities_id);
+        $amenities = Amenities::whereIn('id', $amenityIds)->get();
+        $roomCount = RoomTypes::count();
+        $maxMemberCapacity = Room::max('total_member_capacity');
+        $bedType = Room::distinct()->pluck('bed_type'); // Fetch distinct bed types
+        $similarRooms = Room::whereIn('bed_type', $bedType)->get();
+
+        if ($room->offer_id) {
+            // Assuming the offer has a discount_value attribute
+            $offer = OfferPackage::find($room->offer_id);
+            $discountValue = $offer ? $offer->discount_value : 0;
+
+            $discountedPrice = $room->rent - ($room->rent * ($discountValue / 100));
+            $discount = $discountValue;
+        } else {
+            $discountValue = 0;
+            $discountedPrice = $room->rent;
+            $discount = $discountValue;
+        }
+
+        $availableRooms = Room::with(['offer']) // Assuming you have defined a relationship called `offer`
+            ->whereNotNull('offer_id')
+            ->get();
+
+        $availableRoomsWithDiscounts = $availableRooms->filter(function ($room) {
+            return $room->offer && $room->offer->discount_value > 0; // Adjust 'discount_value' according to your Offer model
+        });
+
+
+        // dd($discountValue);
+        return view('frontend.booknowroomtype', compact('room', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms', 'discountedPrice', 'discountValue', 'availableRoomsWithDiscounts', 'availableRooms', 'discount'));
+    }
 
 
 }
