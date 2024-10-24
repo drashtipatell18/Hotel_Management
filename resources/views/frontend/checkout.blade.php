@@ -4,54 +4,19 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 <style>
-    .custom-dropdown {
-        position: relative;
-        display: inline-block;
-        width: 200px;
+    .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
     }
-
-    .dropdown-button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        background-color: #fff;
-        font-size: 16px;
-        text-align: left;
-        cursor: pointer;
-        position: relative;
-        z-index: 1000;
+    input.error {
+        border-color: #dc3545;
     }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #1A2142;
-        min-width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        z-index: 1000;
-    }
-
-    .dropdown-content a {
-        display: block;
-        padding: 8px;
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .dropdown-content a:hover {
-        background-color: #1A2142;
-    }
-
-    .y_select_btn {
-        background-color: #1A2142;
-        color: white !important;
+    input.valid {
+        border-color: #198754;
     }
 </style>
-
 <!-- Heading section start -->
 
 <section class="d_p-25 d_heading">
@@ -80,37 +45,34 @@
                             <h6>Guest Information</h6>
                         </div>
                     </div>
+                    <input type="hidden" name="room_id" id="room_id" value="{{ $id }}" >
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="First Name*" name="first_name" id="">
+                            <label for="dob">First Name</label>
+                            <input type="text" placeholder="First Name*" id=""  name="first_name" value="{{ old('name', $user->name ?? '') }}">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Last Name*" name="last_name" id="">
+                            <label for="dob">Last Name</label>
+                            <input type="text" placeholder="Last Name*" name="last_name" id=""  value="{{ old('lname', $user->lname ?? '') }}">
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="d-flex">
-                                <div class="custom-dropdown w-auto " style="border-radius:0px;">
-                                    <button class="dropdown-button m-0 y_select_btn">+1</button>
-                                    <div class="dropdown-content">
-                                        <a href="#" data-value="+1">+1</a>
-                                        <a href="#" data-value="+1">+1</a>
-                                        <a href="#" data-value="+44">+44</a>
-                                        <a href="#" data-value="+61">+61</a>
-                                        <!-- Add more options as needed -->
-                                    </div>
+                            <label for="dob">Phone</label>
+                            <input type="tel" placeholder="Phone*" name="phone" id="" value="{{ old('phone', $user->phone_number ?? '') }}">
+                        </div>
+                      
+                        <div class="col-12 col-md-6">
+                            <label for="dob">Email</label>
+                            <input type="email" placeholder="Email*" name="email" id="" value="{{ old('phone', $user->email ?? '') }}">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="input-group">
+                                <label for="dob">Date of Birth (DD/MM/YYYY)</label>
+                                <input type="date" class="birthdate" id="dob" name="dob"
+                                    value="{{ old('dob', $user->dob ?? '') }}">
+                                <div class="custom-date-icon" style="margin-top:-29px;display:flex;margin-left:92%">
+                                    <i class="fas fa-calendar-alt"></i>
                                 </div>
-
-
-                                <input type="text" placeholder="Phone*" class="rounded-top-0 rounded-bottom-0 " name="phone"
-                                    id="">
                             </div>
-
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <input type="email" placeholder="Email*" name="email" id="">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <input type="email" placeholder="Nationality*" name="nationality" id="">
                         </div>
                     </div>
                 </div>
@@ -122,21 +84,23 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
+                            <label for="dob">House No</label>
                             <input type="text" placeholder="House No. / Block No. / Flat No.*" name="house_no" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">Building Name / Street Name / Colony</label>
                             <input type="text" placeholder="Building Name / Street Name / Colony*" name="buling_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">City</label>
                             <input type="text" placeholder="City*" name="city" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">State</label>
                             <input type="text" placeholder="State*" name="state" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Pincode*" name="pincode" id="">
-                        </div>
-                        <div class="col-12 col-md-6">
+                            <label for="dob">Country</label>
                             <input type="text" placeholder="Country*" name="country" id="">
                         </div>
                     </div>
@@ -212,25 +176,34 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
+                            <label for="dob">Card Holder Name</label>
                             <input type="text" placeholder="Card Holder Name*" name="cardholder_name" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">Card Number</label>
                             <input type="text" placeholder="Card Number*" name="card_number" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">Expiry Date MM/YYr</label>
                             <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id="">
                         </div>
                         <div class="col-12 col-md-6">
+                            <label for="dob">CVV</label>
                             <input type="text" placeholder="CVV*" name="cvv" id="">
                         </div>
                         <div class="col-12 col-md-6">
-                            <input type="text" placeholder="Enter Captcha*" name="captcha" id="">
+                            <label for="dob">Enter Captcha</label>
+                            <input type="text" placeholder="Enter Captcha*" name="captcha" id="captcha">
                         </div>
                         <div class="col-6 col-xl-4">
                             <div class="d-flex align-items-center">
                                 <!-- <input type="text" placeholder="Country*" name="" id=""> -->
-                                <img src="/img/d_img/captch.png" alt="">
-                                <i class="fa-solid fa-arrows-rotate d_refresh ms-3"></i>
+                                 <div class="captcha">
+                                    <span>{!! captcha_img('math') !!}</span>
+                                    <button type="button" class="btn btn-danger reload" id="reload">
+                                        &#x21bb;</button>
+                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -270,14 +243,20 @@
                         <div class="row g-3">
                             <div class="col-12 col-xl-5">
                                 <div class="d_img">
-                                    <img src="{{ url('frontend/img/d_img/room1.png') }}" alt="">
+                                    @if($booking->room->images->isNotEmpty())
+                                        @foreach($booking->room->images as $image)
+                                            <img src="{{ asset('assets/upload/' . $image->image) }}" alt="{{ $booking->room->name }}" class="img-fluid">
+                                        @endforeach
+                                    @else
+                                        <img src="{{ asset('assets/upload/default.jpg') }}" alt="Default Image" class="img-fluid">
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-12 col-xl-7">
-                                <h5>1 King Bed, Forest View, Loft Guest Room</h5>
-                                <p><span>Check in :</span> 07/08/24</p>
-                                <p><span>Guests :</span> 1 Adult</p>
-                                <p><span>Rooms : </span>1 Room</p>
+                                <h5>{{ $booking->room->room_name }}</h5>
+                                <p><span>Check in :</span> {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y') }}</p>
+                                <p><span>Guests :</span> {{ $booking->member_count }} Guest</p>
+                                <p><span>Rooms : </span>{{ $booking->room_count }} Room</p>
                             </div>
                         </div>
                         <h3 class="mt-3">Total</h3>
@@ -286,34 +265,26 @@
                     <div class="d_box d_pricelist">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h4>Deposit</h4>
-                            <h4>$2000</h4>
+                            <h4>$1000</h4>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h4>Total Base Price</h4>
-                            <h4>$1250</h4>
+                            <h4>${{ number_format($booking->total_cost_input, 2) }}</h4>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h4>Taxes</h4>
-                            <h4>$0</h4>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h4>Extra : Room Clean</h4>
                             <h4>$100</h4>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <h4>Remaining Balance</h4>
-                            <h4>$0</h4>
                         </div>
                     </div>
                     <hr class="m-0">
                     <div class="d_box d_pricelist">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
+                        <!-- <div class="d-flex align-items-center justify-content-between mb-3">
                             <h4>You Saved</h4>
                             <h4>$100</h4>
-                        </div>
+                        </div> -->
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h3>Total</h3>
-                            <h3>$1350</h3>
+                            <h3>${{ number_format($booking->total_cost_input + 100 + 1000, 2) }}</h3>
                         </div>
                     </div>
                 </div>
@@ -335,115 +306,256 @@
         </div>
     </div>
 </section>
-@endsection
-@push('script')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
-    <script>
-           $(document).ready(function() {
-            $("#checkoutForm").validate({
-                rules: {
-                    first_name: {
-                        required: true
-                    },
-                    last_name: {
-                        required: true
-                    },
-                    phone: {
-                        required: true,
-                        digits: true
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    nationality: {
-                        required: true
-                    },
-                    additional_info: {
-                        required: true
-                    },
-                    house_no: {
-                        required: true
-                    },
-                    buling_name: {
-                        required: true
-                    },
-                    city: {
-                        required: true
-                    },
-                    state: {
-                        required: true
-                    },
-                    country: {
-                        required: true
-                    },
-                    pincode: {
-                        required: true
-                    },
-                    cardholder_name: {
-                        required: true
-                    },
-                    card_number: {
-                        required: true,
-                        creditcard: true
-                    },
-                    expiry_date: {
-                        required: true
-                    },
-                    cvv: {
-                        required: true,
-                        digits: true,
-                        minlength: 3,
-                        maxlength: 4
-                    },
-                },
-                messages: {
-                    first_name: "Please enter your first name",
-                    last_name: "Please enter your last name",
-                    phone: {
-                        required: "Please enter your phone number",
-                        digits: "Please enter only digits"
-                    },
-                    email: {
-                        required: "Please enter your email",
-                        email: "Please enter a valid email address"
-                    },
-                    nationality: "Please enter your nationality",
-                    additional_info: "Please enter your additional information",
-                    house_no: "Please enter your house number",
-                    buling_name: "Please enter your building name",
-                    city: "Please enter your city",
-                    state: "Please enter your state",
-                    country: "Please enter your country",
-                    pincode: "Please enter your pincode",
-                    cardholder_name: "Please enter the cardholder's name",
-                    card_number: {
-                        required: "Please enter your card number",
-                        creditcard: "Please enter a valid credit card number"
-                    },
-                    expiry_date: "Please enter the expiry date",
-                    cvv: {
-                        required: "Please enter the CVV",
-                        digits: "Please enter only digits",
-                        minlength: "CVV must be at least 3 digits",
-                        maxlength: "CVV must be at most 4 digits"
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+$(document).ready(function() {
+        const csrfToken = $('meta[name="csrf-token"]').attr('content');
+        let isCaptchaValid = false;
+    
+        // Captcha reload functionality
+        $('#reload').click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: 'GET',
+        url: '/reload-captcha',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        beforeSend: function() {
+            $('#reload').prop('disabled', true);
+        },
+        success: function(data) {
+            if (data.captcha) {
+                $(".captcha span").html(data.captcha);
+            } else {
+                console.error('Invalid CAPTCHA response');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('CAPTCHA reload failed:', error);
+            alert('Failed to reload CAPTCHA. Please try again.');
+        },
+        complete: function() {
+            $('#reload').prop('disabled', false);
+        }
+    });
+});
+
+
+     
+    function verifyCaptcha(callback) {
+    const captchaValue = $("input[name='captcha']").val();
+    const roomId = $("#room_id").val();
+
+    if (captchaValue) {
+        $.ajax({
+            url: `/checkout-store/${roomId}`,
+            type: 'POST',
+            data: {
+                _token: csrfToken,
+                captcha: captchaValue
+            },
+            beforeSend: function() {
+                $("input[name='captcha']").prop('disabled', true);
+            },
+            success: function(response) {
+
+                if (response.success) {
+                    isCaptchaValid = true;
+                    $("input[name='captcha']").addClass('valid').removeClass('error');
+                    $("input[name='captcha']").next('.error').remove();
+                } else {
+                    isCaptchaValid = false;
+                    $("input[name='captcha']").addClass('error').removeClass('valid');
+                    if (!$("input[name='captcha']").next('.error').length) {
+                        $('<span class="error">Invalid captcha</span>').insertAfter($("input[name='captcha']"));
                     }
-                },
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid').addClass('is-valid');
+                    $('#reload').click(); // Reload CAPTCHA on failure
+                    $("input[name='captcha']").val(''); // Clear input field
                 }
-            });
+                callback(isCaptchaValid);
+            },
+            error: function(xhr, status, error) {
+                isCaptchaValid = false;
+                console.error('Error verifying captcha:', error);
+                alert('Error verifying captcha. Please try again.');
+                callback(false);
+            },
+            complete: function() {
+                $("input[name='captcha']").prop('disabled', false);
+            }
         });
-    </script>
-@endpush
+    } else {
+        callback(false);
+    }
+}
+
+
+    $('#checkoutForm').submit(function(e) {
+    e.preventDefault(); // Prevent the form from submitting
+
+    verifyCaptcha(function(isCaptchaValid) {
+        if (isCaptchaValid) {
+            console.log("CAPTCHA is valid. Submitting form...");
+            e.target.submit(); // Submit the form if CAPTCHA is valid
+        } else {
+            alert('Invalid CAPTCHA. Please try again.');
+        }
+    });
+});
+
+
+   
+
+
+        // $("#checkoutForm").validate({
+        //     rules: {
+        //         first_name: {
+        //             required: true,
+        //             minlength: 2
+        //         },
+        //         last_name: {
+        //             required: true,
+        //             minlength: 2
+        //         },
+        //         phone: {
+        //             required: true,
+        //             digits: true,
+        //             minlength: 10,
+        //             maxlength: 15
+        //         },
+        //         email: {
+        //             required: true,
+        //             email: true
+        //         },
+        //         house_no: {
+        //             required: true
+        //         },
+        //         buling_name: {
+        //             required: true
+        //         },
+        //         city: {
+        //             required: true
+        //         },
+        //         state: {
+        //             required: true
+        //         },
+        //         country: {
+        //             required: true
+        //         },
+        //         pincode: {
+        //             required: true,
+        //             digits: true
+        //         },
+        //         cardholder_name: {
+        //             required: true,
+        //             minlength: 2
+        //         },
+        //         card_number: {
+        //             required: true,
+        //             creditcard: true
+        //         },
+        //         expiry_date: {
+        //             required: true,
+        //             pattern: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
+        //         },
+        //         // cvv: {
+        //         //     required: true,
+        //         //     digits: true,
+        //         //     minlength: 16
+        //         // },
+        //         // captcha: {
+        //         //     required: true
+        //         // }
+        //     },
+        //     messages: {
+        //         first_name: {
+        //             required: "Please enter your first name",
+        //             minlength: "Name must be at least 2 characters long"
+        //         },
+        //         last_name: {
+        //             required: "Please enter your last name",
+        //             minlength: "Name must be at least 2 characters long"
+        //         },
+        //         phone: {
+        //             required: "Please enter your phone number",
+        //             digits: "Please enter only digits",
+        //             minlength: "Phone number must be at least 10 digits",
+        //             maxlength: "Phone number must not exceed 15 digits"
+        //         },
+        //         email: {
+        //             required: "Please enter your email",
+        //             email: "Please enter a valid email address"
+        //         },
+        //         house_no: "Please enter your house number",
+        //         buling_name: "Please enter your building name",
+        //         city: "Please enter your city",
+        //         state: "Please enter your state",
+        //         country: "Please enter your country",
+        //         pincode: {
+        //             required: "Please enter your pincode",
+        //             digits: "Please enter only digits"
+        //         },
+        //         cardholder_name: {
+        //             required: "Please enter the cardholder's name",
+        //             minlength: "Name must be at least 2 characters long"
+        //         },
+        //         card_number: {
+        //             required: "Please enter your card number",
+        //             creditcard: "Please enter a valid credit card number"
+        //         },
+        //         expiry_date: {
+        //             required: "Please enter the expiry date",
+        //             pattern: "Please enter date in MM/YY format"
+        //         },
+        //         cvv: {
+        //             required: "Please enter the CVV",
+        //             digits: "Please enter only digits",
+        //             minlength: "CVV must be at least 3 digits",
+        //             maxlength: "CVV must be at most 4 digits"
+        //         },
+        //         captcha: "Please enter the captcha"
+        //     },
+        //     errorElement: 'span',
+        //     errorPlacement: function(error, element) {
+        //         error.addClass('error');
+        //         error.insertAfter(element);
+        //     },
+        //     highlight: function(element, errorClass, validClass) {
+        //         $(element).addClass('error').removeClass('valid');
+        //     },
+        //     unhighlight: function(element, errorClass, validClass) {
+        //         $(element).removeClass('error').addClass('valid');
+        //     },
+        //     submitHandler: function(form) {
+        //         if (isCaptchaValid) {
+        //             form.submit();
+        //         } else {
+        //             alert('Please enter the correct captcha');
+        //             $('#reload').click();
+        //             $("input[name='captcha']").val('');
+        //         }
+        //     }
+        // });
+
+        // // Custom method for expiry date validation
+        // $.validator.addMethod("pattern", function(value, element, regexp) {
+        //     return this.optional(element) || regexp.test(value);
+        // }, "Please check your input.");
+    });
+</script>
+
+
+
+
+@endsection
+
+
+
+
+
 

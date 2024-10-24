@@ -17,6 +17,7 @@ class Checkout extends Model
         'first_name',
         'last_name',
         'email',
+        'dob',
         'phone',
         'house_no',
         'buling_name',
@@ -29,6 +30,7 @@ class Checkout extends Model
         'expiry_date',
         'cvv',
         'total_price',
+        'captcha',
         'status',
     ];
 

@@ -48,4 +48,18 @@ class Booking extends Model
         return $this->belongsTo(Floor::class);
     }
 
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
+    }
+    public function roomimages()
+    {
+        return $this->belongsTo(RoomImages::class); // Assuming RoomImage is the related model
+    }
+
 }
