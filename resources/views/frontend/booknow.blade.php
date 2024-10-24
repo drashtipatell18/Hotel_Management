@@ -56,7 +56,7 @@
                             <h6>Price: ${{ $room->rent }}<br />
                             </h6>
                         </div>
-                        <form action="{{ route('booknow.store') }}" method="post">
+                        <form action="{{ route('booknow.store') }}" method="post" id="bookingForm">
                             @csrf
                             <div class="row g-3 mt-1">
                                 <div class="col-12">
@@ -224,6 +224,8 @@
     <!-- Similar Rool section Start -->
 
     <!-- card section start -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <section class="d_p-25 d_room">
         <div class="d_container">
@@ -511,27 +513,67 @@
         });
     </script>
 
-    <script>
-        $(function() {
-            // Function to get today's date and time in the format YYYY-MM-DDTHH:MM
-            function getCurrentDateTime() {
-                var today = new Date();
-                var yyyy = today.getFullYear();
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-                var dd = String(today.getDate()).padStart(2, '0');
-                var hh = String(today.getHours()).padStart(2, '0');
-                var min = String(today.getMinutes()).padStart(2, '0');
-                return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+<!-- ==========================  Date Validation ==================================== -->
+
+<script>
+    // Get current date and time in the correct format for datetime-local
+    function getCurrentDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        // Format: YYYY-MM-DDTHH:MM
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    // Set the min and value attributes to the current date and time
+    const currentDateTime = getCurrentDateTime();
+    document.getElementById('checkIn').setAttribute('min', currentDateTime);
+    document.getElementById('checkIn').setAttribute('value', currentDateTime);
+    document.getElementById('checkOut').setAttribute('min', currentDateTime);
+    document.getElementById('checkOut').setAttribute('value', currentDateTime);
+
+    // Add event listeners to validate check-in and check-out times
+    document.getElementById('checkIn').addEventListener('change', validateCheckInOut);
+    document.getElementById('checkOut').addEventListener('change', validateCheckInOut);
+
+    // Function to validate check-in and check-out times
+    function validateCheckInOut() {
+        const checkInTime = new Date(document.getElementById('checkIn').value);
+        const checkOutTime = new Date(document.getElementById('checkOut').value);
+
+        // Check if both times are selected
+        if (checkInTime && checkOutTime) {
+            // Calculate the difference in hours
+            const timeDiff = (checkOutTime - checkInTime) / (1000 * 60 * 60);
+
+            if (checkInTime >= checkOutTime) {
+                toastr.error('Check-out time must be after the check-in time.', 'Error');
+                document.getElementById('checkOut').value = ''; // Clear invalid check-out time
+            } else if (timeDiff < 2) {
+                toastr.error('Check-out time must be at least 2 hours after the check-in time.', 'Error');
+                document.getElementById('checkOut').value = ''; // Clear invalid check-out time
             }
+        }
+    }
 
-            $(".d_cal .ds").val(getCurrentDateTime());
+    // Prevent form submission if validation fails
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        const checkInTime = new Date(document.getElementById('checkIn').value);
+        const checkOutTime = new Date(document.getElementById('checkOut').value);
 
-            $(".d_cal .datepicker-trigger").on("click", function() {
-                var input = $(this).siblings(".ds");
-                input.datepicker("show");
-            });
-        });
-    </script>
+        // Calculate the difference in hours
+        const timeDiff = (checkOutTime - checkInTime) / (1000 * 60 * 60);
+
+        if (checkInTime && checkOutTime && (checkInTime >= checkOutTime || timeDiff < 2)) {
+            e.preventDefault(); // Stop form submission
+            toastr.error('Please select a valid check-out time that is at least 2 hours after the check-in time.', 'Error');
+        }
+    });
+</script>
 
 
 @endsection
