@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Spa;
 use App\Models\SpaCheckOut;
 use App\Models\SpaBookknow;
+use Illuminate\Support\Facades\Auth;
 class SpaBookController extends Controller
 {
     public function spabook()
@@ -19,7 +20,7 @@ class SpaBookController extends Controller
         $spas = Spa::find($id);
         return view('frontend.spabooknow', compact('spas'));
     }
-    public function spabooknowStore(Request $request)
+    public function spabooknowStore(Request $request,$id)
     {
         // dd($request->all());
         $request->validate([
@@ -31,6 +32,7 @@ class SpaBookController extends Controller
             'price' => 'required',
             'spa_id' => 'required',
         ]);
+        $spa = Spa::find($id);
         SpaBookknow::create([
             'checkin' => $request->input('checkin'),
             'time' => $request->input('time'),
@@ -40,13 +42,14 @@ class SpaBookController extends Controller
             'price' => $request->input('price'),
             'spa_id' => $request->input('spa_id'),
         ]);
-        return redirect()->route('spacheckout')->with('success', 'Booking confirmed successfully!');
+        return redirect()->route('spacheckout',$spa->id)->with('success', 'Booking confirmed successfully!');
     }
-    public function spacheckout()
+    public function spacheckout($id)
     {
-        return view('frontend.spacheckout');
+        $spa = Spa::find($id);
+        return view('frontend.spacheckout',compact('spa'));
     }
-    public function spacheckoutStore(Request $request)
+    public function spacheckoutStore(Request $request,$id)
     {
         $request->validate([
             'first_name' => 'required',
@@ -62,7 +65,11 @@ class SpaBookController extends Controller
 
         ]);
 
+        $spa = Spa::find($id);
+
         SpaCheckOut::create([
+            'user_id' => Auth::user()->id,
+            'spa_id' => $spa->id,
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'phone' => $request->input('phone'),

@@ -55,7 +55,7 @@
     <div class="d_container">
         <div class="row g-3">
             <div class="col-12 col-lg-4">
-                <form action="{{ route('spabooknowstore') }}" method="post">
+                <form action="{{ route('spabooknowstore',$spas->id) }}" method="post">
                     @csrf
                     <div class="d_item">
                         <div class="d-flex justify-content-between align-items-center">

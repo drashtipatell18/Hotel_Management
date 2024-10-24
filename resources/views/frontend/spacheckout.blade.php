@@ -30,7 +30,7 @@
         <div class="d_container">
             <div class="row g-4 d_formspace" >
                 <div class="col-12 col-lg-7 p-sm-4 mt-0">
-                    <form action="{{ route('spacheckout.store') }}" method="post" id="checkoutform">
+                    <form action="{{ route('spacheckout.store', $spa->id) }}" method="post" id="checkoutform">
                         @csrf
                         <div class="d_inquiry">
                             <div class="row mb-3">
