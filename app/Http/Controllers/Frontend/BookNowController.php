@@ -113,18 +113,23 @@ class BookNowController extends Controller
         if ($room->offer_id) {
             // Assuming the offer has a discount_value attribute
             $offer = OfferPackage::find($room->offer_id);
-
-            $discountValue = $offer ? $offer->discount_value : 0;
-
-            $discountedPrice = $room->rent - ($room->rent * ($discountValue / 100));
-            $book->discount = $offer->discount_value;
-            $discount = $discountValue;
+        
+            // Check if the offer exists
+            if ($offer) {
+                $discountValue = $offer->discount_value;
+                $discountedPrice = $room->rent - ($room->rent * ($discountValue / 100));
+                $book->discount = $discountValue; // Save the discount to the booking
+            } else {
+                // Handle the case where the offer does not exist
+                $discountValue = 0;
+                $discountedPrice = $room->rent; // No discount applied
+                $book->discount = $discountValue; // Save 0 discount
+            }
         } else {
             $discountValue = 0;
-            $discountedPrice = $room->rent;
-            $discount = $discountValue;
+            $discountedPrice = $room->rent; // No discount applied
+            $book->discount = $discountValue; // Save 0 discount
         }
-
         // Save total cost
 
 

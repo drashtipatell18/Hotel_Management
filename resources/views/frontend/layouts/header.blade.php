@@ -86,6 +86,20 @@
         color:red;
     }
 
+    .d_ribbon {
+    position: absolute;
+    top: 4px;
+    left: -59px;
+    background-color: #53624E;
+    color: white;
+    padding: 7px 49px;
+    transform: rotate(-45deg);
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 1;
+    /* margin-left: 1px; */
+}
+
 </style>
 <body>
     <!-- Page Preloder -->

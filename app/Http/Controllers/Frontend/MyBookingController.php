@@ -12,7 +12,11 @@ class MyBookingController extends Controller
         $checkouts = Checkout::where('user_id', auth()->user()->id)
         ->with(['room', 'booking', 'room.images']) // Ensure roomimages are included through the room relationship
         ->get();
-        // Check if the 'rooms_images' table has a 'checkout_id' column
+
+        if ($checkouts->isEmpty()) {
+            return redirect()->route('nobooking'); // Redirect to the no booking page
+        }
+    
         return view('frontend.my_booking', compact('checkouts'));
     }
     public function nobooking()

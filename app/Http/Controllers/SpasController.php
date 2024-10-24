@@ -67,39 +67,41 @@ class SpasController extends Controller
 
      public function spaUpdate(Request $request, $id)
      {
-        $spa = Spa::findOrFail($id);
-        if (!$spa) {
-            return redirect()->back()->with('error', 'Spa not found.');
-        }
-
-        // Update spa details
-        $spa->category = $request->category;
-        $spa->description = $request->description;
-        $spa->price = $request->input('price');
-
-        $imageNames = explode(',', $spa->image);
-
-        if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $image) {
-                // Generate a unique image name
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                // Move the image to the desired folder
-                $image->move(public_path('/assets/spa/'), $imageName);
-                // Add the new image name to the array
-                $imageNames[] = $imageName;
-            }
-        }
-
-        $spa->image = implode(',', array_unique($imageNames));
-        $spa->save();
-        // Save the updated spa
-        if ($spa->save()) {
-            return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
-        } else {
-            return redirect()->back()->with('error', 'Failed to update spa. Please try again.');
-        }
+         $spa = Spa::findOrFail($id);
+         if (!$spa) {
+             return redirect()->back()->with('error', 'Spa not found.');
+         }
+     
+         // Update spa details
+         $spa->category = $request->category;
+         $spa->description = $request->description;
+         $spa->price = $request->input('price');
+     
+         // Existing images (filter empty values)
+         $imageNames = array_filter(explode(',', $spa->image));
+     
+         if ($request->hasFile('image')) {
+             foreach ($request->file('image') as $image) {
+                 // Generate a unique image name
+                 $imageName = time() . '_' . $image->getClientOriginalName();
+                 // Move the image to the desired folder
+                 $image->move(public_path('/assets/spa/'), $imageName);
+                 // Add the new image name to the array
+                 $imageNames[] = $imageName;
+             }
+         }
+     
+         // Ensure no duplicate image names and filter empty values
+         $spa->image = implode(',', array_unique(array_filter($imageNames)));
+         
+         // Save the updated spa
+         if ($spa->save()) {
+             return redirect()->route('spa/list')->with('success', 'Spa updated successfully');
+         } else {
+             return redirect()->back()->with('error', 'Failed to update spa. Please try again.');
+         }
      }
-
+     
 
      public function spaDelete($id)
      {
@@ -110,31 +112,33 @@ class SpasController extends Controller
 
      public function deleteImage($id)
      {
-         // Find the OfferPackage
+         // Find the Spa
          $spa = Spa::findOrFail($id);
-         
+     
          // Split the images into an array
-         $image = explode(',', $spa->image); // Assuming 'images' is the field name
+         $images = array_filter(explode(',', $spa->image)); // Filter out any empty values
      
          // Check if there are images to delete
-         if (!empty($image)) {
+         if (!empty($images)) {
              // Get the first image name to delete
-             $imageName = array_shift($image); // Remove the first image from the array
-             
-             // Update the images field in the database
-             $spa->image = implode(',', $image);
+             $imageName = array_shift($images); // Remove the first image from the array
+     
+             // Update the images field in the database, filter empty values to avoid trailing commas
+             $spa->image = count($images) > 0 ? implode(',', array_filter($images)) : null;
              $spa->save();
-             
+     
              // Prepare the path for deletion
              $imagePath = public_path('assets/spa/' . $imageName);
              if (File::exists($imagePath)) {
                  File::delete($imagePath);
              }
-             
+     
              return response()->json(['success' => true, 'message' => 'Image deleted successfully.']);
          }
-         
+     
          return response()->json(['success' => false, 'message' => 'No images found to delete.']);
      }
+     
+
 
 }

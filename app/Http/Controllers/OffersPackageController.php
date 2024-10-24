@@ -89,7 +89,7 @@ class OffersPackageController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'is_active' => 'required',
         ]);
-
+    
         // Find the offer package by ID
         $offerPackage = OfferPackage::findOrFail($id);
         $offerPackage->hotel_id = $request->hotel_id;
@@ -101,10 +101,10 @@ class OffersPackageController extends Controller
         $offerPackage->start_date = $request->start_date;
         $offerPackage->end_date = $request->end_date;
         $offerPackage->is_active = $request->is_active === 'on' ? 1 : 0;
-
+    
         // Handle images
-        $imageNames = explode(',', $offerPackage->image);
-
+        $imageNames = !empty($offerPackage->image) ? explode(',', $offerPackage->image) : [];
+    
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
                 // Generate a unique image name
@@ -115,13 +115,13 @@ class OffersPackageController extends Controller
                 $imageNames[] = $imageName;
             }
         }
-
-        // Store unique image names
-        $offerPackage->image = implode(',', array_unique($imageNames));
-
+    
+        // Store unique, non-empty image names
+        $offerPackage->image = implode(',', array_filter(array_unique($imageNames)));
+    
         // Save the updated offer package
         $offerPackage->save();
-
+    
         return redirect()->route('offer/package/list')->with('success', 'Offer Package updated successfully');
     }
     
@@ -149,15 +149,15 @@ class OffersPackageController extends Controller
         $offerPackage = OfferPackage::findOrFail($id);
         
         // Split the images into an array
-        $image = explode(',', $offerPackage->image); // Assuming 'images' is the field name
-    
+        $images = explode(',', $offerPackage->image); // Assuming 'image' is the field name
+        
         // Check if there are images to delete
-        if (!empty($image)) {
+        if (!empty($images)) {
             // Get the first image name to delete
-            $imageName = array_shift($image); // Remove the first image from the array
+            $imageName = array_shift($images); // Remove the first image from the array
             
-            // Update the images field in the database
-            $offerPackage->image = implode(',', $image);
+            // Update the images field in the database, ensuring no trailing commas
+            $offerPackage->image = implode(',', array_filter($images)); // Remove empty values and implode
             $offerPackage->save();
             
             // Prepare the path for deletion
@@ -171,6 +171,7 @@ class OffersPackageController extends Controller
         
         return response()->json(['success' => false, 'message' => 'No images found to delete.']);
     }
+    
     
     
     public function offerPackageList()
