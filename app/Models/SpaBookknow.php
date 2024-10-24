@@ -11,7 +11,7 @@ class SpaBookknow extends Model
 {
     use HasFactory,SoftDeletes;
     protected $table = "spa_bookknows";
-    protected $fillable = ['spa_id', 'checkin', 'datetime', 'technician', 'person', 'price'];
+    protected $fillable = ['spa_id', 'time', 'checkin', 'technician', 'person', 'price', 'total_price'];
 
     public function spa()
     {

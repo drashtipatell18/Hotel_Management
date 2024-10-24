@@ -7,132 +7,151 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-        .over {
-            padding: 50px !important;
+    .over {
+        padding: 50px !important;
+    }
+    .bookButton {
+            padding: 10px 93px;
+            background-color: #fff;
+            color: #1A2142;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 600;
+            transition: .3s all ease-in-out;
         }
-    </style>
+</style>
 
-    <!-- Image section start -->
+<!-- Image section start -->
 
-    <div class="owl-carousel owl-theme" id="d_test2">
-        <div class="item">
-            <div class="d_img">
-                <img src="/img/d_img/spasilder1.png" alt="">
-            </div>
+<div class="owl-carousel owl-theme" id="d_test2">
+    <div class="item">
+        <div class="d_img">
+            <img src="/img/d_img/spasilder1.png" alt="">
         </div>
-        <div class="item">
-            <div class="d_img">
-                <img src="/img/d_img/spasilder1.png" alt="">
-            </div>
+    </div>
+    <div class="item">
+        <div class="d_img">
+            <img src="/img/d_img/spasilder1.png" alt="">
         </div>
-        <div class="item">
-            <div class="d_img">
-                <img src="/img/d_img/spasilder1.png" alt="">
-            </div>
+    </div>
+    <div class="item">
+        <div class="d_img">
+            <img src="/img/d_img/spasilder1.png" alt="">
         </div>
-        <div class="item">
-            <div class="d_img">
-                <img src="/img/d_img/spasilder1.png" alt="">
-            </div>
+    </div>
+    <div class="item">
+        <div class="d_img">
+            <img src="/img/d_img/spasilder1.png" alt="">
         </div>
-
     </div>
 
+</div>
 
-    <!-- Detail section start -->
 
-    <section class="d_p-25 d_detail d_spa">
-        <div class="d_container">
-            <div class="row g-3">
-                <div class="col-12 col-lg-4">
+<!-- Detail section start -->
+
+<section class="d_p-25 d_detail d_spa">
+    <div class="d_container">
+        <div class="row g-3">
+            <div class="col-12 col-lg-4">
+                <form action="{{ route('spabooknowstore') }}" method="post">
+                    @csrf
                     <div class="d_item">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5>Book</h5>
                             <h6>From ${{ $spas->price }}/person</h6>
                         </div>
                         <div class="row g-3 mt-1">
-                        <div class="col-12">
+                                <input type="hidden" name="price" value="{{ $spas->price }}">
+                                <div class="col-12">
                                     <div class="d_filed d-flex justify-content-between align-items-center">
                                         <div class="d_formsubtitle">Check in</div>
                                         <div class="d-flex align-items-center d_cal">
-                                            <input type="datetime-local" class="ds" id="checkIn"
-                                                name="check_in_datetime"
-                                                style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                            <input type="date" class="ds" name="checkin" style="width: 113px;">
+                                            <i class="fa-solid fa-angle-down ms-sm-1 datepicker-trigger"
+                                                style="color: #ffffff;"></i>
                                         </div>
                                     </div>
 
                                 </div>
-                            <div class="col-12">
-                                <div
-                                    class="d_filed d_select d-flex justify-content-between align-items-center position-relative">
-                                    <div class="d_formsubtitle">Time</div>
-                                    <div class="custom-select-wrapper">
-                                        <div class="custom-select">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="custom-select-trigger">
-                                                    <span class="d_time">09:00 am - 10:40 am</span>
-                                                    <!-- <span class="d_price">$120</span> -->
+                                <div class="col-12">
+                                    <div
+                                        class="d_filed d_select d-flex justify-content-between align-items-center position-relative">
+                                        <div class="d_formsubtitle">Time</div>
+                                        <div class="custom-select-wrapper">
+                                            <div class="custom-select">
+                                                <!-- Added name="time" here -->
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="custom-select-trigger">
+                                                        <span class="d_time">09:00 am - 10:40 am</span>
+                                                        <!-- <span class="d_price">$120</span> -->
+                                                    </div>
+                                                    <i class="fa-solid fa-angle-down"></i>
                                                 </div>
-                                                <i class="fa-solid fa-angle-down"></i>
+                                                <div class="custom-options py-3">
+                                                    <div class="custom-option d-flex justify-content-between align-items-center"
+                                                        data-time="09:00 am - 10:40 am" data-price="{{ $spas->price }}">
+                                                        <div class="d_time">09:00 am - 10:40 am</div>
+                                                        <div class="d_price">${{ $spas->price }}</div>
+                                                    </div>
+                                                    <div class="custom-option d-flex justify-content-between align-items-center"
+                                                        data-time="10:00 am - 11:40 am" data-price="{{ $spas->price }}">
+                                                        <div class="d_time">10:00 am - 11:40 am</div>
+                                                        <div class="d_price">${{ $spas->price }}</div>
+                                                    </div>
+                                                    <div class="custom-option d-flex justify-content-between align-items-center"
+                                                        data-time="11:00 am - 12:40 pm" data-price="{{ $spas->price }}">
+                                                        <div class="d_time">11:00 am - 12:40 pm</div>
+                                                        <div class="d_price">${{ $spas->price }}</div>
+                                                    </div>
+                                                    <div class="custom-option d-flex justify-content-between align-items-center"
+                                                        data-time="12:00 pm - 01:40 pm" data-price="{{ $spas->price }}">
+                                                        <div class="d_time">12:00 pm - 01:40 pm</div>
+                                                        <div class="d_price">${{ $spas->price }}</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="custom-options py-3">
-                                                <div class="custom-option d-flex justify-content-between align-items-center"
-                                                    data-time="09:00 am - 10:40 am" data-price="120">
-                                                    <div class="d_time">09:00 am - 10:40 am</div>
-                                                    <div class="d_price">${{ $spas->price }}</div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="spa_id" value="{{ $spas->id }}">
+                                    <input type="hidden" name="time" id="time_input">
+                                </div>
+                                <div class="col-12">
+                                    <div
+                                        class="d_filed d_select1 d-flex justify-content-between align-items-center position-relative">
+                                        <div class="d_formsubtitle">Technician</div>
+                                        <div class="custom-select-wrapper ">
+                                            <div class="custom-select1">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="custom-select-trigger1">Any Technician</div>
+                                                    <i class="fa-solid fa-angle-down"></i>
                                                 </div>
-                                                <div class="custom-option d-flex justify-content-between align-items-center"
-                                                    data-time="10:00 am - 11:40 am" data-price="140">
-                                                    <div class="d_time">10:00 am - 11:40 am</div>
-                                                    <div class="d_price">${{ $spas->price }}</div>
-                                                </div>
-                                                <div class="custom-option d-flex justify-content-between align-items-center"
-                                                    data-time="11:00 am - 12:40 pm" data-price="150">
-                                                    <div class="d_time">11:00 am - 12:40 pm</div>
-                                                    <div class="d_price">${{ $spas->price }}</div>
-                                                </div>
-                                                <div class="custom-option d-flex justify-content-between align-items-center"
-                                                    data-time="12:00 pm - 01:40 pm" data-price="150">
-                                                    <div class="d_time">12:00 pm - 01:40 pm</div>
-                                                    <div class="d_price">${{ $spas->price }}</div>
+                                                <div class="custom-options1 py-3">
+                                                    <div class="custom-option1" data-value="Any Technician">Any Technician
+                                                    </div>
+                                                    <div class="custom-option1" data-value="Female">Female</div>
+                                                    <div class="custom-option1" data-value="Male">Male</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div
-                                    class="d_filed d_select1 d-flex justify-content-between align-items-center position-relative">
-                                    <div class="d_formsubtitle">Technician</div>
-                                    <div class="custom-select-wrapper ">
-                                        <div class="custom-select1">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="custom-select-trigger1">Any Technician</div>
-                                                <i class="fa-solid fa-angle-down"></i>
-                                            </div>
-                                            <div class="custom-options1 py-3">
-                                                <div class="custom-option1" data-value="Any Technician">Any Technician
-                                                </div>
-                                                <div class="custom-option1" data-value="Female">Female</div>
-                                                <div class="custom-option1" data-value="Male">Male</div>
-                                            </div>
+                                <input type="hidden" name="technician" id="technician_input">
+                                <div class="col-12">
+                                    <div class="d_filed d-flex justify-content-between align-items-center">
+                                        <div class="d_formsubtitle">Person</div>
+                                        <div class="d-flex d_btn">
+                                            <button type="button" class="btn-decrement" data-target="room"><i
+                                                    class="fa-solid fa-minus"></i></button>
+                                            <span id="room-count" class="mx-2">1</span>
+                                            <button type="button" class="btn-increment" data-target="room"><i
+                                                    class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="person" id="person_count_input" value="1">
+                                    <input type="hidden" name="total_price" id="total_cost_input" value="0">
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="d_filed d-flex justify-content-between align-items-center">
-                                    <div class="d_formsubtitle">Person</div>
-                                    <div class="d-flex d_btn">
-                                        <button class="btn-decrement" data-target="room"><i
-                                                class="fa-solid fa-minus"></i></button>
-                                        <span id="room-count" class="mx-2">1</span>
-                                        <button class="btn-increment" data-target="room"><i
-                                                class="fa-solid fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <hr class="m-0 p-0">
@@ -147,41 +166,42 @@
                                 </div>
                             </div>
                             <div class="d_cta mt-3 text-center">
-                                <a href="{{ route('spacheckout') }}" class="d-block d-sm-inline-block text-center">Book Treatment</a>
+                                <button type="submit" class="d-block d-sm-inline-block text-center bookButton">Book
+                                    Treatment</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-lg-8 ps-lg-5">
-                    <div class="d_right">
-                        <div class="d-sm-flex d-inline-block justify-content-between align-items-center mb-3">
-                            <h2 class=" d_spatext">Custom Massage (100 min)</h2>
-                            <h2 class="d_spatext">Starting from $120</h2>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                            ridiculus mus. </p>
-                        <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-                            quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                            justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
-                            pretium. Integer tincidunt. </p>
-                        <div class="d_suite mt-xl-3 mt-3">
-                            <h5>Remarks</h5>
-                            <div class="mt-3">
-                                <ul class="px-4">
-                                    <li>*Price increases on weekends & holidays</li>
-                                </ul>
-                            </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-8 ps-lg-5">
+                <div class="d_right">
+                    <div class="d-sm-flex d-inline-block justify-content-between align-items-center mb-3">
+                        <h2 class=" d_spatext">Custom Massage (100 min)</h2>
+                        <h2 class="d_spatext">Starting from $120</h2>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+                        ridiculus mus. </p>
+                    <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
+                        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
+                        justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
+                        pretium. Integer tincidunt. </p>
+                    <div class="d_suite mt-xl-3 mt-3">
+                        <h5>Remarks</h5>
+                        <div class="mt-3">
+                            <ul class="px-4">
+                                <li>*Price increases on weekends & holidays</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
+        </div>
+</section>
 
-    <!-- Detail section end -->
-    <script>
-
-        // select functionality
+<!-- Detail section end -->
+<script>
+    // select functionality
 
         document.addEventListener('DOMContentLoaded', function () {
             var customSelects = document.querySelectorAll('.custom-select');
@@ -204,6 +224,8 @@
                         selectTrigger.textContent = this.textContent;
                         customSelect.classList.remove('open');
                         event.stopPropagation(); // Prevent click event from bubbling up
+                        document.getElementById('technician_input').value = this.getAttribute('data-value'); // Set the value of technician_input
+
                     });
                 });
             });
@@ -217,11 +239,10 @@
                 });
             });
         });
-    </script>
+</script>
 
-    <script>
-
-        // select functionality
+<script>
+    // select functionality
 
         document.addEventListener('DOMContentLoaded', function () {
             var customSelects = document.querySelectorAll('.custom-select1');
@@ -244,6 +265,7 @@
                         selectTrigger.textContent = this.textContent;
                         customSelect.classList.remove('open1');
                         event.stopPropagation(); // Prevent click event from bubbling up
+                        document.getElementById('technician_input').value = this.getAttribute('data-value'); // Set the value of technician_input
                     });
                 });
             });
@@ -258,19 +280,21 @@
             });
         });
 
-    </script>
+</script>
 
 
-     <!-- // total price functionality -->
+<!-- // total price functionality -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
             const timeSelect = document.querySelector('.d_select .custom-select');
             const timeOptions = document.querySelectorAll('.d_select .custom-option');
             const personCount = document.getElementById('room-count');
+            const personCountInput = document.getElementById('person_count_input');
             const decrementBtn = document.querySelector('.btn-decrement');
             const incrementBtn = document.querySelector('.btn-increment');
             const totalCostElement = document.getElementById('total-cost');
+            const totalCostInput = document.getElementById('total_cost_input');
             const customSelectTrigger = document.querySelector('.custom-select-trigger');
 
             let selectedPrice = 0; // Default price
@@ -291,7 +315,7 @@
                         <span class="d_time">${selectedTime}</span>
                         <span class="d_price">$${selectedPrice}</span>
                     `;
-
+                    document.getElementById('time_input').value = selectedTime; // Set the value of time_input
                     updateTotalCost();
                 });
             });
@@ -311,6 +335,7 @@
 
             function updatePersonCount() {
                 personCount.textContent = persons;
+                personCountInput.value = persons;
                 updateTotalCost();
             }
 
@@ -318,6 +343,7 @@
             function updateTotalCost() {
                 const total = selectedPrice * persons;
                 totalCostElement.textContent = `$${total}`;
+                totalCostInput.value = total; // Update the hidden input value
             }
 
             // Initial total cost calculation
@@ -329,13 +355,37 @@
                     timeSelect.querySelector('.custom-options').classList.remove('open');
                 }
             });
+
+            addCounterListeners(
+                document.querySelector('.btn-increment[data-target="room"]'),
+                document.querySelector('.btn-decrement[data-target="room"]'),
+                roomCount, 1
+            );
+
+            // Handle increment button click
+            document.querySelector('.btn-increment[data-target="room"]').addEventListener('click', function() {
+                roomCount++; // Increment the count
+                roomCountElement.textContent = roomCount; // Update the displayed count
+                roomCountInput.value = roomCount; // Update the hidden input value
+                updateTotalCost(); // Update the total cost
+            });
+
+            // Handle decrement button click
+            document.querySelector('.btn-decrement[data-target="room"]').addEventListener('click', function() {
+                if (roomCount > 1) { // Ensure count doesn't go below 1
+                    roomCount--; // Decrement the count
+                    roomCountElement.textContent = roomCount; // Update the displayed count
+                    roomCountInput.value = roomCount; // Update the hidden input value
+                    updateTotalCost(); // Update the total cost
+                }
+            });
         });
-    </script>
+</script>
 
-    <!-- select 1  -->
+<!-- select 1  -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
             const customSelect = document.querySelector('.custom-select');
             const customSelectTrigger = document.querySelector('.custom-select-trigger');
             const customOptions = document.querySelectorAll('.custom-option');
@@ -368,8 +418,6 @@
                 }
             });
         });
-    </script>
-    
+</script>
+
 @endsection
-
-

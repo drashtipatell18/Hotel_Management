@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Spa;
 use App\Models\SpaCheckOut;
+use App\Models\SpaBookknow;
 class SpaBookController extends Controller
 {
     public function spabook()
@@ -17,6 +18,29 @@ class SpaBookController extends Controller
     {
         $spas = Spa::find($id);
         return view('frontend.spabooknow', compact('spas'));
+    }
+    public function spabooknowStore(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'checkin' => 'required',
+            'time' => 'required',
+            'technician' => 'required',
+            'person' => 'required',
+            'total_price' => 'required',
+            'price' => 'required',
+            'spa_id' => 'required',
+        ]);
+        SpaBookknow::create([
+            'checkin' => $request->input('checkin'),
+            'time' => $request->input('time'),
+            'technician' => $request->input('technician'),
+            'person' => $request->input('person'),
+            'total_price' => $request->input('total_price'),
+            'price' => $request->input('price'),
+            'spa_id' => $request->input('spa_id'),
+        ]);
+        return redirect()->route('spacheckout')->with('success', 'Booking confirmed successfully!');
     }
     public function spacheckout()
     {

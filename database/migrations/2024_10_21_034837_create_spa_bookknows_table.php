@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('technician');
             $table->string('person');
             $table->string('price');
+            $table->string('total_price');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('spa_id')->references('id')->on('spas')->onDelete('cascade'); // Add foreign key constraint
