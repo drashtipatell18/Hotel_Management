@@ -2,6 +2,7 @@
 @section('title', 'Spa')
 @section('main-container')
 
+
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadCram2.png') }}">
     <div class="container">
@@ -71,9 +72,8 @@
                                     <a href="#" class="Custom_btn">Book Treatment</a>
                                 </div>
                                 <div class="image_onsection bg-light py-3">
-                                    <h4 class="text-center pb-2">{{ $spa->name }}</h4>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <h4 class="text-center pb-2">{{$spa->category}}<br/>
+                                        <h4 class="text-center pb-2">{{$spa->name}}<br/>
                                             ${{$spa->price}}</h4>
                                     </div>
                                 </div>
@@ -139,46 +139,22 @@
         </div>
     </div>
     <div class="experince_slider owl-carousel">
-        <div class="gallery__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/spasec2_1.png') }}" alt="Bricks">
-                <div class="image__overlay2 image__overlay2--primary">
-                    <h4 class="text-light">Roman Baths</h4>
-                    <p class="image__description2">
-                        Lorem ipsum dolor sit amet, consectetur
-                        laboris nisi ut aliquip ex
-                    </p>
+        @foreach($RoomBaths as $spa) <!-- Assuming $spas is your collection of spa records -->
+            <div class="gallery__item">
+                <div class="Slider_image">
+                    @php
+                        // Split the images by comma and get the last one
+                        $images = explode(',', $spa->image);
+                        $lastImage = end($images); // Get the last image
+                    @endphp
+                    <img class="image__img" src="{{ url('assets/spa/' . trim($lastImage)) }}" alt="{{ $spa->name }}">
+                    <div class="image__overlay2 image__overlay2--primary">
+                        <h4 class="text-light">{{ $spa->name }}</h4>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="gallery__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/spasec2_2.png') }}" alt="Bricks">
-                <div class="image__overlay2 image__overlay2--primary">
-                    <h4 class="text-light">Roman Baths</h4>
-                    <p class="image__description2">
-                        Lorem ipsum dolor sit amet, consectetur
-                        laboris nisi ut aliquip ex
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="gallery__item">
-            <div class="Slider_image">
-                <img class="image__img" src="{{ url('frontend/img/spasec2_2.png') }}" alt="Bricks">
-                <div class="image__overlay2 image__overlay2--primary">
-                    <h4 class="text-light">Roman Baths</h4>
-                    <p class="image__description2">
-                        Lorem ipsum dolor sit amet, consectetur
-                        laboris nisi ut aliquip ex
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Repeat other items as needed -->
+        @endforeach
     </div>
-
 </section>
 <!-- Experience Section End -->
 

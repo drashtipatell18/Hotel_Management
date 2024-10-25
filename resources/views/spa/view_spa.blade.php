@@ -23,6 +23,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Name</th>
                                             <th>Category</th>
                                             <th>Description</th>
                                             <th>Price</th>
@@ -34,6 +35,7 @@
                                         @foreach ($spas as $spa)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{$spa->name}}</td>
                                                 <td>{{ $spa->category }}</td>
                                                 <td>{{ $spa->description }}</td>
                                                 <td>{{ $spa->price }}</td>

@@ -101,6 +101,18 @@
     /* margin-left: 1px; */
 }
 
+/* Sticky Header Styles */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
 </style>
 <body>
     <!-- Page Preloder -->
@@ -653,5 +665,18 @@
             bsDropdown.hide(); // Hide the dropdown if it's open
         }
     }
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.header');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
 });
 </script>

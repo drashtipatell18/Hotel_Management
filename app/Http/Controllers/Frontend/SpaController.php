@@ -11,6 +11,7 @@ class SpaController extends Controller
     public function spa()
     {
         $spas = Spa::take(3)->get();
-        return view('frontend.spa', compact('spas'));
+        $RoomBaths = Spa::all();
+        return view('frontend.spa', compact('spas','RoomBaths'));
     }
 }

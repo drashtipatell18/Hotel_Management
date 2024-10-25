@@ -29,7 +29,7 @@
             <div class="image-gallery" id="imageGallery">
                 <div class="row g-3 px-sm-2 p-0 ">
                     @foreach ($spas as $spa)
-                        <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" data-category="{{ $spa->category }}">
+                        <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" style="padding-bottom: 75px;" data-category="{{ $spa->category }}">
                             <div class="order__item h-100">
                                 <div class="Slider_image m-0 h-100">
                                     @php
@@ -43,9 +43,9 @@
                                             <a href="{{ route('spabookKnow', $spa->id) }}" class="Custom_btn">Book Now</a>
                                         </div>
                                         <div class="image_onsection d_boxsec bg-light py-3">
-                                            <h4 class="text-center pb-2">{{ $spa->category }}</h4>
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <p class="mb-0">${{ $spa->price }}</p>
+                                                <h4 class="text-center pb-2">{{$spa->name}}<br/>
+                                                    ${{$spa->price}}</h4>
                                             </div>
                                         </div>
                                     </div>

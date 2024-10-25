@@ -22,6 +22,14 @@
                             @method('POST')
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ $spa->name }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="category">Category</label>
                                     <input type="text" class="form-control" id="category" name="category"
                                         value="{{ $spa->category }}">

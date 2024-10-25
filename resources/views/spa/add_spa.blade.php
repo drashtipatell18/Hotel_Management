@@ -18,6 +18,17 @@
                         <div class="card-body booking_card">
                             <form action="{{ route('spa/store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name">
+                                        @error('name')
+                                            <div class="error text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="category">Category</label>
@@ -28,10 +39,10 @@
                                 </div>
                                 </div>
                                 <div class="col-md-12">
-                                <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <input type="text" class="form-control" id="description" name="description">
-                                    </div>
+                                    <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input type="text" class="form-control" id="description" name="description">
+                                        </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">

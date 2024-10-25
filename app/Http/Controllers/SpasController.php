@@ -24,6 +24,7 @@ class SpasController extends Controller
      {
         // Uncommenting validation to ensure required fields are checked
         $request->validate([
+            'name' => 'required',
             'category' => 'required',
             'description' => 'required',
             'image' => 'required|array', // Ensure 'image' is an array
@@ -32,6 +33,7 @@ class SpasController extends Controller
         ]);
 
         $spa = new Spa;
+        $spa->name = $request->name;
         $spa->category = $request->category;
         $spa->description = $request->description;
         $spa->price = $request->price;
@@ -73,6 +75,7 @@ class SpasController extends Controller
          }
      
          // Update spa details
+         $spa->name = $request->name;
          $spa->category = $request->category;
          $spa->description = $request->description;
          $spa->price = $request->input('price');
