@@ -56,63 +56,35 @@
         </div>
         <div class="d_container pb-5">
             <div class="row">
-                <div class="col-lg-4 p-0">
-                    <div class="order__item">
-                        <div class="Slider_image">
-                            <img class="image__img" src="{{ url('frontend/img/spa1.png') }}" alt>
-                            <div class="image__overlay3 image__overlay3--primary">
-                                <a href="#" class="Custom_btn">Book Treatment</a>
-                            </div>
-                            <div class="image_onsection bg-light py-3">
-                                <h4 class="text-center pb-2">Massages</h4>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                    <p class="text-dark text-center mb-0">Looking to relieve chronic tension, lower
-                                        stress, manage pain, improve circulation, or... </p>
+                @foreach($spas as $spa)
+                    <div class="col-lg-4 p-0">
+                        <div class="order__item">
+                            <div class="Slider_image">
+                                @php
+                                    // Split the images by comma and get the first one
+                                    $images = explode(',', $spa->image);
+                                    $firstImage = trim($images[0]);
+                                @endphp
+                                <img class="image__img" src="{{ url('assets/spa/' . $firstImage) }}" alt="{{ $spa->name }}">
+                                
+                                <div class="image__overlay3 image__overlay3--primary">
+                                    <a href="#" class="Custom_btn">Book Treatment</a>
+                                </div>
+                                <div class="image_onsection bg-light py-3">
+                                    <h4 class="text-center pb-2">{{ $spa->name }}</h4>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <h4 class="text-center pb-2">{{$spa->category}}<br/>
+                                            ${{$spa->price}}</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <div class="order__item">
-                        <div class="Slider_image">
-                            <img class="image__img" src="{{ url('frontend/img/spa2.png') }}" alt>
-                            <div class="image__overlay3 image__overlay3--primary">
-                                <a href="#" class="Custom_btn">Book Treatment</a>
-                            </div>
-                            <div class="image_onsection bg-light py-3">
-                                <h4 class="text-center pb-2">Couples Massages</h4>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                    <p class="text-dark text-center mb-0">Looking to relieve chronic tension, lower
-                                        stress, manage pain, improve circulation, or... </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 p-0">
-                    <div class="order__item">
-                        <div class="Slider_image">
-                            <img class="image__img" src="{{ url('frontend/img/spa3.png') }}" alt>
-                            <div class="image__overlay3 image__overlay3--primary">
-                                <a href="#" class="Custom_btn">Book Treatment</a>
-                            </div>
-                            <div class="image_onsection bg-light py-3">
-                                <h4 class="text-center pb-2">Facials</h4>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <!-- <i class="fa-solid fa-tag px-2"></i> -->
-                                    <p class="text-dark text-center mb-0">Looking to relieve chronic tension, lower
-                                        stress, manage pain, improve circulation, or... </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-    </div>
+            
+
 
 
 </section>
