@@ -19,6 +19,7 @@ class CheckoutController extends Controller
     }
     public function chckoutStore(Request $request,$id)
     {
+        // dd($request->all());
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -34,7 +35,8 @@ class CheckoutController extends Controller
             'cardholder_name' => 'required',
             'card_number' => 'required',
             'expiry_date' => 'required',
-            'cvv' => 'required'
+            'cvv' => 'required',
+            'captcha' => 'required|captcha'
         ]);
         $booking = Booking::find($id);
         $checkout = Checkout::create([

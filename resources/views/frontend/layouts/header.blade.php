@@ -7,6 +7,7 @@
     <meta name="keywords" content="Hiroto, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Hotel Management</title>
 
     <!-- Css Styles -->
@@ -88,8 +89,8 @@
 
     .d_ribbon {
     position: absolute;
-    top: 4px;
-    left: -59px;
+    top: 39px;
+    left: -29px;
     background-color: #53624E;
     color: white;
     padding: 7px 49px;

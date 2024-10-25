@@ -18,6 +18,9 @@
             font-weight: 600;
             transition: .3s all ease-in-out;
         }
+        .d_room .d_night .d_price{
+            margin-left:37pc;
+        }
     </style>
 
     <section class="d_booknow">
@@ -252,7 +255,7 @@
                             </div>
                             <div class="d_night">
                                 <div class="d_price">
-                                    <h6>${{ $similarRoom->rent }}/ Night</h6>
+                                    <h6>${{ $similarRoom->rent }}</h6>
                                 </div>
                             </div>
                             <div class="d_content">

@@ -85,23 +85,23 @@
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <label for="dob">House No</label>
-                            <input type="text" placeholder="House No. / Block No. / Flat No.*" name="house_no" id="">
+                            <input type="text" placeholder="House No. / Block No. / Flat No.*" name="house_no" id="" value="{{ old('house_no')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Building Name / Street Name / Colony</label>
-                            <input type="text" placeholder="Building Name / Street Name / Colony*" name="buling_name" id="">
+                            <input type="text" placeholder="Building Name / Street Name / Colony*" name="buling_name" id="" value="{{ old('buling_name')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">City</label>
-                            <input type="text" placeholder="City*" name="city" id="">
+                            <input type="text" placeholder="City*" name="city" id="" value="{{ old('city')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">State</label>
-                            <input type="text" placeholder="State*" name="state" id="">
+                            <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Country</label>
-                            <input type="text" placeholder="Country*" name="country" id="">
+                            <input type="text" placeholder="Country*" name="country" id="" value="{{ old('country')}}">
                         </div>
                     </div>
                 </div>
@@ -177,29 +177,32 @@
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <label for="dob">Card Holder Name</label>
-                            <input type="text" placeholder="Card Holder Name*" name="cardholder_name" id="">
+                            <input type="text" placeholder="Card Holder Name*" name="cardholder_name" id=""  value="{{ old('cardholder_name')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Card Number</label>
-                            <input type="text" placeholder="Card Number*" name="card_number" id="">
+                            <input type="text" placeholder="Card Number*" name="card_number" id="" value="{{ old('card_number')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Expiry Date MM/YYr</label>
-                            <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id="">
+                            <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id="" value="{{ old('expiry_date')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">CVV</label>
-                            <input type="text" placeholder="CVV*" name="cvv" id="">
+                            <input type="text" placeholder="CVV*" name="cvv" id="" value="{{ old('CVV')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Enter Captcha</label>
                             <input type="text" placeholder="Enter Captcha*" name="captcha" id="captcha">
+                            @if($errors->has('captcha'))
+                                <div class="error">{{ $errors->first('captcha') }}</div>
+                            @endif
                         </div>
                         <div class="col-6 col-xl-4">
                             <div class="d-flex align-items-center">
                                 <!-- <input type="text" placeholder="Country*" name="" id=""> -->
                                  <div class="captcha">
-                                    <span>{!! captcha_img('math') !!}</span>
+                                 <span>{!! captcha_img()!!}</span>
                                     <button type="button" class="btn btn-danger reload" id="reload">
                                         &#x21bb;</button>
                                  </div>
@@ -243,13 +246,13 @@
                         <div class="row g-3">
                             <div class="col-12 col-xl-5">
                                 <div class="d_img">
+                                <div class="d_img">
                                     @if($booking->room->images->isNotEmpty())
-                                        @foreach($booking->room->images as $image)
-                                            <img src="{{ asset('assets/upload/' . $image->image) }}" alt="{{ $booking->room->name }}" class="img-fluid">
-                                        @endforeach
+                                        <img src="{{ asset('assets/upload/' . $booking->room->images->first()->image) }}" alt="{{ $booking->room->name }}" class="img-fluid">
                                     @else
                                         <img src="{{ asset('assets/upload/default.jpg') }}" alt="Default Image" class="img-fluid">
                                     @endif
+                                </div>
                                 </div>
                             </div>
                             <div class="col-12 col-xl-7">
@@ -315,238 +318,190 @@
 $(document).ready(function() {
         const csrfToken = $('meta[name="csrf-token"]').attr('content');
         let isCaptchaValid = false;
-    
-        // Captcha reload functionality
-        $('#reload').click(function(e) {
-    e.preventDefault();
-    $.ajax({
-        type: 'GET',
-        url: '/reload-captcha',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        },
-        beforeSend: function() {
-            $('#reload').prop('disabled', true);
-        },
-        success: function(data) {
-            if (data.captcha) {
-                $(".captcha span").html(data.captcha);
-            } else {
-                console.error('Invalid CAPTCHA response');
+        $("#checkoutForm").validate({
+        rules: {
+            first_name: {
+                required: true,
+                minlength: 2
+            },
+            last_name: {
+                required: true,
+                minlength: 2
+            },
+            phone: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 15
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            house_no: {
+                required: true
+            },
+            buling_name: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+            state: {
+                required: true
+            },
+            country: {
+                required: true
+            },
+            pincode: {
+                required: true,
+                digits: true
+            },
+            cardholder_name: {
+                required: true,
+                minlength: 2
+            },
+            card_number: {
+                required: true,
+                creditcard: true
+            },
+            expiry_date: {
+                required: true,
+                pattern: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
+            },
+            cvv: {
+                required: true,
+                digits: true,
+                minlength: 3
+            },
+            captcha: {
+                required: true
             }
         },
-        error: function(xhr, status, error) {
-            console.error('CAPTCHA reload failed:', error);
-            alert('Failed to reload CAPTCHA. Please try again.');
+        messages: {
+            first_name: {
+                required: "Please enter your first name",
+                minlength: "Name must be at least 2 characters long"
+            },
+            last_name: {
+                required: "Please enter your last name",
+                minlength: "Name must be at least 2 characters long"
+            },
+            phone: {
+                required: "Please enter your phone number",
+                digits: "Please enter only digits",
+                minlength: "Phone number must be at least 10 digits",
+                maxlength: "Phone number must not exceed 15 digits"
+            },
+            email: {
+                required: "Please enter your email",
+                email: "Please enter a valid email address"
+            },
+            house_no: "Please enter your house number",
+            buling_name: "Please enter your building name",
+            city: "Please enter your city",
+            state: "Please enter your state",
+            country: "Please enter your country",
+            pincode: {
+                required: "Please enter your pincode",
+                digits: "Please enter only digits"
+            },
+            cardholder_name: {
+                required: "Please enter the cardholder's name",
+                minlength: "Name must be at least 2 characters long"
+            },
+            card_number: {
+                required: "Please enter your card number",
+                creditcard: "Please enter a valid credit card number"
+            },
+            expiry_date: {
+                required: "Please enter the expiry date",
+                pattern: "Please enter date in MM/YY format"
+            },
+            cvv: {
+                required: "Please enter the CVV",
+                digits: "Please enter only digits",
+                minlength: "CVV must be at least 3 digits",
+                maxlength: "CVV must be at most 4 digits"
+            },
+            captcha: "Please enter the captcha"
         },
-        complete: function() {
-            $('#reload').prop('disabled', false);
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('error');
+            error.insertAfter(element);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('error').removeClass('valid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('error').addClass('valid');
+        },
+        submitHandler: function(form) {
+            // Check if the CAPTCHA is valid
+            $.ajax({
+                type: 'POST',
+                url: '/validate-captcha',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    captcha: $("input[name='captcha']").val()
+                },
+                success: function(response) {
+                    if (response.valid) {
+                        // CAPTCHA is valid, submit the form
+                        form.submit();
+                    } else {
+                        // CAPTCHA is invalid, show an error message
+                        alert('Invalid CAPTCHA, please try again.');
+                        // $('#reload').click();
+                        $("input[name='captcha']").val('');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('CAPTCHA validation failed:', error);
+                    alert('Failed to validate CAPTCHA. Please try again.');
+                }
+            });
         }
     });
-});
+        
 
+    // Custom method for expiry date validation
+    $.validator.addMethod("pattern", function(value, element, regexp) {
+        return this.optional(element) || regexp.test(value);
+    }, "Please check your input.");
 
-     
-    function verifyCaptcha(callback) {
-    const captchaValue = $("input[name='captcha']").val();
-    const roomId = $("#room_id").val();
-
-    if (captchaValue) {
+    $('#reload').click(function(e) {
+        e.preventDefault();
         $.ajax({
-            url: `/checkout-store/${roomId}`,
-            type: 'POST',
-            data: {
-                _token: csrfToken,
-                captcha: captchaValue
+            type: 'GET',
+            url: '/reload-captcha',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
             },
             beforeSend: function() {
-                $("input[name='captcha']").prop('disabled', true);
+                $('#reload').prop('disabled', true);
             },
-            success: function(response) {
-
-                if (response.success) {
-                    isCaptchaValid = true;
-                    $("input[name='captcha']").addClass('valid').removeClass('error');
-                    $("input[name='captcha']").next('.error').remove();
+            success: function(data) {
+                if (data.captcha) {
+                    $(".captcha span").html(data.captcha);
                 } else {
-                    isCaptchaValid = false;
-                    $("input[name='captcha']").addClass('error').removeClass('valid');
-                    if (!$("input[name='captcha']").next('.error').length) {
-                        $('<span class="error">Invalid captcha</span>').insertAfter($("input[name='captcha']"));
-                    }
-                    $('#reload').click(); // Reload CAPTCHA on failure
-                    $("input[name='captcha']").val(''); // Clear input field
+                    console.error('Invalid CAPTCHA response');
                 }
-                callback(isCaptchaValid);
             },
             error: function(xhr, status, error) {
-                isCaptchaValid = false;
-                console.error('Error verifying captcha:', error);
-                alert('Error verifying captcha. Please try again.');
-                callback(false);
+                console.error('CAPTCHA reload failed:', error);
+                alert('Failed to reload CAPTCHA. Please try again.');
             },
             complete: function() {
-                $("input[name='captcha']").prop('disabled', false);
+                $('#reload').prop('disabled', false);
             }
         });
-    } else {
-        callback(false);
-    }
-}
-
-
-    $('#checkoutForm').submit(function(e) {
-    e.preventDefault(); // Prevent the form from submitting
-
-    verifyCaptcha(function(isCaptchaValid) {
-        if (isCaptchaValid) {
-            console.log("CAPTCHA is valid. Submitting form...");
-            e.target.submit(); // Submit the form if CAPTCHA is valid
-        } else {
-            alert('Invalid CAPTCHA. Please try again.');
-        }
     });
+    
 });
-
-
-   
-
-
-        // $("#checkoutForm").validate({
-        //     rules: {
-        //         first_name: {
-        //             required: true,
-        //             minlength: 2
-        //         },
-        //         last_name: {
-        //             required: true,
-        //             minlength: 2
-        //         },
-        //         phone: {
-        //             required: true,
-        //             digits: true,
-        //             minlength: 10,
-        //             maxlength: 15
-        //         },
-        //         email: {
-        //             required: true,
-        //             email: true
-        //         },
-        //         house_no: {
-        //             required: true
-        //         },
-        //         buling_name: {
-        //             required: true
-        //         },
-        //         city: {
-        //             required: true
-        //         },
-        //         state: {
-        //             required: true
-        //         },
-        //         country: {
-        //             required: true
-        //         },
-        //         pincode: {
-        //             required: true,
-        //             digits: true
-        //         },
-        //         cardholder_name: {
-        //             required: true,
-        //             minlength: 2
-        //         },
-        //         card_number: {
-        //             required: true,
-        //             creditcard: true
-        //         },
-        //         expiry_date: {
-        //             required: true,
-        //             pattern: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
-        //         },
-        //         // cvv: {
-        //         //     required: true,
-        //         //     digits: true,
-        //         //     minlength: 16
-        //         // },
-        //         // captcha: {
-        //         //     required: true
-        //         // }
-        //     },
-        //     messages: {
-        //         first_name: {
-        //             required: "Please enter your first name",
-        //             minlength: "Name must be at least 2 characters long"
-        //         },
-        //         last_name: {
-        //             required: "Please enter your last name",
-        //             minlength: "Name must be at least 2 characters long"
-        //         },
-        //         phone: {
-        //             required: "Please enter your phone number",
-        //             digits: "Please enter only digits",
-        //             minlength: "Phone number must be at least 10 digits",
-        //             maxlength: "Phone number must not exceed 15 digits"
-        //         },
-        //         email: {
-        //             required: "Please enter your email",
-        //             email: "Please enter a valid email address"
-        //         },
-        //         house_no: "Please enter your house number",
-        //         buling_name: "Please enter your building name",
-        //         city: "Please enter your city",
-        //         state: "Please enter your state",
-        //         country: "Please enter your country",
-        //         pincode: {
-        //             required: "Please enter your pincode",
-        //             digits: "Please enter only digits"
-        //         },
-        //         cardholder_name: {
-        //             required: "Please enter the cardholder's name",
-        //             minlength: "Name must be at least 2 characters long"
-        //         },
-        //         card_number: {
-        //             required: "Please enter your card number",
-        //             creditcard: "Please enter a valid credit card number"
-        //         },
-        //         expiry_date: {
-        //             required: "Please enter the expiry date",
-        //             pattern: "Please enter date in MM/YY format"
-        //         },
-        //         cvv: {
-        //             required: "Please enter the CVV",
-        //             digits: "Please enter only digits",
-        //             minlength: "CVV must be at least 3 digits",
-        //             maxlength: "CVV must be at most 4 digits"
-        //         },
-        //         captcha: "Please enter the captcha"
-        //     },
-        //     errorElement: 'span',
-        //     errorPlacement: function(error, element) {
-        //         error.addClass('error');
-        //         error.insertAfter(element);
-        //     },
-        //     highlight: function(element, errorClass, validClass) {
-        //         $(element).addClass('error').removeClass('valid');
-        //     },
-        //     unhighlight: function(element, errorClass, validClass) {
-        //         $(element).removeClass('error').addClass('valid');
-        //     },
-        //     submitHandler: function(form) {
-        //         if (isCaptchaValid) {
-        //             form.submit();
-        //         } else {
-        //             alert('Please enter the correct captcha');
-        //             $('#reload').click();
-        //             $("input[name='captcha']").val('');
-        //         }
-        //     }
-        // });
-
-        // // Custom method for expiry date validation
-        // $.validator.addMethod("pattern", function(value, element, regexp) {
-        //     return this.optional(element) || regexp.test(value);
-        // }, "Please check your input.");
-    });
 </script>
 
 
