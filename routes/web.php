@@ -51,6 +51,7 @@ use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
 use App\Http\Controllers\Frontend\CaptchaController;
 
+use App\Http\Controllers\LocationController;
 
 // =========================================================== Backend Route ============================================================
 
@@ -385,6 +386,8 @@ Route::controller(ClientReviewController::class)->group(function () {
     Route::get('/clientReview/delete/{id}','clientReviewDelete')->name('clientReview.delete');
 
 });
+Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
+Route::post('/location/store', [LocationController::class, 'store'])->name('location.store');
 
 
 
@@ -434,6 +437,7 @@ Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.
 Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
 
 Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha'])->name('reload.captcha');
+
 
 
 Route::middleware(['auth.redirect'])->group(function () {

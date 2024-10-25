@@ -147,6 +147,12 @@
                     </a>
                 </li>
 
+                <li class="{{ set_active(['location.create']) }}">
+                    <a href="{{ route('location.create') }}">
+                        <img src="{{ url('assets/icons/call1.png') }}" style="width: 20px; height:20px"><span>Location</span>
+                    </a>
+                </li>
+
 
             </ul>
         </div>
