@@ -11,4 +11,10 @@ class Spa extends Model
     use HasFactory, SoftDeletes;
     protected $table = "spas";
     protected $fillable = ['category', 'description', 'image', 'price'];
+
+
+    public function spaBookknow()
+    {
+        return $this->hasOne(SpaBookknow::class); // Or belongsTo, depending on your database structure
+    }
 }
