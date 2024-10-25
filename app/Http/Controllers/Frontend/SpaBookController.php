@@ -18,7 +18,11 @@ class SpaBookController extends Controller
     public function spabookKnow($id)
     {
         $spas = Spa::find($id);
-        return view('frontend.spabooknow', compact('spas'));
+        $images = explode(',', $spas->image);
+        $spaBookknow = $spas->spaBookknow;
+        $spaCategory = $spas ? $spas->category : null;
+        
+        return view('frontend.spabooknow', compact('spas','images','spaCategory'));
     }
     public function spabooknowStore(Request $request,$id)
     {
@@ -33,7 +37,7 @@ class SpaBookController extends Controller
             'spa_id' => 'required',
         ]);
         $spa = Spa::find($id);
-        SpaBookknow::create([
+        $spaBookknow = SpaBookknow::create([
             'checkin' => $request->input('checkin'),
             'time' => $request->input('time'),
             'technician' => $request->input('technician'),
@@ -42,15 +46,24 @@ class SpaBookController extends Controller
             'price' => $request->input('price'),
             'spa_id' => $request->input('spa_id'),
         ]);
-        return redirect()->route('spacheckout',$spa->id)->with('success', 'Booking confirmed successfully!');
+        return redirect()->route('spacheckout',$spaBookknow->id)->with('success', 'Booking confirmed successfully!');
     }
     public function spacheckout($id)
     {
-        $spa = Spa::find($id);
-        return view('frontend.spacheckout',compact('spa'));
+        $spaBookknow = SpaBookknow::with('spa')->find($id); // Updated to include spa relation
+        $spa = $spaBookknow->spa; // Accessing the spa relation directly
+        $spaCategory = $spa ? $spa->category : null;
+        $firstImagePath = null;
+        if ($spa && $spa->image) {
+            $images = explode(',', $spa->image); // Split the string into an array
+            $firstImagePath = trim($images[0]); // Get the first image and trim any whitespace
+        }
+      
+        return view('frontend.spacheckout',compact('spa','firstImagePath','spaCategory','spaBookknow'));
     }
     public function spacheckoutStore(Request $request,$id)
     {
+        // dd($id);
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -62,12 +75,18 @@ class SpaBookController extends Controller
             'card_number' => 'required',
             'expiry_date' => 'required',
             'cvv' => 'required',
+            'captcha' => 'required|captcha'
 
         ]);
+        $spaBookknow = SpaBookknow::with('spa')->find($id); // Updated to include spa relation
+        $spa = $spaBookknow->spa; // Accessing the spa relation directly
 
-        $spa = Spa::find($id);
+        $basePrice = $spaBookknow->total_price;
+        $taxAmount = 100; // Assuming fixed tax for this example
+        $totalPrice = $basePrice + $taxAmount;
+        
 
-        SpaCheckOut::create([
+        $spacheckout = SpaCheckOut::create([
             'user_id' => Auth::user()->id,
             'spa_id' => $spa->id,
             'first_name' => $request->input('first_name'),
@@ -80,9 +99,10 @@ class SpaBookController extends Controller
             'card_number' => $request->card_number,
             'expiry_date' => $request->input('expiry_date'),
             'cvv' => $request->input('cvv'),
-            'total_price' => $request->input('total_price'),
+            'total_price' => $totalPrice,
+            'captcha' => $request->input('captcha'),
         ]);
-
+       
         return redirect()->route('spabook')->with('success', 'Booking confirmed successfully!');
     }
 }

@@ -24,5 +24,6 @@ class SpaCheckOut extends Model
         'cvv',
         'total_price',
         'status',
+        'captcha'
     ];
 }

@@ -63,14 +63,14 @@
                             @csrf
                             <div class="row g-3 mt-1">
                                 <div class="col-12">
-                                    <div class="d_filed d-flex justify-content-between align-items-center">
-                                        <div class="d_formsubtitle">Check in</div>
-                                        <div class="d-flex align-items-center d_cal">
-                                            <input type="datetime-local" class="ds" id="checkIn"
-                                                name="check_in_datetime"
-                                                style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                        <div class="d_filed d-flex justify-content-between align-items-center">
+                                            <div class="d_formsubtitle">Check in</div>
+                                            <div class="d-flex align-items-center d_cal">
+                                                <input type="datetime-local" class="ds" id="checkIn"
+                                                    name="check_in_datetime"
+                                                    style="color: black; background-color: white; padding-left: 7px; width:185px">
+                                            </div>
                                         </div>
-                                    </div>
 
                                 </div>
                                 <div class="col-12">

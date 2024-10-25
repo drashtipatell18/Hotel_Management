@@ -113,7 +113,7 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12">
-                            <textarea type="text" placeholder="Additional Message" name="additional_info" id="" rows="7"></textarea>
+                            <textarea type="text" placeholder="Additional Message" name="additional_info" id="" rows="7">{{ old('additional_info') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">CVV</label>
-                            <input type="text" placeholder="CVV*" name="cvv" id="" value="{{ old('CVV')}}">
+                            <input type="text" placeholder="CVV*" name="cvv" id="" value="{{ old('cvv')}}">
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="dob">Enter Captcha</label>
@@ -369,14 +369,7 @@ $(document).ready(function() {
                 required: true,
                 pattern: /^(0[1-9]|1[0-2])\/([0-9]{2})$/
             },
-            cvv: {
-                required: true,
-                digits: true,
-                minlength: 3
-            },
-            captcha: {
-                required: true
-            }
+          
         },
         messages: {
             first_name: {
@@ -500,7 +493,7 @@ $(document).ready(function() {
             }
         });
     });
-    
+
 });
 </script>
 
