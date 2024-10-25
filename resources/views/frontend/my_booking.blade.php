@@ -4,12 +4,9 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-.booking_image img {
-    width: 100%;
-    height: auto;
-    height: 100%;
-    object-fit: cover;
-}
+    .booking_image{
+        display: flex;
+    }
 </style>
 <section class=" d_room spad2">
     <div class="d_container mb-4">
@@ -39,28 +36,31 @@
                                 @endif
                             </div>
                             <div class="booking_details">
-                                <h2 class="booking_title">{{ $checkout->room->room_name }}</h2>
+                                <h2 class="booking_title">{{ $checkout->room ? $checkout->room->room_name : 'No room name available' }}</h2>
                                 <div class="booking_info">
                                     <div class="info_item">
                                         <img src="{{ url('frontend/img/book_icon1.png') }}" alt="Size Icon">
-                                        <span>{{ $checkout->room->room_size }}</span>
+                                        <span>{{ $checkout->room ? $checkout->room->room_size : 'No size available' }}</span>
                                     </div>
                                     <div class="info_item">
                                         <img src="{{ url('frontend/img/book_icon2.png') }}" alt="Guests Icon">
-                                        <span>{{ $checkout->booking->member_count }}</span>
+                                        <span>{{ $checkout->booking ? $checkout->booking->member_count : 'No guest count available' }}</span>
                                     </div>
                                     <div class="info_item">
                                         <img src="{{ url('frontend/img/book_icon3.png') }}" alt="Bed Icon">
-                                        <span>{{ $checkout->room->bed_type }}</span>
+                                        <span>{{ $checkout->room ? $checkout->room->bed_type : 'No bed type available' }}</span>
                                     </div>
                                 </div>
                                 <div class="booking_text">
-                                    <p><strong>Check in :</strong> {{ $checkout->booking->check_in_date }}</p>
-                                    <p><strong>Check out :</strong> {{ $checkout->booking->check_out_date }}</p>
-                                    <p><strong>Members :</strong> {{ $checkout->booking->member_count }}</p>
-                                    <p><strong>Rooms :</strong> {{ $checkout->booking->room_count }}</p>
-                                    <p><strong>Status :</strong> <span class="status_confirmed">{{ $checkout->status
-                                            }}</span></p>
+                                    @if($checkout->booking)
+                                        <p><strong>Check in :</strong> {{ $checkout->booking->check_in_date }}</p>
+                                        <p><strong>Check out :</strong> {{ $checkout->booking->check_out_date }}</p>
+                                        <p><strong>Members :</strong> {{ $checkout->booking->member_count }}</p>
+                                        <p><strong>Rooms :</strong> {{ $checkout->booking->room_count }}</p>
+                                        <p><strong>Status :</strong> <span class="status_confirmed">{{ $checkout->status }}</span></p>
+                                    @else
+                                        <p>No booking details available.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

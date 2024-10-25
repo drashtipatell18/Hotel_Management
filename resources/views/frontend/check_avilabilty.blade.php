@@ -11,6 +11,15 @@
         padding: 90px 0 !important;
         background-position: center !important;
     }
+    .d_room .d_night .d_price{
+        margin-left:37pc;
+    }
+    .d_ribbon {
+        position: absolute;
+        top: 8px;
+        left: -29px;
+    }
+  
 </style>
 
 <!-- Breadcrumb Begin -->
@@ -334,7 +343,7 @@
                             <div class="d_night">
                                 <div class="d_price">
                                  ${savingText ? `<div class="d_ribbon">${savingText}</div>` : ''}
-                                    <h6>$${room.rent}/ Night</h6>
+                                    <h6>$${room.rent}</h6>
                                 </div>
                             </div>
                             <div class="d_content">
@@ -345,7 +354,7 @@
                                     </div>
                                     <div class="d-flex align-items-center me-3">
                                         <img src="/img/d_img/icon2.png" class="me-2" alt="">
-                                        <div class="d_icondesc">Guests</div>
+                                        <div class="d_icondesc">$${room.rent}</div>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <img src="/img/d_img/bedroom.png" class="me-2" alt="">
