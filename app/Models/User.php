@@ -38,7 +38,8 @@ class User extends Authenticatable
         'password',
         'staff_id',
         'password_reset_otp',
-        'password_reset_otp_expires_at'
+        'password_reset_otp_expires_at',
+        'google_id'
     ];
 
     /**
