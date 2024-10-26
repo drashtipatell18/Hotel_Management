@@ -50,6 +50,7 @@ use App\Http\Controllers\Frontend\MyBookingController;
 use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
 use App\Http\Controllers\Frontend\CaptchaController;
+use App\Http\Controllers\Frontend\GoogleLoginController;
 
 use App\Http\Controllers\LocationController;
 
@@ -450,7 +451,8 @@ Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.
 Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
 
 
-
+Route::get('auth/google', [GoogleLoginController::class, 'GoogleLogin'])->name('auth.google');
+Route::get('auth/google-callback', [GoogleLoginController::class, 'GoogleAuthentication'])->name('auth.google-callback');
 
 
 Route::middleware(['auth.redirect'])->group(function () {
