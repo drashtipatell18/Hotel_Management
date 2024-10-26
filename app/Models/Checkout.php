@@ -30,6 +30,7 @@ class Checkout extends Model
         'expiry_date',
         'cvv',
         'total_price',
+        'coupon_code',
         'captcha',
         'status',
     ];
