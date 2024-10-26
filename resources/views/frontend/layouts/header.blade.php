@@ -85,6 +85,7 @@
     }
     .error{
         color:red;
+        font-weight:500;
     }
 
     .d_ribbon {
@@ -102,7 +103,7 @@
 }
 
 /* Sticky Header Styles */
-    .header {
+    /* .header {
         position: fixed;
         top: 0;
         left: 0;
@@ -111,7 +112,7 @@
         background-color: #fff;
         transition: all 0.3s ease;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    } */
     
 </style>
 <body>
@@ -373,7 +374,7 @@
                                         </a>
                                         <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
-                                            <li><a class="dropdown-item" href="#">Booking</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
                                         </ul>
                                     </div>
                                 </div>&nbsp;&nbsp;
@@ -422,10 +423,10 @@
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center py-3">
                                                 <div class="y_facebbok_icon d-flex justify-content-center">
-                                                    <img src="img/facebook_ic.png" alt>
+                                                    <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
                                                 </div>
                                                 <div class="y_ggole_icon d-flex justify-content-center">
-                                                    <img src="img/google_ic.png" alt>
+                                                    <img src="{{ url('frontend/img/google_ic.png') }}" alt>
                                                 </div>
                                             </div>
                                         </form>
