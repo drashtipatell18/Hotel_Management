@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms_images', function (Blueprint $table) {
+        Schema::create('coupon_usages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('room_id')->nullable();
-            $table->string('image')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('coupon_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('set null');
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms_images');
+        Schema::dropIfExists('coupon_usages');
     }
 };

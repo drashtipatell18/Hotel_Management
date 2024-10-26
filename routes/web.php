@@ -36,7 +36,7 @@ use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\ClientReviewController;
 use App\Http\Controllers\OffersPackageController;
 use App\Http\Controllers\HotelAmenitiesController;
-
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\AboutUsController;
 use App\Http\Controllers\Frontend\RoomsFrontendController;
@@ -376,6 +376,16 @@ Route::controller(OffersPackageController::class)->group(function () {
     Route::delete('offer/image/delete/{id}',  'deleteImage')->name('offer/image/delete');
 });
 
+//coupon
+Route::controller(CouponController::class)->group(function () {
+    Route::get('coupon/add', 'couponCreate')->name('coupon/add');
+    Route::post('coupon/store', 'couponStore')->name('coupon/store');
+    Route::get('coupon/list', 'couponList')->name('coupon/list');
+    Route::get('coupon/edit/{id}', 'couponEdit')->name('coupon/edit');
+    Route::post('coupon/update/{id}', 'couponUpdate')->name('coupon/update');
+    Route::get('/coupon/delete/{id}','couponDelete')->name('coupon/delete');
+    Route::post('/update-coupon-status',  'updateStatus')->name('update.coupon.status');
+});
 // Client Review
 Route::controller(ClientReviewController::class)->group(function () {
     Route::get('clientReview/add', 'clientReviewCreate')->name('clientReview/add');
@@ -406,6 +416,14 @@ Route::get('/booknow/{roomId}', [BookNowController::class, 'booknow'])->name('bo
 Route::get('/booknowroomtype/{roomId}', [BookNowController::class, 'booknowroomtype'])->name('booknowroomtype');
 
 
+Route::post('/validate-coupon', [CouponController::class, 'validateCoupon'])->name('validate.coupon');
+Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
+Route::get('/checkout/{id}',[CheckoutController::class,'checkout'])->name('checkout');
+Route::post('/checkout-store/{id}',[CouponController::class,'chckoutStore'])->name('chckout.store');
+Route::post('coupon/apply/{id}', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
+Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
+Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
+Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');
 
 
 
@@ -438,7 +456,7 @@ Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('of
 Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
     Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
-    
+
     Route::get('/checkout/{id}',[CheckoutController::class,'checkout'])->name('checkout');
     Route::post('/checkout-store/{id}',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
     Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');

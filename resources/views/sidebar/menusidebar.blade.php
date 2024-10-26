@@ -8,7 +8,7 @@
 
                     <li class="list-divider"></li>
 
-                
+
                 <li class="submenu">
                     <a href="#">
                         <img src="{{ url('assets/icons/room.png') }}" style="width: 20px; height:20px">
@@ -20,7 +20,7 @@
                         <li><a class="{{ set_active(['amenities/hotel/list']) }}" href="{{ route('amenities/hotel/list') }}">Hotel Amenities </a></li>
                     </ul>
                 </li>
-              
+
                 <li class="{{ set_active(['facilities/list']) }}">
                     <a href="{{ route('facilities/list') }}">
                         <img src="{{ url('assets/icons/facility.png') }}" style="width: 25px; height:25px"><span>Facilities</span>
@@ -54,6 +54,12 @@
                 <li class="{{ set_active(['offer/package/list']) }}">
                     <a href="{{ route('offer/package/list') }}">
                         <img src="{{ url('assets/icons/offerPackage.png') }}" style="width: 20px; height:20px"><span>Offer Package</span>
+                    </a>
+                </li>
+
+                <li class="{{ set_active(['coupon/list']) }}">
+                    <a href="{{ route('coupon/list') }}">
+                        <img src="{{ url('assets/icons/coupon.png') }}" style="width: 20px; height:20px"><span>Coupons</span>
                     </a>
                 </li>
 
