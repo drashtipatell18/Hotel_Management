@@ -502,30 +502,28 @@
             }
         });
         $("#applyCouponForm").validate({
-        rules: {
-            coupon_code: {
-                required: true
+            rules: {
+                coupon_code: {
+                    required: true
+                }
+            },
+            messages: {
+                coupon_code: {
+                    required: "Please enter a coupon code"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('error');
+                error.insertAfter(element);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('error').removeClass('valid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('error').addClass('valid');
             }
-        },
-        messages: {
-            coupon_code: {
-                required: "Please enter a coupon code"
-            }
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('error');
-            error.insertAfter(element);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('error').removeClass('valid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('error').addClass('valid');
-        }
-    });
-
-
+        });
 
         // Custom method for expiry date validation
         $.validator.addMethod("pattern", function(value, element, regexp) {
@@ -539,109 +537,105 @@
             return this.optional(element) || (value === "VALID_COUPON_CODE"); // Replace with actual validation logic
         }, "Please enter a valid coupon code.");
 
-    $('#reload').click(function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: '/reload-captcha',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            beforeSend: function() {
-                $('#reload').prop('disabled', true);
-            },
-            success: function(data) {
-                if (data.captcha) {
-                    $(".captcha span").html(data.captcha);
-                } else {
-                    console.error('Invalid CAPTCHA response');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('CAPTCHA reload failed:', error);
-                alert('Failed to reload CAPTCHA. Please try again.');
-            },
-            complete: function() {
-                $('#reload').prop('disabled', false);
-            }
-        });
-    });
-
-    $("#applyCouponForm").on("submit", function(e) {
-        e.preventDefault();
-
-        if (!$(this).valid()) {
-            return false;
-        }
-
-        const couponCode = $("#coupon_code").val().trim();
-        const bookingId = $("#room_id").val(); // Get the booking ID from hidden input
-
-        // Clear previous messages
-        $('.error').hide().text('');
-        $('.success').hide().text('');
-
-        $.ajax({
-            type: "POST",
-            url: `/coupon/apply/${bookingId}`,
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            data: {
-                coupon_code: couponCode
-            },
-            success: function(response) {
-                if (response.success) {
-                    // Update the price displays
-                    const totalBasePrice = $('.d_pricelist .mb-3:nth-child(2) h4:last-child');
-                    const totalWithExtras = $('.d_pricelist .mb-3:last-child h3:last-child');
-
-                    // Update the total price
-                    totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
-
-                    // Handle discount row
-                    if ($('.discount-row').length === 0) {
-                        $('.d_pricelist .mb-3:last-child').before(`
-                            <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                                <h4>Discount Applied</h4>
-                                <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
-                            </div>
-                        `);
+        $('#reload').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '/reload-captcha',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                beforeSend: function() {
+                    $('#reload').prop('disabled', true);
+                },
+                success: function(data) {
+                    if (data.captcha) {
+                        $(".captcha span").html(data.captcha);
                     } else {
-                        $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
+                        console.error('Invalid CAPTCHA response');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('CAPTCHA reload failed:', error);
+                    alert('Failed to reload CAPTCHA. Please try again.');
+                },
+                complete: function() {
+                    $('#reload').prop('disabled', false);
+                }
+            });
+        });
+
+        $("#applyCouponForm").on("submit", function(e) {
+            e.preventDefault();
+
+            if (!$(this).valid()) {
+                return false;
+            }
+
+            const couponCode = $("#coupon_code").val().trim();
+            const bookingId = $("#room_id").val(); // Get the booking ID from hidden input
+
+            // Clear previous messages
+            $('.error').hide().text('');
+            $('.success').hide().text('');
+
+            $.ajax({
+                type: "POST",
+                url: `/coupon/apply/${bookingId}`,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: {
+                    coupon_code: couponCode
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update the price displays
+                        const totalBasePrice = $('.d_pricelist .mb-3:nth-child(2) h4:last-child');
+                        const totalWithExtras = $('.d_pricelist .mb-3:last-child h3:last-child');
+
+                        // Update the total price
+                        totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
+
+                        // Handle discount row
+                        if ($('.discount-row').length === 0) {
+                            $('.d_pricelist .mb-3:last-child').before(`
+                                <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                                    <h4>Discount Applied</h4>
+                                    <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
+                                </div>
+                            `);
+                        } else {
+                            $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
+                        }
+
+                        // Show success message
+                        $('.success').text(response.success).show(); // Display success message
+                    } else {
+                        // Show error message if response indicates failure
+                        $('.error').text(response.message || 'An error occurred.').show();
                     }
 
-                    // Show success message
-                    $('.success').text(response.success).show(); // Display success message
-                } else {
-                    // Show error message if response indicates failure
-                    $('.error').text(response.message || 'An error occurred.').show();
+                    // Clear the coupon input
+                    $("#coupon_code").val('');
+                },
+                error: function(xhr) {
+                    const errorResponse = xhr.responseJSON;
+                    if (errorResponse && errorResponse.error) {
+                        $('.error').text(errorResponse.error).show(); // Display error message
+                    } else {
+                        $('.error').text('An unexpected error occurred. Please try again.').show(); // General error message
+                    }
+                },
+                complete: function() {
+                    // Reset button state
+                    submitButton.prop('disabled', false).text(originalButtonText);
                 }
-
-                // Clear the coupon input
-                $("#coupon_code").val('');
-            },
-            error: function(xhr) {
-                const errorResponse = xhr.responseJSON;
-                if (errorResponse && errorResponse.error) {
-                    $('.error').text(errorResponse.error).show(); // Display error message
-                } else {
-                    $('.error').text('An unexpected error occurred. Please try again.').show(); // General error message
-                }
-            },
-            complete: function() {
-                // Reset button state
-                submitButton.prop('disabled', false).text(originalButtonText);
-            }
+            });
         });
     });
-});
 
 </script>
-
-
-
-
 @endsection
 
 
