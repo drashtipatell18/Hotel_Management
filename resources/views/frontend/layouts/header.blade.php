@@ -101,6 +101,9 @@
     z-index: 1;
     /* margin-left: 1px; */
 }
+.new_y_google_icon img {
+    margin: auto;
+}
 
 /* Sticky Header Styles */
     /* .header {
@@ -425,9 +428,9 @@
                                                 <div class="y_facebbok_icon d-flex justify-content-center">
                                                     <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
                                                 </div>
-                                                <div class="y_google_icon d-flex justify-content-center">
-                                                    <a href="{{ route('auth.google') }}" target="_blank">
-                                                        <img src="{{ url('frontend/img/google_ic.png') }}" alt="Google Icon">
+                                                <div class="new_y_google_icon d-flex justify-content-center">
+                                                    <a href="{{ route('auth.google') }}" target="_self">
+                                                        <img src="{{ url('frontend/img/google_ic.png') }}" style="display:block" alt="Google Icon">
                                                     </a>
                                                 </div>
                                             </div>
