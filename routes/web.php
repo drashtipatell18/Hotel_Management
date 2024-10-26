@@ -407,14 +407,9 @@ Route::get('/booknowroomtype/{roomId}', [BookNowController::class, 'booknowroomt
 
 
 
-Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
-Route::get('/checkout/{id}',[CheckoutController::class,'checkout'])->name('checkout');
-Route::post('/checkout-store/{id}',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
-Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
-Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
-Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');
 
-Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
+
+// Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
 Route::get('/no-booking',[MyBookingController::class,'nobooking'])->name('nobooking');
 Route::get('/offer-package/{id}',[OfferPackageController::class,'offerPackage'])->name('offerPackage');
 
@@ -436,11 +431,18 @@ Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name(
 Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');
 Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
 
-Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha'])->name('reload.captcha');
+
 
 
 
 Route::middleware(['auth.redirect'])->group(function () {
     Route::get('/my-profile',[EditProfileController::class,'myProfile'])->name('myProfile');
-
+    Route::post('/booknow/store',[BookNowController::class,'booknowStore'])->name('booknow.store');
+    
+    Route::get('/checkout/{id}',[CheckoutController::class,'checkout'])->name('checkout');
+    Route::post('/checkout-store/{id}',[CheckoutController::class,'chckoutStore'])->name('chckout.store');
+    Route::get('/mybooking',[MyBookingController::class,'mybooking'])->name('mybooking');
+    Route::get('/edit-profile',[EditProfileController::class,'editProfile'])->name('editProfile');
+    Route::post('/updateprofiledata',[EditProfileController::class,'updateProfileData'])->name('updateprofiledata');
+    Route::get('reload-captcha', [CaptchaController::class, 'reloadCaptcha'])->name('reload.captcha');
 });
