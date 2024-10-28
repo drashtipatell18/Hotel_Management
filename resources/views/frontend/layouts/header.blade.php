@@ -426,7 +426,9 @@
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center py-3">
                                                 <div class="y_facebbok_icon d-flex justify-content-center">
-                                                    <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                                                    <a href="{{ route('auth.facebook') }}" target="_self">
+                                                            <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                                                    </a>
                                                 </div>
                                                 <div class="new_y_google_icon d-flex justify-content-center">
                                                     <a href="{{ route('auth.google') }}" target="_self">

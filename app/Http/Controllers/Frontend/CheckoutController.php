@@ -66,7 +66,7 @@ class CheckoutController extends Controller
             'captcha' => $request->input('captcha'),
             'status' => 'pending',
         ]);
-        dd($checkout);
+        
         session()->forget(['discount', 'discount_amount', 'discount_type']);
 
         return redirect()->route('mybooking')->with('success', 'Booking created successfully');
