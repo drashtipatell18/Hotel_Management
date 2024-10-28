@@ -28,6 +28,7 @@ class EditProfileController extends Controller
     public function updateProfileData(Request $request)
     {
         $user = Auth::user();
+       
 
         $user->name = $request->name;
         $user->lname = $request->lname;
@@ -35,8 +36,12 @@ class EditProfileController extends Controller
         $user->phone_number = $request->phone_number;
         $user->dob = $request->dob;
         $user->address = $request->address;
-        // dd($user->dob);
-       
+        $user->country = $request->country;
+        $user->state = $request->state;
+        $user->city = $request->city;
+        // dd($user);
+      
+      
     
         // Handle image upload if provided
         if ($request->hasFile('profile')) 

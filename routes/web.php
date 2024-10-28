@@ -51,6 +51,7 @@ use App\Http\Controllers\Frontend\OfferPackageController;
 use App\Http\Controllers\Frontend\SpaBookController;
 use App\Http\Controllers\Frontend\CaptchaController;
 use App\Http\Controllers\Frontend\GoogleLoginController;
+use App\Http\Controllers\Frontend\FacebookLoginController;
 
 use App\Http\Controllers\LocationController;
 
@@ -453,6 +454,9 @@ Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('of
 
 Route::get('auth/google', [GoogleLoginController::class, 'GoogleLogin'])->name('auth.google');
 Route::get('auth/google-callback', [GoogleLoginController::class, 'GoogleAuthentication'])->name('auth.google-callback');
+
+Route::get('auth/facebook', [FacebookLoginController::class, 'FacebokLogin'])->name('auth.facebook');
+Route::get('auth/google-callback', [FacebookLoginController::class, 'FacebookAuthentication'])->name('auth.facebook-callback');
 
 
 Route::middleware(['auth.redirect'])->group(function () {
