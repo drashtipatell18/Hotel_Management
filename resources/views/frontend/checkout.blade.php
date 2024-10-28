@@ -306,13 +306,16 @@
                     <h4>Taxes</h4>
                     <h4>$100</h4>
                 </div>
-            </div>
-            <hr class="m-0">
-            <div class="d_box d_pricelist">
-                <!-- <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h4>You Saved</h4>
-                            <h4>$100</h4>
-                        </div> -->
+                @if(session('discount'))
+                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                        <h4>Discount ({{ session('discount_type') }})</h4>
+                        <h4>${{ number_format(session('discount'), 2) }}</h4>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                        <h4>Discount Applied </h4>
+                        <h4>${{ number_format(session('discount_applied'), 2) }}</h4>
+                    </div>
+                @endif
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3>Total</h3>
                     <h3>${{ number_format($booking->final_price, 2) }}</h3>
@@ -597,17 +600,17 @@
                         // Update the total price
                         totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
 
-                        // Handle discount row
-                        if ($('.discount-row').length === 0) {
-                            $('.d_pricelist .mb-3:last-child').before(`
-                                <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                                    <h4>Discount Applied</h4>
-                                    <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
-                                </div>
-                            `);
-                        } else {
-                            $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
-                        }
+                        // // Handle discount row
+                        // if ($('.discount-row').length === 0) {
+                        //     $('.d_pricelist .mb-3:last-child').before(`
+                        //         <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                        //             <h4>Discount Applied</h4>
+                        //             <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
+                        //         </div>
+                        //     `);
+                        // } else {
+                        //     $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
+                        // }
 
                         // Show success message
                         $('.success').text(response.success).show(); // Display success message
@@ -637,5 +640,6 @@
 
 </script>
 @endsection
+
 
 

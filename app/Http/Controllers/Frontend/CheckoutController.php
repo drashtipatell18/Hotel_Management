@@ -61,11 +61,13 @@ class CheckoutController extends Controller
             'card_number' => $request->input('card_number'),
             'expiry_date' => $request->input('expiry_date'),
             'cvv' => $request->input('cvv'),
-            'total_price' => $request->input('total_price'),
+            'total_price' => $booking->final_price,
+            'coupon_code' => $booking->coupon_code,
             'captcha' => $request->input('captcha'),
             'status' => 'pending',
         ]);
-        // dd($checkout);
+        dd($checkout);
+        session()->forget(['discount', 'discount_amount', 'discount_type']);
 
         return redirect()->route('mybooking')->with('success', 'Booking created successfully');
     }
@@ -81,15 +83,14 @@ class CheckoutController extends Controller
 
         // Find the coupon
         $coupon = Coupon::where('code', $couponCode)->first();
-        // dd($coupon->discount_amount);
         if (!$coupon) {
             return response()->json(['error' => 'Invalid coupon code.'], 400);
         }
 
         // Check if the user has already used this coupon
         $couponUsage = CouponUsage::where('coupon_id', $coupon->id)
-                                   ->where('user_id', auth()->user()->id)
-                                   ->first();
+                                ->where('user_id', auth()->user()->id)
+                                ->first();
 
         if ($couponUsage) {
             return response()->json(['error' => 'You have already used this coupon.'], 400);
@@ -101,14 +102,14 @@ class CheckoutController extends Controller
         }
 
         // Apply discount logic here
-        if ($coupon->type === 'percentage') {
-            $discountAmount = ($booking->total_cost_input * $coupon->discount_amount) / 100; // Calculate percentage discount
-        } else {
-            $discountAmount = $coupon->discount_amount; // Fixed amount discount
-        }
+        $discountAmount = $coupon->type === 'percentage'
+            ? ($booking->total_cost_input * $coupon->discount_amount) / 100
+            : $coupon->discount_amount;
+
         $totalPrice = $booking->total_cost_input - $discountAmount;
 
-        // Update the booking or checkout with the new total price
+        // Update the booking with the new total price
+        $booking->coupon_code = $couponCode;
         $booking->discount = $discountAmount;
         $booking->final_price = $totalPrice;
         $booking->save();
@@ -119,6 +120,10 @@ class CheckoutController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
+        // Store discount in session
+        session(['discount' => $coupon->discount_amount]); // Store discount in session
+        session(['discount_applied' => $discountAmount]); // Store discount amount in session
+        session(['discount_type' => $coupon->type]); // Store discount type in session
         // Return JSON response for successful coupon application
         return response()->json([
             'success' => 'Coupon applied successfully.',
