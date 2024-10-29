@@ -14,7 +14,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    
+
     <link rel="stylesheet" href="{{ url('frontend/css/elegant-icons.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/nice-select.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url('frontend/css/jquery-ui.min.css') }}" type="text/css">
@@ -116,7 +116,7 @@
         transition: all 0.3s ease;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     } */
-    
+
 </style>
 <body>
     <!-- Page Preloder -->
@@ -297,8 +297,11 @@
                         <p class="text-center">Don't worry! It happens. Please enter the email address linked with your account.</p>
                     </div>
                 </div>
-                <input type="email" id="forgotEmail" placeholder="Enter your email">
-                <button id="newSendCodeBtn">Send Code</button>
+                <form id="forgotPasswordAjaxFormMobile">
+                    @csrf
+                    <input type="email" id="forgotEmail" placeholder="Enter your email">
+                    <button id="newSendCodeBtn" type="submit">Send Code</button>
+                </form>
             </div>
 
             <!-- OTP Verification Form -->
@@ -315,7 +318,7 @@
                     <input type="text" maxlength="1" class="new-otp-box" id="newOtp3">
                     <input type="text" maxlength="1" class="new-otp-box" id="newOtp4">
                 </div>
-                <button id="newVerifyBtn">Verify</button>
+                <button id="newVerifyBtn" type="submit">Verify</button>
                 <p class="new_verification_resend">Didn't receive the code? <span>Resend</span></p>
             </div>
 
@@ -335,7 +338,7 @@
                     <input type="password" id="newConfirmNewPassword" placeholder="Confirm Password">
                     <i class="fas fa-eye new-toggle-password" id="newToggleConfirmNewPassword"></i>
                 </div>
-                <button id="newCreatePasswordBtn">Create Password</button>
+                <button id="newCreatePasswordBtn" type="submit">Create Password</button>
             </div>
         </div>
     </div>
@@ -659,6 +662,47 @@
         });
     });
 
+    document.getElementById('forgotPasswordAjaxFormMobile').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        const email = document.getElementById('forgotEmail').value;
+        const submitButton = document.getElementById('newSendCodeBtn');
+
+        submitButton.disabled = true; // Disable the button to prevent multiple clicks
+        submitButton.textContent = 'Sending...'; // Change button text
+
+        // Create FormData object to send the email
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token
+
+        // Send AJAX request
+        fetch('/forget-password', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle success
+                submitButton.textContent = 'Code Sent';
+                submitButton.style.color = 'green'; // Optional: change color for success
+            } else {
+                // Handle error response
+                return response.json().then(errorData => {
+                    // Log the error data for debugging
+                    console.error('Error response:', errorData);
+                    alert(errorData.message || 'Error sending code. Please try again.'); // Notify user
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); // Log the error for debugging
+            alert('An error occurred. Please try again.'); // Notify user
+        })
+        .finally(() => {
+            submitButton.disabled = false; // Re-enable the button
+            submitButton.textContent = 'Send Code'; // Reset button text
+        });
+    });
 </script>
 
 <script>
@@ -678,7 +722,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('.header');
-    
+
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');

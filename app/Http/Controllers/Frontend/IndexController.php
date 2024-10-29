@@ -39,7 +39,7 @@ class IndexController extends Controller
         $clientReviews = ClientReview::all();
         $roomCount = Room::count();
         $maxMemberCapacity = Room::max('total_member_capacity');
-        
+
         return view('frontend.index',compact('amenities','facilities','roomTypes','premiumRoomsCount','deluxeSuitesCount','HoneymoonRoomsCount','standardSuitesCount','clientReviews','roomCount','maxMemberCapacity','offerPackages'));
     }
     public function register()
@@ -49,6 +49,7 @@ class IndexController extends Controller
     }
     public function forgotPassword(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
         ]);
