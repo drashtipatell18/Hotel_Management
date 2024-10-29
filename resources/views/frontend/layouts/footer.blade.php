@@ -113,26 +113,13 @@
 <script src="{{ url('frontend/js/jquery.slicknav.js') }}"></script>
 <script src="{{ url('frontend/js/owl.carousel.min.js') }}"></script>
 <script src="{{ url('frontend/js/main.js') }}"></script>
-<!-- <script src="{{ url('frontend/js/d_home.js') }}"></script> -->
+
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
 <!-- <script src="{{ url('frontend/js/jquery.nice-select.min.js') }}"></script> -->
 
-
-<!-- <script>
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('navbar').innerHTML = data;
-        });
-    fetch('footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer').innerHTML = data;
-        });
-</script> -->
 
 <script>
     window.onload = function () {

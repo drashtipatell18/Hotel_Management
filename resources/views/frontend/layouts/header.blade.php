@@ -428,7 +428,7 @@
                                                 <div class="m_sline"></div>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center py-3">
-                                                <div class="y_facebbok_icon d-flex justify-content-center">
+                                                <div class="y_facebbok_icon d-flex justify-content-center" style="text-align:center">
                                                     <a href="{{ route('auth.facebook') }}" target="_self">
                                                             <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
                                                     </a>

@@ -29,6 +29,10 @@
         background-color: #030c38;
         color: white;
     }
+    .d_form .d_inquiry select {
+        background-color: white !important;
+    }
+
 </style>
 <!-- Heading section start -->
 
@@ -110,19 +114,41 @@
                                 <input type="text" placeholder="Building Name / Street Name / Colony*"
                                     name="buling_name" id="" value="{{ old('buling_name')}}">
                             </div>
-                            <div class="col-12 col-md-6">
+                            <!-- <div class="col-12 col-md-6">
                                 <label for="dob">City</label>
                                 <input type="text" placeholder="City*" name="city" id="" value="{{ old('city')}}">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label for="dob">State</label>
-                                <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}">
-                            </div>
+                            </div> -->
+
                             <div class="col-12 col-md-6">
                                 <label for="dob">Country</label>
-                                <input type="text" placeholder="Country*" name="country" id=""
-                                    value="{{ old('country')}}">
+                                <!-- <input type="text" placeholder="Country*" name="country" id=""
+                                    value="{{ old('country')}}"> -->
+
+                                <select name="country" id="country" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                    <option value="">Select Country</option>
+                                    <!-- Add options here -->
+                                </select>
                             </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="dob">State</label>
+                                <!-- <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}"> -->
+
+                                <select name="state" id="state" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                    <option value="">Select State</option>
+                                    <!-- Add options here -->
+                                </select>
+
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="city">City</label>
+                                <select name="city" id="city" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                    <option value="">Select City</option>
+                                    <!-- Add options here -->
+                                </select>
+                            </div>
+                          
                         </div>
                     </div>
                     <div class="d_inquiry">
@@ -207,7 +233,7 @@
                                     value="{{ old('card_number')}}">
                             </div>
                             <div class="col-12 col-md-6">
-                                <label for="dob">Expiry Date MM/YYr</label>
+                                <label for="dob">Expiry Date MM/YY</label>
                                 <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id=""
                                     value="{{ old('expiry_date')}}">
                             </div>
@@ -226,7 +252,8 @@
                                 <div class="d-flex align-items-center">
                                     <!-- <input type="text" placeholder="Country*" name="" id=""> -->
                                     <div class="captcha">
-                                        <span>{!! captcha_img()!!}</span>
+                                        <!-- <span>{!! captcha_img()!!}</span> -->
+                                        <span><img src="{{ captcha_src() }}" alt="CAPTCHA"></span>
                                         <button type="button" class="btn btn-danger reload" id="reload">
                                             &#x21bb;</button>
                                     </div>
@@ -639,6 +666,181 @@
     });
 
 </script>
+
+<script>
+    const countrySelect = document.getElementById('country');
+    const stateSelect = document.getElementById('state');
+    const citySelect = document.getElementById('city');
+
+    
+    // Fetch countries on page load
+    document.addEventListener('DOMContentLoaded', async () => {
+        const selectedCountry = "{{ $customerEdit->country ?? '' }}";
+        const selectedState = "{{ $customerEdit->state ?? '' }}";
+        const selectedCity = "{{ $customerEdit->city ?? '' }}";
+
+     
+
+        try {
+            const countries = await fetchCountries();
+
+            populateCountries(countries, selectedCountry);
+
+            if (selectedCountry) {
+                const states = await fetchStates(selectedCountry);
+              
+                populateStates(states, selectedState);
+
+                if (selectedState) {
+                    const cities = await fetchCities(selectedCountry, selectedState);
+                    populateCities(cities, selectedCity);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    });
+
+    async function fetchCountries() {
+        const response = await fetch('https://api.countrystatecity.in/v1/countries', {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // The API returns an array of country objects
+    }
+
+    function populateCountries(countries, selectedCountry = '') {
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.iso2;
+
+
+            option.textContent = country.name;
+            if (country.iso2 === selectedCountry) {
+                option.selected = true;
+            }
+            console.log(option.textContent);
+            countrySelect.appendChild(option);
+        });
+    }
+
+
+
+    // Event listener for country selection
+    countrySelect.addEventListener('change', getStates);
+
+    async function getStates() {
+        const countryCode = countrySelect.value;
+        if (countryCode) {
+            try {
+                const states = await fetchStates(countryCode);
+                populateStates(states);
+                stateSelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching states:", error);
+            }
+        } else {
+            resetStateAndCitySelects();
+        }
+    }
+
+    async function fetchStates(countryCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+
+    function populateStates(states, selectedState = '') {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        states.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state.iso2;
+            option.textContent = state.name;
+            if (state.iso2 === selectedState) {
+                option.selected = true;
+            }
+            stateSelect.appendChild(option);
+        });
+        resetCitySelect();
+    }
+
+    // Event listener for state selection
+    stateSelect.addEventListener('change', getCities); // Uncomment this line
+
+    async function getCities() {
+        const stateCode = stateSelect.value;
+        const countryCode = countrySelect.value;
+        resetCitySelect();
+        if (stateCode && countryCode) {
+            try {
+                const cities = await fetchCities(countryCode, stateCode);
+                populateCities(cities);
+                citySelect.disabled = false;
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+            }
+        }
+    }
+
+    async function fetchCities(countryCode, stateCode) {
+        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
+            headers: {
+                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Adjust this based on the API response structure
+    }
+
+    function populateCities(cities, selectedCity = '') {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.name;
+            option.textContent = city.name;
+            if (city.name === selectedCity) {
+                option.selected = true;
+            }
+            citySelect.appendChild(option);
+        });
+    }
+
+    function resetStateAndCitySelects() {
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+        resetCitySelect();
+        stateSelect.disabled = true;
+    }
+
+    function resetCitySelect() {
+        citySelect.innerHTML = '<option value="">Select City</option>';
+        citySelect.disabled = true; // Disable city dropdown until a state is selected
+    }
+
+</script>
+
+
 @endsection
 
 

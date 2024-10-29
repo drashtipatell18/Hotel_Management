@@ -8,6 +8,7 @@ use App\Models\Checkout;
 use App\Models\Booking;
 use App\Models\Coupon;
 use App\Models\CouponUsage;
+use App\Models\Customer;
 
 class CheckoutController extends Controller
 {
@@ -17,11 +18,11 @@ class CheckoutController extends Controller
         // dd($booking);
 
         $user = auth()->user();
-        return view('frontend.checkout',compact('id','user','booking'));
+        $customerEdit = Customer::where('user_id', $user->id)->first();
+        return view('frontend.checkout',compact('id','user','booking','customerEdit'));
     }
     public function chckoutStore(Request $request,$id)
     {
-        // dd($request->all());
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
