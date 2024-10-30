@@ -489,7 +489,7 @@
 <!-- Experience Section End -->
 
 <!-- service Section Begin -->
-<div class="Newslatter">
+{{-- <div class="Newslatter">
     <div class="Newslatter_opacity_bg  pt-lg-5 pb-lg-5">
         <div class="container Newslatter_container ">
             <h1 class="text-light text-center">Subscribe to Our
@@ -511,7 +511,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 
