@@ -29,10 +29,6 @@
         background-color: #030c38;
         color: white;
     }
-    .d_form .d_inquiry select {
-        background-color: white !important;
-    }
-
 </style>
 <!-- Heading section start -->
 
@@ -114,41 +110,19 @@
                                 <input type="text" placeholder="Building Name / Street Name / Colony*"
                                     name="buling_name" id="" value="{{ old('buling_name')}}">
                             </div>
-                            <!-- <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6">
                                 <label for="dob">City</label>
                                 <input type="text" placeholder="City*" name="city" id="" value="{{ old('city')}}">
-                            </div> -->
-
-                            <div class="col-12 col-md-6">
-                                <label for="dob">Country</label>
-                                <!-- <input type="text" placeholder="Country*" name="country" id=""
-                                    value="{{ old('country')}}"> -->
-
-                                <select name="country" id="country" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
-                                    <option value="">Select Country</option>
-                                    <!-- Add options here -->
-                                </select>
                             </div>
-
                             <div class="col-12 col-md-6">
                                 <label for="dob">State</label>
-                                <!-- <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}"> -->
-
-                                <select name="state" id="state" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
-                                    <option value="">Select State</option>
-                                    <!-- Add options here -->
-                                </select>
-
+                                <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}">
                             </div>
-
                             <div class="col-12 col-md-6">
-                                <label for="city">City</label>
-                                <select name="city" id="city" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
-                                    <option value="">Select City</option>
-                                    <!-- Add options here -->
-                                </select>
+                                <label for="dob">Country</label>
+                                <input type="text" placeholder="Country*" name="country" id=""
+                                    value="{{ old('country')}}">
                             </div>
-                          
                         </div>
                     </div>
                     <div class="d_inquiry">
@@ -233,7 +207,7 @@
                                     value="{{ old('card_number')}}">
                             </div>
                             <div class="col-12 col-md-6">
-                                <label for="dob">Expiry Date MM/YY</label>
+                                <label for="dob">Expiry Date MM/YYr</label>
                                 <input type="text" placeholder="Expiry Date MM/YY" name="expiry_date" id=""
                                     value="{{ old('expiry_date')}}">
                             </div>
@@ -252,8 +226,7 @@
                                 <div class="d-flex align-items-center">
                                     <!-- <input type="text" placeholder="Country*" name="" id=""> -->
                                     <div class="captcha">
-                                        <!-- <span>{!! captcha_img()!!}</span> -->
-                                        <span><img src="{{ captcha_src() }}" alt="CAPTCHA"></span>
+                                        <span>{!! captcha_img()!!}</span>
                                         <button type="button" class="btn btn-danger reload" id="reload">
                                             &#x21bb;</button>
                                     </div>
@@ -333,19 +306,16 @@
                     <h4>Taxes</h4>
                     <h4>$100</h4>
                 </div>
-                @if(session('discount'))
-                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        <h4>Discount ({{ session('discount_type') }})</h4>
-                        <h4>${{ number_format(session('discount'), 2) }}</h4>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        <h4>Discount Applied </h4>
-                        <h4>${{ number_format(session('discount_applied'), 2) }}</h4>
-                    </div>
-                @endif
+            </div>
+            <hr class="m-0">
+            <div class="d_box d_pricelist">
+                <!-- <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h4>You Saved</h4>
+                            <h4>$100</h4>
+                        </div> -->
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3>Total</h3>
-                    <h3>${{ number_format($booking->final_price, 2) }}</h3>
+                    <h3>${{ number_format($booking->total_cost_input, 2) }}</h3>
                 </div>
             </div>
         </div>
@@ -532,28 +502,30 @@
             }
         });
         $("#applyCouponForm").validate({
-            rules: {
-                coupon_code: {
-                    required: true
-                }
-            },
-            messages: {
-                coupon_code: {
-                    required: "Please enter a coupon code"
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('error');
-                error.insertAfter(element);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('error').removeClass('valid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('error').addClass('valid');
+        rules: {
+            coupon_code: {
+                required: true
             }
-        });
+        },
+        messages: {
+            coupon_code: {
+                required: "Please enter a coupon code"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('error');
+            error.insertAfter(element);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('error').removeClass('valid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('error').addClass('valid');
+        }
+    });
+
+
 
         // Custom method for expiry date validation
         $.validator.addMethod("pattern", function(value, element, regexp) {
@@ -567,281 +539,107 @@
             return this.optional(element) || (value === "VALID_COUPON_CODE"); // Replace with actual validation logic
         }, "Please enter a valid coupon code.");
 
-        $('#reload').click(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '/reload-captcha',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                beforeSend: function() {
-                    $('#reload').prop('disabled', true);
-                },
-                success: function(data) {
-                    if (data.captcha) {
-                        $(".captcha span").html(data.captcha);
-                    } else {
-                        console.error('Invalid CAPTCHA response');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('CAPTCHA reload failed:', error);
-                    alert('Failed to reload CAPTCHA. Please try again.');
-                },
-                complete: function() {
-                    $('#reload').prop('disabled', false);
+    $('#reload').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: '/reload-captcha',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            beforeSend: function() {
+                $('#reload').prop('disabled', true);
+            },
+            success: function(data) {
+                if (data.captcha) {
+                    $(".captcha span").html(data.captcha);
+                } else {
+                    console.error('Invalid CAPTCHA response');
                 }
-            });
-        });
-
-        $("#applyCouponForm").on("submit", function(e) {
-            e.preventDefault();
-
-            if (!$(this).valid()) {
-                return false;
+            },
+            error: function(xhr, status, error) {
+                console.error('CAPTCHA reload failed:', error);
+                alert('Failed to reload CAPTCHA. Please try again.');
+            },
+            complete: function() {
+                $('#reload').prop('disabled', false);
             }
-
-            const couponCode = $("#coupon_code").val().trim();
-            const bookingId = $("#room_id").val(); // Get the booking ID from hidden input
-
-            // Clear previous messages
-            $('.error').hide().text('');
-            $('.success').hide().text('');
-
-            $.ajax({
-                type: "POST",
-                url: `/coupon/apply/${bookingId}`,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                data: {
-                    coupon_code: couponCode
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Update the price displays
-                        const totalBasePrice = $('.d_pricelist .mb-3:nth-child(2) h4:last-child');
-                        const totalWithExtras = $('.d_pricelist .mb-3:last-child h3:last-child');
-
-                        // Update the total price
-                        totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
-
-                        // // Handle discount row
-                        // if ($('.discount-row').length === 0) {
-                        //     $('.d_pricelist .mb-3:last-child').before(`
-                        //         <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        //             <h4>Discount Applied</h4>
-                        //             <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
-                        //         </div>
-                        //     `);
-                        // } else {
-                        //     $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
-                        // }
-
-                        // Show success message
-                        $('.success').text(response.success).show(); // Display success message
-                    } else {
-                        // Show error message if response indicates failure
-                        $('.error').text(response.message || 'An error occurred.').show();
-                    }
-
-                    // Clear the coupon input
-                    $("#coupon_code").val('');
-                },
-                error: function(xhr) {
-                    const errorResponse = xhr.responseJSON;
-                    if (errorResponse && errorResponse.error) {
-                        $('.error').text(errorResponse.error).show(); // Display error message
-                    } else {
-                        $('.error').text('An unexpected error occurred. Please try again.').show(); // General error message
-                    }
-                },
-                complete: function() {
-                    // Reset button state
-                    submitButton.prop('disabled', false).text(originalButtonText);
-                }
-            });
         });
     });
 
-</script>
+    $("#applyCouponForm").on("submit", function(e) {
+        e.preventDefault();
 
-<script>
-    const countrySelect = document.getElementById('country');
-    const stateSelect = document.getElementById('state');
-    const citySelect = document.getElementById('city');
+        if (!$(this).valid()) {
+            return false;
+        }
 
-    
-    // Fetch countries on page load
-    document.addEventListener('DOMContentLoaded', async () => {
-        const selectedCountry = "{{ $customerEdit->country ?? '' }}";
-        const selectedState = "{{ $customerEdit->state ?? '' }}";
-        const selectedCity = "{{ $customerEdit->city ?? '' }}";
+        const couponCode = $("#coupon_code").val().trim();
+        const bookingId = $("#room_id").val(); // Get the booking ID from hidden input
 
-     
+        // Clear previous messages
+        $('.error').hide().text('');
+        $('.success').hide().text('');
 
-        try {
-            const countries = await fetchCountries();
+        $.ajax({
+            type: "POST",
+            url: `/coupon/apply/${bookingId}`,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            data: {
+                coupon_code: couponCode
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Update the price displays
+                    const totalBasePrice = $('.d_pricelist .mb-3:nth-child(2) h4:last-child');
+                    const totalWithExtras = $('.d_pricelist .mb-3:last-child h3:last-child');
 
-            populateCountries(countries, selectedCountry);
+                    // Update the total price
+                    totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
 
-            if (selectedCountry) {
-                const states = await fetchStates(selectedCountry);
-              
-                populateStates(states, selectedState);
+                    // Handle discount row
+                    if ($('.discount-row').length === 0) {
+                        $('.d_pricelist .mb-3:last-child').before(`
+                            <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                                <h4>Discount Applied</h4>
+                                <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
+                            </div>
+                        `);
+                    } else {
+                        $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
+                    }
 
-                if (selectedState) {
-                    const cities = await fetchCities(selectedCountry, selectedState);
-                    populateCities(cities, selectedCity);
+                    // Show success message
+                    $('.success').text(response.success).show(); // Display success message
+                } else {
+                    // Show error message if response indicates failure
+                    $('.error').text(response.message || 'An error occurred.').show();
                 }
+
+                // Clear the coupon input
+                $("#coupon_code").val('');
+            },
+            error: function(xhr) {
+                const errorResponse = xhr.responseJSON;
+                if (errorResponse && errorResponse.error) {
+                    $('.error').text(errorResponse.error).show(); // Display error message
+                } else {
+                    $('.error').text('An unexpected error occurred. Please try again.').show(); // General error message
+                }
+            },
+            complete: function() {
+                // Reset button state
+                submitButton.prop('disabled', false).text(originalButtonText);
             }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+        });
     });
-
-    async function fetchCountries() {
-        const response = await fetch('https://api.countrystatecity.in/v1/countries', {
-            headers: {
-                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data; // The API returns an array of country objects
-    }
-
-    function populateCountries(countries, selectedCountry = '') {
-        countries.forEach(country => {
-            const option = document.createElement('option');
-            option.value = country.iso2;
-
-
-            option.textContent = country.name;
-            if (country.iso2 === selectedCountry) {
-                option.selected = true;
-            }
-            console.log(option.textContent);
-            countrySelect.appendChild(option);
-        });
-    }
-
-
-
-    // Event listener for country selection
-    countrySelect.addEventListener('change', getStates);
-
-    async function getStates() {
-        const countryCode = countrySelect.value;
-        if (countryCode) {
-            try {
-                const states = await fetchStates(countryCode);
-                populateStates(states);
-                stateSelect.disabled = false;
-            } catch (error) {
-                console.error("Error fetching states:", error);
-            }
-        } else {
-            resetStateAndCitySelects();
-        }
-    }
-
-    async function fetchStates(countryCode) {
-        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
-            headers: {
-                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data; // Adjust this based on the API response structure
-    }
-
-
-    function populateStates(states, selectedState = '') {
-        stateSelect.innerHTML = '<option value="">Select State</option>';
-        states.forEach(state => {
-            const option = document.createElement('option');
-            option.value = state.iso2;
-            option.textContent = state.name;
-            if (state.iso2 === selectedState) {
-                option.selected = true;
-            }
-            stateSelect.appendChild(option);
-        });
-        resetCitySelect();
-    }
-
-    // Event listener for state selection
-    stateSelect.addEventListener('change', getCities); // Uncomment this line
-
-    async function getCities() {
-        const stateCode = stateSelect.value;
-        const countryCode = countrySelect.value;
-        resetCitySelect();
-        if (stateCode && countryCode) {
-            try {
-                const cities = await fetchCities(countryCode, stateCode);
-                populateCities(cities);
-                citySelect.disabled = false;
-            } catch (error) {
-                console.error("Error fetching cities:", error);
-            }
-        }
-    }
-
-    async function fetchCities(countryCode, stateCode) {
-        const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
-            headers: {
-                'X-CSCAPI-KEY': 'd2dtRzM0UmlYQWVDTmFGZ3pFVHB2anVISlJjWDM3ZHRuMGxQZ1FDag==' // Replace with your actual API key
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data; // Adjust this based on the API response structure
-    }
-
-    function populateCities(cities, selectedCity = '') {
-        citySelect.innerHTML = '<option value="">Select City</option>';
-        cities.forEach(city => {
-            const option = document.createElement('option');
-            option.value = city.name;
-            option.textContent = city.name;
-            if (city.name === selectedCity) {
-                option.selected = true;
-            }
-            citySelect.appendChild(option);
-        });
-    }
-
-    function resetStateAndCitySelects() {
-        stateSelect.innerHTML = '<option value="">Select State</option>';
-        resetCitySelect();
-        stateSelect.disabled = true;
-    }
-
-    function resetCitySelect() {
-        citySelect.innerHTML = '<option value="">Select City</option>';
-        citySelect.disabled = true; // Disable city dropdown until a state is selected
-    }
+});
 
 </script>
+
+
 
 
 @endsection
-
-
-

@@ -68,7 +68,7 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
         
-        session()->forget(['discount', 'discount_amount', 'discount_type']);
+        // session()->forget(['discount', 'discount_amount', 'discount_type']);
 
         return redirect()->route('mybooking')->with('success', 'Booking created successfully');
     }
@@ -122,9 +122,9 @@ class CheckoutController extends Controller
         ]);
 
         // Store discount in session
-        session(['discount' => $coupon->discount_amount]); // Store discount in session
-        session(['discount_applied' => $discountAmount]); // Store discount amount in session
-        session(['discount_type' => $coupon->type]); // Store discount type in session
+        // session(['discount' => $coupon->discount_amount]); // Store discount in session
+        // session(['discount_applied' => $discountAmount]); // Store discount amount in session
+        // session(['discount_type' => $coupon->type]); // Store discount type in session
         // Return JSON response for successful coupon application
         return response()->json([
             'success' => 'Coupon applied successfully.',
