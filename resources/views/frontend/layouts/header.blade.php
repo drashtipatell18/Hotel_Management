@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="{{ url('frontend/css/d_style.css') }}" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
 
     <!-- font-family  -->
@@ -45,30 +46,38 @@
 </head>
 <style>
     .custom-dropdown {
-        background-color: white; /* Set background color to black */
+        background-color: white;
+        /* Set background color to black */
     }
 
     .custom-dropdown .dropdown-item {
-        color: black; /* Set text color to white for better visibility */
+        color: black;
+        /* Set text color to white for better visibility */
     }
 
     .custom-dropdown .dropdown-item:hover {
-        background-color: darkgray; /* Optional: Change hover color for better UX */
-        color: white; /* Maintain text color on hover */
-    }
-    button:disabled {
-        background-color: #ccc; /* Change to a light gray */
-        color: #666; /* Change to a dark gray */
-        cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+        background-color: darkgray;
+        /* Optional: Change hover color for better UX */
+        color: white;
+        /* Maintain text color on hover */
     }
 
-    .header__logo{
+    button:disabled {
+        background-color: #ccc;
+        /* Change to a light gray */
+        color: #666;
+        /* Change to a dark gray */
+        cursor: not-allowed;
+        /* Change cursor to indicate the button is disabled */
+    }
+
+    .header__logo {
         height: 69px;
         width: 69px;
         padding: 0px !important;
     }
 
-    .footer__logo{
+    .footer__logo {
         height: 69px;
         width: 69px;
         padding: 0px !important;
@@ -80,38 +89,41 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        display: none; /* Hidden by default */
+        display: none;
+        /* Hidden by default */
         padding: 10px;
         background-color: #007BFF;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        width:40px;
+        width: 40px;
     }
-    .error{
-        color:red;
-        font-weight:500;
+
+    .error {
+        color: red;
+        font-weight: 500;
     }
 
     .d_ribbon {
-    position: absolute;
-    top: 39px;
-    left: -29px;
-    background-color: #53624E;
-    color: white;
-    padding: 7px 49px;
-    transform: rotate(-45deg);
-    font-weight: bold;
-    font-size: 18px;
-    z-index: 1;
-    /* margin-left: 1px; */
-}
-.new_y_google_icon img {
-    margin: auto;
-}
+        position: absolute;
+        top: 39px;
+        left: -29px;
+        background-color: #53624E;
+        color: white;
+        padding: 7px 49px;
+        transform: rotate(-45deg);
+        font-weight: bold;
+        font-size: 18px;
+        z-index: 1;
+        /* margin-left: 1px; */
+    }
 
+    .new_y_google_icon img {
+        margin: auto;
+    }
 </style>
+
 <body>
     <!-- Page Preloder -->
     <!-- <div id="preloder">
@@ -162,17 +174,18 @@
             <li><a href="" class="nav-link">+1 23 4567890</a></li>
         </ul>
         @if (Auth::check())
-            <div class="header__nav__widget">
-                <div class="dropdown">
-                    <a style="padding:10px" class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
-                    </ul>
-                </div>
-            </div>&nbsp;&nbsp;
+        <div class="header__nav__widget">
+            <div class="dropdown">
+                <a style="padding:10px" class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
+                </ul>
+            </div>
+        </div>&nbsp;&nbsp;
         @endif
         <div class="offcanvas__btn__widget">
             @auth
@@ -219,12 +232,13 @@
                     <div class="d-flex justify-content-center align-items-center py-3">
                         <div class="y_facebbok_icon d-flex justify-content-center" style="text-align:center">
                             <a href="{{ route('auth.facebook') }}" target="_self">
-                                    <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                                <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
                             </a>
                         </div>
                         <div class="new_y_google_icon d-flex justify-content-center">
                             <a href="{{ route('auth.google') }}" target="_self">
-                                <img src="{{ url('frontend/img/google_ic.png') }}" style="display:block" alt="Google Icon">
+                                <img src="{{ url('frontend/img/google_ic.png') }}" style="display:block"
+                                    alt="Google Icon">
                             </a>
                         </div>
                     </div>
@@ -259,11 +273,15 @@
                         <div class="new_m_sline"></div>
                     </div>
                     <div class="d-flex justify-content-center align-items-center py-3">
-                        <div class="new_y_facebook_icon d-flex justify-content-center">
-                            <img src="img/facebook_ic.png" alt>
+                        <div class="new_y_facebook_icon d-flex justify-content-center" style="text-align:center">
+                            <a href="{{ route('auth.facebook') }}" target="_self">
+                                <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                            </a>
                         </div>
-                        <div class="new_y_google_icon d-flex justify-content-center">
-                            <img src="img/google_ic.png" alt>
+                        <div class="new_y_google_icon d-flex justify-content-center" style="text-align:center">
+                            <a href="{{ route('auth.google') }}" target="_self">
+                                <img src="{{ url('frontend/img/google_ic.png') }}" alt>
+                            </a>
                         </div>
                     </div>
                 </form>
@@ -304,7 +322,8 @@
                 <h2>Forgot Password</h2>
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-lg-10">
-                        <p class="text-center">Don't worry! It happens. Please enter the email address linked with your account.</p>
+                        <p class="text-center">Don't worry! It happens. Please enter the email address linked with your
+                            account.</p>
                     </div>
                 </div>
                 <form id="forgotPasswordAjaxFormMobile">
@@ -361,7 +380,7 @@
                     <div class="col-lg-2 align-self-center">
                         <div class="header__logo">
                             <a href="{{ route('index') }}">
-                                <img  class="w-100 h-100" src="{{ url('assets/img/Frame.png') }}" alt="">
+                                <img class="w-100 h-100" src="{{ url('assets/img/Frame.png') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -383,22 +402,24 @@
                                 </ul>
                             </nav>
                             @if (Auth::check())
-                                <div class="header__nav__widget">
-                                    <div class="dropdown">
-                                        <a style="padding:10px" class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
-                                        </a>
-                                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
-                                        </ul>
-                                    </div>
-                                </div>&nbsp;&nbsp;
+                            <div class="header__nav__widget">
+                                <div class="dropdown">
+                                    <a style="padding:10px" class="dropdown-toggle" href="#" role="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
+                                    </ul>
+                                </div>
+                            </div>&nbsp;&nbsp;
                             @endif
 
                             <div class="header__nav__widget">
                                 @auth
-                                <a style="padding-left: 28px;padding-right: 25px;" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
+                                <a style="padding-left: 28px;padding-right: 25px;" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Logout</a>
                                 @else
                                 <a href="#" id="openModalBtn">Login</a>
                                 @endauth
@@ -438,21 +459,23 @@
                                                 <div class="m_sline"></div>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center py-3">
-                                                <div class="y_facebbok_icon d-flex justify-content-center" style="text-align:center">
+                                                <div class="y_facebbok_icon d-flex justify-content-center"
+                                                    style="text-align:center">
                                                     <a href="{{ route('auth.facebook') }}" target="_self">
-                                                            <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                                                        <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
                                                     </a>
                                                 </div>
                                                 <div class="new_y_google_icon d-flex justify-content-center">
                                                     <a href="{{ route('auth.google') }}" target="_self">
-                                                        <img src="{{ url('frontend/img/google_ic.png') }}" style="display:block" alt="Google Icon">
+                                                        <img src="{{ url('frontend/img/google_ic.png') }}"
+                                                            style="display:block" alt="Google Icon">
                                                     </a>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
 
-                                    <div id="registerForm" class="form">
+                                    <div id="registerForm" class="form hidden">
                                         <div class="row  m-0 justify-content-center d-flex">
                                             <div class="col-lg-9">
                                                 <h2>Hello! Register to get started</h2>
@@ -481,32 +504,40 @@
                                                 <div class="m_sline"></div>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center py-3">
-                                                <div class="y_facebbok_icon d-flex justify-content-center">
-                                                    <img src="img/facebook_ic.png" alt>
+                                                <div class="y_facebbok_icon d-flex justify-content-center"
+                                                    style="text-align:center">
+                                                    <a href="{{ route('auth.facebook') }}" target="_self">
+                                                        <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                                                    </a>
                                                 </div>
-                                                <div class="y_ggole_icon d-flex justify-content-center">
-                                                    <img src="img/google_ic.png" alt>
+                                                <div class="new_y_google_icon d-flex justify-content-center">
+                                                    <a href="{{ route('auth.google') }}" target="_self">
+                                                        <img src="{{ url('frontend/img/google_ic.png') }}"
+                                                            style="display:block" alt="Google Icon">
+                                                    </a>
                                                 </div>
                                             </div>
+                                        </form>
                                     </div>
-                                    </form>
-
 
                                     <!-- Forgot Password Form -->
                                     <div id="forgotPasswordForm" class="form">
                                         <h2>Forgot Password</h2>
                                         <div class="row m-0 justify-content-center d-flex">
                                             <div class="col-lg-10">
-                                                <p class="text-center">Don't worry! It occurs. Please enter the email address linked with your account.</p>
+                                                <p class="text-center">Don't worry! It occurs. Please enter the email
+                                                    address linked with your account.</p>
                                             </div>
                                         </div>
-                                        <form id="forgotPasswordAjaxForm"> <!-- Ensure this ID is unique -->
+                                        <form id="forgotPasswordAjaxForm">
+                                            <!-- Ensure this ID is unique -->
                                             @csrf
-                                            <input type="text" placeholder="Enter your email" name="email" id="email"> <!-- Changed input type to text and added required attribute -->
+                                            <input type="text" placeholder="Enter your email" name="email" id="email">
+                                            <!-- Changed input type to text and added required attribute -->
                                             <button type="submit" id="submit">Send Code</button>
                                         </form>
                                     </div>
-                                        <!-- OTP Verification Form -->
+                                    <!-- OTP Verification Form -->
                                     <div id="otpVerificationForm" class="form hidden">
                                         <h2>OTP Verification</h2>
                                         <div class="row  m-0 justify-content-center d-flex">
@@ -524,8 +555,9 @@
                                             <input type="text" maxlength="1" class="otp-box" id="otp4">
                                         </div>
                                         <button id="verifyBtn">Verify</button>
-                                        <form id="resendOTPAjaxForm"> <!-- Ensure this ID is unique -->
-                                        @csrf
+                                        <form id="resendOTPAjaxForm">
+                                            <!-- Ensure this ID is unique -->
+                                            @csrf
                                             <p class="verification_resend">Didn't
                                                 receive code?
                                                 <span id="resendOtp" style="cursor: pointer; color: blue;">Resend</span>
@@ -545,7 +577,8 @@
                                             </div>
                                         </div>
                                         <div class="password-field">
-                                            <input type="password" id="newPassword" name="newPassword" placeholder="New Password">
+                                            <input type="password" id="newPassword" name="newPassword"
+                                                placeholder="New Password">
                                             <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
                                         </div>
                                         <div class="password-field">
@@ -587,7 +620,8 @@
                                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn" style="background-color: #1A2142;color: #fff; width: 100%;">Yes</button>
+                                <button type="submit" class="btn"
+                                    style="background-color: #1A2142;color: #fff; width: 100%;">Yes</button>
                             </div>
                         </div>
                     </div>
@@ -596,7 +630,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 </body>
 
@@ -703,7 +737,7 @@ document.getElementById('forgotPasswordAjaxFormMobile').addEventListener('submit
         submitButton.textContent = 'Code Sent';
         submitButton.style.color = 'green';
         toastr.success(data.message || 'OTP sent successfully');
-        
+
         // Show OTP verification form
         document.getElementById('newForgotPasswordForm').classList.add('hidden');
         document.getElementById('newOtpVerificationForm').classList.remove('hidden');
@@ -721,7 +755,7 @@ document.getElementById('forgotPasswordAjaxFormMobile').addEventListener('submit
 // OTP Verification
 document.getElementById('newVerifyBtn').addEventListener('click', function(e) {
     e.preventDefault();
-    
+
     const email = document.getElementById('forgotEmail').value;
     const otp = [
         document.getElementById('newOtp1').value,
@@ -729,7 +763,7 @@ document.getElementById('newVerifyBtn').addEventListener('click', function(e) {
         document.getElementById('newOtp3').value,
         document.getElementById('newOtp4').value
     ].join('');
-    
+
     const formData = new FormData();
     formData.append('email', email);
     formData.append('otp', otp);
@@ -743,7 +777,7 @@ document.getElementById('newVerifyBtn').addEventListener('click', function(e) {
     .then(data => {
         if (data.success) {
             toastr.success(data.message || 'OTP verified successfully');
-            
+
             // Show password reset form
             document.getElementById('newOtpVerificationForm').classList.add('hidden');
             document.getElementById('newCreateNewPasswordForm').classList.remove('hidden');
