@@ -1478,8 +1478,8 @@
 	Testimonial
 	-----------------------*/
 
-	.Testimonials {
-		background-image: url(/img/testimonialsBack.jpg);
+	.Testimonial_back {
+		background-image: url('/public/frontend/img/testimonialsBack.jpg');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}

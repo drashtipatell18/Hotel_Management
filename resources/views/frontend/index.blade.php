@@ -1,7 +1,13 @@
 @extends('frontend.layouts.main')
 @section('main-container')
 
-
+<style>
+     .Testimonials  {
+		background-image: url('/public/frontend/img/testimonialsBack.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+</style>
 
 <!-- Default Modal -->
 <!-- <div id="defaultModal" class="unique-modal" style="display: none;"> -->
@@ -240,7 +246,7 @@
 <!-- Gallery Section End -->
 
 <!-- rooms Section Begin -->
-<section class="rooms spad">
+<section class="rooms spad" style="background-image: url('{{ url('frontend/img/roomsBack.png') }}'); background-repeat: no-repeat;background-size:cover">
     <div class="gallery__text">
         <div class="container Facilities">
             <div class="row m-0  d-flex justify-content-center">
@@ -390,7 +396,7 @@
 </section>
 
 <!-- offer Section Begin -->
-<section class="offer spad">
+<section class="offer spad" style="background-image: url('{{ url('frontend/img/offerBack.png') }}'); background-repeat: no-repeat;background-size:cover">
     <div class="gallery__text">
         <div class="container Facilities">
             <div class="row m-0  d-flex justify-content-center">
@@ -443,8 +449,8 @@
 <!-- offer Section End -->
 
 <!-- Testimonials Section Begin -->
-<section class="Testimonials pt-lg-5">
-    <div class="Testimonial_back">
+<section class="Testimonials pt-lg-5" style="background-image: url('frontend/img/testimonialsBack1.jpg');">
+   <div class="Testimonial_back">
         <div class="gallery__text2">
             <div class="container Facilities">
                 <div class="row m-0  d-flex justify-content-center">
@@ -489,7 +495,7 @@
 <!-- Experience Section End -->
 
 <!-- service Section Begin -->
-{{-- <div class="Newslatter">
+<div class="Newslatter" style="background-image: url('frontend/img/newslatterBack.png');">
     <div class="Newslatter_opacity_bg  pt-lg-5 pb-lg-5">
         <div class="container Newslatter_container ">
             <h1 class="text-light text-center">Subscribe to Our
@@ -511,7 +517,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 
 
