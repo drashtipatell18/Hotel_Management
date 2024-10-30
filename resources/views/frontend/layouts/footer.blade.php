@@ -8,7 +8,8 @@
                             <div class="footer__logo">
                                 <a href="#">
                                     <!-- <img src="img/logo.png" alt> -->
-                                    <h1 class="text-light mb-0">logo</h1>
+                                    <!-- <h1 class="text-light mb-0">logo</h1>   -->
+                                    <img class="w-100 h-100" src="{{ url('assets/img/Frame.png') }}" alt="">
                                 </a>
                             </div>
                             <p class="text-light">Lorem ipsum dolor sit

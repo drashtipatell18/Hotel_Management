@@ -68,6 +68,12 @@
         padding: 0px !important;
     }
 
+    .footer__logo{
+        height: 69px;
+        width: 69px;
+        padding: 0px !important;
+    }
+
 
 
     #scrollToTopBtn {
@@ -104,18 +110,6 @@
 .new_y_google_icon img {
     margin: auto;
 }
-
-/* Sticky Header Styles */
-    /* .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background-color: #fff;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    } */
 
 </style>
 <body>
@@ -154,8 +148,6 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__logo">
             <a href="{{ route('index') }}">
-                <!-- <img src="img/logo.png" alt=""> -->
-                <!-- <h2 class="text-light">Logo</h2> -->
                 <img class="w-100 h-100" src="{{ url('assets/img/Logo.png') }}" alt="">
             </a>
         </div>
@@ -167,7 +159,21 @@
             <li><a href="{{ route('spa') }}" class="nav-link" data-page="spabook">Spa</a></li>
             <li><a href="{{ route('gallery') }} " class="nav-link" data-page="gallery">Gallery</a></li>
             <li><a href="{{ route('contact-us')}}" class="nav-link" data-page="contact">Contact Us</a></li>
+            <li><a href="" class="nav-link">+1 23 4567890</a></li>
         </ul>
+        @if (Auth::check())
+            <div class="header__nav__widget">
+                <div class="dropdown">
+                    <a style="padding:10px" class="dropdown-toggle" href="#" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }} <i class="fas fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{{ route('myProfile') }}">My Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('mybooking') }}">My Booking</a></li>
+                    </ul>
+                </div>
+            </div>&nbsp;&nbsp;
+        @endif
         <div class="offcanvas__btn__widget">
             @auth
             <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
@@ -193,7 +199,7 @@
             <div id="newLoginForm" class="new-form">
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-sm-9">
-                        <h2>Welcome back! Glad to see you, Again!</h2>
+                        <h2>Welcome back! Glad to see you, Again11!</h2>
                     </div>
                 </div>
                 <form id="mobileloginAjaxForm">
@@ -203,7 +209,7 @@
                         <input type="password" name="password" id="newLoginPassword" placeholder="Password">
                         <i class="fas fa-eye new-toggle-password" id="newToggleLoginPassword"></i>
                     </div>
-                    <button id="newForgotPasswordBtn">Forgot Password?</button>
+                    <button type="button" id="newForgotPasswordBtn">Forgot Password?</button>
                     <button>Login</button>
                     <div class="new_m_scon pt-4">
                         <div class="new_m_sline"></div>
@@ -211,11 +217,15 @@
                         <div class="new_m_sline"></div>
                     </div>
                     <div class="d-flex justify-content-center align-items-center py-3">
-                        <div class="new_y_facebook_icon d-flex justify-content-center">
-                            <img src="img/facebook_ic.png" alt>
+                        <div class="y_facebbok_icon d-flex justify-content-center" style="text-align:center">
+                            <a href="{{ route('auth.facebook') }}" target="_self">
+                                    <img src="{{ url('frontend/img/facebook_ic.png') }}" alt>
+                            </a>
                         </div>
                         <div class="new_y_google_icon d-flex justify-content-center">
-                            <img src="img/google_ic.png" alt>
+                            <a href="{{ route('auth.google') }}" target="_self">
+                                <img src="{{ url('frontend/img/google_ic.png') }}" style="display:block" alt="Google Icon">
+                            </a>
                         </div>
                     </div>
                 </form>
@@ -259,7 +269,7 @@
                 </form>
             </div>
             <!-- Forgot Password Form -->
-            {{-- <div id="newForgotPasswordForm" class="new-form">
+            <!-- {{-- <div id="newForgotPasswordForm" class="new-form">
                 <h2>Forgot Password</h2>
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-lg-10">
@@ -269,10 +279,10 @@
                 </div>
                 <input type="email" placeholder="Enter your email">
                 <button id="newSendCodeBtn">Send Code</button>
-            </div>
+            </div> -->
 
             <!-- OTP Verification Form -->
-            <div id="newOtpVerificationForm" class="new-form hidden">
+            <!-- <div id="newOtpVerificationForm" class="new-form hidden">
                 <h2>OTP Verification</h2>
                 <div class="row m-0 justify-content-center d-flex">
                     <div class="col-lg-10">
@@ -287,7 +297,7 @@
                 </div>
                 <button id="newVerifyBtn">Verify</button>
                 <p class="new_verification_resend">Didn't receive code? <span>Resend</span></p>
-            </div> --}}
+            </div> --}} -->
 
 
             <div id="newForgotPasswordForm" class="new-form">
@@ -299,7 +309,7 @@
                 </div>
                 <form id="forgotPasswordAjaxFormMobile">
                     @csrf
-                    <input type="email" id="forgotEmail" placeholder="Enter your email">
+                    <input type="text" name="email" id="forgotEmail" placeholder="Enter your email">
                     <button id="newSendCodeBtn" type="submit">Send Code</button>
                 </form>
             </div>
@@ -662,47 +672,136 @@
         });
     });
 
-    document.getElementById('forgotPasswordAjaxFormMobile').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
-        const email = document.getElementById('forgotEmail').value;
-        const submitButton = document.getElementById('newSendCodeBtn');
 
-        submitButton.disabled = true; // Disable the button to prevent multiple clicks
-        submitButton.textContent = 'Sending...'; // Change button text
+   // Forgot Password Form Submission
+document.getElementById('forgotPasswordAjaxFormMobile').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('forgotEmail').value;
+    const submitButton = document.getElementById('newSendCodeBtn');
 
-        // Create FormData object to send the email
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
 
-        // Send AJAX request
-        fetch('/forget-password', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                // Handle success
-                submitButton.textContent = 'Code Sent';
-                submitButton.style.color = 'green'; // Optional: change color for success
-            } else {
-                // Handle error response
-                return response.json().then(errorData => {
-                    // Log the error data for debugging
-                    console.error('Error response:', errorData);
-                    alert(errorData.message || 'Error sending code. Please try again.'); // Notify user
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error); // Log the error for debugging
-            alert('An error occurred. Please try again.'); // Notify user
-        })
-        .finally(() => {
-            submitButton.disabled = false; // Re-enable the button
-            submitButton.textContent = 'Send Code'; // Reset button text
-        });
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('_token', '{{ csrf_token() }}');
+
+    fetch('/forget-password', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.json().then(errorData => {
+                throw new Error(errorData.message || 'Error sending code.');
+            });
+        }
+    })
+    .then(data => {
+        submitButton.textContent = 'Code Sent';
+        submitButton.style.color = 'green';
+        toastr.success(data.message || 'OTP sent successfully');
+        
+        // Show OTP verification form
+        document.getElementById('newForgotPasswordForm').classList.add('hidden');
+        document.getElementById('newOtpVerificationForm').classList.remove('hidden');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        toastr.error(error.message || 'An error occurred. Please try again.');
+    })
+    .finally(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Code';
     });
+});
+
+// OTP Verification
+document.getElementById('newVerifyBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('forgotEmail').value;
+    const otp = [
+        document.getElementById('newOtp1').value,
+        document.getElementById('newOtp2').value,
+        document.getElementById('newOtp3').value,
+        document.getElementById('newOtp4').value
+    ].join('');
+    
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('otp', otp);
+    formData.append('_token', '{{ csrf_token() }}');
+
+    fetch('/verify-otp', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            toastr.success(data.message || 'OTP verified successfully');
+            
+            // Show password reset form
+            document.getElementById('newOtpVerificationForm').classList.add('hidden');
+            document.getElementById('newCreateNewPasswordForm').classList.remove('hidden');
+        } else {
+            throw new Error(data.message || 'Invalid or expired OTP');
+        }
+    })
+    .catch(error => {
+        toastr.error(error.message || 'An error occurred during OTP verification.');
+    });
+});
+
+// New Password Creation
+document.getElementById('newCreatePasswordBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const newNewPassword = document.getElementById('newNewPassword').value;
+    const newConfirmNewPassword = document.getElementById('newConfirmNewPassword').value;
+
+    if (newNewPassword !== newConfirmNewPassword) {
+        toastr.error("Passwords do not match.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('email', document.getElementById('forgotEmail').value);
+    formData.append('newNewPassword', newNewPassword);
+    formData.append('_token', '{{ csrf_token() }}');
+
+    fetch('password/resetMobile', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            toastr.success(data.message || 'Password created successfully');
+            window.location.href = '/';
+        } else {
+            throw new Error(data.message || 'Password creation failed');
+        }
+    })
+    .catch(error => {
+        toastr.error(error.message || 'An error occurred while creating the new password.');
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <script>

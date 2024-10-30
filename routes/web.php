@@ -448,6 +448,7 @@ Route::post('/loginstore', [IndexController::class, 'authenticate'])->name('logi
 Route::post('/forget-password', [IndexController::class, 'forgotPassword'])->name('forget.password');
 Route::post('/verify-otp', [IndexController::class, 'verifyOtp'])->name('verify.otp');
 Route::post('/password/reset', [IndexController::class, 'resetPassword'])->name('password.reset');
+Route::post('/password/resetMobile', [IndexController::class, 'resetPasswordMobile'])->name('password.resetmobile');
 Route::post('/resend-otp', [IndexController::class, 'resendOtp'])->name('resend.otp');
 Route::get('/offer-details', [IndexController::class, 'offerDetails'])->name('offerDetails');
 

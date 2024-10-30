@@ -231,7 +231,6 @@ class IndexController extends Controller
     public function resetPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
             'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
         ]);
 
@@ -250,6 +249,30 @@ class IndexController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Password updated successfully.']);
     }
+
+
+    public function resetPasswordMobile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'newNewPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        }
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found.']);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->newNewPassword);
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Password updated successfully.']);
+    }
+
 
     public function resendOtp(Request $request)
     {

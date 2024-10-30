@@ -2,6 +2,7 @@
 @section('main-container')
 
 
+
 <!-- Default Modal -->
 <!-- <div id="defaultModal" class="unique-modal" style="display: none;"> -->
     <!-- <div class="unique-modal-content"> -->
@@ -145,7 +146,7 @@
 <!-- welcome Section End -->
 
 <!-- service Section Begin -->
-<div class="service">
+<div class="service" style="background-image: url('{{ url('frontend/img/serviceBack.png') }}'); background-repeat: no-repeat;background-size:cover">
     <div class="service_opacity_bg">
         <div class="container service_container">
             <div class="row m-0 d-flex justify-content-center">
