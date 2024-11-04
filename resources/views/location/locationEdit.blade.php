@@ -21,6 +21,13 @@
                                     <input type="text" class="form-control" id="name" name="name" value="{{ $location->name }}">
                                 </div>
                             </div>
+                            {{-- Map Link --}}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="map_link">Map Link</label>
+                                    <input type="text" class="form-control" id="map_link" name="map_link" value="{{ $location->map_link }}">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="address">Address</label>

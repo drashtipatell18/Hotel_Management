@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Location extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['name', 'latitude', 'longitude', 'address'];
+    protected $fillable = ['name', 'map_link', 'latitude', 'longitude', 'address'];
 }

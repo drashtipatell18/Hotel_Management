@@ -19,6 +19,7 @@ class LocationController extends Controller
         // Validate the input
         $request->validate([
             'name' => 'required|string',
+            'map_link' => 'required|string',
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -27,6 +28,7 @@ class LocationController extends Controller
         // Create a new location entry
         Location::create([
             'name' => $request->input('name'),
+            'map_link' => $request->input('map_link'),
             'address' => $request->input('address'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
@@ -51,7 +53,13 @@ class LocationController extends Controller
     public function locationUpdate(Request $request, $id)
     {
         $location = Location::find($id);
-        $location->update($request->all());
+        $location->update([
+            'name' => $request->input('name'),
+            'map_link' => $request->input('map_link'),
+            'address' => $request->input('address'),
+            'latitude' => $request->input('latitude'),
+            'longitude' => $request->input('longitude'),
+        ]);
         return redirect()->route('location.list')->with('success', 'Location updated successfully');
     }
 

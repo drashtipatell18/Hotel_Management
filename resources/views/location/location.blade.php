@@ -26,6 +26,18 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            {{-- Map Link --}}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Map Link</label>
+                                    <input type="text" class="form-control @error('map_link') is-invalid @enderror" name="map_link" id="map_link" value="{{ old('map_link') }}">
+                                    @error('map_link')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            
                             {{-- Address --}}
                             <div class="col-md-12">
                                 <div class="form-group">

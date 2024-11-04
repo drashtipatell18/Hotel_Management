@@ -114,19 +114,16 @@
         <div class="row py-4 about_sec2_row">
             <div class="col-lg-8 col-md-6">
                 <div class="d-flex justify-content-center">
-                    <iframe class="y_con_location"
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14877.287421451878!2d72.8858624!3d21.219082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1724393202474!5m2!1sen!2sin"
-                        width="786" height="702" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    {!! $location->map_link !!}
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 d-flex align-items-center">
                 <div>
                     <div class="y_abouttext">
                         <h2>Location</h2>
-                        <p>330 Kling Ford, Lake Denitaside, United States</p>
+                        <p>{{ $address }}</p>
                         <div class="pt-3">
-                            <a href="#" class="Custom_btn">Get Directions</a>
+                            <a href="https://www.google.com/maps/place/Kalathiya+Infotech/@{{ $location->latitude }},{{ $location->longitude }},19z/data=!4m6!3m5!1s0x26cb5e4230fc8877:0xd36ccfe485cd6a01!8m2!3d{{ $location->latitude }}!4d{{ $location->longitude }}!16s%2Fg%2F11kbyh9bk6?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D" class="Custom_btn" target="_blank">Get Directions</a>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contacts;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-
+use App\Models\Location;
 class ContactController extends Controller
 {
     public function ContactList()
@@ -33,7 +33,9 @@ class ContactController extends Controller
     }
     public function contactus()
     {
-        return view('frontend.contact');
+        $location = Location::first();
+        $address = $location->address;
+        return view('frontend.contact', compact('location', 'address'));
     }
 
     public function contactusStore(Request $request)
