@@ -398,9 +398,14 @@ Route::controller(ClientReviewController::class)->group(function () {
     Route::get('/clientReview/delete/{id}','clientReviewDelete')->name('clientReview.delete');
 
 });
-Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
-Route::post('/location/store', [LocationController::class, 'store'])->name('location.store');
 
+// Location
+Route::get('/location/create', [LocationController::class, 'locationCreate'])->name('location.create');
+Route::post('/location/store', [LocationController::class, 'locationStore'])->name('location.store');
+Route::get('/location/list', [LocationController::class, 'locationList'])->name('location.list');
+Route::get('/location/edit/{id}', [LocationController::class, 'locationEdit'])->name('location.edit');
+Route::post('/location/update/{id}', [LocationController::class, 'locationUpdate'])->name('location.update');
+Route::get('/location/delete/{id}', [LocationController::class, 'locationDelete'])->name('location.delete');
 
 
 

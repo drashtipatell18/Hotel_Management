@@ -7,32 +7,58 @@ use App\Models\Location;
 
 class LocationController extends Controller
 {
-    public function create()
+    public function locationCreate()
     {
-        // dd('isha');
         return view('location.location');
     }
 
-    public function store(Request $request)
+    public function locationStore(Request $request)
     {
-        // Uncomment if you want to debug the request data
         // dd($request->all());
 
         // Validate the input
         $request->validate([
-            'address' => 'required|string|max:255',
+            'name' => 'required|string',
+            'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);
 
         // Create a new location entry
         Location::create([
+            'name' => $request->input('name'),
             'address' => $request->input('address'),
-            'lat' => $request->input('latitude'),
-            'lng' => $request->input('longitude'),
+            'latitude' => $request->input('latitude'),
+            'longitude' => $request->input('longitude'),
         ]);
 
         // Redirect with a success message
-        return redirect()->route('location.create')->with('success', 'Location added successfully');
+        return redirect()->route('location.list')->with('success', 'Location added successfully');
+    }
+
+    public function locationList()
+    {
+        $locations = Location::all();
+        return view('location.locationList', compact('locations'));
+    }
+
+    public function locationEdit($id)
+    {
+        $location = Location::find($id);
+        return view('location.locationEdit', compact('location'));
+    }
+
+    public function locationUpdate(Request $request, $id)
+    {
+        $location = Location::find($id);
+        $location->update($request->all());
+        return redirect()->route('location.list')->with('success', 'Location updated successfully');
+    }
+
+    public function locationDelete($id)
+    {
+        $location = Location::find($id);
+        $location->delete();
+        return redirect()->route('location.list')->with('success', 'Location deleted successfully');
     }
 }

@@ -71,14 +71,14 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <input placeholder="Your Email" type="email" class="form-control" id="email" name="email">
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
                             <input placeholder="Your Subject" type="text" class="form-control" id="subject" name="subject">
                             @error('subject')
@@ -92,7 +92,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <div class="mt-5 y_contact_btn">
                             <button type="submit" class="Custom_btn">Submit</button>
                         </div>
