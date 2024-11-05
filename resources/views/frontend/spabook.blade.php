@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', 'SpaBook')
+@section('title', 'Hotel Management: SpaBook')
 @section('main-container')
 <style>
     .d_gallery .nav-tabs {

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', 'Gallery')
+@section('title', 'Hotel Management: Gallery')
 @section('main-container')
 
 <style>

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', 'Rooms')
+@section('title', 'Hotel Management: Rooms')
 @section('main-container')
 
 <!-- Breadcrumb Begin -->
