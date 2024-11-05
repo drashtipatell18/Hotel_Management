@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', 'Spa')
+@section('title', 'Hotel Management: Spa')
 @section('main-container')
 
 

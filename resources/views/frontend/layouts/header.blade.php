@@ -8,12 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Hotel Management</title>
+    <title>@yield('title', 'Hotel Management')</title>
     <link rel="icon" href="{{ asset('assets/img/Logo.png') }}" type="image/x-icon"/>
 
-    <!-- Css Styles -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"> -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
     <link rel="stylesheet" href="{{ url('frontend/css/elegant-icons.css') }}" type="text/css">

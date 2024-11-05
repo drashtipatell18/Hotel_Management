@@ -1,5 +1,5 @@
 @extends('frontend.layouts.main')
-@section('title', 'Checkout')
+@section('title', 'Hotel Management: Checkout')
 @section('main-container')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
