@@ -20,6 +20,7 @@ class CouponController extends Controller
 
     public function couponStore(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'code' => 'required|unique:coupons,code',
             'name' => 'required',
@@ -31,6 +32,12 @@ class CouponController extends Controller
             'expires_at' => 'nullable|date|after:starts_at',
         ]);
 
+        $fileName = null;
+        if ($request->hasFile('image')) {
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('assets/coupons'), $fileName);
+        }
+
         Coupon::create([
             'user_id' => auth()->user()->id,
             'code' => $request->input('code'),
@@ -41,6 +48,7 @@ class CouponController extends Controller
             'max_uses' => $request->input('max_uses'),
             'starts_at' => $request->input('starts_at'),
             'expires_at' => $request->input('expires_at'),
+            'image' => $fileName,
         ]);
         return redirect()->route('coupon/list')->with('success', 'Coupon created successfully');
     }
@@ -53,6 +61,7 @@ class CouponController extends Controller
 
     public function couponUpdate(Request $request, $id)
     {
+        // dd($request->all());
         $request->validate([
             'code' => 'required|unique:coupons,code,' . $id,
             'name' => 'required',
@@ -65,6 +74,12 @@ class CouponController extends Controller
         ]);
 
         $coupon = Coupon::findOrFail($id);
+        // dd($request->hasfile('image'));
+        if ($request->hasFile('image')) {
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('assets/coupons'), $fileName);
+            $coupon->image = $fileName;
+        }
         $coupon->update([
             'code' => $request->input('code'),
             'name' => $request->input('name'),

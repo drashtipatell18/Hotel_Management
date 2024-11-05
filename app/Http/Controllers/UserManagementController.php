@@ -26,7 +26,7 @@ class UserManagementController extends Controller
     public function userView($user_id)
     {
         $userData = User::where('user_id',$user_id)->first();
-       
+
         return view('usermanagement.useredit',compact('userData'));
     }
 
@@ -67,7 +67,7 @@ class UserManagementController extends Controller
     }
 
     /** delete record */
-    public function userDelete($id)
+    public function userDelete($id) 
     {
         try {
 
@@ -93,18 +93,18 @@ class UserManagementController extends Controller
         $columnName_arr  = $request->get('columns');
         $order_arr       = $request->get('order');
         $search_arr      = $request->get('search');
-    
+
         $columnIndex     = $columnIndex_arr[0]['column']; // Column index
         $columnName      = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
         $searchValue     = $search_arr['value']; // Search value
-    
+
         // Get users with role_id = 0
         $users = DB::table('users')->where('role_id', 0);
-    
+
         // Total records with role_id = 0
         $totalRecords = $users->count();
-    
+
         // Total filtered records
         $totalRecordsWithFilter = $users->where(function ($query) use ($searchValue) {
             $query->where('name', 'like', '%' . $searchValue . '%');
@@ -113,7 +113,7 @@ class UserManagementController extends Controller
             $query->orWhere('phone_number', 'like', '%' . $searchValue . '%');
             $query->orWhere('status', 'like', '%' . $searchValue . '%');
         })->count();
-    
+
         // Fetch data with search filter and pagination
         $records = $users->orderBy($columnName, $columnSortOrder)
             ->where(function ($query) use ($searchValue) {
@@ -126,14 +126,14 @@ class UserManagementController extends Controller
             ->skip($start)
             ->take($rowPerPage)
             ->get();
-    
+
         $data_arr = [];
-    
+
         foreach ($records as $key => $record) {
             $profile = $record->profile && file_exists(public_path('assets/img/' . $record->profile))
             ? '<img src="'.asset('assets/img/' . $record->profile).'" width="80" class="avatar avatar-sm mr-2">'
             : '<img src="'.asset('assets/img/men.jpg').'" width="80" class="avatar avatar-sm mr-2">';
-    
+
             $modify = '
                 <td class="text-right">
                     <a href="'.url('users/add/edit/'.$record->user_id).'" style="font-size: 23px; padding: 5px; color: #009688;">
@@ -155,7 +155,7 @@ class UserManagementController extends Controller
                 "modify"       => $modify,
             ];
         }
-    
+
         $response = [
             "draw"                 => intval($draw),
             "iTotalRecords"        => $totalRecords,
@@ -164,7 +164,7 @@ class UserManagementController extends Controller
         ];
         return response()->json($response);
     }
-    
+
 
     public function createUser(Request $request)
     {
@@ -191,7 +191,7 @@ class UserManagementController extends Controller
         $user->position = $request->position;
         $user->department = $request->department;
         $user->password = bcrypt($request->password);
-       
+
 
         if ($request->hasFile('profile')) {
             $fileName = time() . '.' . $request->profile->extension();

@@ -77,6 +77,31 @@
                                             <div class="error text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label>Profile Image</label>
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <div class="custom-file">
+                                                    <input type="file"
+                                                        class="custom-file-input @error('image') is-invalid @enderror"
+                                                        id="image" name="image"
+                                                        onchange="previewImage(event, 'imagePreview')">
+                                                    <input type="hidden" class="form-control" name="hidden_fileupload">
+                                                    <label class="custom-file-label" for="customFile">Choose
+                                                        file</label>
+                                                    @error('image')
+                                                        <div class="error text-danger">{{ $message }}</div>
+                                                    @enderror 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a href="#">
+                                                    <img id="imagePreview" class="avatar-img"
+                                                        style="width: 50px; height: 50px; object-fit: cover;">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Update Coupon</button>
                                 </div>
                             </form>
@@ -86,4 +111,14 @@
             </div>
         </div>
     </div>
+<script>
+    function previewImage(event, previewElementId) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById(previewElementId);
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection
