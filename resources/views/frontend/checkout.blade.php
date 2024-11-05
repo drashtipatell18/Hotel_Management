@@ -17,24 +17,24 @@
         font-size: 14px;
     }
 
-    input.error {
+    /* input.error {
         border-color: #dc3545;
     }
 
     input.valid {
         border-color: #198754;
-    }
+    } */
 
     .coupon-btn {
         background-color: #030c38;
         color: white;
         height: 50px !important;
-        width:100% !important
+        width: 100% !important
     }
+
     .d_form .d_inquiry select {
         background-color: white !important;
     }
-
 </style>
 <!-- Heading section start -->
 
@@ -126,7 +126,8 @@
                                 <!-- <input type="text" placeholder="Country*" name="country" id=""
                                     value="{{ old('country')}}"> -->
 
-                                <select name="country" id="country" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                <select name="country" id="country" class="form-select"
+                                    style="border: 1px solid black !important;padding: 11px;color:black">
                                     <option value="">Select Country</option>
                                     <!-- Add options here -->
                                 </select>
@@ -136,7 +137,8 @@
                                 <label for="dob">State</label>
                                 <!-- <input type="text" placeholder="State*" name="state" id="" value="{{ old('state')}}"> -->
 
-                                <select name="state" id="state" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                <select name="state" id="state" class="form-select"
+                                    style="border: 1px solid black !important;padding: 11px;color:black">
                                     <option value="">Select State</option>
                                     <!-- Add options here -->
                                 </select>
@@ -145,12 +147,13 @@
 
                             <div class="col-12 col-md-6">
                                 <label for="city">City</label>
-                                <select name="city" id="city" class="form-select" style="border: 1px solid black !important;padding: 11px;color:black">
+                                <select name="city" id="city" class="form-select"
+                                    style="border: 1px solid black !important;padding: 11px;color:black">
                                     <option value="">Select City</option>
                                     <!-- Add options here -->
                                 </select>
                             </div>
-                          
+
                         </div>
                     </div>
                     <div class="d_inquiry">
@@ -293,6 +296,7 @@
     </form>
 
     </div>
+
     <!-- <div class="col-12 col-sm-1"></div> -->
     <div class="col-12 col-lg-5 p-sm-4 ">
         <div class="d_book">
@@ -335,24 +339,24 @@
                     <h4>Taxes</h4>
                     <h4>$100</h4>
                 </div>
-                @if(session('discount'))
-                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        <h4>Discount ({{ session('discount_type') }})</h4>
-                        <h4>${{ number_format(session('discount'), 2) }}</h4>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        <h4>Discount Applied </h4>
-                        <h4>${{ number_format(session('discount_applied'), 2) }}</h4>
-                    </div>
+
+                @if(session()->has('discount'))
+                <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                    <h4>Discount {{ session('discount_type') ? '('.session('discount_type').')' : '' }}</h4>
+                    <h4>${{ number_format(session('discount'), 2) }}</h4>
+                </div>
+
+                @if(session()->has('discount_applied'))
+                <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
+                    <h4>Discount Applied</h4>
+                    <h4>${{ number_format(session('discount_applied'), 2) }}</h4>
+                </div>
+                @endif
                 @endif
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                @if(session('discount'))
                     <h3>Total</h3>
-                    <h3>${{ number_format($booking->final_price, 2) }}</h3>
-                @else
-                    <h3>Total</h3>
-                    <h3>${{ number_format($booking->total_cost_input, 2) }}</h3>
-                @endif
+                    <h3>${{ number_format(session()->has('final_price') ? session('final_price') :
+                        $booking->total_cost_input, 2) }}</h3>
                 </div>
             </div>
         </div>
@@ -361,7 +365,8 @@
                 @csrf
                 <div class="row">
                     <div class="col-6">
-                        <input type="text" placeholder="Apply Coupon" name="coupon_code" id="coupon_code">
+                        <input type="text" placeholder="Apply Coupon" value="{{ session('coupon_code', $booking->coupon_code) }}"
+                            name="coupon_code" id="coupon_code">
                         <div id="message-container">
                             <span class="error" style="display: none;"></span> <!-- For error messages -->
                             <span class="success" style="display: none;"></span> <!-- For success messages -->
@@ -376,7 +381,7 @@
                     </div>
                 </div>
             </form>
-            <p class="d_note">Note : Booking Details will be send on your mobile number or Email.</p>
+            <p class="d_note">Note : Booking Details will be send to your mobile number or Email.</p>
         </div>
     </div>
     </div>
@@ -628,26 +633,14 @@
                 success: function(response) {
                     if (response.success) {
                         // Update the price displays
-                        const totalBasePrice = $('.d_pricelist .mb-3:nth-child(2) h4:last-child');
                         const totalWithExtras = $('.d_pricelist .mb-3:last-child h3:last-child');
 
                         // Update the total price
                         totalWithExtras.text(`$${response.new_total_price.toFixed(2)}`);
 
-                        // // Handle discount row
-                        // if ($('.discount-row').length === 0) {
-                        //     $('.d_pricelist .mb-3:last-child').before(`
-                        //         <div class="d-flex align-items-center justify-content-between mb-3 discount-row">
-                        //             <h4>Discount Applied</h4>
-                        //             <h4>$${parseFloat(response.discount).toFixed(2)}</h4> <!-- Ensure discount is a number -->
-                        //         </div>
-                        //     `);
-                        // } else {
-                        //     $('.discount-row h4:last-child').text(`$${parseFloat(response.discount_applied).toFixed(2)}`); // Ensure discount is a number
-                        // }
-
                         // Show success message
                         $('.success').text(response.success).show(); // Display success message
+                        location.reload();
                     } else {
                         // Show error message if response indicates failure
                         $('.error').text(response.message || 'An error occurred.').show();
@@ -663,10 +656,6 @@
                     } else {
                         $('.error').text('An unexpected error occurred. Please try again.').show(); // General error message
                     }
-                },
-                complete: function() {
-                    // Reset button state
-                    submitButton.prop('disabled', false).text(originalButtonText);
                 }
             });
         });
@@ -679,14 +668,14 @@
     const stateSelect = document.getElementById('state');
     const citySelect = document.getElementById('city');
 
-    
+
     // Fetch countries on page load
     document.addEventListener('DOMContentLoaded', async () => {
         const selectedCountry = "{{ $customerEdit->country ?? '' }}";
         const selectedState = "{{ $customerEdit->state ?? '' }}";
         const selectedCity = "{{ $customerEdit->city ?? '' }}";
 
-     
+
 
         try {
             const countries = await fetchCountries();
@@ -695,7 +684,7 @@
 
             if (selectedCountry) {
                 const states = await fetchStates(selectedCountry);
-              
+
                 populateStates(states, selectedState);
 
                 if (selectedState) {
@@ -849,6 +838,3 @@
 
 
 @endsection
-
-
-
