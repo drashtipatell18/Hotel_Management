@@ -16,7 +16,7 @@
                 <div class="col-sm-12">
                     <div class="card card-table">
                         <div class="card-body booking_card">
-                            <form action="{{ route('coupon/update', $coupon->id) }}" method="post">
+                            <form action="{{ route('coupon/update', $coupon->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('POST')
                                 <div class="col-md-12">
@@ -91,7 +91,7 @@
                                                         file</label>
                                                     @error('image')
                                                         <div class="error text-danger">{{ $message }}</div>
-                                                    @enderror 
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-md-1">

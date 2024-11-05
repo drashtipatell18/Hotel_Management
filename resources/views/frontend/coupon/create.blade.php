@@ -13,7 +13,7 @@
                 <div class="col-sm-12">
                     <div class="card card-table">
                         <div class="card-body booking_card">
-                            <form action="{{ route('coupon/store') }}" method="post">
+                            <form action="{{ route('coupon/store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="code">Code</label>
