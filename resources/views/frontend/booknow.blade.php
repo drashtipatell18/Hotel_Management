@@ -136,7 +136,11 @@
                             <div class="card mx-2 coupon-card" style="width: 18rem;">
                                 <div class="card-body text-center">
                                     <div class="coupon-badge">
-                                        <img src="path/to/logo.png" alt="Logo" style="width: 50px; height: 50px;">
+                                        @if($coupon->image)
+                                            <img src="{{ url('assets/coupons/' . $coupon->image) }}" alt="Logo" style="width: 50px; height: 50px;">
+                                        @else
+                                            <img src="{{ url('assets/coupons/default.jfif') }}" alt="Logo" style="width: 50px; height: 50px;">
+                                        @endif
                                     </div>
                                     <h5 class="card-title">{{ $coupon->name }}</h5>
                                     <p class="card-text">USE <b>{{ $coupon->code }}</b></p>
