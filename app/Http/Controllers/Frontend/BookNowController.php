@@ -12,6 +12,7 @@ use App\Models\RoomTypes;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\OfferPackage;
+use App\Models\Coupon;
 
 class BookNowController extends Controller
 {
@@ -53,9 +54,15 @@ class BookNowController extends Controller
             return $room->offer && $room->offer->discount_value > 0; // Adjust 'discount_value' according to your Offer model
         });
 
+        $coupons = Coupon::all();
 
+        // Filter coupons based on start_date and end_date
+        $currentDate = now(); // Get the current date and time
+        $validCoupons = $coupons->filter(function ($coupon) use ($currentDate) {
+            return $coupon->starts_at <= $currentDate && $coupon->expires_at >= $currentDate;
+        });
         // dd($discountValue);
-        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms', 'discountedPrice', 'discountValue', 'availableRoomsWithDiscounts', 'availableRooms', 'discount'));
+        return view('frontend.booknow', compact('room', 'roomImages', 'amenities', 'roomCount', 'maxMemberCapacity', 'similarRooms', 'discountedPrice', 'discountValue', 'availableRoomsWithDiscounts', 'availableRooms', 'discount','validCoupons'));
     }
 
     public function booknowStore(Request $request)

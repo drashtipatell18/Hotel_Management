@@ -2,50 +2,172 @@
 @section('title', 'Book Now')
 @section('main-container')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .bookButton {
+        padding: 10px 93px;
+        background-color: #fff;
+        color: #1A2142;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 2px;
+        font-weight: 600;
+        transition: .3s all ease-in-out;
+    }
+    .d_room .d_night .d_price{
+        margin-left:37pc;
+    }
+    
+      
+    .cards-wrapper{
+        display: flex;
+    }
+    .card{
+        margin: 0.5em;
+        width: calc(100%/3);
+        border: 1px solid #007bff;
+        border-radius: .25rem;
+    }
+  
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    .card-body {
+        padding: 1rem; /* Ensure consistent padding */
+    }
 
-    <style>
-        .bookButton {
-            padding: 10px 93px;
-            background-color: #fff;
-            color: #1A2142;
-            font-size: 16px;
-            text-decoration: none;
-            border-radius: 2px;
-            font-weight: 600;
-            transition: .3s all ease-in-out;
-        }
-        .d_room .d_night .d_price{
-            margin-left:37pc;
-        }
-    </style>
+    .carousel-item {
+        display: none;
+    }
+    .carousel-item.active {
+        display: block;
+    }
+    .cards-wrapper {
+        gap: 15px;
+        padding: 20px;
+    }
+    .coupon-card {
+        width: 18rem;
+        padding: 15px;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    .coupon-card:hover {
+        transform: translateY(-5px);
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
-    <section class="d_booknow">
-        <div class="d_img col">
-            <!-- Check if there are images and display the first one, else show the default room image -->
-            @if ($room->images->isNotEmpty())
-                <img src="{{ url('assets/upload/' . $room->images->first()->image) }}" alt="{{ $room->room_name }}">
-            @else
-                <img src="{{ url('assets/upload/' . $room->image) }}" alt="{{ $room->room_name }}">
-            @endif
+    .coupon-card-0 {
+        border: 2px solid #FF69B4 !important; /* Pink */
+        box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+    }
+
+    .coupon-card-1 {
+        border: 2px solid #FF0000 !important; /* Red */
+        box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+    }
+
+    .coupon-card-2 {
+        border: 2px solid #0000FF !important; /* Blue */
+        box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3);
+    }
+
+    .coupon-card-3 {
+        border: 2px solid #008000 !important; /* Green */
+        box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
+    }
+
+</style>
+
+<section class="d_booknow">
+    <div class="d_img col">
+        <!-- Check if there are images and display the first one, else show the default room image -->
+        @if ($room->images->isNotEmpty())
+            <img src="{{ url('assets/upload/' . $room->images->first()->image) }}" alt="{{ $room->room_name }}">
+        @else
+            <img src="{{ url('assets/upload/' . $room->image) }}" alt="{{ $room->room_name }}">
+        @endif
+    </div>
+
+    <div class="d_container">
+        <div class="d_subimg d-flex justify-content-center mt-4">
+            <!-- Display the other images as thumbnails -->
+            @foreach ($room->images as $image)
+                <div class="d_subnavimg me-2 me-sm-3">
+                    <img src="{{ url('assets/upload/' . $image->image) }}" alt="">
+                </div>
+            @endforeach
         </div>
-
-        <div class="d_container">
-            <div class="d_subimg d-flex justify-content-center mt-4">
-                <!-- Display the other images as thumbnails -->
-                @foreach ($room->images as $image)
-                    <div class="d_subnavimg me-2 me-sm-3">
-                        <img src="{{ url('assets/upload/' . $image->image) }}" alt="">
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
     <!-- Image section End -->
+<!-- <section class="offer spad">
+    <div class="gallery__text">
+        <div class="row m-0 d-flex justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2>Exclusive Coupons</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container offer_slider">
+        <div class="textSlider owl-carousel">
+            @foreach($validCoupons as $coupon)
+                <div class="item">
+                    <div class="coupon-card">
+                        <h3>{{ $coupon->name }}</h3>
+                        <p>USE <b>{{ $coupon->code }}</b></p>
+                        <p>Flat <b>₹{{ $coupon->discount_amount }}</b> Off</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section> -->
+
+<section class="pt-5 pb-5">
+    <h3 class="text-center">Exclusive Coupons</h3>
+    <div id="carouselExampleControls" class="carousel carousel-dark slide mx-auto" data-ride="carousel" style="max-width: 80%;">
+        <div class="carousel-inner">
+            @foreach($validCoupons->chunk(4) as $chunk)
+                <div class="carousel-item @if($loop->first) active @endif">
+                    <div class="cards-wrapper d-flex justify-content-center">
+                        @foreach($chunk as $loop->index => $coupon)
+                            <div class="card mx-2 coupon-card-{{ $loop->index }}" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">{{ $coupon->name }}</h5>
+                                    <p class="card-text text-center">
+                                        USE <b>{{ $coupon->code }}</b><br>
+                                        Flat <b>₹{{ $coupon->discount_amount }}</b> Off
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <a class="carousel-control-prev" href="javascript:void(0);" role="button" onclick="moveToPrev()">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="javascript:void(0);" role="button" onclick="moveToNext()">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
+
+
+
 
     <!-- Detail section start -->
 
@@ -576,6 +698,35 @@
             toastr.error('Please select a valid check-out time that is at least 2 hours after the check-in time.', 'Error');
         }
     });
+</script>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    const totalSlides = slides.length;
+
+    function moveToNext() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateCarousel();
+        }
+    }
+
+    function moveToPrev() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateCarousel();
+        }
+    }
+
+    function updateCarousel() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            }
+        });
+    }
 </script>
 
 
