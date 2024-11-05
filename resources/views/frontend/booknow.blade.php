@@ -17,8 +17,8 @@
     .d_room .d_night .d_price{
         margin-left:37pc;
     }
-    
-      
+
+
     .cards-wrapper{
         display: flex;
     }
@@ -28,7 +28,7 @@
         border: 1px solid #007bff;
         border-radius: .25rem;
     }
-  
+
 
     .card-body {
         padding: 1rem; /* Ensure consistent padding */
@@ -45,13 +45,30 @@
         padding: 20px;
     }
     .coupon-card {
-        width: 18rem;
-        padding: 15px;
-        border-radius: 8px;
-        transition: transform 0.3s;
+        border: 1px solid #e0e0e0; /* Light border */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        padding: 20px; /* Padding for content */
+        background-color: #fff; /* White background */
+        text-align: center; /* Center text */
+        transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
     }
     .coupon-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-5px); /* Lift effect on hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    }
+    .coupon-badge {
+        margin-bottom: 15px; /* Space below badge */
+    }
+    .card-title {
+        font-weight: bold; /* Bold title */
+        font-size: 1.25rem; /* Larger font size */
+        margin: 0; /* Remove default margin */
+    }
+    .card-text {
+        font-size: 1rem; /* Standard font size */
+        color: #555; /* Darker text color */
+        margin: 0; /* Remove default margin */
     }
     .carousel-control-prev,
     .carousel-control-next {
@@ -69,7 +86,7 @@
         box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
     }
 
-    .coupon-card-1 {
+    /* .coupon-card-1 {
         border: 2px solid #FF0000 !important; /* Red */
         box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
     }
@@ -82,7 +99,7 @@
     .coupon-card-3 {
         border: 2px solid #008000 !important; /* Green */
         box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
-    }
+    } */
 
 </style>
 
@@ -140,13 +157,14 @@
                 <div class="carousel-item @if($loop->first) active @endif">
                     <div class="cards-wrapper d-flex justify-content-center">
                         @foreach($chunk as $loop->index => $coupon)
-                            <div class="card mx-2 coupon-card-{{ $loop->index }}" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center">{{ $coupon->name }}</h5>
-                                    <p class="card-text text-center">
-                                        USE <b>{{ $coupon->code }}</b><br>
-                                        Flat <b>₹{{ $coupon->discount_amount }}</b> Off
-                                    </p>
+                            <div class="card mx-2 coupon-card" style="width: 18rem;">
+                                <div class="card-body text-center">
+                                    <div class="coupon-badge">
+                                        <img src="path/to/logo.png" alt="Logo" style="width: 50px; height: 50px;">
+                                    </div>
+                                    <h5 class="card-title">{{ $coupon->name }}</h5>
+                                    <p class="card-text">USE <b>{{ $coupon->code }}</b></p>
+                                    <p class="card-text">Flat <b>₹{{ $coupon->discount_amount }}</b> Off</p>
                                 </div>
                             </div>
                         @endforeach
