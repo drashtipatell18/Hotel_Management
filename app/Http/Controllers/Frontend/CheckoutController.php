@@ -44,6 +44,10 @@ class CheckoutController extends Controller
 
         $booking = Booking::find($id);
 
+        $discount = floatval($booking->discount ?? 0);
+        $finalPrice = floatval($booking->total_cost_input) - $discount;
+
+
         $checkout = Checkout::create([
             'user_id' => auth()->user()->id,
             'booking_id' => $booking->id,
@@ -62,13 +66,12 @@ class CheckoutController extends Controller
             'card_number' => $request->input('card_number'),
             'expiry_date' => $request->input('expiry_date'),
             'cvv' => $request->input('cvv'),
-            'total_price' => $booking->final_price,
+            'total_price' => $finalPrice, // Use calculated final price
             'coupon_code' => $booking->coupon_code,
             'captcha' => $request->input('captcha'),
             'status' => 'pending',
         ]);
-        
-        // session()->forget(['discount', 'discount_amount', 'discount_type']);
+        session()->forget(['discount', 'discount_applied', 'discount_type', 'final_price']);
 
         return redirect()->route('mybooking')->with('success', 'Booking created successfully');
     }
@@ -122,9 +125,11 @@ class CheckoutController extends Controller
         ]);
 
         // Store discount in session
-        // session(['discount' => $coupon->discount_amount]); // Store discount in session
-        // session(['discount_applied' => $discountAmount]); // Store discount amount in session
-        // session(['discount_type' => $coupon->type]); // Store discount type in session
+        session(['discount' => $coupon->discount_amount]); // Store discount in session
+        session(['discount_applied' => $discountAmount]); // Store discount amount in session
+        session(['discount_type' => $coupon->type]); // Store discount type in session
+        session(['final_price' => $totalPrice]); // Store final price in session
+
         // Return JSON response for successful coupon application
         return response()->json([
             'success' => 'Coupon applied successfully.',
