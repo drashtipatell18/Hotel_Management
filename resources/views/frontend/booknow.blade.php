@@ -108,30 +108,6 @@
     </div>
 </section>
 
-    <!-- Image section End -->
-<!-- <section class="offer spad">
-    <div class="gallery__text">
-        <div class="row m-0 d-flex justify-content-center">
-            <div class="col-lg-8 text-center">
-                <h2>Exclusive Coupons</h2>
-            </div>
-        </div>
-    </div>
-    <div class="container offer_slider">
-        <div class="textSlider owl-carousel">
-            @foreach($validCoupons as $coupon)
-                <div class="item">
-                    <div class="coupon-card">
-                        <h3>{{ $coupon->name }}</h3>
-                        <p>USE <b>{{ $coupon->code }}</b></p>
-                        <p>Flat <b>₹{{ $coupon->discount_amount }}</b> Off</p>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section> -->
-
 <section class="pt-5 pb-5">
     <h3 class="text-center">Exclusive Coupons</h3>
     <div id="carouselExampleControls" class="carousel carousel-dark slide mx-auto" data-ride="carousel" style="max-width: 80%;">
@@ -165,9 +141,6 @@
         </a>
     </div>
 </section>
-
-
-
 
     <!-- Detail section start -->
 
