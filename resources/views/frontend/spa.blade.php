@@ -4,7 +4,7 @@
 
 
 <!-- Breadcrumb Begin -->
-<div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadCram2.png') }}">
+<div class="breadcrumb-option set-bg lazy-bg" data-setbg="{{ url('frontend/img/breadCram2.png') }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">

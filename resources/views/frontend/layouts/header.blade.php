@@ -121,6 +121,26 @@
     .new_y_google_icon img {
         margin: auto;
     }
+    /* Customize the entire scrollbar */
+    ::-webkit-scrollbar {
+        width: 12px; /* Width of the scrollbar */
+    }
+
+    /* Customize the track (the background) */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Color of the scrollbar track */
+        border-radius: 10px; /* Optional: round the track edges */
+    }
+
+    /* Customize the scrollbar thumb (the draggable part) */
+    ::-webkit-scrollbar-thumb {
+        background-color: #1A2142; /* Color of the scrollbar */
+        border-radius: 10px; /* Optional: round the thumb edges */
+        border: 2px solid #f1f1f1; /* Optional: give the thumb a border */
+    }
+
+
+
 </style>
 
 <body>
@@ -634,6 +654,27 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const lazyBgElements = document.querySelectorAll('.lazy-bg');
+        
+        const lazyLoadBackground = (entry) => {
+            if (entry.isIntersecting) {
+                const section = entry.target;
+                const bgUrl = section.getAttribute('data-setbg');
+                section.style.backgroundImage = `url(${bgUrl})`;
+                observer.unobserve(section);
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => lazyLoadBackground(entry));
+        }, { rootMargin: '0px', threshold: 0.1 });
+
+        lazyBgElements.forEach(section => observer.observe(section));
+    });
+</script>
 
 <script>
     document.querySelectorAll('.toggle-password').forEach(item => {
