@@ -1,16 +1,17 @@
 @extends('frontend.layouts.main')
 @section('title', 'Hotel Management: SpaBook')
 @section('main-container')
-<style>
-    .d_gallery .nav-tabs {
+    <style>
+        .d_gallery .nav-tabs {
             overflow: auto;
-    }
-    ::-webkit-scrollbar {
-        display: none;
-    }
-</style>
+        }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     <section class="d_p-25 d_gallery mt-3 mb-4">
@@ -29,7 +30,8 @@
             <div class="image-gallery" id="imageGallery">
                 <div class="row g-3 px-sm-2 p-0 ">
                     @foreach ($spas as $spa)
-                        <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" style="padding-bottom: 75px;" data-category="{{ $spa->category }}">
+                        <div class="col-12 col-md-6 col-lg-4 my-2 d_spabook" style="padding-bottom: 75px;"
+                            data-category="{{ $spa->category }}">
                             <div class="order__item h-100">
                                 <div class="Slider_image m-0 h-100">
                                     @php
@@ -44,8 +46,8 @@
                                         </div>
                                         <div class="image_onsection d_boxsec bg-light py-3">
                                             <div class="d-flex justify-content-center align-items-center">
-                                                <h4 class="text-center pb-2">{{$spa->name}}<br/>
-                                                    ${{$spa->price}}</h4>
+                                                <h4 class="text-center pb-2">{{ $spa->name }}<br />
+                                                    ${{ $spa->price }}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -58,11 +60,11 @@
         </div>
     </section>
 
-<script src="{{ url('frontend/js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url('frontend/js/d_home.js') }}"></script>
+    <script src="{{ url('frontend/js/jquery-3.3.1.min.js') }}"></script>
+    {{-- <script src="{{ url('frontend/js/d_home.js') }}"></script> --}}
 
-<script>
-        document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.tab');
             const galleryItems = document.querySelectorAll('.d_spabook');
 
@@ -77,7 +79,7 @@
             }
 
             filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     const category = this.getAttribute('data-category');
@@ -88,5 +90,5 @@
             // Initialize with 'all' category
             filterGallery('all');
         });
-</script>
+    </script>
 @endsection
