@@ -44,11 +44,20 @@
                                 <div class="footer__widget">
                                     <h4>Contact</h4>
                                     <ul>
-                                        <li class="d-flex pb-2"><i
-                                                class="text-light px-2 pt-2 fa-solid fa-location-dot"></i><a
-                                                class="text-light" href="#">330 Kling Ford,
-                                                Lake Denitaside,
-                                                United States</a></li>
+                                    <?php
+                                        use App\Models\Location;
+                                        $locations = Location::all();
+                                    ?>
+                                       <?php foreach ($locations as $location): ?>
+                                            <li class="d-flex pb-2">
+                                                <i class="text-light px-2 pt-2 fa-solid fa-location-dot"></i>
+                                                <a class="text-light" 
+                                                href="https://www.google.com/maps/place/Kalathiya+Infotech/@<?= $location->latitude ?>,<?= $location->longitude ?>,19z/data=!4m6!3m5!1s0x26cb5e4230fc8877:0xd36ccfe485cd6a01!8m2!3d<?= $location->latitude ?>!4d<?= $location->longitude ?>!16s%2Fg%2F11kbyh9bk6?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D" 
+                                                target="_blank">
+                                                    <?= $location->address ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
                                         <li class="d-flex pb-2 align-items-center"><i
                                                 class="text-light px-2 fa-solid fa-phone"></i><a class="text-light"
                                                 href="#">+1 23 4567890
@@ -66,9 +75,9 @@
                                     <p class="text-light y_hide_text">And keep up to
                                         date with our hotel.</p>
                                     <div class="footer__social">
-                                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                        <a href="#"><i class="fa-brands fa-square-x-twitter"></i></a>
+                                        <a href="https://www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
+                                        <a href="https://www.instagram.com"><i class="fa-brands fa-instagram"></i></a>
+                                        <a href="https://x.com/?lang=en"><i class="fa-brands fa-square-x-twitter"></i></a>
                                     </div>
                                 </div>
                             </div>

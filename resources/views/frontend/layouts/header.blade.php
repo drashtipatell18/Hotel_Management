@@ -121,8 +121,8 @@
     .new_y_google_icon img {
         margin: auto;
     }
-  
-    /* .sticky-header {
+/*   
+    .sticky-header {
         position: fixed;
         top: 0;
         left: 0;
@@ -172,7 +172,7 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__logo">
             <a href="{{ route('index') }}">
-                <img class="w-100 h-100" src="{{ url('assets/img/Logo.png') }}" alt="">
+                <img class="w-100 h-100" src="#" alt="">
             </a>
         </div>
         <!-- <div id="mobile-menu-wrap"></div> -->
