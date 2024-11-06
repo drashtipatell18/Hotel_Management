@@ -39,7 +39,7 @@
  </div> -->
 
 <!-- Hero Section Begin -->
-<section class=" set-bg" data-setbg="{{ url('frontend/img/hero.jpg') }}">
+<section class="set-bg lazy-bg" data-setbg="{{ url('frontend/img/hero.jpg') }}">
     <div class="Opacity_bg hero spad">
         <div class="container">
             <div class="row  m-0">

@@ -23,7 +23,7 @@
 </style>
 
 <!-- Breadcrumb Begin -->
-<div class="breadcrumb-option d_banner set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
+<div class="breadcrumb-option d_banner set-bg lazy-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
     <div class="d_container">
         <div class="row">
             <div class="col-lg-12 text-center px-lg-4 px-3">
