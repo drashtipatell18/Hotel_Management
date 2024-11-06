@@ -685,7 +685,7 @@ ol {
     border: 1px solid #1A2142;
     padding: 12px 20px;
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
     color: #727272;
 }
 
@@ -698,7 +698,7 @@ ol {
     border-radius: 4px 0 0 4px;
     border: none !important;
     padding: 0px 12px;
-    font-size: 12px;
+    font-size: 16px;
 }
 /* .d_form .nice-select{
     background-color: #1A2142 !important;

@@ -877,36 +877,22 @@ document.getElementById('newCreatePasswordBtn').addEventListener('click', functi
 </script>
 
 <script>
-//     document.addEventListener('click', function (event) {
-//     const dropdownToggle = document.getElementById('dropdownMenuButton1');
-//     const dropdownMenu = dropdownToggle.nextElementSibling; // The dropdown menu
+    document.addEventListener('click', function (event) {
+        const dropdownToggle = document.getElementById('dropdownMenuButton1');
 
-//     // Check if the click is outside the dropdown toggle and dropdown menu
-//     if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-//         const bsDropdown = bootstrap.Dropdown.getInstance(dropdownToggle); // Get the Bootstrap instance
-//         if (bsDropdown) {
-//             bsDropdown.hide(); // Hide the dropdown if it's open
-//         }
-//     }
-// });
+        // Check if the dropdownToggle element and Bootstrap instance exist
+        if (dropdownToggle) {
+            const dropdownMenu = dropdownToggle.nextElementSibling; // The dropdown menu
 
-
-document.addEventListener('click', function (event) {
-    const dropdownToggle = document.getElementById('dropdownMenuButton1');
-
-    // Check if the dropdownToggle element and Bootstrap instance exist
-    if (dropdownToggle) {
-        const dropdownMenu = dropdownToggle.nextElementSibling; // The dropdown menu
-
-        // Check if the click is outside the dropdown toggle and dropdown menu
-        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            const bsDropdown = bootstrap.Dropdown.getInstance(dropdownToggle); // Get the Bootstrap instance
-            if (bsDropdown && bsDropdown._isShown()) { // Ensure dropdown is open
-                bsDropdown.hide(); // Hide the dropdown if it's open
+            // Check if the click is outside the dropdown toggle and dropdown menu
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                const bsDropdown = bootstrap.Dropdown.getInstance(dropdownToggle); // Get the Bootstrap instance
+                if (bsDropdown && bsDropdown._isShown()) { // Ensure dropdown is open
+                    bsDropdown.hide(); // Hide the dropdown if it's open
+                }
             }
         }
-    }
-});
+    });
 </script>
 
 
