@@ -21,7 +21,7 @@
 
 </style>
 <!-- Breadcrumb Begin -->
-<div class="breadcrumb-option set-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
+<div class="breadcrumb-option set-bg lazy-bg" data-setbg="{{ url('frontend/img/breadcrumb-bg.jpg') }}">
     <div class="container">
         <div class="row m-0">
             <div class="col-lg-12 text-center">

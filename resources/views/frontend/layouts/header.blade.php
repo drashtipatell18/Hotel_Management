@@ -121,6 +121,19 @@
     .new_y_google_icon img {
         margin: auto;
     }
+  
+    /* .sticky-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: #fff; /* Add your desired background color */
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Optional: adds a subtle shadow */
+        /* transition: all 0.3s ease-in-out; */
+    /* } */
+
+
 </style>
 
 <body>
@@ -372,7 +385,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header">
+    <header class="header sticky-header">
         <div class="header__nav__option">
             <div class="d_container">
                 <div class="row m-0">
@@ -634,6 +647,44 @@
 </body>
 
 </html>
+
+<!-- NavBAR Sticky  -->
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.sticky-header');
+        const scrollThreshold = 100; // Adjust this value as needed
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    });
+</script> -->
+
+<!-- Image Lazy -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const lazyBgElements = document.querySelectorAll('.lazy-bg');
+        
+        const lazyLoadBackground = (entry) => {
+            if (entry.isIntersecting) {
+                const section = entry.target;
+                const bgUrl = section.getAttribute('data-setbg');
+                section.style.backgroundImage = `url(${bgUrl})`;
+                observer.unobserve(section);
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => lazyLoadBackground(entry));
+        }, { rootMargin: '0px', threshold: 0.1 });
+
+        lazyBgElements.forEach(section => observer.observe(section));
+    });
+</script>
 
 <script>
     document.querySelectorAll('.toggle-password').forEach(item => {
