@@ -19,7 +19,7 @@
         top: 8px;
         left: -29px;
     }
-  
+
 </style>
 
 <!-- Breadcrumb Begin -->
@@ -197,7 +197,7 @@
                                                 </li>
                                             @endforeach
                                             </ul>
-                                            
+
                                         </div>
                                         <div class="tab-pane fade d_tab border-0" id="v-pills-settings" role="tabpanel"
                                             aria-labelledby="v-pills-settings-tab" tabindex="0">
@@ -368,7 +368,7 @@
                                     <div class="col-12 col-lg-1 p-0"></div>
                                     <div class="col-12 col-lg-3 p-0">
                                         <div class="d_cta">
-                                           <a href="${reserveUrl}" class="d-block reserve-btn" data-room-id="${room.id}">Reserve</a> 
+                                           <a href="${reserveUrl}" class="d-block reserve-btn" data-room-id="${room.id}">Reserve</a>
                                         </div>
                                     </div>
                                 </div>
@@ -385,7 +385,7 @@
                 button.addEventListener('click', function(event) {
                     event.preventDefault();
                     const roomId = this.getAttribute('data-room-id');
-                    window.location.href = `/booknow/${roomId}`; 
+                    window.location.href = `/booknow/${roomId}`;
                 });
             });
 
@@ -563,7 +563,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const dropdown = document.querySelector('.dropdown');
             const dropdownToggle = document.querySelector('.dropdown-toggle');
-            const dropdownMenu = document.querySelector('.dropdown-menu');selectedSort
+            const dropdownMenu = document.querySelector('.dropdown-menu');
             const tabLinks = document.querySelectorAll('#v-pills-tab .nav-link');
             const tabContents = document.querySelectorAll('#v-pills-tabContent .tab-pane');
 
@@ -720,5 +720,15 @@ document.addEventListener('DOMContentLoaded', filterRooms);
         }
     });
 </script>
-
+<script>
+    // Close dropdown when a room type is selected
+    document.querySelectorAll('.room-type-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                dropdownMenu.classList.remove('show'); // Close the dropdown
+            }
+        });
+    });
+</script>
 @endsection
