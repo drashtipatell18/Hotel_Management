@@ -121,24 +121,20 @@
     .new_y_google_icon img {
         margin: auto;
     }
-    /* Customize the entire scrollbar */
-    ::-webkit-scrollbar {
-        width: 12px; /* Width of the scrollbar */
-    }
+  
 
-    /* Customize the track (the background) */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1; /* Color of the scrollbar track */
-        border-radius: 10px; /* Optional: round the track edges */
-    }
 
-    /* Customize the scrollbar thumb (the draggable part) */
-    ::-webkit-scrollbar-thumb {
-        background-color: #1A2142; /* Color of the scrollbar */
-        border-radius: 10px; /* Optional: round the thumb edges */
-        border: 2px solid #f1f1f1; /* Optional: give the thumb a border */
-    }
 
+    .sticky-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: #fff; /* Add your desired background color */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+        transition: all 0.3s ease-in-out;
+    }
 
 
 </style>
@@ -392,7 +388,7 @@
     </div>
 
     <!-- Header Section Begin -->
-    <header class="header">
+    <header class="header sticky-header">
         <div class="header__nav__option">
             <div class="d_container">
                 <div class="row m-0">
@@ -655,6 +651,23 @@
 
 </html>
 
+<!-- NavBAR Sticky  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.sticky-header');
+        const scrollThreshold = 100; // Adjust this value as needed
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    });
+</script>
+
+<!-- Image Lazy -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const lazyBgElements = document.querySelectorAll('.lazy-bg');
