@@ -122,19 +122,16 @@
         margin: auto;
     }
   
-
-
-
-    .sticky-header {
+    /* .sticky-header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         z-index: 1000;
         background-color: #fff; /* Add your desired background color */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
-        transition: all 0.3s ease-in-out;
-    }
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Optional: adds a subtle shadow */
+        /* transition: all 0.3s ease-in-out; */
+    /* } */
 
 
 </style>
@@ -652,7 +649,7 @@
 </html>
 
 <!-- NavBAR Sticky  -->
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const header = document.querySelector('.sticky-header');
         const scrollThreshold = 100; // Adjust this value as needed
@@ -665,7 +662,7 @@
             }
         });
     });
-</script>
+</script> -->
 
 <!-- Image Lazy -->
 <script>
