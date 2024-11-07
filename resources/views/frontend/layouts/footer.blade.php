@@ -48,16 +48,26 @@
                                         use App\Models\Location;
                                         $locations = Location::all();
                                     ?>
-                                       <?php foreach ($locations as $location): ?>
-                                            <li class="d-flex pb-2">
-                                                <i class="text-light px-2 pt-2 fa-solid fa-location-dot"></i>
-                                                <a class="text-light" 
-                                                href="https://www.google.com/maps/place/Kalathiya+Infotech/@<?= $location->latitude ?>,<?= $location->longitude ?>,19z/data=!4m6!3m5!1s0x26cb5e4230fc8877:0xd36ccfe485cd6a01!8m2!3d<?= $location->latitude ?>!4d<?= $location->longitude ?>!16s%2Fg%2F11kbyh9bk6?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D" 
-                                                target="_blank">
-                                                    <?= $location->address ?>
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($locations as $location): ?>
+                                        <li class="d-flex pb-2">
+                                            <i class="text-light px-2 pt-2 fa-solid fa-location-dot"></i>
+                                            <a class="text-light" 
+                                            href="https://www.google.com/maps/place/Kalathiya+Infotech/@<?= $location->latitude ?>,<?= $location->longitude ?>,19z/data=!4m6!3m5!1s0x26cb5e4230fc8877:0xd36ccfe485cd6a01!8m2!3d<?= $location->latitude ?>!4d<?= $location->longitude ?>!16s%2Fg%2F11kbyh9bk6?hl=en&entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D" 
+                                            target="_blank">
+                                                <?php
+                                                    $addressParts = explode(',', $location->address);
+                                                    foreach ($addressParts as $index => $part) {
+                                                        echo trim($part);
+                                                        if (($index + 1) % 3 === 0) {
+                                                            echo '<br>';
+                                                        } elseif ($index < count($addressParts) - 1) {
+                                                            echo ', ';
+                                                        }
+                                                    }
+                                                ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
                                         <li class="d-flex pb-2 align-items-center"><i
                                                 class="text-light px-2 fa-solid fa-phone"></i><a class="text-light"
                                                 href="#">+1 23 4567890

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2024 at 05:15 AM
+-- Generation Time: Nov 07, 2024 at 04:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -139,7 +139,12 @@ INSERT INTO `booking` (`id`, `customer_id`, `room_type_id`, `room_number`, `room
 (9, '75', 1, '20002', 3, 4, 1, 'AC', NULL, 3000, 1000, 4, 2880, 0, NULL, '2024-11-05 10:11:58', NULL, '2024-11-05', '15:33:00', '2024-11-06', '17:35:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-05 04:33:58', '2024-11-05 04:33:58', NULL, 1, NULL),
 (10, '75', 3, '2001', 6, 4, 2, 'AC', NULL, 42000, 7000, 45, 40320, 0, NULL, '2024-11-05 10:11:35', NULL, '2024-11-05', '15:37:00', '2024-11-20', '15:37:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-05 04:37:35', '2024-11-05 04:38:59', NULL, 2, 40275),
 (11, '75', 1, '20002', 3, 6, 1, 'AC', NULL, 3000, 1000, 78, 2880, 0, NULL, '2024-11-05 10:11:52', NULL, '2024-11-05', '15:50:00', '2024-11-21', '17:52:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-05 04:50:52', '2024-11-05 04:52:34', NULL, 1, 2802),
-(12, '75', 3, '2001', 5, 1, 2, 'AC', NULL, 35000, 7000, 78, 33600, 0, NULL, '2024-11-06 03:11:08', NULL, '2024-11-06', '08:55:00', '2024-11-21', '08:55:00', NULL, NULL, NULL, 'ABC', NULL, 'confirmed', '2024-11-05 21:56:08', '2024-11-05 21:58:17', NULL, 2, 33522);
+(12, '75', 3, '2001', 5, 1, 2, 'AC', NULL, 35000, 7000, 78, 33600, 0, NULL, '2024-11-06 03:11:08', NULL, '2024-11-06', '08:55:00', '2024-11-21', '08:55:00', NULL, NULL, NULL, 'ABC', NULL, 'confirmed', '2024-11-05 21:56:08', '2024-11-05 21:58:17', NULL, 2, 33522),
+(13, '75', 3, '2001', 4, 1, 2, 'AC', NULL, 28000, 7000, 4, 26880, 0, NULL, '2024-11-06 05:11:28', NULL, '2024-11-06', '10:36:00', '2024-11-28', '10:36:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-05 23:36:28', '2024-11-05 23:36:28', NULL, 2, NULL),
+(14, '75', 1, '20002', 5, 1, 1, 'AC', NULL, 5000, 1000, 4, 4800, 0, NULL, '2024-11-06 07:11:34', NULL, '2024-11-06', '12:42:00', '2024-11-29', '12:42:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-06 01:42:34', '2024-11-06 01:42:34', NULL, 1, NULL),
+(15, '75', 1, '20002', 1, 3, 1, 'AC', NULL, 1000, 1000, 4, 960, 0, NULL, '2024-11-06 08:11:26', NULL, '2024-11-06', '14:16:00', '2024-11-27', '14:16:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-06 03:16:26', '2024-11-06 03:16:26', NULL, 1, NULL),
+(16, '75', 1, '20002', 2, 1, 1, 'AC', NULL, 2000, 1000, 4, 1920, 0, NULL, '2024-11-06 09:11:38', NULL, '2024-11-06', '15:28:00', '2024-11-21', '15:28:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-06 04:28:38', '2024-11-06 04:28:38', NULL, 1, NULL),
+(17, '75', 1, '20002', 4, 1, 1, 'AC', NULL, 4000, 1000, 4, 3840, 0, NULL, '2024-11-07 03:11:20', NULL, '2024-11-07', '08:57:00', '2024-11-30', '08:57:00', NULL, NULL, NULL, NULL, NULL, 'confirmed', '2024-11-06 21:57:20', '2024-11-06 21:57:20', NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,7 +186,11 @@ CREATE TABLE `checkouts` (
 INSERT INTO `checkouts` (`id`, `user_id`, `first_name`, `last_name`, `email`, `phone`, `dob`, `house_no`, `buling_name`, `country`, `state`, `city`, `cardholder_name`, `card_number`, `expiry_date`, `cvv`, `total_price`, `status`, `created_at`, `updated_at`, `room_id`, `booking_id`, `captcha`, `coupon_code`) VALUES
 (1, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-05', 'dd', 'ddd', 'IN', 'AN', 'Nicobar', 'DhruvishPatel', '1234567890123456', '02/22', '123', '2876', 'pending', '2024-11-05 04:34:30', '2024-11-05 04:34:30', 1, 9, 'rrbt', NULL),
 (2, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-03', 'w', 'ww', 'IN', 'DL', NULL, 'ww', 'www', '02/22', '123', '40275', 'pending', '2024-11-05 04:40:52', '2024-11-05 04:40:52', 2, 10, 'yhbp', 'ddd'),
-(3, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-02', '409', 'Dhanmora', 'IN', 'DL', NULL, 'Dhruvish', '1234567890123456', '02/22', '123', '33522', 'pending', '2024-11-05 22:01:25', '2024-11-05 22:01:25', 2, 12, 'a7n8', 'ABC');
+(3, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-02', '409', 'Dhanmora', 'IN', 'DL', NULL, 'Dhruvish', '1234567890123456', '02/22', '123', '33522', 'pending', '2024-11-05 22:01:25', '2024-11-05 22:01:25', 2, 12, 'a7n8', 'ABC'),
+(4, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-05', 'ewewe', 'wewee', 'IN', 'DL', NULL, 'wewewe', '1234567890123456', '02/22', '123', '26876', 'pending', '2024-11-05 23:37:19', '2024-11-05 23:37:19', 2, 13, 'mrq9', NULL),
+(5, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-05', 'eee', 'eeee', 'IN', 'LD', 'Kavaratti', 'erer', '1234567890123456', '02/22', '123', '4796', 'pending', '2024-11-06 01:43:04', '2024-11-06 01:43:04', 1, 14, '667f', NULL),
+(6, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-05', '409', 'Dhanmora', 'IN', 'PB', 'Abohar', 'Dhruvish', '1234567890123456', '02/22', '123', '956', 'pending', '2024-11-06 03:19:26', '2024-11-06 03:19:26', 1, 15, 'ppjf', NULL),
+(8, 75, 'Dhruvish', 'Sorathiya', 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '2024-11-14', '908', 'Dhanmora', 'IN', 'MN', 'Kamjong', 'dqdw', '1234567890123456', '02/22', '123', '3836', 'pending', '2024-11-06 22:00:02', '2024-11-06 22:00:02', 1, 17, 'dahy', NULL);
 
 -- --------------------------------------------------------
 
@@ -335,7 +344,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `user_id`, `name`, `lname`, `country`, `state`, `city`, `room_type`, `total_numbers`, `date`, `time`, `arrival_date`, `depature_date`, `email`, `ph_number`, `fileupload`, `address`, `gender`, `aadharcard`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 75, 'Dhruvish', 'Sorathiya', 'IN', 'DL', 'South Delhi', NULL, NULL, '2024-11-05', NULL, NULL, NULL, 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '1730697914_1729741348_the-day-is-marked-with-an-array-of-messages-that-encapsulate-patriotism.jpg', 'Dhanmora Katargam', NULL, NULL, 'active', '2024-11-03 23:51:33', '2024-11-03 23:56:29', NULL);
+(1, 75, 'Dhruvish', 'Sorathiya', 'IN', 'HR', 'Ambala', NULL, NULL, '2024-11-14', NULL, NULL, NULL, 'dhruvish.kalathiyainfotech@gmail.com', '8141233650', '1730697914_1729741348_the-day-is-marked-with-an-array-of-messages-that-encapsulate-patriotism.jpg', 'Dhanmora Katargam', NULL, NULL, 'active', '2024-11-03 23:51:33', '2024-11-06 04:59:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -654,7 +663,7 @@ CREATE TABLE `locations` (
 --
 
 INSERT INTO `locations` (`id`, `name`, `map_link`, `address`, `latitude`, `longitude`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'kalathiya infotech', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d464.9570868654145!2d72.8818075!3d21.2057926!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x26cb5e4230fc8877%3A0xd36ccfe485cd6a01!2sKalathiya%20Infotech!5e0!3m2!1sen!2sin!4v1730698866120!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', 'Silver Point, 102-103, Jivanjyot Circle, nr. Savlia Circle, Devidarshan Society, Yoginagar Society, Surat, Gujarat 395010', '21.2147', '72.8887', NULL, '2024-11-03 22:22:16', '2024-11-04 00:17:31');
+(1, 'kalathiya infotech', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d464.9570868654145!2d72.8818075!3d21.2057926!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x26cb5e4230fc8877%3A0xd36ccfe485cd6a01!2sKalathiya%20Infotech!5e0!3m2!1sen!2sin!4v1730698866120!5m2!1sen!2sin\" width=\"786\" height=\"702\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>', 'Silver Point, 102-103, Jivanjyot Circle, nr. Savlia Circle, Devidarshan Society, Yoginagar Society, Surat, Gujarat 395010', '21.2147', '72.8887', NULL, '2024-11-03 22:22:16', '2024-11-04 00:17:31');
 
 -- --------------------------------------------------------
 
@@ -882,8 +891,8 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `floor_id`, `room_name`, `room_number`, `room_type_id`, `ac_non_ac`, `food_id`, `bed_type`, `rent`, `phone_number`, `room_size`, `message`, `status`, `from_date`, `to_date`, `total_member_capacity`, `created_at`, `updated_at`, `deleted_at`, `smoking_id`, `view_id`, `offer_id`, `include_suites`) VALUES
-(1, 1, 'King Bed, Forest View, Loft Guest Room23', '20002', 1, 'AC', 2, 'King bed', '1000', 8141233650, '80m2', 'ffff', 'active', '2024-11-04', '2024-11-05', 5, '2024-08-29 00:05:03', '2024-11-03 22:28:39', NULL, NULL, NULL, 2, NULL),
-(2, 2, 'Queen Bed, City View, Standard Room', '2001', 3, 'AC', 2, 'Queen bed', '7000', 8141233650, '60m2', 'ddd', 'active', '2024-11-05', '2024-11-08', 23, '2024-10-18 22:41:02', '2024-11-03 22:35:00', NULL, 2, 7, 2, NULL),
+(1, 1, 'King Bed, Forest View, Loft Guest Room23', '20002', 1, 'AC', 2, 'King bed', '1000', 8141233650, '80m2', 'ffff', 'active', '2024-11-06', '2024-11-23', 5, '2024-08-29 00:05:03', '2024-11-03 22:28:39', NULL, NULL, NULL, 2, NULL),
+(2, 2, 'Queen Bed, City View, Standard Room', '2001', 3, 'AC', 2, 'Queen bed', '7000', 8141233650, '60m2', 'ddd', 'active', '2024-11-06', '2024-11-09', 23, '2024-10-18 22:41:02', '2024-11-03 22:35:00', NULL, 2, 7, 2, NULL),
 (3, 2, 'Double Beds, Garden View, Family Suite', '2008', 7, 'AC', 5, 'Queen bed', '5000', 8141233650, '100m2', 'ddd', 'active', '2024-10-23', '2024-10-31', NULL, '2024-09-10 22:41:02', '2024-11-03 22:28:40', NULL, NULL, NULL, 4, NULL),
 (6, 1, 'ddd', '12000', 1, 'AC', 1, 'king', '100', 8141233650, '50m2', 'dddd', 'active', '2024-10-21', '2024-10-31', 34, '2024-10-16 06:09:44', '2024-11-03 22:28:40', NULL, 2, 6, NULL, NULL),
 (16, 3, 'Lev Leon', '139456', 7, 'NON-AC', 7, 'Double bed', '80000', 9879831225, '100m2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum', 'active', '2024-10-17', '2024-10-27', 12, '2024-10-16 23:58:43', '2024-10-22 05:47:24', NULL, 3, 7, 1, '<p>THTHHDHd</p><p>sdadadhasdadasldd</p><p><strong>\\asdmasdjdkad</strong></p>'),
@@ -971,8 +980,7 @@ INSERT INTO `room_types` (`id`, `room_name`, `description`, `capacity`, `extra_b
 (5, 'Executive Room', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 5, 0, NULL, NULL, '10', 2300, 2300, '410696895.executive-suite-living-room-1920-x-1080_wide.jpg', 'active', '2024-07-28 23:03:18', '2024-10-04 06:47:29', NULL),
 (6, 'Honeymoon Suite Room', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 2, 0, NULL, NULL, '11', 5000, 5000, '278721253.honeymoon-suite-interior-package-at-our-jungle-house-a-lodge-near-CY0D96.jpg', 'active', '2024-07-28 23:03:44', '2024-10-04 06:48:16', NULL),
 (7, 'Deluxe Room', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 3, 1, 300, 2, '1,2,3,4,5,6,7,8', 4000, 4600, '894329167.1679880757083.png', 'active', '2024-07-28 23:04:17', '2024-10-04 06:47:35', NULL),
-(15, 'Premium Rooms', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 2, 0, NULL, NULL, '1,2,3,4,5', 1200, 1200, NULL, 'active', '2024-09-30 01:07:32', '2024-10-04 06:47:41', NULL),
-(16, 'Standard double Room', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 1, 0, NULL, NULL, '1,2,3,4,5,6,7', 230, 230, NULL, 'active', '2024-09-30 01:40:58', '2024-10-27 23:41:10', NULL);
+(15, 'Premium Rooms', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna laboris nisi ut aliquip exLorem ipsum dolor sit amet,', 2, 0, NULL, NULL, '1,2,3,4,5', 1200, 1200, NULL, 'active', '2024-09-30 01:07:32', '2024-10-04 06:47:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1032,7 @@ INSERT INTO `room_type_images` (`id`, `roomType_id`, `room_image`, `created_at`,
 (28, 1, '1727677942_SocketTVLogo.jpg', '2024-09-30 01:02:22', '2024-10-04 06:06:17', '2024-10-04 06:06:17'),
 (29, NULL, '1727678083_SocketTVLogo.jpg', '2024-09-30 01:04:43', '2024-09-30 01:04:43', NULL),
 (30, 15, '1727678252_image 79.png', '2024-09-30 01:07:32', '2024-09-30 01:07:32', NULL),
-(31, 16, '1727680258_image 79.png', '2024-09-30 01:40:58', '2024-10-27 23:41:00', '2024-10-27 23:41:00'),
+(31, NULL, '1727680258_image 79.png', '2024-09-30 01:40:58', '2024-10-27 23:41:00', '2024-10-27 23:41:00'),
 (32, NULL, '1727695621_25-07-2024-Dhruvish.png', '2024-09-30 05:57:01', '2024-09-30 05:57:11', '2024-09-30 05:57:11'),
 (33, NULL, '1727696439_PHK_Exterior_1280 - Copy.jpg', '2024-09-30 06:10:39', '2024-10-01 05:27:44', '2024-10-01 05:27:44'),
 (34, 1, '1728041858_roomSec1.png', '2024-10-04 06:07:38', '2024-10-04 06:10:51', '2024-10-04 06:10:51'),
@@ -1032,7 +1040,7 @@ INSERT INTO `room_type_images` (`id`, `roomType_id`, `room_image`, `created_at`,
 (36, 1, '1728042107_images.jpg', '2024-10-04 06:11:47', '2024-10-04 06:12:13', '2024-10-04 06:12:13'),
 (37, 1, '1728042138_large_deluxe-double-double.jpg', '2024-10-04 06:12:18', '2024-10-04 06:19:01', '2024-10-04 06:19:01'),
 (38, 1, '1728042548_white-bedroom-hotel 1 (1).png', '2024-10-04 06:19:08', '2024-10-04 06:19:08', NULL),
-(39, 16, '1730092270_spasec2_1.png', '2024-10-27 23:41:10', '2024-10-27 23:41:10', NULL);
+(39, NULL, '1730092270_spasec2_1.png', '2024-10-27 23:41:10', '2024-10-27 23:41:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -1151,7 +1159,9 @@ INSERT INTO `spa_bookknows` (`id`, `checkin`, `time`, `technician`, `person`, `p
 (6, '2024-10-31', '10:00 am - 11:40 am', 'Female', '2', '586', 1172, '2024-10-25 03:18:22', '2024-10-25 03:18:22', NULL, 1),
 (7, '2024-10-29', '11:00 am - 12:40 pm', 'Female', '3', '586', 1758, '2024-10-27 23:43:42', '2024-10-27 23:43:42', NULL, 1),
 (8, '2024-11-14', '10:00 am - 11:40 am', 'Female', '5', '3423', 17115, '2024-11-05 22:13:29', '2024-11-05 22:13:29', NULL, 2),
-(9, '2024-11-20', '11:00 am - 12:40 pm', 'Female', '4', '586', 2344, '2024-11-05 22:18:00', '2024-11-05 22:18:00', NULL, 1);
+(9, '2024-11-20', '11:00 am - 12:40 pm', 'Female', '4', '586', 2344, '2024-11-05 22:18:00', '2024-11-05 22:18:00', NULL, 1),
+(10, '2024-11-21', '11:00 am - 12:40 pm', 'Female', '4', '586', 2344, '2024-11-06 01:47:20', '2024-11-06 01:47:20', NULL, 1),
+(11, '2024-11-19', '12:00 pm - 01:40 pm', 'Male', '4', '3423', 13692, '2024-11-06 03:19:52', '2024-11-06 03:19:52', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -1272,10 +1282,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_id`, `name`, `lname`, `dob`, `email`, `address`, `join_date`, `phone_number`, `status`, `role_id`, `profile`, `position`, `department`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `staff_id`, `password_reset_otp`, `password_reset_otp_expires_at`, `country`, `state`, `city`, `google_id`) VALUES
-(1, 'KH_001', 'VirajKeva', 'Sorathiya', '2024-10-08', 'admin@example.com', 'Kalthiya Solution', NULL, '8141233650', NULL, 0, '1730787664.png', NULL, NULL, '2024-08-31 05:26:06', '$2y$10$8iTUQ2jrPAa8prNQybeUHuKvxxKBumFOt0bxsB3PwnC7mk/hPErWO', 's2BF6VEsytZP7VuoTXzNfsAx2pzHnC7FIGIuyapx5yUbpL9gBgiqek8oWAOA', '2024-07-26 06:58:28', '2024-11-05 00:53:55', NULL, NULL, NULL, 'AF', 'BDG', 'Ghormach', NULL),
+(1, 'KH_001', 'VirajKeva', 'Sorathiya', '2024-10-08', 'admin@example.com', 'Kalthiya Solution', NULL, '8141233650', NULL, 0, '1730787664.png', NULL, NULL, '2024-08-31 05:26:06', '$2y$10$8iTUQ2jrPAa8prNQybeUHuKvxxKBumFOt0bxsB3PwnC7mk/hPErWO', 'UKfXHvIQvpeWqBkNN3EskRxqsrDte9xi8ZPCM1940NWYdH0JQzKR2BW2qgoz', '2024-07-26 06:58:28', '2024-11-05 00:53:55', NULL, NULL, NULL, 'AF', 'BDG', 'Ghormach', NULL),
 (64, 'KH_002', 'Frontened Side', 'Developer', '2024-10-27', 'fronted123@gmail.com', 'JKP Nager SOA456', NULL, '8141233650', NULL, 3, '1728557262_close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg', NULL, NULL, NULL, '$2y$10$/Gbb8wm8PvNOV9ybMHuwTue6p.fZS0c4tfBVKKvFIGoVt0XYcA6H6', NULL, '2024-10-10 05:14:25', '2024-10-10 06:49:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (65, 'KH_003', 'staff', 'role', '2024-10-10', 'staff@gmail.com', NULL, NULL, '9879831225', NULL, 1, '6707bd7c029a7.jpg', NULL, NULL, NULL, '$2y$10$9reg1DFuqDvhg7RfZTTwbuQnS4DHuLTLHDMs9xINkRefhNBS1bt3G', NULL, '2024-10-10 06:11:48', '2024-10-10 06:11:48', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(75, 'KH_004', 'Dhruvish', 'Sorathiya', '2024-11-05', 'dhruvish.kalathiyainfotech@gmail.com', 'Dhanmora Katargam', NULL, '8141233650', NULL, 3, '1730697914_1729741348_the-day-is-marked-with-an-array-of-messages-that-encapsulate-patriotism.jpg', NULL, NULL, NULL, '$2y$10$Ht2lMkEJ0MsA4nn.72iuNugj4c3KVBHleD9TqTn0DyG97RTA.QCTi', NULL, '2024-11-03 23:51:33', '2024-11-03 23:56:29', NULL, NULL, NULL, 'IN', 'DL', NULL, '112195652951894170292');
+(75, 'KH_004', 'Dhruvish', 'Sorathiya', '2024-11-14', 'dhruvish.kalathiyainfotech@gmail.com', 'Dhanmora Katargam', NULL, '8141233650', NULL, 3, '1730697914_1729741348_the-day-is-marked-with-an-array-of-messages-that-encapsulate-patriotism.jpg', NULL, NULL, NULL, '$2y$10$Ht2lMkEJ0MsA4nn.72iuNugj4c3KVBHleD9TqTn0DyG97RTA.QCTi', NULL, '2024-11-03 23:51:33', '2024-11-06 04:59:40', NULL, NULL, NULL, 'IN', 'HR', 'Ambala', '112195652951894170292');
 
 -- --------------------------------------------------------
 
@@ -1602,13 +1612,13 @@ ALTER TABLE `amenities`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `checkouts`
 --
 ALTER TABLE `checkouts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `client_reviews`
@@ -1794,7 +1804,7 @@ ALTER TABLE `spas`
 -- AUTO_INCREMENT for table `spa_bookknows`
 --
 ALTER TABLE `spa_bookknows`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `spa_check_outs`
