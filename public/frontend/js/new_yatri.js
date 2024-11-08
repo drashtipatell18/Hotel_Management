@@ -114,6 +114,35 @@
         }
     });
 
+    $(".order__slider2").owlCarousel({
+        center: false,
+        autoplay: false,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: false,
+        items: 4,
+        loop: true,
+        nav: true,
+        margin: 0,
+        dots: true,
+        responsive: {
+            1440: {
+                items: 4    
+            },
+            1024: {
+                items: 3    
+            },
+            600:{
+                items: 2
+            },
+            425:{
+                items: 1
+            },
+            320:{
+                items: 1
+            }
+        }
+    });
+
     // experince slider 
     $(".experince_slider").owlCarousel({
         center: true,

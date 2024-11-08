@@ -1679,6 +1679,39 @@
 	/*---------------------
 	Gallery
 	-----------------------*/
+	.about_sec2_row img{
+		object-fit: cover;
+		height: 387px;
+		width: 608px !important;
+	}
+	.about_sec1_col img{
+		object-fit: cover;
+		height: 387px;
+		width: 608px !important;
+	} 
+	
+	.Slider_image img{
+		object-fit: cover;
+		height: 387px;
+		width: 608px !important;
+	}
+	.y_contact_img{
+		width: 100%;
+		height: auto !important;    
+	}
+	.aboutsec4_img1{
+		padding-top: 40px;
+		/* padding-bottom: 9px; */
+		height: 574px;
+		width: 300px;
+		object-fit: cover;
+	}
+	.aboutsec4_img2 {
+		height: 600px;
+		width: 400px;
+		padding-top: 10px;
+		object-fit: cover;
+	}
 	.Slider_image {
 		position: relative;
 		margin: 15px;
@@ -3487,6 +3520,24 @@
 	}
 	/* Wide Mobile = 480px */
 	@media screen and (max-width: 1024px) {
+		.aboutsec4_img1{
+			height: 294px;
+			width: 160px !important;
+		}
+		.aboutsec4_img2 {
+			height: 315px;
+			width: 216px;
+			padding-top: 14px;
+			object-fit: cover;
+		}
+		/* .about_sec2_row img{
+			height: 218px;
+			width: 304px !important;
+		} */
+		.Slider_image img {
+			height: 218px;
+			width: 304px !important;
+		}
 		.footer__about {
 			margin-bottom: 20px;
 		}
@@ -4743,6 +4794,23 @@
 	}
 
 	@media only screen and (max-width: 479px) {
+		.aboutsec4_img2 {
+			height: 261px;
+			width: 157px;
+			padding-top: 23px;
+		}
+		.aboutsec4_img1 {
+			height: 244px;
+			width: 116px !important;
+		}
+		/* .about_sec2_row img{
+			height: 135px;
+			width: 236px !important;
+		} */
+		.Slider_image img {
+			height: 135px;
+			width: 236px !important;
+		}
 		#ui-datepicker-div {
 			left: 20% !important;
 		}

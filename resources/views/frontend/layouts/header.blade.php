@@ -171,9 +171,9 @@
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__logo">
-            <a href="{{ route('index') }}">
+            <!-- <a href="{{ route('index') }}">
                 <img class="w-100 h-100" src="#" alt="">
-            </a>
+            </a> -->
         </div>
         <!-- <div id="mobile-menu-wrap"></div> -->
         <ul class="menu__class">

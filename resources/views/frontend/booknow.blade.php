@@ -52,6 +52,10 @@
         background-color: #fff; /* White background */
         text-align: center; /* Center text */
         transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
     .coupon-card:hover {
         transform: translateY(-5px); /* Lift effect on hover */
@@ -86,21 +90,38 @@
         box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
     }
 
-    /* .coupon-card-1 {
-        border: 2px solid #FF0000 !important; /* Red */
-        box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+ 
+    
+    .order__slider2 .owl-nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none; /* Prevents nav from blocking slide clicks */
+    }
+    .order__slider2 .owl-nav .owl-prev span,
+    .order__slider2 .owl-nav .owl-next span{
+      font-size: xxx-large;
+      
+    }
+    .order__slider2 .owl-nav .owl-prev,
+    .order__slider2 .owl-nav .owl-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: all; /* Re-enable pointer events on the icons */
     }
 
-    .coupon-card-2 {
-        border: 2px solid #0000FF !important; /* Blue */
-        box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3);
+    .order__slider2 .owl-nav .owl-prev {
+        left: -20px; /* Adjust this to control the left spacing */
     }
 
-    .coupon-card-3 {
-        border: 2px solid #008000 !important; /* Green */
-        box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
-    } */
-
+    .order__slider2 .owl-nav .owl-next {
+        right: -20px; /* Adjust this to control the right spacing */
+    }
 </style>
 
 <section class="d_booknow">
@@ -126,41 +147,28 @@
 </section>
 
 <section class="pt-5 pb-5">
-    <h3 class="text-center">Exclusive Coupons</h3>
-    <div id="carouselExampleControls" class="carousel carousel-dark slide mx-auto" data-ride="carousel" style="max-width: 80%;">
-        <div class="carousel-inner">
-            @foreach($validCoupons->chunk(4) as $chunk)
-                <div class="carousel-item @if($loop->first) active @endif">
-                    <div class="cards-wrapper d-flex justify-content-center">
-                        @foreach($chunk as $loop->index => $coupon)
-                            <div class="card mx-2 coupon-card" style="width: 18rem;">
-                                <div class="card-body text-center">
-                                    <div class="coupon-badge">
-                                        @if($coupon->image)
-                                            <img src="{{ url('assets/coupons/' . $coupon->image) }}" alt="Logo" style="width: 50px; height: 50px;">
-                                        @else
-                                            <img src="{{ url('assets/coupons/default.jfif') }}" alt="Logo" style="width: 50px; height: 50px;">
-                                        @endif
-                                    </div>
-                                    <h5 class="card-title">{{ $coupon->name }}</h5>
-                                    <p class="card-text">USE <b>{{ $coupon->code }}</b></p>
-                                    <p class="card-text">Flat <b>₹{{ $coupon->discount_amount }}</b> Off</p>
-                                </div>
+    <h3 class="text-center pb-4">Exclusive Coupons</h3>
+    <div class="container">
+        <div class="order__slider2 owl-carousel" data-ride="carousel">
+            @foreach ($validCoupons as $coupon)
+                <div class="order__item">
+                    <div class="card coupon-card" style="width: 18rem;">
+                        <div class="card-body text-center">
+                            <div class="coupon-badge">
+                                @if($coupon->image)
+                                    <img src="{{ url('assets/coupons/' . $coupon->image) }}" alt="Logo" style="width: 50px; height: 50px;">
+                                @else
+                                    <img src="{{ url('assets/coupons/default.jfif') }}" alt="Logo" style="width: 50px; height: 50px;">
+                                @endif
                             </div>
-                        @endforeach
+                            <h5 class="card-title">{{ $coupon->title }}</h5>
+                            <p class="card-text">USE <b>{{ $coupon->code }}</b></p>
+                            <p class="card-text">Flat <b>{{ $coupon->discount_value }}</b> Off</p>
+                        </div>
                     </div>
                 </div>
             @endforeach
         </div>
-
-        <a class="carousel-control-prev" href="javascript:void(0);" role="button" onclick="moveToPrev()">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="javascript:void(0);" role="button" onclick="moveToNext()">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
 </section>
 
